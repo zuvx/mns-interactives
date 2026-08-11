@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Souq · Lesson 1: Any Order?</title>
+<link rel="stylesheet" href="souq.css">
+<style>
+  .scaleZone{display:grid;grid-template-columns:1fr 1fr;gap:1.125rem;align-items:start;margin:.375rem 0 .25rem}
+  .cart{background:var(--sand);border-radius:16px;padding:.875rem;text-align:center;border:3px solid var(--sand-2)}
+  .cart h3{margin:0 0 .5rem;color:var(--wood);font-size:1rem}
+  .crates{min-height:6rem;display:flex;flex-wrap:wrap;gap:.375rem;justify-content:center;
+    align-content:flex-end;padding:.375rem;border-radius:10px;
+    background:repeating-linear-gradient(0deg,rgba(90,58,34,.06) 0 22px,transparent 22px 24px)}
+  .crate{width:2.125rem;height:1.25rem;border-radius:4px;position:relative;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);animation:drop .3s ease;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.6875rem;font-weight:700;font-family:var(--display)}
+  .crate.lotA{background:var(--lotA);border:2px solid var(--lotA-deep);color:#fff}
+  .crate.lotB{background:var(--lotB);border:2px solid var(--lotB-deep);color:#fff}
+  @keyframes drop{from{transform:translateY(-14px);opacity:0}to{transform:none;opacity:1}}
+  .order{font-size:.875rem;font-weight:700;color:var(--wood);min-height:1.25rem;margin-top:.375rem}
+  .loadbtns{margin-top:.5rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+  .load{border:none;cursor:pointer;min-height:var(--tap);padding:.5rem 1rem;border-radius:12px;
+    font-family:var(--display);font-weight:700;font-size:1.0625rem;color:#fff}
+  .load.a{background:var(--lotA);box-shadow:0 3px 0 var(--lotA-deep)}
+  .load.b{background:var(--lotB);box-shadow:0 3px 0 var(--lotB-deep)}
+  .load:disabled{opacity:.35;cursor:not-allowed}
+  .load:active:not(:disabled){transform:translateY(2px)}
+
+  .beam-wrap{margin:1rem 0 .25rem;display:flex;flex-direction:column;align-items:center}
+  .beam{width:min(520px,92%);height:.875rem;background:linear-gradient(var(--wood),#3f2716);
+    border-radius:8px;transition:transform .6s cubic-bezier(.5,-0.3,.4,1.4);transform-origin:center}
+  .post{width:.875rem;height:2.125rem;background:var(--wood);border-radius:0 0 6px 6px}
+
+  .stock{display:flex;gap:1.375rem;flex-wrap:wrap;margin:.5rem 0}
+  .stall{flex:1 1 200px;background:var(--sand);border-radius:16px;padding:.875rem;
+    text-align:center;border:3px solid var(--sand-2)}
+  .stall .big{font-family:var(--display);font-size:1.875rem;color:var(--teal)}
+  .yesno{display:flex;gap:.75rem;flex-wrap:wrap;margin:.625rem 0}
+  .yesno button{flex:1 1 200px;border:3px solid var(--teal);background:var(--paper);color:var(--ink);
+    cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.0625rem;
+    min-height:var(--tap);padding:.75rem;border-radius:14px}
+  .yesno button:active{transform:translateY(2px)}
+
+  .effrow{background:var(--sand);border-radius:16px;padding:.875rem 1rem;margin:.75rem 0;
+    border-left:6px solid var(--teal-2)}
+  .effpair{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.5rem}
+  .effpair button{flex:1 1 180px;border:3px solid var(--teal);background:var(--paper);
+    color:var(--ink);cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.25rem;
+    min-height:var(--tap);border-radius:12px;padding:.625rem}
+  .effpair button[aria-pressed="true"]{background:var(--teal);color:var(--paper)}
+  .effwhy{margin-top:.5rem;font-weight:700;color:var(--pom-deep);min-height:1.5rem;font-size:.9375rem}
+</style>
+</head>
+<body data-lesson="l1">
+<div class="wrap">
+
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-lantern"></use></svg>
+      <div>
+        <h1>The Number Souq</h1>
+        <p class="sub">Lesson 1 · Any Order? — Commutativity</p>
+      </div>
+      <div class="pill">Unit 4 · Stage 3 · 3Ni.02</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="commutative"><div class="ktext"><b>commutative</b><span>You can swap the order — the total stays the same.</span></div></div>
+      <div class="kcard" data-word="add"><div class="ktext"><b>add</b><span>Put amounts together.</span></div></div>
+      <div class="kcard" data-word="sum"><div class="ktext"><b>sum / total</b><span>The answer when you add.</span></div></div>
+      <div class="kcard" data-word="subtract"><div class="ktext"><b>subtract</b><span>Take away.</span></div></div>
+      <div class="kcard" data-word="difference"><div class="ktext"><b>difference</b><span>The answer to a subtraction.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <!-- SCREEN 0 -->
+  <section class="screen on" data-s="0">
+    <div class="card">
+      <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-basket"></use></svg> Welcome</span>
+      <h2>Welcome to the souq, trader!</h2>
+      <p class="lead" data-read="Today you find out a secret about adding and taking away in the market. You work on your own. Every stall asks you a question. You work out the answer and type it in.">
+        Today you find out a secret about adding and taking away in the market.</p>
+      <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-lantern"></use></svg>
+        <div><b>How this works.</b> You work on your own. Every stall asks you a question.
+        <b>You</b> work out the answer and type it in. The souq only tells you if you are right.
+        If you get stuck, try again — a hint appears after two tries.</div></div>
+      <p style="font-weight:700">Three stalls, then your licence:</p>
+      <ul style="line-height:2">
+        <li><b>The Balance</b> — load two lots and work out what each cart weighs.</li>
+        <li><b>The Returns Counter</b> — try giving crates back the other way round.</li>
+        <li><b>The Efficient Trader</b> — pick the order that is easier to work out.</li>
+      </ul>
+      <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Enter the souq</button></div>
+    </div>
+  </section>
+
+  <!-- SCREEN 1: The Balance -->
+  <section class="screen" data-s="1">
+    <div class="card">
+      <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-balance"></use></svg> Stall 1 · The Balance</span>
+      <h2>Does the order change the total?</h2>
+      <p class="lead" data-read="Load both lots into each cart. Load them in a different order in Cart B. Then work out what each cart weighs before you weigh them.">
+        Load <b>both lots</b> into each cart, in a <b>different order</b> in Cart B.
+        Then work out what each cart weighs — <b>before</b> you use the scales.</p>
+
+      <div class="pickrow" id="pairPick" role="group" aria-label="Choose a pair of lots"></div>
+
+      <div class="scaleZone">
+        <div class="cart">
+          <h3 id="capA">Cart A</h3>
+          <div class="crates" id="cratesA" role="img" aria-label="Cart A is empty"></div>
+          <div class="order" id="ordA">Nothing loaded yet</div>
+          <div class="loadbtns" id="loadA"></div>
+        </div>
+        <div class="cart">
+          <h3 id="capB">Cart B</h3>
+          <div class="crates" id="cratesB" role="img" aria-label="Cart B is empty"></div>
+          <div class="order" id="ordB">Nothing loaded yet</div>
+          <div class="loadbtns" id="loadB"></div>
+        </div>
+      </div>
+
+      <div id="askZone"></div>
+
+      <div class="beam-wrap">
+        <div class="beam" id="beam"></div>
+        <div class="post"></div>
+      </div>
+      <p class="verdict" id="verdict"></p>
+
+      <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+        <div id="think1"><b>Think:</b> will the two carts balance? Decide <i>before</i> you weigh.</div></div>
+
+      <div class="btnrow">
+        <button class="btn teal" type="button" id="weighBtn" onclick="weigh()" disabled>Weigh both carts</button>
+        <button class="btn ghost" type="button" onclick="resetCarts()">Empty the carts</button>
+        <button class="btn ghost" type="button" onclick="go(2)">Next: Returns Counter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: Returns Counter -->
+  <section class="screen" data-s="2">
+    <div class="card">
+      <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> Stall 2 · The Returns Counter</span>
+      <h2>Can we take away in any order too?</h2>
+      <p class="lead" data-read="A stall has 50 crates. A customer brings back 30 crates. Work out the first one yourself, then decide about the other way round.">
+        A stall has <b>50 crates</b>. A customer brings back <b>30 crates</b>.</p>
+
+      <div class="stock">
+        <div class="stall"><div>Stall stock</div><div class="big">50</div><div>crates</div></div>
+        <div class="stall"><div>Customer returns</div><div class="big">30</div><div>crates</div></div>
+      </div>
+
+      <div id="retAsk"></div>
+
+      <p style="font-weight:700" data-read="Now the other way round. Could the stall take 50 crates away from only 30?">
+        Now try it the other way round: <b>30 − 50</b>. Could the stall do that?</p>
+      <div class="yesno">
+        <button type="button" onclick="tryReturn(true)">Yes, it works</button>
+        <button type="button" onclick="tryReturn(false)">No, there are not enough</button>
+      </div>
+      <div class="resultbox" id="retRes" role="status"></div>
+
+      <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+        <div><b>Think:</b> adding balanced in any order. Did taking away?</div></div>
+
+      <div class="btnrow">
+        <button class="btn ghost" type="button" onclick="go(1)">Back to the Balance</button>
+        <button class="btn" type="button" onclick="go(3)">Next: The Efficient Trader</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: Efficiency -->
+  <section class="screen" data-s="3">
+    <div class="card">
+      <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-coin"></use></svg> Stall 3 · The Efficient Trader</span>
+      <h2>Same total — but which is easier?</h2>
+      <p class="lead" data-read="Both orders give the same answer. A good trader picks the order that is quicker to work out in your head. Choose one, then work out the total.">
+        Both orders give the same answer. A good trader picks the order that is
+        <b>quicker to work out in your head</b>. Choose one, then work out the total yourself.</p>
+      <div id="effList"></div>
+
+      <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+        <div><b>Abigail says:</b> <i>"To add 13 and 75 I would choose 75 + 13. It is easier to add
+        a small number onto a big one."</i> Do you agree? You will write about this on the next screen.</div></div>
+
+      <div class="btnrow">
+        <button class="btn ghost" type="button" onclick="go(2)">Back</button>
+        <button class="btn" type="button" onclick="go(4)">Go to the Licence Office</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: Licence -->
+  <section class="screen" data-s="4">
+    <div class="card">
+      <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Licence Office</span>
+      <h2>Prove it to earn your Trader's Licence</h2>
+      <p class="lead" data-read="Answer these on screen. Then write the last two in your maths book.">
+        Answer these on screen. The last two go in your <b>maths book</b>.</p>
+
+      <div id="licAsk"></div>
+
+      <div class="quest"><div class="q">In your maths book</div>
+        1. Write <b>three</b> additions that show adding can be done in any order.<br>
+        2. Raj says: <i>"23 − 58 or 58 − 23 — either way I get 35."</i> Is Raj right? Explain why.</div>
+
+      <div class="mywork" id="mywork"></div>
+
+      <div class="licence">
+        <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Souq Trader's Licence · Tier 1</h3>
+        <div style="font-weight:700">Stamp this when you can explain the secret to someone else.</div>
+        <div><span class="stamp" id="stamp">APPROVED</span></div>
+        <div class="btnrow" style="justify-content:center">
+          <button class="btn gold" type="button" id="stampBtn">Stamp my licence</button>
+        </div>
+      </div>
+
+      <p class="note">Teacher: the licence is self-stamped, so check the book work and the Session
+        summary before recording the tier on the printed Licence Card.</p>
+    </div>
+  </section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Souq · Cambridge Primary Stage 3 · Unit 4 Lesson 1 (3Ni.02). Works offline. No scores, no timers.</p>
+</div>
+
+<script src="souq.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Souq.init([
+    {icon:'basket',  label:'Welcome'},
+    {icon:'balance', label:'The Balance'},
+    {icon:'swap',    label:'Returns'},
+    {icon:'coin',    label:'Efficient'},
+    {icon:'scroll',  label:'Licence'}
+  ], {onEnter:function(n){ if(n===4) Souq.renderMyWork(); }});
+
+  /* ============ Stall 1: The Balance ============
+     The child loads the lots, then WORKS OUT each total. The page never
+     prints the total — it only checks. Weighing unlocks once both are right. */
+
+  var PAIRS=[[30,20],[40,10],[60,40],[70,30]];
+  var pairIdx=0, cartA=[], cartB=[], askA=null, askB=null;
+
+  var pickRow=document.getElementById('pairPick');
+  PAIRS.forEach(function(p,i){
+    var b=document.createElement('button');
+    b.type='button';
+    b.textContent=p[0]+' & '+p[1];
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','Use the lots '+p[0]+' and '+p[1]);
+    b.addEventListener('click',function(){ setPair(i); });
+    pickRow.appendChild(b);
+  });
+
+  function lotName(i){ return PAIRS[pairIdx][i]; }
+  function total(arr){ return arr.reduce(function(s,l){ return s+PAIRS[pairIdx][l]; },0); }
+  function order(arr){ return arr.map(lotName).join(' + '); }
+
+  function buildLoadButtons(){
+    [['loadA',cartA,'A'],['loadB',cartB,'B']].forEach(function(cfg){
+      var host=document.getElementById(cfg[0]);
+      host.innerHTML='';
+      [0,1].forEach(function(lot){
+        var b=document.createElement('button');
+        b.type='button';
+        b.className='load '+(lot===0?'a':'b');
+        b.textContent='Load '+lotName(lot);
+        b.setAttribute('aria-label','Load the lot of '+lotName(lot)+' into Cart '+cfg[2]);
+        b.addEventListener('click',function(){ loadLot(cfg[2], lot); });
+        host.appendChild(b);
+      });
+    });
+    syncLoadButtons();
+  }
+  function syncLoadButtons(){
+    [['loadA',cartA],['loadB',cartB]].forEach(function(cfg){
+      var host=document.getElementById(cfg[0]);
+      Array.prototype.forEach.call(host.children,function(b,lot){
+        b.disabled = cfg[1].indexOf(lot)!==-1;
+      });
+    });
+  }
+  function loadLot(cart,lot){
+    var arr = cart==='A'?cartA:cartB;
+    if(arr.indexOf(lot)!==-1) return;
+    arr.push(lot);
+    clearVerdict();
+    render();
+  }
+
+  function setPair(i){
+    pairIdx=i;
+    Array.prototype.forEach.call(pickRow.children,function(b,j){
+      b.setAttribute('aria-pressed', String(i===j));
+    });
+    resetCarts();
+    buildLoadButtons();
+  }
+
+  function resetCarts(){
+    cartA=[]; cartB=[]; askA=null; askB=null;
+    document.getElementById('askZone').innerHTML='';
+    clearVerdict();
+    syncLoadButtons();
+    render();
+  }
+  window.resetCarts=resetCarts;
+
+  function crateHTML(arr){
+    var h='';
+    arr.forEach(function(lot){
+      var n=PAIRS[pairIdx][lot]/10;
+      for(var i=0;i<n;i++) h+='<div class="crate '+(lot===0?'lotA':'lotB')+'">10</div>';
+    });
+    return h;
+  }
+
+  function render(){
+    document.getElementById('cratesA').innerHTML=crateHTML(cartA);
+    document.getElementById('cratesB').innerHTML=crateHTML(cartB);
+    document.getElementById('ordA').textContent = cartA.length ? order(cartA)+' = ?' : 'Nothing loaded yet';
+    document.getElementById('ordB').textContent = cartB.length ? order(cartB)+' = ?' : 'Nothing loaded yet';
+    document.getElementById('cratesA').setAttribute('aria-label',
+      cartA.length ? 'Cart A holds '+order(cartA) : 'Cart A is empty');
+    document.getElementById('cratesB').setAttribute('aria-label',
+      cartB.length ? 'Cart B holds '+order(cartB) : 'Cart B is empty');
+    document.getElementById('capA').textContent='Cart A'+(cartA.length?'  ('+order(cartA)+')':'');
+    document.getElementById('capB').textContent='Cart B'+(cartB.length?'  ('+order(cartB)+')':'');
+
+    var t=document.getElementById('think1');
+    if(cartA.length<2||cartB.length<2){
+      t.innerHTML='<b>Think:</b> load both lots into both carts. Which order will you use in Cart B?';
+    } else if(cartA.join()===cartB.join()){
+      t.innerHTML='<b>Think:</b> both carts are in the <b>same</b> order. Empty Cart B and load the other lot first, so you are really testing the order.';
+    } else {
+      t.innerHTML='<b>Think:</b> will the carts balance? Decide <i>before</i> you weigh.';
+    }
+
+    maybeAsk();
+    updateWeighBtn();
+  }
+
+  /* Ask for both totals once the carts are loaded in opposite orders. */
+  function maybeAsk(){
+    var ready = cartA.length===2 && cartB.length===2 && cartA.join()!==cartB.join();
+    var zone=document.getElementById('askZone');
+    if(!ready){ zone.innerHTML=''; askA=null; askB=null; return; }
+    if(askA) return;                       // already asked for this build
+    zone.innerHTML='';
+    var a=total(cartA), b=total(cartB);
+    askA=Souq.ask(zone,{
+      prompt:'Work it out: what does Cart A weigh?  '+order(cartA)+' = ?',
+      answer:a,
+      task:'L1 Balance Cart A ('+order(cartA)+')',
+      nudge:'Not quite. Count the crates — each one is worth 10.',
+      hint:'Count in tens: there are '+(a/10)+' crates altogether, so '+(a/10)+' tens.',
+      praise:'Yes.',
+      onSolved:updateWeighBtn
+    });
+    askB=Souq.ask(zone,{
+      prompt:'Now Cart B:  '+order(cartB)+' = ?',
+      answer:b,
+      task:'L1 Balance Cart B ('+order(cartB)+')',
+      nudge:'Not quite. It is the same two lots as Cart A, just loaded the other way round.',
+      hint:'Same crates as Cart A, so the same total.',
+      praise:'Yes.',
+      onSolved:updateWeighBtn
+    });
+  }
+
+  function updateWeighBtn(){
+    document.getElementById('weighBtn').disabled = !(askA&&askB&&askA.isSolved()&&askB.isSolved());
+  }
+
+  function clearVerdict(){
+    var v=document.getElementById('verdict');
+    v.textContent=''; v.className='verdict';
+    document.getElementById('beam').style.transform='';
+  }
+
+  // One award per pair, however many times the scales are used.
+  var weighed={};
+  window.weigh=function(){
+    var v=document.getElementById('verdict');
+    var key=PAIRS[pairIdx].join('-');
+    document.getElementById('beam').style.transform='rotate(0deg)';
+    v.className='verdict good';
+    v.textContent='Balanced. '+order(cartA)+' and '+order(cartB)+
+      ' both weigh '+total(cartA)+'. Same two lots, different order, same total — that is commutative.';
+    if(!weighed[key]){
+      weighed[key]=true;
+      Souq.record({task:'L1 Balance ('+PAIRS[pairIdx][0]+' & '+PAIRS[pairIdx][1]+')', result:'correct in 1'});
+    }
+  };
+
+  setPair(0);
+
+  /* ============ Stall 2: Returns Counter ============ */
+  Souq.ask(document.getElementById('retAsk'),{
+    prompt:'Work it out: the stall has 50 crates and gives 30 back. How many are left?  50 − 30 = ?',
+    answer:20,
+    task:'L1 Returns 50 − 30',
+    nudge:'Not quite. Start at 50 and count back 30, or think 5 tens take away 3 tens.',
+    hint:'5 tens − 3 tens = 2 tens, and 2 tens is 20.',
+    praise:'Yes, 20 crates are left.'
+  });
+
+  var retTries=0, retAwarded=false;
+  window.tryReturn=function(saidYes){
+    var box=document.getElementById('retRes');
+    box.className='resultbox show';
+    retTries++;
+    if(saidYes){
+      box.classList.add('fails');
+      box.innerHTML='Look again. The stall only has <b>30</b> crates. Could you take <b>50</b> away from 30? Try the other button.';
+      Souq.record({task:'L1 Returns 30 − 50', result:'tried yes'});
+    } else {
+      box.classList.add('works');
+      box.innerHTML='Correct. There are not enough crates in 30 to take 50 away. '+
+        'So subtraction is <b>not</b> commutative — with taking away, the order matters.';
+      if(!retAwarded){
+        retAwarded=true;
+        Souq.record({task:'L1 Returns 30 − 50', result:'correct in '+retTries});
+      }
+    }
+  };
+
+  /* ============ Stall 3: The Efficient Trader ============
+     The child picks an order AND works out the total, so the strategy talk
+     is attached to a calculation they actually did. */
+  var EFF=[
+    {l:'5 + 34',   r:'34 + 5',   sum:39,
+     why:'Starting at 34 and counting on 5 is quicker than starting at 5 and counting on 34.'},
+    {l:'20 + 70',  r:'70 + 20',  sum:90,
+     why:'These are both tens, so either order is easy. 2 tens and 7 tens make 9 tens.'},
+    {l:'50 + 26',  r:'26 + 50',  sum:76,
+     why:'Many traders start with the tidy 50. Either order works — the total never changes.'},
+    {l:'42 + 23',  r:'23 + 42',  sum:65,
+     why:'Starting at the bigger number, 42, means fewer steps to hold in your head.'},
+    {l:'3 + 4 + 6',r:'6 + 4 + 3',sum:13,
+     why:'Look for a pair that makes 10 first: 4 + 6 = 10, then add 3. Choosing the order helps you spot it.'}
+  ];
+
+  var effList=document.getElementById('effList');
+  EFF.forEach(function(e,i){
+    var row=document.createElement('div');
+    row.className='effrow';
+    row.innerHTML='<div style="font-family:var(--display);font-weight:700;color:var(--wood)">'+
+      (i+1)+'. Which would you rather work out?</div>'+
+      '<div class="effpair" role="group" aria-label="Question '+(i+1)+'">'+
+      '<button type="button">'+e.l+'</button><button type="button">'+e.r+'</button></div>'+
+      '<p class="effwhy" role="status"></p>';
+    effList.appendChild(row);
+
+    var btns=row.querySelectorAll('.effpair button');
+    var why=row.querySelector('.effwhy');
+    var asked=false;
+    btns.forEach(function(b){
+      b.addEventListener('click',function(){
+        btns.forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); });
+        why.textContent='Good choice. Now work out the total.';
+        Souq.record({task:'L1 Efficiency '+(i+1), result:'chose '+b.textContent});
+        if(asked) return;
+        asked=true;
+        Souq.ask(row,{
+          prompt:'What is the total of '+e.l+' ?',
+          answer:e.sum,
+          task:'L1 Efficiency total '+e.l,
+          nudge:'Not quite. Try starting at the biggest number and counting on.',
+          hint:e.why+' The total is the same whichever order you choose.',
+          praise:'Yes — and you would get the same total the other way round.',
+          onSolved:function(){ why.textContent=e.why; }
+        });
+      });
+    });
+  });
+
+  /* ============ Licence Office ============ */
+  var licHost=document.getElementById('licAsk');
+  [
+    {prompt:'40 + 20 = 60. So what is 20 + 40 ?', answer:60,
+     nudge:'Remember the balance: same two lots, different order.',
+     hint:'Adding can be done in any order, so the total stays 60.',
+     praise:'Yes — order does not change the total.'},
+    {prompt:'70 − 50 = 20. So what is 50 − 70 ?  Type 0 if it cannot be done.', answer:0,
+     nudge:'Could you take 70 away from only 50?',
+     hint:'There are not enough in 50 to take 70 away, so this one cannot be done. Type 0.',
+     praise:'Correct — subtraction is not commutative.'},
+    {prompt:'Abigail adds 13 and 75. What total does she get?', answer:88,
+     nudge:'Start at 75 and add 13: first add 10, then add 3.',
+     hint:'75 + 10 = 85, then 85 + 3 = 88.',
+     praise:'Yes — and 13 + 75 gives 88 too.'}
+  ].forEach(function(q,i){
+    q.task='L1 Licence Q'+(i+1);
+    Souq.ask(licHost,q);
+  });
+
+})();
+</script>
+</body>
+</html>

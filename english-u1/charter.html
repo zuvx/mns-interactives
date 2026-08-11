@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rescue Station · Crew Charter</title>
+<link rel="stylesheet" href="station.css">
+<style>
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1rem 0}
+  .tier{background:var(--paper);border:4px solid var(--sky-2);border-radius:18px;padding:1.125rem;
+    text-align:center;transition:border-color .25s ease,background .25s ease}
+  .tier h3{margin:.25rem 0;color:var(--navy);font-size:1.1875rem}
+  .tier .obj{font-size:.8125rem;font-weight:700;color:var(--slate);margin-bottom:.5rem}
+  .tier .can{font-size:.9375rem;min-height:3.5rem}
+  .tier .mark{width:4rem;height:4rem;margin:0 auto .5rem;border-radius:50%;
+    background:var(--sky-2);color:var(--navy);display:flex;align-items:center;justify-content:center}
+  .tier .mark .icon{width:2.25rem;height:2.25rem}
+  .tier button{margin-top:.75rem;border:3px solid var(--navy);background:var(--paper);color:var(--navy);
+    font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;
+    min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;width:100%}
+  .tier[data-earned="true"]{border-color:var(--ok);background:#F1FAF4}
+  .tier[data-earned="true"] .mark{background:var(--ok);color:#fff}
+  .tier[data-earned="true"] button{background:var(--ok);border-color:var(--ok-deep);color:#fff}
+
+  .full{margin-top:1.25rem;background:var(--navy);color:var(--paper);border-radius:18px;
+    padding:1.5rem;text-align:center;opacity:.45;transition:opacity .4s ease}
+  .full.on{opacity:1}
+  .full h2{margin:0 0 .5rem;color:var(--paper);font-size:1.625rem}
+  .full .stamp{opacity:0}
+  .full.on .stamp{opacity:1;animation:thud .4s ease}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
+      <div><h1>Rescue Station Crew Charter</h1><p class="sub">Unit 1 · Danger! — all four badges</p></div>
+      <div class="pill">Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <div class="card">
+    <h2>Your crew's journey through the unit</h2>
+    <p class="lead">One badge per part of the unit. A badge is awarded when the crew can <b>explain</b>
+      the idea, never for finishing first. Tap a badge when your crew has earned it.</p>
+
+    <div class="tiers" id="tiers"></div>
+
+    <div class="full" id="full">
+      <h2>Full Rescue Station Charter</h2>
+      <div style="font-weight:700">Awarded when all four badges are earned.</div>
+      <div><span class="stamp">CHARTER GRANTED</span></div>
+    </div>
+
+    <p class="note">Teacher: project this at the start of each week so the class sees the arc of the unit.
+      Badges are tapped in class and are <b>not saved</b> — reopening the page clears them, by design.
+      Record the real award on the printed Crew Card.</p>
+  </div>
+
+  <p class="note">The Rescue Station · Collins International Primary English Stage 3 · Unit 1. Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="station.js"></script>
+<script>
+(function(){
+  'use strict';
+  Station.init([{icon:'medal', label:'Charter'}]);
+
+  var TIERS=[
+    {n:1, name:'Trainee', obj:'Week 1 · 3Rg.08 · 3Rg.07', mark:'helmet',
+     can:'Can find nouns and adjectives in a sentence, and describe a character with words that fit.',
+     file:'L1-nouns-adjectives-the-kit-room.html'},
+    {n:2, name:'Crew', obj:'Week 2 · 3Rg.10 · 3Ww.02 · 3Wg.07', mark:'run',
+     can:'Can spot action AND being verbs, add -ing by the right rule, and use tricky past verbs.',
+     file:'L2-verbs-the-action-deck.html'},
+    {n:3, name:'Radio Operator', obj:'Week 3 · 3Wg.03 · 3Ws.01', mark:'radio',
+     can:'Can punctuate what somebody said, and tell what happened in the order it happened.',
+     file:'L3-speech-and-recount-the-radio-room.html'},
+    {n:4, name:'Reporter', obj:'Week 3 · 3Ri.14 · 3Wc.05', mark:'news',
+     can:'Can scan a report for one piece of information, and write for a real purpose.',
+     file:'L4-non-fiction-the-report-desk.html'}
+  ];
+
+  var host=document.getElementById('tiers');
+  var earned=[false,false,false,false];
+
+  TIERS.forEach(function(t,i){
+    var d=document.createElement('div');
+    d.className='tier';
+    d.setAttribute('data-earned','false');
+    d.innerHTML=
+      '<div class="mark">'+Station.icon(t.mark)+'</div>'+
+      '<div class="obj">Badge '+t.n+' · '+t.obj+'</div>'+
+      '<h3>'+t.name+'</h3>'+
+      '<p class="can">'+t.can+'</p>'+
+      '<button type="button" aria-pressed="false">Not yet earned</button>'+
+      '<p style="margin:.5rem 0 0"><a href="'+t.file+'" style="color:var(--navy);font-weight:700">Open part '+t.n+'</a></p>';
+    var btn=d.querySelector('button');
+    btn.setAttribute('aria-label','Mark badge '+t.n+', '+t.name+', as earned');
+    btn.addEventListener('click',function(){
+      earned[i]=!earned[i];
+      d.setAttribute('data-earned', String(earned[i]));
+      btn.setAttribute('aria-pressed', String(earned[i]));
+      btn.textContent = earned[i] ? 'Earned' : 'Not yet earned';
+      var all=earned.every(Boolean);
+      document.getElementById('full').classList.toggle('on', all);
+      var live=document.getElementById('live');
+      if(live) live.textContent = all
+        ? 'All four badges earned. Full Crew Charter granted.'
+        : 'Badge '+t.n+' '+(earned[i]?'earned':'cleared')+'.';
+    });
+    host.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

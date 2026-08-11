@@ -1,0 +1,283 @@
+/* ============================================================
+   The Number Post Office — shared stylesheet
+   Cambridge Primary Maths Stage 3 · Unit 3 · Reading and writing numbers to 1000
+
+   Rules: design-system/mns-classroom/pages/number-post-office.md
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+
+/* ---- Typeface: Century Gothic, the school font ----
+   Monotype face that ships with Microsoft Office. NOT redistributable, so it
+   is never bundled, and iPads do not carry it. This stack resolves to the real
+   thing on any machine with Office and falls back to the geometric sans faces
+   iOS ships with: single-storey 'a', circular bowls, same genre. */
+
+:root{
+  --cream:#FBF6EC; --cream-2:#F0E6D2; --paper:#FFFDF7;
+  --post:#C8102E; --post-deep:#96001F;      /* pillar-box red */
+  --navy:#1B3A6B; --navy-2:#2E5A9C;
+  --brass:#D9A441; --brass-deep:#B07F1E;    /* fills only, never text */
+  --kraft:#8A6240; --ink:#22201C;
+  --ok:#2F8F5B; --ok-deep:#1C5C39;
+  /* place-value colours, kept identical everywhere in the unit */
+  --hund:#1B3A6B; --hund-deep:#0E2247;
+  --tens:#D9A441; --tens-deep:#B07F1E;
+  --ones:#B5477E; --ones-deep:#8A2F5E;
+  --shadow:0 8px 0 rgba(138,98,64,.20);
+  --tap:56px;          /* primary manipulative */
+  --tap-min:48px;      /* everything else clickable */
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --display:var(--school);
+  --body:var(--school);
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{
+  margin:0;font-family:var(--body);font-size:1rem;line-height:1.5;
+  color:var(--ink);background:var(--cream);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(200,16,46,.08), transparent 30%),
+    radial-gradient(circle at 88% 12%, rgba(27,58,107,.09), transparent 28%);
+  min-height:100vh;
+}
+h1,h2,h3,.display{font-family:var(--display);font-weight:700}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 3.75rem}
+
+:focus-visible{outline:4px solid var(--post);outline-offset:3px;border-radius:6px}
+:root[data-board] :focus-visible{outline-width:5px}
+
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-lg{width:1.6em;height:1.6em}
+
+/* ---- Header: a franking stripe instead of the souq awning ---- */
+header{position:relative;margin-top:.5rem;border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.franking{height:1.625rem;background:repeating-linear-gradient(115deg,
+  var(--post) 0 18px, var(--paper) 18px 26px, var(--navy) 26px 44px, var(--paper) 44px 52px)}
+.head-body{background:var(--navy);color:var(--paper);padding:1rem 1.375rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-mark{font-size:2.125rem;line-height:1;color:var(--brass);flex:0 0 auto}
+.head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.375rem);letter-spacing:.3px}
+.head-body .sub{margin:.125rem 0 0;font-weight:700;opacity:.94;font-size:.9375rem}
+.pill{margin-left:auto;background:var(--brass);color:var(--ink);font-family:var(--display);
+  font-weight:600;padding:.5rem .875rem;border-radius:999px;font-size:.875rem;
+  box-shadow:0 3px 0 var(--brass-deep)}
+
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0 0;justify-content:flex-end;align-items:center}
+.tool{border:3px solid var(--navy);background:var(--paper);color:var(--navy);
+  font-family:var(--display);font-weight:600;font-size:.9375rem;cursor:pointer;
+  min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;
+  display:inline-flex;align-items:center;gap:.5rem;transition:background .2s ease,color .2s ease}
+.tool[aria-pressed="true"]{background:var(--navy);color:var(--paper)}
+
+/* ---- Key words (EAL) ---- */
+.keys{margin:.875rem 0;background:var(--paper);border:3px dashed var(--brass);
+  border-radius:16px;padding:.625rem .875rem}
+.keys summary{cursor:pointer;font-family:var(--display);font-weight:600;color:var(--navy);
+  font-size:1.0625rem;list-style:none;min-height:var(--tap-min);display:flex;align-items:center;gap:.5rem}
+.keys summary::-webkit-details-marker{display:none}
+.krow{display:flex;flex-wrap:wrap;gap:.625rem;margin-top:.75rem}
+.kcard{flex:1 1 200px;background:var(--cream);border-radius:12px;padding:.625rem .75rem;
+  border-left:6px solid var(--navy-2);display:flex;align-items:flex-start;gap:.5rem}
+.kcard .ktext{flex:1}
+.kcard b{font-family:var(--display);color:var(--post-deep);display:block;font-size:1rem}
+.kcard span{font-size:.875rem;font-weight:400}
+.say{flex:0 0 auto;border:none;background:var(--navy-2);color:var(--paper);cursor:pointer;
+  width:var(--tap-min);height:var(--tap-min);border-radius:10px;box-shadow:0 3px 0 var(--navy);
+  display:inline-flex;align-items:center;justify-content:center;font-size:1.125rem}
+.say:active{transform:translateY(2px)}
+
+.rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
+.rail button{flex:1 1 0;min-width:130px;min-height:var(--tap-min);border:none;cursor:pointer;
+  font-family:var(--display);font-weight:600;font-size:.875rem;padding:.625rem .5rem;
+  border-radius:12px;background:var(--cream-2);color:var(--kraft);
+  box-shadow:0 3px 0 rgba(138,98,64,.18);transition:transform .08s,background .2s ease;
+  display:inline-flex;align-items:center;justify-content:center;gap:.375rem}
+.rail button[aria-current="step"]{background:var(--post);color:var(--paper);box-shadow:0 3px 0 var(--post-deep)}
+.rail button:active{transform:translateY(2px)}
+
+.screen{display:none;animation:pop .25s ease}
+.screen.on{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:20px;padding:1.375rem;box-shadow:var(--shadow);margin-top:.75rem}
+.card h2{margin:0 0 .25rem;font-size:clamp(1.3125rem,3.4vw,1.75rem);color:var(--navy)}
+.card h2:focus{outline:none}
+.lead{font-size:1.0625rem;font-weight:400;margin:.2em 0 1em}
+.tag{display:inline-flex;align-items:center;gap:.375rem;background:var(--brass);color:var(--ink);
+  font-family:var(--display);font-weight:600;font-size:.8125rem;padding:.25rem .75rem;
+  border-radius:999px;margin-bottom:.5rem}
+
+.think{background:var(--cream);border-radius:14px;padding:.75rem 1rem;font-weight:400;
+  border-left:6px solid var(--navy-2);margin:.75rem 0;display:flex;gap:.625rem;align-items:flex-start}
+.think b{color:var(--post-deep)}
+.think .icon{flex:0 0 auto;margin-top:.15em;color:var(--navy)}
+
+.btn{border:none;cursor:pointer;font-family:var(--display);font-weight:600;font-size:1.125rem;
+  color:var(--paper);background:var(--post);padding:.8125rem 1.625rem;border-radius:14px;
+  min-height:var(--tap-min);box-shadow:0 4px 0 var(--post-deep);transition:transform .08s;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn:active{transform:translateY(3px)}
+.btn.navy{background:var(--navy);box-shadow:0 4px 0 #0E2247}
+.btn.brass{background:var(--brass);color:var(--ink);box-shadow:0 4px 0 var(--brass-deep)}
+.btn.ghost{background:transparent;color:var(--navy);box-shadow:none;border:3px solid var(--navy)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
+
+.pickrow{display:flex;gap:.75rem;flex-wrap:wrap;margin:.375rem 0 .875rem}
+.pickrow button{border:none;cursor:pointer;font-family:var(--display);font-weight:600;
+  font-size:1.0625rem;background:var(--cream-2);color:var(--kraft);min-height:var(--tap-min);
+  padding:.625rem 1.125rem;border-radius:12px;box-shadow:0 3px 0 rgba(138,98,64,.18);
+  transition:background .2s ease,color .2s ease}
+.pickrow button[aria-pressed="true"]{background:var(--navy);color:var(--paper);box-shadow:0 3px 0 #0E2247}
+.pickrow button:active{transform:translateY(2px)}
+
+/* ---- Ask box: where the child does the work ---- */
+.ask{background:var(--paper);border:3px solid var(--brass);border-radius:16px;
+  padding:.875rem 1rem;margin:.75rem 0}
+.ask.solved{border-color:var(--ok);background:#F1FAF4}
+.ask-q{display:block;font-family:var(--display);font-weight:700;font-size:1.0625rem;
+  color:var(--post-deep);margin-bottom:.5rem}
+.ask.solved .ask-q{color:var(--ok-deep)}
+.ask-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.ask-row input{min-height:var(--tap);font-family:var(--display);font-size:1.5rem;
+  text-align:center;padding:.5rem;border-radius:12px;border:3px solid var(--brass);
+  background:var(--paper);color:var(--ink);width:7rem}
+.ask-row input.words{width:min(22rem,100%);text-align:left;font-size:1.25rem}
+.ask-row input:disabled{background:var(--cream-2);opacity:1;border-color:var(--ok)}
+.ask-fb{margin:.5rem 0 0;font-weight:700;min-height:1.4rem;font-size:.9375rem}
+.ask-fb.good{color:var(--ok-deep)}
+.ask-fb.bad{color:var(--post-deep)}
+
+/* ---- H / T / O keypad: the zero place holder made visible ---- */
+.hto{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin:.75rem 0}
+.hto-col{display:flex;flex-direction:column;align-items:center;gap:.375rem}
+.hto-lbl{font-family:var(--display);font-weight:700;font-size:.8125rem;color:var(--kraft)}
+.hto input{width:4.25rem;min-height:var(--tap);font-family:var(--display);font-size:2rem;
+  text-align:center;border-radius:12px;border:3px solid var(--cream-2);background:var(--paper);color:var(--ink)}
+.hto-col.h input{border-color:var(--hund)}
+.hto-col.t input{border-color:var(--tens-deep)}
+.hto-col.o input{border-color:var(--ones)}
+
+/* ---- Place-value counters ---- */
+.counters{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin:.75rem 0;min-height:3.5rem}
+.counter{width:3rem;height:3rem;border-radius:50%;display:inline-flex;align-items:center;
+  justify-content:center;font-family:var(--display);font-weight:700;font-size:.9375rem;
+  color:#fff;animation:drop .25s ease}
+.counter.h{background:var(--hund);border:3px solid var(--hund-deep)}
+.counter.t{background:var(--tens);border:3px solid var(--tens-deep);color:var(--ink)}
+.counter.o{background:var(--ones);border:3px solid var(--ones-deep)}
+@keyframes drop{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+
+/* ---- Word cards (Collins Resource sheet 2) ---- */
+.wordbank{display:flex;flex-wrap:wrap;gap:.625rem;justify-content:center;margin:.75rem 0}
+.wordcard{border:3px solid var(--navy);background:var(--paper);color:var(--ink);cursor:pointer;
+  font-family:var(--display);font-weight:700;font-size:1.0625rem;min-height:var(--tap-min);
+  padding:.5rem 1rem;border-radius:12px}
+.wordcard:disabled{opacity:.3;cursor:not-allowed}
+.wordcard:active:not(:disabled){transform:translateY(2px)}
+.label-slot{background:var(--cream);border:3px dashed var(--kraft);border-radius:14px;
+  min-height:4.5rem;padding:.75rem;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;
+  justify-content:center;margin:.75rem 0}
+.label-slot .placed{background:var(--navy);color:var(--paper);border-radius:10px;
+  padding:.375rem .75rem;font-family:var(--display);font-weight:700;font-size:1.0625rem;
+  border:none;cursor:pointer;min-height:var(--tap-min)}
+.label-slot .hintline{color:var(--kraft);font-weight:700;font-size:.9375rem}
+
+/* ---- Streets of houses (L3 / L4) ---- */
+.street{background:var(--cream);border-radius:16px;padding:.875rem;margin:.75rem 0;
+  border:3px solid var(--cream-2)}
+.street h3{margin:0 0 .5rem;text-align:center;font-size:1.0625rem;color:var(--navy)}
+.houses{display:flex;flex-wrap:wrap;gap:.625rem;justify-content:center}
+.house{border:3px solid var(--kraft);background:var(--paper);color:var(--ink);cursor:pointer;
+  min-width:5rem;min-height:var(--tap);border-radius:10px 10px 4px 4px;
+  font-family:var(--display);font-weight:700;font-size:1.125rem;padding:.5rem .625rem;
+  position:relative}
+.house::before{content:"";position:absolute;left:-3px;right:-3px;top:-14px;height:14px;
+  background:var(--post);clip-path:polygon(0 100%,50% 0,100% 100%);border-radius:2px}
+.house[data-state="right"]{background:#E7F5EC;border-color:var(--ok);color:var(--ok-deep)}
+.house[data-state="wrong"]{background:#FBE9EC;border-color:var(--post);color:var(--post-deep)}
+.house:disabled{cursor:default}
+
+/* ---- Sequence strip ---- */
+.seq{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;align-items:center;margin:.75rem 0}
+/* Each step is one unit so a wrap can never leave a "+2" at the end of a line
+   pointing at nothing, with its box orphaned on the line below. */
+.seqstep{display:inline-flex;align-items:center;gap:.5rem}
+.seqbox{min-width:5.5rem;min-height:var(--tap);border-radius:12px;border:3px solid var(--navy);
+  background:var(--paper);display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:1.375rem;color:var(--navy)}
+.seqbox.blank{border-style:dashed;border-color:var(--kraft);color:var(--kraft)}
+.seq .arrow{font-family:var(--display);font-weight:700;color:var(--kraft);font-size:1.125rem}
+
+/* ---- Feedback ---- */
+.verdict{font-family:var(--display);font-size:1.25rem;text-align:center;min-height:1.75rem;margin-top:.625rem}
+.verdict.good{color:var(--ok-deep)}
+.verdict.bad{color:var(--post-deep)}
+.resultbox{margin-top:.625rem;border-radius:14px;padding:.875rem 1rem;font-weight:700;
+  font-size:1.0625rem;display:none}
+.resultbox.show{display:block;animation:pop .25s ease}
+.resultbox.works{background:#E7F5EC;border:3px solid var(--ok);color:var(--ok-deep)}
+.resultbox.fails{background:#FBE9EC;border:3px solid var(--post);color:var(--post-deep)}
+
+/* ---- Postbag: points ---- */
+.postbag{display:inline-flex;align-items:center;gap:.5rem;margin-right:auto;
+  background:var(--brass);color:var(--ink);border:3px solid var(--brass-deep);
+  border-radius:999px;padding:.375rem 1rem;min-height:var(--tap-min);
+  font-family:var(--display);font-weight:700}
+.postbag .icon-lg{color:var(--post-deep)}
+.postbag-n{font-size:1.5rem;line-height:1}
+.postbag-l{font-size:.8125rem;opacity:.85}
+.postbag.pop{animation:stamppop .45s ease}
+@keyframes stamppop{
+  0%{transform:scale(1)} 35%{transform:scale(1.18);box-shadow:0 0 0 8px rgba(217,164,65,.35)}
+  100%{transform:scale(1);box-shadow:none}
+}
+
+/* ---- Badge / licence ---- */
+.quest{background:var(--cream);border-radius:14px;padding:.875rem 1rem;margin:.625rem 0;
+  border-left:6px solid var(--navy-2);font-weight:400}
+.quest .q{font-family:var(--display);font-weight:700;color:var(--post-deep);font-size:1rem;margin-bottom:.25rem}
+.badge{margin-top:1rem;background:var(--navy);color:var(--paper);border-radius:18px;
+  padding:1.25rem;text-align:center}
+.badge h3{margin:0 0 .375rem;font-size:1.5rem}
+.stamp{display:inline-block;margin-top:.625rem;border:5px double var(--paper);border-radius:50%;
+  padding:.75rem 1.25rem;font-family:var(--display);font-size:1.125rem;transform:rotate(-8deg);
+  opacity:0;transition:opacity .3s}
+.stamp.on{opacity:1;animation:thud .4s ease}
+@keyframes thud{0%{transform:rotate(-8deg) scale(1.6);opacity:0}60%{opacity:1}100%{transform:rotate(-8deg) scale(1)}}
+
+/* ---- End-of-lesson panel the child shows the teacher ---- */
+.mywork{background:var(--navy);color:var(--paper);border-radius:18px;padding:1.125rem;
+  text-align:center;margin-top:1rem}
+.mywork h3{margin:0 0 .375rem;color:var(--paper);font-size:1.25rem}
+.mywork .big{font-family:var(--display);font-size:3rem;line-height:1.1;color:var(--brass)}
+.mywork .code{margin-top:.625rem;font-family:var(--display);font-size:1rem;
+  background:rgba(255,255,255,.15);border-radius:10px;padding:.375rem .75rem;display:inline-block}
+.mywork .breakdown{margin-top:.75rem;text-align:left;background:rgba(255,255,255,.1);
+  border-radius:12px;padding:.625rem .875rem}
+.mywork .breakdown summary{cursor:pointer;font-family:var(--display);font-weight:700;
+  min-height:var(--tap-min);display:flex;align-items:center}
+.mywork .breakdown ul{margin:.5rem 0 0;padding-left:1.25rem}
+.mywork .breakdown li{font-size:.875rem;margin-bottom:.25rem}
+.mywork .purse-note{margin:.75rem 0 0;font-weight:700;font-size:.9375rem}
+
+/* ---- Teacher session summary ---- */
+.summary{margin-top:1rem;background:var(--paper);border:3px solid var(--navy-2);
+  border-radius:16px;padding:1rem 1.125rem;display:none}
+.summary.show{display:block}
+.summary h3{margin:0 0 .5rem;color:var(--navy);font-size:1.1875rem}
+.summary ul{margin:.5rem 0 0;padding-left:1.25rem}
+.summary li{font-size:.9375rem;margin-bottom:.25rem}
+.summary .none{font-weight:400;opacity:.8}
+.summary .privacy{font-size:.8125rem;color:var(--kraft);margin-top:.75rem;font-weight:700}
+
+.note{font-size:.8125rem;font-weight:700;color:var(--kraft);margin-top:1.125rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}}

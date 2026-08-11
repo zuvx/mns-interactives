@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rescue Station · Week 1: The Kit Room</title>
+<link rel="stylesheet" href="station.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .score{font-family:var(--display);font-weight:700;color:var(--slate);margin-top:.5rem}
+  .picture{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0}
+  .picture div{flex:1 1 12rem;background:var(--paper);border:3px solid var(--hi);border-radius:14px;
+    padding:.75rem 1rem;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body data-lesson="w1">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-helmet"></use></svg>
+      <div><h1>The Kit Room</h1><p class="sub">Week 1 · Nouns, adjectives and describing a character</p></div>
+      <div class="pill">Unit 1 · Stage 3 · 3Rg.08 · 3Rg.07</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="noun"><div class="ktext"><b>noun</b><span>A word that names a person, a place or a thing: <i>helmet, cliff, Tom</i>.</span></div></div>
+      <div class="kcard" data-word="adjective"><div class="ktext"><b>adjective</b><span>A word that tells us more about a noun: <i>a <b>steep</b> cliff</i>.</span></div></div>
+      <div class="kcard" data-word="danger"><div class="ktext"><b>danger</b><span>When something could hurt you. The <b>g</b> here is soft, like in <i>giant</i>.</span></div></div>
+      <div class="kcard" data-word="terrified"><div class="ktext"><b>terrified</b><span>Very, very frightened. Say it in parts: terr / i / fied.</span></div></div>
+      <div class="kcard" data-word="rescue"><div class="ktext"><b>rescue</b><span>To save someone who is in danger. Say it in parts: res / cue.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-helmet"></use></svg> Trainee training</span>
+    <h2>Welcome to the Kit Room</h2>
+    <p class="lead" data-read="Every piece of kit in this room has a name. A naming word is a noun. A word that tells us more about it is an adjective. Sort the kit, then describe it.">
+      Every piece of kit in this room has a name. A naming word is a <b>noun</b>. A word that tells
+      us more about it is an <b>adjective</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>How this works.</b> You do the thinking, the screen only checks. If you get something
+      wrong you get a clue, and after two tries you get the answer explained. Nothing is ever taken
+      off your points.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the kit room</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-basket"></use></svg> Sort the kit</span>
+    <h2>Noun or adjective?</h2>
+    <p class="lead" data-read="Tap a word. Then tap noun if it names something, or adjective if it tells us more about it.">
+      Tap a word, then tap <b>Noun</b> or <b>Adjective</b>.</p>
+    <p class="key-legend"><span class="wc-noun">Noun = names it</span><span class="wc-adj">Adjective = describes it</span></p>
+    <div class="bay">
+      <h3 id="sortWord">—</h3>
+      <div class="choices" role="group" aria-label="Choose noun or adjective">
+        <button type="button" onclick="sortPick('noun')">Noun — it names something</button>
+        <button type="button" onclick="sortPick('adj')">Adjective — it describes something</button>
+      </div>
+      <p class="verdict" id="sortV"></p>
+      <p class="score" id="sortScore"></p>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: find them in sentences</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Danger patrol</span>
+    <h2>Find the word in the sentence</h2>
+    <p class="lead" data-read="Read the sentence. Tap the word the question asks for.">
+      Read the sentence, then tap the word the question asks for.</p>
+    <div class="bay">
+      <p class="sentence" id="patSent"></p>
+      <p style="font-weight:700" id="patQ"></p>
+      <div class="chips" id="patChips" role="group" aria-label="Tap the answer"></div>
+      <p class="verdict" id="patV"></p>
+    </div>
+    <div class="btnrow">
+      <button class="btn navy" type="button" onclick="nextPatrol()">Next sentence</button>
+      <button class="btn ghost" type="button" onclick="go(3)">Next: describe a character</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> Describe the scene</span>
+    <h2>Choose a better word</h2>
+    <p class="lead" data-read="Each sentence is missing its adjective. Write one word that fits. There is more than one right answer.">
+      Each sentence is missing its adjective. Write <b>one word</b> that fits. More than one word can
+      be right — the screen accepts any adjective from the word bank, and any other sensible one is
+      worth showing your teacher.</p>
+    <div class="picture">
+      <div>Word bank: steep · rocky · terrified · brave · icy · huge · blazing · narrow · strong</div>
+    </div>
+    <div id="gapAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Choose two pictures from Student Book page 1. Write a sentence about each one. Every sentence
+      needs a capital letter, a full stop, and at least one adjective.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: crew card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Crew office</span>
+    <h2>Earn your Trainee badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last two go in your English book.">
+      Answer these on screen. The last two go in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      1. Write one sentence about Tom on the cliff. Underline the noun, circle the adjective.<br>
+      2. Describe Tom in three words. Then say <b>why</b> you chose each word.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Rescue Station · Badge 1: Trainee</h3>
+      <div style="font-weight:700">Stamp this when you can explain what a noun does and what an adjective does.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my crew card</button></div>
+    </div>
+    <p class="note">All four badges done? Open <b>charter.html</b>. Teacher: check the book work and the
+      Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Rescue Station · Stage 3 · Unit 1 Week 1 (3Rg.08, 3Rg.07, 3Ri.08, 3Wv.05). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="station.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'helmet', label:'Welcome'},
+    {icon:'basket', label:'Sort'},
+    {icon:'search', label:'Patrol'},
+    {icon:'pen',    label:'Describe'},
+    {icon:'medal',  label:'Crew card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Sort: noun or adjective? (SB p1 word work) ============ */
+  var WORDS=[
+    {w:'helmet',    t:'noun', why:'A helmet is a thing you can hold. Naming word, so it is a noun.'},
+    {w:'steep',     t:'adj',  why:'Steep tells us what the cliff is like, so it is an adjective.'},
+    {w:'cliff',     t:'noun', why:'A cliff is a place. Naming word, so it is a noun.'},
+    {w:'terrified', t:'adj',  why:'Terrified tells us how the boy feels, so it is an adjective.'},
+    {w:'rope',      t:'noun', why:'A rope is a thing. Naming word, so it is a noun.'},
+    {w:'icy',       t:'adj',  why:'Icy tells us what the path is like, so it is an adjective.'},
+    {w:'helicopter',t:'noun', why:'A helicopter is a thing. Naming word, so it is a noun.'},
+    {w:'brave',     t:'adj',  why:'Brave tells us what the pilot is like, so it is an adjective.'},
+    {w:'harness',   t:'noun', why:'A harness is a thing you wear. Naming word, so it is a noun.'},
+    {w:'blazing',   t:'adj',  why:'Blazing tells us what the fire is like, so it is an adjective.'}
+  ];
+  var sortI=-1, sortTries=0, sortDone=0;
+
+  function nextSort(){
+    sortI++;
+    if(sortI>=WORDS.length){
+      document.getElementById('sortWord').textContent='All sorted. Well done.';
+      document.getElementById('sortV').className='verdict';
+      document.getElementById('sortV').textContent='';
+      return;
+    }
+    sortTries=0;
+    document.getElementById('sortWord').textContent=WORDS[sortI].w;
+    var v=document.getElementById('sortV'); v.className='verdict'; v.textContent='';
+    Station.speak(WORDS[sortI].w);
+  }
+
+  window.sortPick=function(kind){
+    if(sortI>=WORDS.length) return;
+    var item=WORDS[sortI], v=document.getElementById('sortV');
+    sortTries++;
+    if(kind===item.t){
+      v.className='verdict good';
+      v.textContent=item.why;
+      sortDone++;
+      document.getElementById('sortScore').textContent='Sorted: '+sortDone+' of '+WORDS.length;
+      Station.record({task:'W1 Sort "'+item.w+'"', result:'correct in '+sortTries});
+      window.setTimeout(nextSort, 1400);
+    } else {
+      v.className='verdict bad';
+      v.textContent = sortTries>=2 ? item.why
+        : (item.t==='noun' ? 'Have another look. Can you touch one, or point at it? Then it names something.'
+                           : 'Have another look. Does this word tell you what something is LIKE?');
+      Station.record({task:'W1 Sort "'+item.w+'"', result:'tried '+kind});
+    }
+  };
+  nextSort();
+
+  /* ============ Patrol: find the word in a sentence (SB p1 q1) ============ */
+  var PAT=[
+    {s:'The terrified boy held on to the rocky ledge.', q:'Tap the NOUN that names the person.',
+     ans:'boy', why:'Boy names the person, so it is the noun. Terrified and rocky are adjectives.'},
+    {s:'A huge helicopter flew over the icy mountain.', q:'Tap an ADJECTIVE.',
+     ans:['huge','icy'], why:'Huge tells us about the helicopter and icy tells us about the mountain. Both are adjectives.'},
+    {s:'Alex ran along the narrow path.', q:'Tap the ADJECTIVE.',
+     ans:'narrow', why:'Narrow tells us what the path is like, so it is the adjective.'},
+    {s:'The brave crew carried a long rope.', q:'Tap a NOUN.',
+     ans:['crew','rope'], why:'Crew and rope both name something, so both are nouns. Brave and long are adjectives.'},
+    {s:'Thick smoke filled the busy street.', q:'Tap the NOUN that names a place.',
+     ans:'street', why:'Street names a place, so it is the noun you needed. Smoke is a noun too, but it is not a place.'}
+  ];
+  var patI=-1;
+
+  window.nextPatrol=function(){
+    patI=(patI+1)%PAT.length;
+    var p=PAT[patI];
+    document.getElementById('patSent').textContent=p.s;
+    document.getElementById('patSent').setAttribute('data-read', p.s);
+    document.getElementById('patQ').textContent=p.q;
+    var v=document.getElementById('patV'); v.className='verdict'; v.textContent='';
+
+    var host=document.getElementById('patChips');
+    host.innerHTML='';
+    var answers=[].concat(p.ans);
+    var tries=0, done=false;
+    p.s.replace(/\./g,'').split(' ').forEach(function(word){
+      var b=document.createElement('button');
+      b.type='button'; b.className='chip'; b.textContent=word;
+      b.addEventListener('click',function(){
+        if(done||b.dataset.state) return;
+        tries++;
+        var hit=answers.some(function(a){ return Station.norm(a)===Station.norm(word); });
+        b.dataset.state=hit?'right':'wrong';
+        if(hit){
+          done=true;
+          v.className='verdict good'; v.textContent=p.why;
+          Station.record({task:'W1 Patrol '+(patI+1), result:'correct in '+tries});
+        } else {
+          v.className='verdict bad';
+          v.textContent = tries>=2 ? p.why : 'Not that one. Read the sentence again and ask: does this word NAME something, or DESCRIBE something?';
+          Station.record({task:'W1 Patrol '+(patI+1), result:'tried '+word});
+        }
+      });
+      host.appendChild(b);
+    });
+  };
+  nextPatrol();
+
+  /* ============ Describe: fill the adjective gap (SB p4-5) ============
+     Any adjective from the word bank is accepted, because the objective is
+     choosing a word that fits, not guessing the one the book used. */
+  var gapHost=document.getElementById('gapAsk');
+  [
+    {prompt:'Tom looked down the ______ cliff. Write one adjective.',
+     answers:['steep','rocky','high','huge','icy','narrow','dangerous'],
+     nudge:'What is the cliff LIKE? Look at the word bank.',
+     hint:'Steep, rocky or high all fit: "Tom looked down the steep cliff."',
+     task:'W1 Adjective gap 1'},
+    {prompt:'The ______ boy held on with both hands. Write one adjective.',
+     answers:['terrified','frightened','scared','brave','strong'],
+     nudge:'How does the boy FEEL? Look at the word bank.',
+     hint:'Terrified fits: "The terrified boy held on with both hands."',
+     task:'W1 Adjective gap 2'},
+    {prompt:'A ______ fire burned in the old building. Write one adjective.',
+     answers:['blazing','huge','hot','fierce','big'],
+     nudge:'What is the fire LIKE? Look at the word bank.',
+     hint:'Blazing fits: "A blazing fire burned in the old building."',
+     task:'W1 Adjective gap 3'}
+  ].forEach(function(q){
+    q.type='text';
+    q.praise='Yes, that word describes the noun.';
+    Station.ask(gapHost,q);
+  });
+
+  /* ============ Crew card questions ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'In "the strong wind", which word is the noun?',
+    options:[
+      {text:'strong', why:'Strong tells us what the wind is like, so it is the adjective.'},
+      {text:'wind',   why:'Yes. Wind names the thing, so it is the noun.'},
+      {text:'the',    why:'"The" is not a naming word. Look for the word that names something.'}
+    ],
+    answer:1, task:'W1 Badge Q1'
+  });
+  Station.choose(badgeHost,{
+    prompt:'Which sentence uses an adjective?',
+    options:[
+      {text:'The dog ran.',            why:'Nothing here tells us what the dog is like. No adjective yet.'},
+      {text:'The frightened dog ran.', why:'Yes. Frightened tells us more about the dog.'},
+      {text:'The dog ran away.',       why:'Away tells us where, not what the dog is like. Still no adjective.'}
+    ],
+    answer:1, task:'W1 Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Write one adjective to describe a helmet.',
+    answers:['hard','strong','yellow','red','shiny','heavy','tough','bright','white','black','blue','safe','round','plastic','new','old','big','small'],
+    nudge:'What is a helmet LIKE? Think about how it looks or how it feels.',
+    hint:'Hard, strong, yellow and shiny all work: "a hard helmet".',
+    praise:'Yes, that describes the helmet.',
+    task:'W1 Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

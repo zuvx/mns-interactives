@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rescue Station · Week 3a: The Radio Room</title>
+<link rel="stylesheet" href="station.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .bubble{background:var(--paper);border:3px solid var(--navy-2);border-radius:18px;
+    padding:.875rem 1.125rem;margin:.5rem 0;font-size:1.125rem;position:relative}
+  .bubble::after{content:'';position:absolute;left:2rem;bottom:-14px;width:0;height:0;
+    border:7px solid transparent;border-top-color:var(--navy-2)}
+  .marks{font-family:var(--display);font-size:1.75rem;color:var(--red);font-weight:700}
+  .steps{display:grid;gap:.5rem;margin:.75rem 0}
+  .steps div{background:var(--paper);border-left:6px solid var(--hi);border-radius:12px;padding:.625rem .875rem}
+</style>
+</head>
+<body data-lesson="w3a">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-radio"></use></svg>
+      <div><h1>The Radio Room</h1><p class="sub">Week 3 · Speech marks and telling what happened, in order</p></div>
+      <div class="pill">Unit 1 · Stage 3 · 3Wg.03 · 3Ws.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="speech marks"><div class="ktext"><b>speech marks</b><span>The marks that go around the words somebody says: <span class="marks">“ ”</span></span></div></div>
+      <div class="kcard" data-word="dialogue"><div class="ktext"><b>dialogue</b><span>People talking to each other in a story.</span></div></div>
+      <div class="kcard" data-word="recount"><div class="ktext"><b>recount</b><span>Writing that tells what happened, in the order it happened.</span></div></div>
+      <div class="kcard" data-word="sequence"><div class="ktext"><b>sequence</b><span>The order events go in: first, next, then, at last.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-radio"></use></svg> Radio training</span>
+    <h2>Welcome to the Radio Room</h2>
+    <p class="lead" data-read="Speech marks go around the exact words somebody says. Nothing else goes inside them.">
+      Speech marks go around the <b>exact words</b> somebody says. Nothing else goes inside them.</p>
+    <div class="bubble">Alex shouted, <span class="marks">“</span>Hold on, Tom!<span class="marks">”</span></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>The test.</b> Could you hear those words if you were standing there? Then they go inside
+      the marks. <i>Alex shouted</i> is not something you hear him say, so it stays outside.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Take the first call</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Listen in</span>
+    <h2>Tap only the words that were said out loud</h2>
+    <p class="lead" data-read="Tap every word that belongs inside the speech marks. Leave out who said it.">
+      Tap <b>every</b> word that belongs inside the speech marks. Leave out the part that says
+      <i>who</i> said it.</p>
+    <div class="bay">
+      <p class="sentence" id="listenSent"></p>
+      <div class="chips" id="listenChips" role="group" aria-label="Tap the spoken words"></div>
+      <p class="verdict" id="listenV"></p>
+    </div>
+    <div class="btnrow">
+      <button class="btn navy" type="button" onclick="nextListen()">Next call</button>
+      <button class="btn ghost" type="button" onclick="go(2)">Next: put the marks in</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> Punctuation check</span>
+    <h2>Which one is punctuated correctly?</h2>
+    <p class="lead" data-read="Read all three. Only one has the speech marks in the right place.">
+      Read all three carefully. Only one has the speech marks in the right place.</p>
+    <div id="punctAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: order the rescue</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clipboard"></use></svg> Incident report</span>
+    <h2>Put the rescue in order</h2>
+    <p class="lead" data-read="A recount tells what happened in the order it happened. Tap one card, then tap another card to swap them.">
+      A recount tells what happened <b>in the order it happened</b>. Tap one card, then tap another
+      card to swap them. When you think it is right, press Check the order.</p>
+    <div id="orderAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Now write the recount as if you were Alex. Start: <i>Yesterday afternoon Tom and I went for a
+      walk.</i> Include <b>one line of dialogue</b> with speech marks around it.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: crew card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Crew office</span>
+    <h2>Earn your Radio Operator badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last two go in your English book.">
+      Answer these on screen. The last two go in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      1. Write what the helicopter pilot said to Tom. Use speech marks and a "how" verb
+      (<i>shouted, called, whispered</i>).<br>
+      2. Write your recount's ending in two sentences. Say how Alex felt when the rescue was over.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Rescue Station · Badge 3: Radio Operator</h3>
+      <div style="font-weight:700">Stamp this when you can say where speech marks go and why order matters in a recount.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my crew card</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Rescue Station · Stage 3 · Unit 1 Week 3 (3Wg.03, 3Rg.04, 3Ws.01, 3Wc.02). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="station.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'radio',     label:'Welcome'},
+    {icon:'search',    label:'Listen in'},
+    {icon:'pen',       label:'Punctuation'},
+    {icon:'clipboard', label:'Order'},
+    {icon:'medal',     label:'Crew card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Listen in: which words were spoken? ============
+     The child must tap every spoken word and no others, so "Alex shouted"
+     stays outside. Tapping a reporting word is the misconception this
+     activity exists to catch. */
+  var CALLS=[
+    {s:'Alex shouted, Hold on, Tom!', said:['hold','on','tom'],
+     why:'Only "Hold on, Tom!" was said out loud. "Alex shouted" tells us who spoke.'},
+    {s:'Help is on the way! called Alex.', said:['help','is','on','the','way'],
+     why:'"Help is on the way!" is what Alex said. "called Alex" stays outside the marks.'},
+    {s:'The pilot said, Now, let go!', said:['now','let','go'],
+     why:'Only "Now, let go!" was spoken. "The pilot said" tells us who spoke.'},
+    {s:'I am scared, whispered Tom.', said:['i','am','scared'],
+     why:'"I am scared" is what Tom said. "whispered Tom" tells us who spoke and how.'}
+  ];
+  var callI=-1;
+
+  window.nextListen=function(){
+    callI=(callI+1)%CALLS.length;
+    var c=CALLS[callI];
+    document.getElementById('listenSent').textContent=c.s;
+    document.getElementById('listenSent').setAttribute('data-read', c.s);
+    var v=document.getElementById('listenV'); v.className='verdict'; v.textContent='';
+    var host=document.getElementById('listenChips');
+    host.innerHTML='';
+    var tries=0, found=0, done=false;
+
+    c.s.split(' ').forEach(function(word){
+      var clean=Station.norm(word);
+      var b=document.createElement('button');
+      b.type='button'; b.className='chip'; b.textContent=word;
+      b.addEventListener('click',function(){
+        if(done||b.dataset.state) return;
+        tries++;
+        var hit=c.said.indexOf(clean)!==-1;
+        b.dataset.state=hit?'right':'wrong';
+        if(hit){
+          found++;
+          if(found===c.said.length){
+            done=true;
+            v.className='verdict good'; v.textContent=c.why;
+            Station.record({task:'W3a Listen in '+(callI+1), result:'correct in '+tries});
+          } else {
+            v.className='verdict good';
+            v.textContent='Yes, that word was said out loud. Keep going.';
+          }
+        } else {
+          v.className='verdict bad';
+          v.textContent = tries>=c.said.length ? c.why
+            : 'Not that one. Could you HEAR that word if you were standing there?';
+          Station.record({task:'W3a Listen in '+(callI+1), result:'tried '+word});
+        }
+      });
+      host.appendChild(b);
+    });
+  };
+  nextListen();
+
+  /* ============ Punctuation check (PCM 2 / SB p8) ============ */
+  var punctHost=document.getElementById('punctAsk');
+  Station.choose(punctHost,{
+    prompt:'Which one is punctuated correctly?',
+    options:[
+      {text:'Alex shouted, “Hold on, Tom!”', why:'Yes. The marks go around the spoken words only, and the sentence mark stays inside.'},
+      {text:'“Alex shouted, Hold on, Tom!”', why:'This puts "Alex shouted" inside the marks, but he did not say those words out loud.'},
+      {text:'Alex shouted, Hold on, “Tom!”', why:'Only the name ended up inside. All the spoken words belong inside the marks.'}
+    ],
+    answer:0, task:'W3a Punctuation Q1'
+  });
+  Station.choose(punctHost,{
+    prompt:'Which one is punctuated correctly?',
+    options:[
+      {text:'“Where is the rope” asked Tom?', why:'The question mark belongs to Tom\'s question, so it goes inside the marks.'},
+      {text:'Where is the rope? “asked Tom.”', why:'The marks are around the wrong part. Tom said the question, not "asked Tom".'},
+      {text:'“Where is the rope?” asked Tom.', why:'Yes. The question mark is inside because Tom asked the question.'}
+    ],
+    answer:2, task:'W3a Punctuation Q2'
+  });
+  Station.choose(punctHost,{
+    prompt:'Which one is punctuated correctly?',
+    options:[
+      {text:'The pilot called “we are coming for you.”', why:'Nearly. Spoken words start with a capital letter: "We are coming for you."'},
+      {text:'The pilot called, “We are coming for you.”', why:'Yes. Comma before the speech, capital letter to start it, full stop inside the marks.'},
+      {text:'The pilot, called “We are coming for you”.', why:'The comma is in the wrong place and the full stop ended up outside the marks.'}
+    ],
+    answer:1, task:'W3a Punctuation Q3'
+  });
+
+  /* ============ Order the rescue (WB p3 sequencing) ============ */
+  Station.order(document.getElementById('orderAsk'),{
+    prompt:'Put the five events of the rescue in the order they happened.',
+    items:[
+      {text:'Alex phoned for help.',                          pos:4},
+      {text:'Tom and Alex walked along the cliff path.',      pos:1},
+      {text:'A helicopter lifted Tom to safety.',             pos:5},
+      {text:'Tom slipped and fell over the edge.',            pos:2},
+      {text:'Tom held on to a rock with both hands.',         pos:3}
+    ],
+    nudge:'Start at the beginning. What were the boys doing BEFORE anything went wrong?',
+    hint:'Walked along the path, then slipped and fell, then held on, then Alex phoned, then the helicopter came.',
+    praise:'That is the right order.',
+    task:'W3a Order the rescue'
+  });
+
+  /* ============ Crew card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'What goes inside speech marks?',
+    options:[
+      {text:'The name of the person speaking.', why:'The name tells us who spoke, so it stays outside.'},
+      {text:'The exact words somebody says.',   why:'Yes. Only the words you would hear.'},
+      {text:'The whole sentence.',              why:'Not the whole sentence — only the part that was actually said.'}
+    ],
+    answer:1, task:'W3a Badge Q1'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Which word tells us HOW someone spoke: shouted, walked or rope?',
+    answers:['shouted'],
+    nudge:'Two of these are not about speaking at all.',
+    hint:'Shouted. It tells us the words were said loudly.',
+    praise:'Yes. Shouted tells us how the words were said.',
+    task:'W3a Badge Q2'
+  });
+  Station.choose(badgeHost,{
+    prompt:'A recount should be written in which order?',
+    options:[
+      {text:'The order things happened.',   why:'Yes. First, next, then, at last.'},
+      {text:'The most exciting part first.',why:'That is a news headline, not a recount. A recount keeps the real order.'},
+      {text:'Any order you like.',          why:'Then your reader cannot follow what happened. Order is the point of a recount.'}
+    ],
+    answer:0, task:'W3a Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

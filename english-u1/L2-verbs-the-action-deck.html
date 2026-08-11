@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rescue Station · Week 2: The Action Deck</title>
+<link rel="stylesheet" href="station.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .rulecard{background:var(--paper);border:3px solid var(--hi);border-radius:14px;padding:.875rem 1rem;
+    margin:.5rem 0;font-weight:700}
+  .rulecard span{display:block;font-weight:400;margin-top:.25rem}
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.625rem}
+  .score{font-family:var(--display);font-weight:700;color:var(--slate);margin-top:.5rem}
+</style>
+</head>
+<body data-lesson="w2">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-run"></use></svg>
+      <div><h1>The Action Deck</h1><p class="sub">Week 2 · Verbs, -ing spellings and tricky past tense</p></div>
+      <div class="pill">Unit 1 · Stage 3 · 3Rg.10 · 3Ww.02 · 3Wg.07</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="verb"><div class="ktext"><b>verb</b><span>A word for what someone does or is: <i>slipped, grabbed, was</i>.</span></div></div>
+      <div class="kcard" data-word="past tense"><div class="ktext"><b>past tense</b><span>Something that already happened: <i>Yesterday I <b>ran</b></i>.</span></div></div>
+      <div class="kcard" data-word="irregular"><div class="ktext"><b>irregular</b><span>A verb that does not add -ed. It changes: <i>go</i> becomes <i>went</i>.</span></div></div>
+      <div class="kcard" data-word="cling"><div class="ktext"><b>cling</b><span>To hold on very tightly: <i>Tom was <b>clinging</b> to the rock</i>.</span></div></div>
+      <div class="kcard" data-word="dangle"><div class="ktext"><b>dangle</b><span>To hang and swing in the air.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-run"></use></svg> Crew training</span>
+    <h2>Welcome to the Action Deck</h2>
+    <p class="lead" data-read="A verb is what someone does. Am, is, are, was and were are verbs too: they tell us how someone is. On this deck you find the verbs, then change them.">
+      A <b>verb</b> is what someone does: <i>slipped, grabbed, flew</i>. And these are verbs too:
+      <b>am, is, are, was, were</b> — they tell us how someone <b>is</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Watch out.</b> Many people think a verb has to be something you can act out. <i>I <b>was</b>
+      in pain</i> has a verb in it as well, and it is <i>was</i>.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the shift</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Verb hunt</span>
+    <h2>Tap the verb in the sentence</h2>
+    <p class="lead" data-read="Read the sentence. Tap the word that says what someone does or is.">
+      Read the sentence, then tap the word that says what someone <b>does</b> or <b>is</b>.</p>
+    <div class="bay">
+      <p class="sentence" id="huntSent"></p>
+      <div class="chips" id="huntChips" role="group" aria-label="Tap the verb"></div>
+      <p class="verdict" id="huntV"></p>
+    </div>
+    <div class="btnrow">
+      <button class="btn navy" type="button" onclick="nextHunt()">Next sentence</button>
+      <button class="btn ghost" type="button" onclick="go(2)">Next: the -ing machine</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> The -ing machine</span>
+    <h2>Add -ing to the verb</h2>
+    <div class="rules">
+      <div class="rulecard">Most verbs: just add -ing
+        <span>look → looking · hold → holding</span></div>
+      <div class="rulecard">Ends in <b>e</b>: drop the e, add -ing
+        <span>hope → hoping · slide → sliding</span></div>
+      <div class="rulecard">Short word, one vowel, one last letter: double it
+        <span>run → running · grab → grabbing</span></div>
+    </div>
+    <p class="lead" data-read="Write the -ing form of each verb. Check which rule it needs first.">
+      Write the <b>-ing</b> form. Decide which rule it needs <b>before</b> you type.</p>
+    <div id="ingAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: the radio room</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-radio"></use></svg> Yesterday's call-out</span>
+    <h2>Tricky past-tense verbs</h2>
+    <p class="lead" data-read="These verbs do not add e d. They change completely. Write what each one becomes when it already happened.">
+      These verbs do <b>not</b> add <i>-ed</i>. They change completely. Write what each one becomes
+      when it <b>already happened</b>.</p>
+    <div id="pastAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Write three sentences about yesterday's rescue. Use <b>went</b>, <b>ran</b> and <b>saw</b>, one
+      in each sentence. Underline the verb you used.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: crew card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Crew office</span>
+    <h2>Earn your Crew badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last two go in your English book.">
+      Answer these on screen. The last two go in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      1. Write two sentences about Tom: one with an <b>action</b> verb, one with a <b>being</b> verb
+      (am / is / are / was / were).<br>
+      2. Pick three verbs from today. Write each one in the past tense and use it in a sentence.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Rescue Station · Badge 2: Crew</h3>
+      <div style="font-weight:700">Stamp this when you can explain the three -ing rules and name three tricky past-tense verbs.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my crew card</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Rescue Station · Stage 3 · Unit 1 Week 2 (3Rg.08, 3Rg.10, 3Ww.02, 3Wg.06, 3Wg.07). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="station.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'run',    label:'Welcome'},
+    {icon:'search', label:'Verb hunt'},
+    {icon:'pen',    label:'-ing'},
+    {icon:'radio',  label:'Past tense'},
+    {icon:'medal',  label:'Crew card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Verb hunt (SB p5 sentences a-h, reworded) ============
+     Two of these have a being verb, on purpose: without them children learn
+     the rule "a verb is something you can act out", which is wrong. */
+  var HUNT=[
+    {s:'Tom slipped on the wet rock.', ans:['slipped'],
+     why:'Slipped is what Tom did, so it is the verb.'},
+    {s:'Alex grabbed the rope with both hands.', ans:['grabbed'],
+     why:'Grabbed is the action, so it is the verb.'},
+    {s:'The helicopter flew over the cliff.', ans:['flew'],
+     why:'Flew is what the helicopter did, so it is the verb.'},
+    {s:'Tom was in pain.', ans:['was'],
+     why:'Was is a verb too. It tells us how Tom was, even though nobody is moving.'},
+    {s:'The children are safe now.', ans:['are'],
+     why:'Are is a being verb. It tells us how the children are.'},
+    {s:'The rope dangled in the wind.', ans:['dangled'],
+     why:'Dangled is what the rope did, so it is the verb.'}
+  ];
+  var huntI=-1;
+
+  window.nextHunt=function(){
+    huntI=(huntI+1)%HUNT.length;
+    var h=HUNT[huntI];
+    document.getElementById('huntSent').textContent=h.s;
+    document.getElementById('huntSent').setAttribute('data-read', h.s);
+    var v=document.getElementById('huntV'); v.className='verdict'; v.textContent='';
+    var host=document.getElementById('huntChips');
+    host.innerHTML='';
+    var tries=0, done=false;
+    h.s.replace(/\./g,'').split(' ').forEach(function(word){
+      var b=document.createElement('button');
+      b.type='button'; b.className='chip'; b.textContent=word;
+      b.addEventListener('click',function(){
+        if(done||b.dataset.state) return;
+        tries++;
+        var hit=h.ans.some(function(a){ return Station.norm(a)===Station.norm(word); });
+        b.dataset.state=hit?'right':'wrong';
+        if(hit){
+          done=true;
+          v.className='verdict good'; v.textContent=h.why;
+          Station.record({task:'W2 Verb hunt '+(huntI+1), result:'correct in '+tries});
+        } else {
+          v.className='verdict bad';
+          v.textContent = tries>=2 ? h.why
+            : 'Not that one. Ask yourself: what is happening here, or how is someone?';
+          Station.record({task:'W2 Verb hunt '+(huntI+1), result:'tried '+word});
+        }
+      });
+      host.appendChild(b);
+    });
+  };
+  nextHunt();
+
+  /* ============ The -ing machine (SB p6, WB p2) ============ */
+  var ingHost=document.getElementById('ingAsk');
+  [
+    {verb:'look',  ans:'looking',  rule:'Most verbs just add -ing.'},
+    {verb:'hold',  ans:'holding',  rule:'Most verbs just add -ing.'},
+    {verb:'hope',  ans:'hoping',   rule:'Hope ends in e, so drop the e: hoping.'},
+    {verb:'slide', ans:'sliding',  rule:'Slide ends in e, so drop the e: sliding.'},
+    {verb:'run',   ans:'running',  rule:'Run is short with one vowel, so double the n: running.'},
+    {verb:'grab',  ans:'grabbing', rule:'Grab is short with one vowel, so double the b: grabbing.'},
+    {verb:'cling', ans:'clinging', rule:'Cling already ends in ng, so just add -ing: clinging.'}
+  ].forEach(function(q,i){
+    Station.ask(ingHost,{
+      type:'text',
+      prompt:'Add -ing to: ' + q.verb,
+      answers:[q.ans],
+      nudge:'Check the rules above. Does this verb end in e? Is it short with one vowel?',
+      hint:q.rule,
+      praise:'Correct.',
+      task:'W2 -ing ' + q.verb
+    });
+  });
+
+  /* ============ Tricky past tense (Week 2 Lesson 3) ============ */
+  var pastHost=document.getElementById('pastAsk');
+  [
+    {v:'go',    ans:'went',   sent:'Yesterday I ______ to the cliff.',  hint:'go becomes went, not "goed".'},
+    {v:'run',   ans:'ran',    sent:'Yesterday she ______ fast.',        hint:'run becomes ran, not "runned".'},
+    {v:'catch', ans:'caught', sent:'Yesterday he ______ the ball.',     hint:'catch becomes caught, not "catched".'},
+    {v:'see',   ans:'saw',    sent:'Yesterday we ______ a helicopter.', hint:'see becomes saw, not "seed".'},
+    {v:'fly',   ans:'flew',   sent:'Yesterday the bird ______ away.',   hint:'fly becomes flew, not "flyed".'},
+    {v:'fall',  ans:'fell',   sent:'Yesterday Tom ______ off the path.',hint:'fall becomes fell, not "falled".'}
+  ].forEach(function(q){
+    Station.ask(pastHost,{
+      type:'text',
+      prompt:q.sent + '  (' + q.v + ')',
+      answers:[q.ans],
+      nudge:'This one does not take -ed. Say the sentence out loud. Which word sounds right?',
+      hint:q.hint,
+      praise:'Yes, that is the tricky one.',
+      task:'W2 Past tense ' + q.v
+    });
+  });
+
+  /* ============ Crew card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which sentence is correct?',
+    options:[
+      {text:'Yesterday I goed home.',  why:'Go does not take -ed. It changes to went.'},
+      {text:'Yesterday I went home.',  why:'Yes. Go becomes went in the past.'},
+      {text:'Yesterday I gone home.',  why:'Close, but gone needs a helper word: "I have gone home". On its own we say went.'}
+    ],
+    answer:1, task:'W2 Badge Q1'
+  });
+  Station.choose(badgeHost,{
+    prompt:'Which word in "The crew were ready" is the verb?',
+    options:[
+      {text:'crew',  why:'Crew names the people, so it is a noun.'},
+      {text:'were',  why:'Yes. Were is a being verb: it tells us how the crew were.'},
+      {text:'ready', why:'Ready describes the crew, so it is an adjective.'}
+    ],
+    answer:1, task:'W2 Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Add -ing to: swim',
+    answers:['swimming'],
+    nudge:'Short word, one vowel, one last letter. What does the rule say?',
+    hint:'Double the m: swimming.',
+    praise:'Correct.',
+    task:'W2 Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

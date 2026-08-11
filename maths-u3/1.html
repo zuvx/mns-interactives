@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Post Office · Lesson 1: The Sorting Room</title>
+<link rel="stylesheet" href="post.css">
+</head>
+<body data-lesson="u3l1">
+<div class="wrap">
+
+  <header>
+    <div class="franking"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-sort"></use></svg>
+      <div>
+        <h1>The Sorting Room</h1>
+        <p class="sub">Lesson 1 · Numerals and words (A)</p>
+      </div>
+      <div class="pill">Unit 3 · Stage 3 · 3Ni.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-letter"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="numeral"><div class="ktext"><b>numeral</b><span>A number written in digits, like 349.</span></div></div>
+      <div class="kcard" data-word="digit"><div class="ktext"><b>digit</b><span>One of the symbols 0 to 9.</span></div></div>
+      <div class="kcard" data-word="place holder"><div class="ktext"><b>place holder</b><span>A zero that keeps a column empty, like the 0 in 705.</span></div></div>
+      <div class="kcard" data-word="zero"><div class="ktext"><b>zero</b><span>Nothing in that column. We do not say it out loud.</span></div></div>
+      <div class="kcard" data-word="number"><div class="ktext"><b>number</b><span>How many there are. We can write it in digits or in words.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <!-- 0 Welcome -->
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-postbag"></use></svg> Your first day</span>
+    <h2>Welcome to the Sorting Room!</h2>
+    <p class="lead" data-read="Every parcel needs an address label. Some labels show digits and some show words. Your job is to write the missing one.">
+      Every parcel needs an address label. Some show <b>digits</b>, some show <b>words</b>.
+      Your job is to write the missing one.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-letter"></use></svg>
+      <div><b>How this works.</b> You work on your own. Every parcel asks you a question and
+      <b>you</b> work out the answer. Wrong answers are fine — you get a clue, and a full hint
+      after two tries. You collect points in your postbag to show your teacher at the end.</div></div>
+    <p style="font-weight:700">Three benches, then your badge:</p>
+    <ul style="line-height:2">
+      <li><b>Bench 1</b> — read the digits, build the label in words.</li>
+      <li><b>Bench 2</b> — listen to the address, write the digits.</li>
+      <li><b>Bench 3</b> — the Spelling Desk. Some labels are spelt wrongly.</li>
+    </ul>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start sorting</button></div>
+  </div></section>
+
+  <!-- 1 Numeral -> words, built from cards -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-parcel"></use></svg> Bench 1 · Build the label</span>
+    <h2>Write the number in words</h2>
+    <p class="lead" data-read="Look at the digits on the parcel. Tap the word cards in the right order to build the label. Tap a card you have placed to take it back.">
+      Tap the word cards <b>in order</b> to build the label. Tap a placed card to take it back.</p>
+
+    <div class="pickrow" id="b1pick" role="group" aria-label="Choose a parcel"></div>
+
+    <div class="badge" style="background:var(--kraft);padding:1rem">
+      <div style="font-family:var(--display);font-size:3rem;line-height:1.1" id="b1num">?</div>
+      <div style="font-weight:700">on the parcel</div>
+    </div>
+
+    <div class="label-slot" id="b1slot" role="group" aria-label="Your label"></div>
+    <div class="wordbank" id="b1bank" role="group" aria-label="Word cards"></div>
+    <p class="verdict" id="b1v"></p>
+
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Think:</b> where does the word <b>and</b> go? It comes after the hundreds, every time.</div></div>
+
+    <div class="btnrow">
+      <button class="btn ghost" type="button" onclick="clearLabel()">Clear the label</button>
+      <button class="btn ghost" type="button" onclick="go(2)">Next bench</button>
+    </div>
+  </div></section>
+
+  <!-- 2 Words -> numeral, with H/T/O -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-postbox"></use></svg> Bench 2 · Write the digits</span>
+    <h2>Listen, then write the numeral</h2>
+    <p class="lead" data-read="Tap the speaker to hear the address. Then write the number in digits. Remember to use zero if a column is empty.">
+      Tap the speaker to <b>hear</b> the address. Then write it in digits.
+      Use <b>zero</b> if a column has nothing in it.</p>
+
+    <div class="pickrow" id="b2pick" role="group" aria-label="Choose an address"></div>
+
+    <div class="badge" style="background:var(--navy);padding:1rem">
+      <div style="font-family:var(--display);font-size:clamp(1.25rem,4vw,1.875rem)" id="b2words">?</div>
+      <div class="btnrow" style="justify-content:center">
+        <button class="btn brass" type="button" id="b2say">Say it again</button>
+      </div>
+    </div>
+
+    <div id="b2ask"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div id="b2think"><b>Think:</b> how many hundreds? How many tens? How many ones?</div></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next bench</button></div>
+  </div></section>
+
+  <!-- 3 Spelling desk -->
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pencil"></use></svg> Bench 3 · The Spelling Desk</span>
+    <h2>These labels are spelt wrongly</h2>
+    <p class="lead" data-read="A new postal worker wrote these labels. Every one has a spelling mistake. Write each label again, spelt correctly.">
+      A new worker wrote these labels. Each one has a spelling mistake.
+      Write it again, <b>spelt correctly</b>.</p>
+    <div id="b3list"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Watch out:</b> <b>forty</b> has no <i>u</i>. <b>fifty</b> has no <i>v</i> after the f-i.
+      And <b>eight</b> keeps its <i>gh</i>.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Go to the badge office</button></div>
+  </div></section>
+
+  <!-- 4 Badge -->
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stamp"></use></svg> Badge Office</span>
+    <h2>Earn your Sorter badge</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Use these words to make <b>two</b> different 3-digit numbers, and write each one as a numeral:<br>
+      <b>hundred &nbsp; forty &nbsp; five &nbsp; and &nbsp; eight</b><br>
+      2. Anya is thinking of a number. Every digit is odd. All the digits are different.
+      It is less than 230. Write all the numbers she could be thinking of.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Post Office Badge · Level 1: Sorter</h3>
+      <div style="font-weight:700">Stamp this when you can write any 3-digit number in words <i>and</i> digits.</div>
+      <div><span class="stamp" id="stamp">SORTED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn brass" type="button" id="stampBtn">Stamp my badge</button></div>
+    </div>
+    <p class="note">Teacher: the badge is self-stamped. Check the book work and the Session summary before recording the level.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Post Office · Cambridge Primary Stage 3 · Unit 3 Lesson 1 (3Ni.01, 3Np.01, 3Nc.03). Works offline. No timers.</p>
+</div>
+
+<script src="numwords.js"></script>
+<script src="post.js"></script>
+<script>
+(function(){
+  'use strict';
+  var N = window.NumWords;
+
+  Post.init([
+    {icon:'postbag', label:'Start'},
+    {icon:'parcel',  label:'Build label'},
+    {icon:'postbox', label:'Write digits'},
+    {icon:'pencil',  label:'Spelling'},
+    {icon:'stamp',   label:'Badge'}
+  ], {onEnter:function(n){ if(n===4) Post.renderMyWork(); }});
+
+  /* ================= Bench 1: numeral -> words with cards =================
+     Collins Resource sheet 2 uses separate word cards, with 'and' as its own
+     card. Building the label puts the child in charge of where 'and' goes,
+     which is one of the unit's success criteria. */
+  var B1 = [349, 705, 920, 664, 276];
+  var b1i = 0, placed = [], bank = [];
+  var b1Awarded = {}, b1Tries = {};
+
+  var b1pick = document.getElementById('b1pick');
+  B1.forEach(function(n,i){
+    var b=document.createElement('button');
+    b.type='button'; b.textContent=n;
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','Build the label for '+n);
+    b.addEventListener('click',function(){ loadB1(i); });
+    b1pick.appendChild(b);
+  });
+
+  function shuffle(a){
+    var r=a.slice();
+    for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=r[i];r[i]=r[j];r[j]=t;}
+    return r;
+  }
+
+  function loadB1(i){
+    b1i=i; placed=[];
+    Array.prototype.forEach.call(b1pick.children,function(b,j){ b.setAttribute('aria-pressed',String(i===j)); });
+    var n=B1[i];
+    document.getElementById('b1num').textContent=n;
+    var correct=N.toCards(n);
+    // Two plausible extra cards so the answer is not just "use every card".
+    var distractors=['twenty','six'].filter(function(d){ return correct.indexOf(d)===-1; }).slice(0,2);
+    bank=shuffle(correct.concat(distractors));
+    if(!b1Tries[i]) b1Tries[i]=0;
+    renderB1();
+  }
+
+  function renderB1(){
+    var slot=document.getElementById('b1slot');
+    var bankEl=document.getElementById('b1bank');
+    slot.innerHTML='';
+    if(!placed.length){
+      var h=document.createElement('span');
+      h.className='hintline';
+      h.textContent='Tap the word cards below to build the label here.';
+      slot.appendChild(h);
+    }
+    placed.forEach(function(w,idx){
+      var b=document.createElement('button');
+      b.type='button'; b.className='placed'; b.textContent=w;
+      b.setAttribute('aria-label','Remove '+w+' from the label');
+      b.addEventListener('click',function(){ placed.splice(idx,1); clearB1Verdict(); renderB1(); });
+      slot.appendChild(b);
+    });
+    slot.setAttribute('aria-label', placed.length ? 'Your label: '+N.cardsToWords(placed) : 'Your label is empty');
+
+    bankEl.innerHTML='';
+    bank.forEach(function(w){
+      var used=placed.filter(function(p){return p===w;}).length;
+      var avail=bank.filter(function(x){return x===w;}).length;
+      var b=document.createElement('button');
+      b.type='button'; b.className='wordcard'; b.textContent=w;
+      b.disabled = used>=avail;
+      b.setAttribute('aria-label','Add the word '+w);
+      b.addEventListener('click',function(){ placed.push(w); clearB1Verdict(); renderB1(); checkB1(); });
+      bankEl.appendChild(b);
+    });
+  }
+
+  function clearB1Verdict(){
+    var v=document.getElementById('b1v'); v.className='verdict'; v.textContent='';
+  }
+  window.clearLabel=function(){ placed=[]; clearB1Verdict(); renderB1(); };
+
+  function checkB1(){
+    var target=B1[b1i], want=N.toCards(target), v=document.getElementById('b1v');
+    if(placed.length < want.length) return;                 // still building
+    b1Tries[b1i]=(b1Tries[b1i]||0)+1;
+    if(N.cardsToWords(placed)===N.toWords(target)){
+      v.className='verdict good';
+      v.textContent='Correct. '+target+' is '+N.toWords(target)+'.';
+      Post.speak(N.toWords(target));
+      if(!b1Awarded[b1i]){
+        b1Awarded[b1i]=true;
+        Post.record({task:'U3L1 Label '+target, result:'correct in '+b1Tries[b1i]});
+      }
+    } else {
+      v.className='verdict bad';
+      v.textContent = b1Tries[b1i]>=2
+        ? 'Not yet. '+target+' is '+N.toWords(target)+'. Clear the label and build that.'
+        : 'Not yet. Read your label back to yourself — does it say '+target+'?';
+      Post.record({task:'U3L1 Label '+target, result:'tried '+N.cardsToWords(placed)});
+    }
+  }
+  loadB1(0);
+
+  /* ================= Bench 2: words -> numeral =================
+     The device reads the address aloud, so this is real dictation: the
+     objective says "recite, read and write number names". */
+  var B2 = [356, 54, 899, 105, 607, 480];
+  var b2i = 0;
+
+  var b2pick=document.getElementById('b2pick');
+  B2.forEach(function(n,i){
+    var b=document.createElement('button');
+    b.type='button'; b.textContent='Address '+(i+1);
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','Address '+(i+1));
+    b.addEventListener('click',function(){ loadB2(i); });
+    b2pick.appendChild(b);
+  });
+
+  document.getElementById('b2say').addEventListener('click',function(){
+    Post.speak(N.toWords(B2[b2i]));
+  });
+
+  function loadB2(i){
+    b2i=i;
+    Array.prototype.forEach.call(b2pick.children,function(b,j){ b.setAttribute('aria-pressed',String(i===j)); });
+    var n=B2[i], w=N.toWords(n), p=N.parts(n);
+    document.getElementById('b2words').textContent=w;
+    Post.speak(w);
+    var zeroNote = (p.t===0 && n>=100)
+      ? '<b>Think:</b> listen carefully — there are no tens in this one. What digit keeps the tens column empty?'
+      : '<b>Think:</b> how many hundreds? How many tens? How many ones?';
+    document.getElementById('b2think').innerHTML=zeroNote;
+    var host=document.getElementById('b2ask');
+    host.innerHTML='';
+    Post.ask(host,{
+      prompt:'Write "'+w+'" as a numeral.',
+      answer:n,
+      task:'U3L1 Numeral for '+w,
+      nudge: p.t===0 && n>=100
+        ? 'Careful — there are no tens. You still need a digit in the tens column.'
+        : 'Not quite. Say the number again slowly: hundreds, then tens, then ones.',
+      hint: n<100
+        ? w+' is '+p.t+' tens and '+p.o+' ones, so it is '+n+'.'
+        : w+' is '+p.h+' hundreds, '+p.t+' tens and '+p.o+' ones, so it is '+n+'.',
+      praise:'Correct.'
+    });
+  }
+  loadB2(0);
+
+  /* ================= Bench 3: the Spelling Desk =================
+     Collins WB p23 q4. Spelling number names is an explicit part of 3Ni.01
+     and the misspellings below are the ones Collins prints. */
+  var SPELL = [
+    {wrong:'eit hundred and fourty-nine', right:849,
+     clue:'Two words are wrong. Say the number out loud first: what is the hundreds word?'},
+    {wrong:'nin hundred and fivety-free', right:953,
+     clue:'Three words are wrong here. Which digit sounds like "free"?'},
+    {wrong:'sixe hundred and seventeen',  right:617,
+     clue:'Only the first word is wrong. How do you spell the digit 6?'},
+    {wrong:'too hundred and thurty-one',  right:231,
+     clue:'Two words are wrong. "Too" means "as well" — this one is the number.'}
+  ];
+  var b3=document.getElementById('b3list');
+  SPELL.forEach(function(s,i){
+    var box=document.createElement('div');
+    box.className='quest';
+    box.innerHTML='<div class="q">Label '+(i+1)+'</div>'+
+      '<div style="font-size:1.25rem;font-family:var(--display);color:var(--post-deep);' +
+      'text-decoration:line-through;text-decoration-color:var(--post)">'+s.wrong+'</div>';
+    b3.appendChild(box);
+    Post.ask(box,{
+      words:true,
+      prompt:'Write this label correctly.',
+      accept:function(v){ return N.wordsMatch(v, N.toWords(s.right)); },
+      task:'U3L1 Spelling '+s.right,
+      nudge:s.clue,
+      hint:'It should be "'+N.toWords(s.right)+'".',
+      praise:'Spelt correctly.'
+    });
+  });
+
+  /* ================= Badge Office ================= */
+  var lic=document.getElementById('licAsk');
+  [
+    {prompt:'Write 135 in words.', words:true,
+     accept:function(v){ return N.wordsMatch(v,'one hundred and thirty-five'); },
+     nudge:'1 hundred, 3 tens, 5 ones. Do not forget the word "and".',
+     hint:'It is "one hundred and thirty-five".', praise:'Yes.'},
+    {prompt:'Write "six hundred and forty-nine" as a numeral.', answer:649,
+     nudge:'6 hundreds, 4 tens, 9 ones.',
+     hint:'It is 649.', praise:'Yes.'},
+    {prompt:'A number has no tens. It is seven hundred and five. Write it as a numeral.', answer:705,
+     nudge:'The tens column is empty, so it needs a place holder.',
+     hint:'Zero holds the tens place: 705.', praise:'Yes — zero is the place holder.'},
+    {prompt:'Write 480 in words.', words:true,
+     accept:function(v){ return N.wordsMatch(v,'four hundred and eighty'); },
+     nudge:'There are no ones, so you do not say anything after the tens.',
+     hint:'It is "four hundred and eighty".', praise:'Yes.'}
+  ].forEach(function(q,i){ q.task='U3L1 Badge Q'+(i+1); Post.ask(lic,q); });
+})();
+</script>
+</body>
+</html>

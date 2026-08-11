@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sweet Factory · Lesson 5: The Factory Inspection</title>
+<link rel="stylesheet" href="factory.css">
+</head>
+<body data-lesson="u1l5">
+<div class="wrap">
+
+  <header>
+    <div class="candy"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-clipboard"></use></svg>
+      <div>
+        <h1>The Factory Inspection</h1>
+        <p class="sub">Lesson 5 · Revision before the Progress Check</p>
+      </div>
+      <div class="pill">Unit 1 · Stage 3 · 3Nc.01-03</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <!-- 0 Welcome -->
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clipboard"></use></svg> Inspection day</span>
+    <h2>The inspector is coming</h2>
+    <p class="lead" data-read="Today you check that the whole factory is running properly. Every station you have worked at gets one last test. The numbers are all new ones.">
+      Today you check the whole factory. Every station you have worked at gets one last test,
+      with <b>new numbers</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>This is practice, not the test.</b> The real Progress Check is on paper and you do
+      it on your own, with the iPads away. Nothing here is one of its questions.</div></div>
+    <p style="font-weight:700">Five checks:</p>
+    <ul style="line-height:2">
+      <li><b>Check 1</b> — finish the counting patterns.</li>
+      <li><b>Check 2</b> — the long runs, including one that goes past a hundred.</li>
+      <li><b>Check 3</b> — sort even from not even.</li>
+      <li><b>Check 4</b> — explain what even and odd mean.</li>
+      <li><b>Check 5</b> — estimate, then count.</li>
+    </ul>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Begin the inspection</button></div>
+  </div></section>
+
+  <!-- 1 Short patterns -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-belt"></use></svg> Check 1 · Finish the patterns</span>
+    <h2>What comes next?</h2>
+    <p class="lead" data-read="Each line is counting in a constant step. Work out the rule first, then the missing numbers.">
+      Each line counts in a constant step. Work out the <b>rule</b> first, then the missing numbers.</p>
+    <div id="c1"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next check</button></div>
+  </div></section>
+
+  <!-- 2 Long runs -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tray"></use></svg> Check 2 · The long runs</span>
+    <h2>Keep going, and mind the corner</h2>
+    <p class="lead" data-read="Longer runs now. One of them crosses a hundred, so watch the hundreds digit.">
+      Longer runs. One of them crosses a hundred — watch the hundreds digit.</p>
+    <div id="c2a"></div>
+    <h3 style="margin-top:1.25rem">And backwards in hundreds</h3>
+    <div id="c2b"></div>
+    <div id="c2talk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next check</button></div>
+  </div></section>
+
+  <!-- 3 Sorting -->
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pair"></use></svg> Check 3 · Sort the batches</span>
+    <h2>Even, or not even?</h2>
+    <p class="lead" data-read="Read the headings carefully. The second column says not even.">
+      Read the headings carefully. The second column says <b>not even</b>.</p>
+    <div id="c3"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next check</button></div>
+  </div></section>
+
+  <!-- 4 Explaining -->
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Check 4 · Explain it</span>
+    <h2>Say what even and odd mean</h2>
+    <p class="lead" data-read="The inspector wants explanations, not just answers. Pick the best way of finishing each sentence.">
+      The inspector wants <b>explanations</b>, not just answers.</p>
+    <div id="c4"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>On the paper</b> you will have to write this in your own words. Practise saying it
+      out loud now: an even number can be divided by 2 with nothing left over.</div></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(5)">Next check</button></div>
+  </div></section>
+
+  <!-- 5 Estimating -->
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Check 5 · Estimate, then count</span>
+    <h2>The last two jars</h2>
+    <p class="lead" data-read="Look, choose a range, then group in tens and count for real.">
+      Look, choose a range, then group in tens and count for real.</p>
+    <div id="c5a"></div>
+    <div id="c5b"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(6)">Finish the inspection</button></div>
+  </div></section>
+
+  <!-- 6 Done -->
+  <section class="screen" data-s="6"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Inspection complete</span>
+    <h2>Ready for the Progress Check</h2>
+    <p class="lead" data-read="Show your jar to your teacher. Then put the iPad away, because the Progress Check is on paper and you do it on your own.">
+      Show your jar to your teacher. Then <b>put the iPad away</b> — the Progress Check is on
+      paper and you do it on your own.</p>
+
+    <div class="quest"><div class="q">Before the paper, check yourself</div>
+      Can you count on and back in 10s from any number, even past a hundred?<br>
+      Can you count on and back in 100s?<br>
+      Can you sort numbers into even and not even, and say <i>why</i>?<br>
+      Can you give a sensible <b>range</b> for a jar you only glanced at?</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Sweet Factory Badge · Level 5: Ready</h3>
+      <div style="font-weight:700">Stamp this when all four questions above are a yes.</div>
+      <div><span class="stamp" id="stamp">READY</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn lemon" type="button" id="stampBtn">Stamp my badge</button></div>
+    </div>
+    <p class="note">Teacher: revision only. None of these numbers appear on the Progress Check.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Sweet Factory · Cambridge Primary Stage 3 · Unit 1 Lesson 5 (3Nc.01, 3Nc.02, 3Nc.03). Works offline. No timers.</p>
+</div>
+
+<script src="factory.js"></script>
+<script src="sweets.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Factory.init([
+    {icon:'clipboard', label:'Start'},
+    {icon:'belt',      label:'Patterns'},
+    {icon:'tray',      label:'Long runs'},
+    {icon:'pair',      label:'Sort'},
+    {icon:'talk',      label:'Explain'},
+    {icon:'jar',       label:'Estimate'},
+    {icon:'medal',     label:'Done'}
+  ], {onEnter:function(n){ if(n===6) Factory.renderMyWork(); }});
+
+  /* ===== Check 1: the four short patterns, mirroring Q1a-d =====
+     Every number here is checked against the mark scheme in check-factory.js
+     so the revision cannot accidentally rehearse the paper itself. */
+  var c1 = document.getElementById('c1');
+  [
+    {start:258, step:10,   terms:3},
+    {start:631, step:-10,  terms:3},
+    {start:147, step:100,  terms:3},
+    {start:584, step:-100, terms:3}
+  ].forEach(function(p, idx){
+    var seq = [];
+    for (var i = 0; i < p.terms; i++) seq.push(p.start + i * p.step);
+
+    var box = document.createElement('div');
+    box.className = 'quest';
+    box.innerHTML = '<div class="q">Pattern ' + 'abcd'[idx] + '</div>' +
+      '<div class="seq">' +
+        '<span class="seqstep"><span class="seqbox">' + seq[0] + '</span></span>' +
+        '<span class="seqstep"><span class="arrow">?</span><span class="seqbox blank">?</span></span>' +
+        '<span class="seqstep"><span class="arrow">?</span><span class="seqbox blank">?</span></span>' +
+      '</div>';
+    c1.appendChild(box);
+
+    Factory.ask(box, {
+      prompt: 'The pattern starts at ' + seq[0] + ' and the next number is ' + seq[1] +
+              '. What is the step? Type it without a minus sign.',
+      answer: Math.abs(p.step),
+      task: 'U1L5 Rule ' + seq[0],
+      nudge: 'How far apart are ' + seq[0] + ' and ' + seq[1] + '?',
+      hint: 'The step is ' + Math.abs(p.step) + ', going ' + (p.step > 0 ? 'up' : 'down') + '.',
+      praise: 'Yes — that is the term-to-term rule.'
+    });
+    Factory.ask(box, {
+      prompt: 'So what comes after ' + seq[1] + '?',
+      answer: seq[2],
+      task: 'U1L5 Term ' + seq[2],
+      nudge: (p.step > 0 ? 'Add ' : 'Take away ') + Math.abs(p.step) + '.',
+      hint: seq[1] + (p.step > 0 ? ' + ' : ' − ') + Math.abs(p.step) + ' = ' + seq[2] + '.',
+      praise: 'Correct.'
+    });
+  });
+
+  /* ===== Check 2: the long runs, one crossing a hundred ===== */
+  Sweets.buildCountRun({
+    host: document.getElementById('c2a'),
+    start: 471, step: 10, steps: 5, unit: 'tray of 10', taskPrefix: 'U1L5 Run on'
+  });
+  Sweets.buildCountRun({
+    host: document.getElementById('c2b'),
+    start: 918, step: -100, steps: 4, unit: 'crate of 100', taskPrefix: 'U1L5 Run back'
+  });
+  Factory.choose(document.getElementById('c2talk'), {
+    prompt: 'Counting on in 10s, you go from 893 to 903. What happened?',
+    task: 'U1L5 Boundary talk',
+    options: [
+      {label:'The ones stayed the same and the tens filled a new hundred', right:true,
+       why:'Yes. The 3 never moved. 89 tens became 90 tens, which is 900.'},
+      {label:'Every digit changed', why:'Not quite. Look at the last digit: it is 3 both times.'},
+      {label:'The ones digit went up by 1', why:'No. 893 and 903 both end in 3.'}
+    ]
+  });
+
+  /* ===== Check 3: sorting, mirroring Q4 ===== */
+  Sweets.buildCarroll({
+    host: document.getElementById('c3'),
+    numbers: [62, 155, 240, 883, 416, 709, 530, 97],
+    leftLabel: 'Even numbers',
+    rightLabel: 'Not even numbers',
+    test: function(n){ return n % 2 === 0; },
+    taskPrefix: 'U1L5 Sort'
+  });
+
+  /* ===== Check 4: the two generalisations, Q5 and Q6 ===== */
+  var c4 = document.getElementById('c4');
+  Factory.choose(c4, {
+    prompt: 'Finish this: an even number is a number that ...',
+    task: 'U1L5 Explain even',
+    options: [
+      {label:'can be divided by 2 with nothing left over', right:true,
+       why:'Yes. That is the best explanation, and it works for any size of number.'},
+      {label:'is bigger than an odd number',
+       why:'No. 3 is odd and 4 is even, but 100 is even and bigger than both.'},
+      {label:'has an even digit somewhere in it',
+       why:'No. 27 has a 2 in it and is odd. Only the last digit decides.'}
+    ]
+  });
+  Factory.choose(c4, {
+    prompt: 'Finish this: an odd number is a number that ...',
+    task: 'U1L5 Explain odd',
+    options: [
+      {label:'cannot be divided by 2 — it is an even number add 1', right:true,
+       why:'Yes. Both halves of that are worth saying on the paper.'},
+      {label:'is a strange or unusual number',
+       why:'That is the other meaning of the word odd. In maths it means it will not share by 2.'},
+      {label:'always ends in 9',
+       why:'No. 9 is odd but so are 1, 3, 5 and 7.'}
+    ]
+  });
+
+  /* ===== Check 5: estimating, mirroring Q7 ===== */
+  Sweets.buildJar({ host: document.getElementById('c5a'), count: 26, taskPrefix: 'U1L5 Jar 1' });
+  Sweets.buildJar({ host: document.getElementById('c5b'), count: 63, taskPrefix: 'U1L5 Jar 2' });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sweet Factory · Factory Charter</title>
+<link rel="stylesheet" href="factory.css">
+</head>
+<body data-lesson="u1charter">
+<div class="wrap">
+
+  <header>
+    <div class="candy"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
+      <div>
+        <h1>The Factory Charter</h1>
+        <p class="sub">Unit 1 · Counting and sequences (A) · five levels</p>
+      </div>
+      <div class="pill">3Nc.01 · 3Nc.02 · 3Nc.03</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Project this at the start of every lesson</span>
+    <h2>How you get promoted</h2>
+    <p class="lead" data-read="You start as a Packer. Each lesson you can earn the next level. You keep every level you earn.">
+      You start as a <b>Packer</b>. Each lesson you can earn the next level, and you keep every
+      level you earn.</p>
+
+    <div class="quest"><div class="q">Level 1 · Packer <span style="color:var(--cocoa)">— Lesson 1</span></div>
+      Count on and count back in <b>10s and 100s</b> from any number, including when the count
+      goes past a hundred.</div>
+
+    <div class="quest"><div class="q">Level 2 · Wrapper <span style="color:var(--cocoa)">— Lesson 2</span></div>
+      Tell <b>even</b> from <b>odd</b>, and say how you know without just reciting the rule.</div>
+
+    <div class="quest"><div class="q">Level 3 · Sorter <span style="color:var(--cocoa)">— Lesson 3</span></div>
+      Explain even and odd by <b>sharing between 2</b>, and sort numbers too big to draw.</div>
+
+    <div class="quest"><div class="q">Level 4 · Inspector <span style="color:var(--cocoa)">— Lesson 4</span></div>
+      Give a <b>sensible range</b> for a jar you only glanced at, then group in tens to check.</div>
+
+    <div class="quest"><div class="q">Level 5 · Ready <span style="color:var(--cocoa)">— Lesson 5</span></div>
+      All four of the above, on new numbers, ready for the Progress Check on paper.</div>
+
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>About the sweets in your jar.</b> You earn them for solving, never lose them for
+      trying. A hint costs nothing — using one when you are stuck is exactly what it is for.
+      Show your jar to your teacher at the end of the lesson.</div></div>
+
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-sweet"></use></svg> The one factory rule</h3>
+      <div style="font-weight:700">Look at what the numbers do. Do not just chant them.</div>
+    </div>
+
+    <p class="note">The Sweet Factory · Cambridge Primary Stage 3 · Unit 1. Works offline. No timers.</p>
+  </div></section>
+</div>
+
+<script src="factory.js"></script>
+<script>
+  // A single-screen page. There is no #rail element, so no buttons are built;
+  // the one entry only supplies the text for the screen-reader live region.
+  Factory.init([{icon:'medal', label:'Charter'}]);
+</script>
+</body>
+</html>

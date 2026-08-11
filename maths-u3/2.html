@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Post Office · Lesson 2: The Parcel Scales</title>
+<link rel="stylesheet" href="post.css">
+</head>
+<body data-lesson="u3l2">
+<div class="wrap">
+
+  <header>
+    <div class="franking"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-scales"></use></svg>
+      <div>
+        <h1>The Parcel Scales</h1>
+        <p class="sub">Lesson 2 · Numerals and words (B)</p>
+      </div>
+      <div class="pill">Unit 3 · Stage 3 · 3Np.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-letter"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="unit"><div class="ktext"><b>unit</b><span>A group we count as one. Ten ones make one ten.</span></div></div>
+      <div class="kcard" data-word="digit"><div class="ktext"><b>digit</b><span>One of the symbols 0 to 9.</span></div></div>
+      <div class="kcard" data-word="place holder"><div class="ktext"><b>place holder</b><span>A zero that keeps a column empty, like the 0 in 607.</span></div></div>
+      <div class="kcard" data-word="hundreds"><div class="ktext"><b>hundreds</b><span>The left column. 4 hundreds means 400.</span></div></div>
+      <div class="kcard" data-word="numeral"><div class="ktext"><b>numeral</b><span>A number written in digits.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <!-- 0 Welcome -->
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scales"></use></svg> Weighing in</span>
+    <h2>Welcome to the Parcel Scales</h2>
+    <p class="lead" data-read="Every parcel is weighed with counters. Blue counters are worth one hundred. Yellow are worth ten. Pink are worth one.">
+      Parcels are weighed with counters.
+      <b style="color:var(--hund)">Blue = 100</b> ·
+      <b style="color:var(--tens-deep)">Yellow = 10</b> ·
+      <b style="color:var(--ones)">Pink = 1</b></p>
+    <div class="counters">
+      <span class="counter h">100</span><span class="counter h">100</span>
+      <span class="counter t">10</span><span class="counter t">10</span><span class="counter t">10</span><span class="counter t">10</span>
+      <span class="counter o">1</span><span class="counter o">1</span><span class="counter o">1</span>
+      <span class="counter o">1</span><span class="counter o">1</span><span class="counter o">1</span>
+    </div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>That parcel weighs 246.</b> There are 2 hundreds, 4 tens and 6 ones.
+      Notice that the digit tells you <i>how many</i>, and its column tells you <i>how much each one is worth</i>.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start weighing</button></div>
+  </div></section>
+
+  <!-- 1 Counters -> numeral, H/T/O keypad -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-parcel"></use></svg> Scale 1 · Read the counters</span>
+    <h2>What does this parcel weigh?</h2>
+    <p class="lead" data-read="Count the counters. Write how many hundreds, how many tens and how many ones. Use zero if a column is empty.">
+      Count the counters, then fill in <b>each column</b>. Use <b>0</b> if a column is empty.</p>
+
+    <div class="pickrow" id="s1pick" role="group" aria-label="Choose a parcel"></div>
+    <div class="counters" id="s1counters" role="img" aria-label="Counters"></div>
+
+    <div class="hto" role="group" aria-label="Write the number in columns">
+      <div class="hto-col h"><span class="hto-lbl">HUNDREDS</span>
+        <input id="s1h" type="number" inputmode="numeric" min="0" max="9" aria-label="How many hundreds"></div>
+      <div class="hto-col t"><span class="hto-lbl">TENS</span>
+        <input id="s1t" type="number" inputmode="numeric" min="0" max="9" aria-label="How many tens"></div>
+      <div class="hto-col o"><span class="hto-lbl">ONES</span>
+        <input id="s1o" type="number" inputmode="numeric" min="0" max="9" aria-label="How many ones"></div>
+    </div>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn navy" type="button" id="s1check">Check the weight</button>
+    </div>
+    <p class="verdict" id="s1v"></p>
+    <div id="s1words"></div>
+
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next scale</button></div>
+  </div></section>
+
+  <!-- 2 Numeral -> counters -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-van"></use></svg> Scale 2 · Load the parcel</span>
+    <h2>Make this weight with counters</h2>
+    <p class="lead" data-read="Tap the counters to load the parcel until it weighs exactly the right amount. Use as few counters as you can.">
+      Tap counters until the parcel weighs <b>exactly</b> the right amount, using <b>as few counters as you can</b>.</p>
+    <div class="pickrow" id="s2pick" role="group" aria-label="Choose a target weight"></div>
+
+    <div class="badge" style="background:var(--kraft);padding:1rem">
+      <div style="font-weight:700">Load exactly</div>
+      <div style="font-family:var(--display);font-size:3rem;line-height:1.1" id="s2target">?</div>
+    </div>
+
+    <div class="counters" id="s2tray" role="img" aria-label="Your parcel is empty"></div>
+    <p class="verdict" id="s2v"></p>
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn" type="button" onclick="addC('h')" style="background:var(--hund);box-shadow:0 4px 0 var(--hund-deep)">Add 100</button>
+      <button class="btn brass" type="button" onclick="addC('t')">Add 10</button>
+      <button class="btn" type="button" onclick="addC('o')" style="background:var(--ones);box-shadow:0 4px 0 var(--ones-deep)">Add 1</button>
+      <button class="btn ghost" type="button" onclick="emptyTray()">Empty</button>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next scale</button></div>
+  </div></section>
+
+  <!-- 3 Zero as place holder -->
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-postbox"></use></svg> Scale 3 · The empty column</span>
+    <h2>What happens when a column is empty?</h2>
+    <p class="lead" data-read="Sometimes a parcel has no tens, or no ones. We still need a digit to hold the column. That digit is zero.">
+      Sometimes there are <b>no tens</b>, or <b>no ones</b>. We still need a digit to hold the
+      column open. That digit is <b>zero</b> — and we never say it out loud.</p>
+    <div id="s3list"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Careful:</b> "four hundred and six" is <b>406</b>, not <b>4006</b>.
+      Hundreds, tens, ones — always three columns.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Go to the badge office</button></div>
+  </div></section>
+
+  <!-- 4 Badge -->
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stamp"></use></svg> Badge Office</span>
+    <h2>Earn your Weigher badge</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Anja had the digit cards <b>5</b>, <b>6</b> and <b>7</b>. She made six different 3-digit
+      numbers. What were they? Write each one in numerals <i>and</i> in words.<br>
+      2. Draw counters to show <b>354</b>, then write it in words.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Post Office Badge · Level 2: Weigher</h3>
+      <div style="font-weight:700">Stamp this when you can say what every digit in a number is worth.</div>
+      <div><span class="stamp" id="stamp">WEIGHED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn brass" type="button" id="stampBtn">Stamp my badge</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the level.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Post Office · Stage 3 · Unit 3 Lesson 2 (3Ni.01, 3Np.01). Works offline. No timers.</p>
+</div>
+
+<script src="numwords.js"></script>
+<script src="post.js"></script>
+<script>
+(function(){
+  'use strict';
+  var N = window.NumWords;
+
+  Post.init([
+    {icon:'scales',  label:'Start'},
+    {icon:'parcel',  label:'Read counters'},
+    {icon:'van',     label:'Load parcel'},
+    {icon:'postbox', label:'Empty column'},
+    {icon:'stamp',   label:'Badge'}
+  ], {onEnter:function(n){ if(n===4) Post.renderMyWork(); }});
+
+  function countersHTML(p){
+    var h='';
+    for(var i=0;i<p.h;i++) h+='<span class="counter h">100</span>';
+    for(var j=0;j<p.t;j++) h+='<span class="counter t">10</span>';
+    for(var k=0;k<p.o;k++) h+='<span class="counter o">1</span>';
+    return h;
+  }
+
+  /* ================= Scale 1: counters -> numeral, by column =================
+     A single answer box hides the place holder. Three boxes make the empty
+     column impossible to miss, which is the misconception the Teacher's Guide
+     names: children writing 400506 for 456. */
+  var S1 = [246, 435, 354, 607, 480, 903];
+  var s1i = 0, s1Awarded = {}, s1Tries = {};
+
+  var s1pick=document.getElementById('s1pick');
+  S1.forEach(function(n,i){
+    var b=document.createElement('button');
+    b.type='button'; b.textContent='Parcel '+(i+1);
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','Parcel '+(i+1));
+    b.addEventListener('click',function(){ loadS1(i); });
+    s1pick.appendChild(b);
+  });
+
+  function loadS1(i){
+    s1i=i;
+    Array.prototype.forEach.call(s1pick.children,function(b,j){ b.setAttribute('aria-pressed',String(i===j)); });
+    var n=S1[i], p=N.parts(n);
+    document.getElementById('s1counters').innerHTML=countersHTML(p);
+    document.getElementById('s1counters').setAttribute('aria-label',
+      p.h+' hundred counters, '+p.t+' ten counters and '+p.o+' one counters');
+    ['s1h','s1t','s1o'].forEach(function(id){
+      var el=document.getElementById(id); el.value=''; el.disabled=false;
+    });
+    var v=document.getElementById('s1v'); v.className='verdict'; v.textContent='';
+    document.getElementById('s1words').innerHTML='';
+    document.getElementById('s1check').disabled=false;
+    if(!s1Tries[i]) s1Tries[i]=0;
+  }
+
+  document.getElementById('s1check').addEventListener('click',function(){
+    var n=S1[s1i], p=N.parts(n), v=document.getElementById('s1v');
+    var h=parseInt(document.getElementById('s1h').value,10);
+    var t=parseInt(document.getElementById('s1t').value,10);
+    var o=parseInt(document.getElementById('s1o').value,10);
+    if([h,t,o].some(isNaN)){
+      v.className='verdict'; v.textContent='Fill in all three columns. Write 0 if a column is empty.';
+      return;
+    }
+    s1Tries[s1i]++;
+    if(h===p.h && t===p.t && o===p.o){
+      v.className='verdict good';
+      v.textContent='Correct. That parcel weighs '+n+'.';
+      document.getElementById('s1check').disabled=true;
+      ['s1h','s1t','s1o'].forEach(function(id){ document.getElementById(id).disabled=true; });
+      if(!s1Awarded[s1i]){
+        s1Awarded[s1i]=true;
+        Post.record({task:'U3L2 Read counters '+n, result:'correct in '+s1Tries[s1i]});
+      }
+      // Same number, now in words — reading and writing in one step.
+      var host=document.getElementById('s1words');
+      host.innerHTML='';
+      Post.ask(host,{
+        words:true,
+        prompt:'Now write '+n+' in words.',
+        accept:function(val){ return N.wordsMatch(val, N.toWords(n)); },
+        task:'U3L2 Words for '+n,
+        nudge:'Say it out loud first. Remember the word "and" after the hundreds.',
+        hint:'It is "'+N.toWords(n)+'".',
+        praise:'Correct.'
+      });
+    } else {
+      v.className='verdict bad';
+      var wrong=[];
+      if(h!==p.h) wrong.push('hundreds');
+      if(t!==p.t) wrong.push('tens');
+      if(o!==p.o) wrong.push('ones');
+      v.textContent = s1Tries[s1i]>=2
+        ? 'Not yet. There are '+p.h+' hundreds, '+p.t+' tens and '+p.o+' ones, so it is '+n+'.'
+        : 'Check the '+wrong.join(' and ')+' again. Count that colour of counter.';
+      Post.record({task:'U3L2 Read counters '+n, result:'tried '+h+'/'+t+'/'+o});
+    }
+  });
+  loadS1(0);
+
+  /* ================= Scale 2: numeral -> counters ================= */
+  var S2 = [246, 435, 307, 520, 764];
+  var s2i = 0, tray = {h:0,t:0,o:0}, s2Awarded = {}, s2Tries = {};
+
+  var s2pick=document.getElementById('s2pick');
+  S2.forEach(function(n,i){
+    var b=document.createElement('button');
+    b.type='button'; b.textContent=n;
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','Load a parcel weighing '+n);
+    b.addEventListener('click',function(){ loadS2(i); });
+    s2pick.appendChild(b);
+  });
+
+  function loadS2(i){
+    s2i=i; tray={h:0,t:0,o:0};
+    Array.prototype.forEach.call(s2pick.children,function(b,j){ b.setAttribute('aria-pressed',String(i===j)); });
+    document.getElementById('s2target').textContent=S2[i];
+    if(!s2Tries[i]) s2Tries[i]=0;
+    paintTray();
+  }
+  window.emptyTray=function(){ tray={h:0,t:0,o:0}; paintTray(); };
+
+  window.addC=function(kind){
+    // Cap at 9 per column: ten of one unit should be exchanged, not stacked.
+    if(tray[kind]>=9){
+      var vv=document.getElementById('s2v');
+      vv.className='verdict bad';
+      vv.textContent='Ten of those would make one bigger counter. Try a different colour.';
+      return;
+    }
+    tray[kind]++;
+    paintTray();
+  };
+
+  function trayTotal(){ return tray.h*100 + tray.t*10 + tray.o; }
+
+  function paintTray(){
+    var el=document.getElementById('s2tray');
+    el.innerHTML=countersHTML(tray);
+    el.setAttribute('aria-label', trayTotal()===0 ? 'Your parcel is empty'
+      : 'Your parcel holds '+tray.h+' hundreds, '+tray.t+' tens and '+tray.o+' ones');
+    var target=S2[s2i], want=N.parts(target), v=document.getElementById('s2v');
+    var total=trayTotal();
+    if(total===0){ v.className='verdict'; v.textContent=''; return; }
+    if(total===target){
+      var fewest = (tray.h===want.h && tray.t===want.t && tray.o===want.o);
+      s2Tries[s2i]++;
+      if(fewest){
+        v.className='verdict good';
+        v.textContent='Exactly '+target+', with the fewest counters. That is '+N.toWords(target)+'.';
+        Post.speak(N.toWords(target));
+        if(!s2Awarded[s2i]){
+          s2Awarded[s2i]=true;
+          Post.record({task:'U3L2 Load '+target, result:'correct in '+s2Tries[s2i]});
+        }
+      } else {
+        v.className='verdict bad';
+        v.textContent='The weight is right, but you used more counters than you need. '+
+          'Could ten small counters be swapped for one bigger one?';
+      }
+    } else if(total>target){
+      v.className='verdict bad';
+      v.textContent='That is '+total+' — too heavy by '+(total-target)+'. Empty and try again.';
+    } else {
+      v.className='verdict';
+      v.textContent='So far: '+total+'. Keep loading.';
+    }
+  }
+  loadS2(0);
+
+  /* ================= Scale 3: zero as place holder =================
+     Collins WB p25 q6 asks children to complete the words. These are the
+     numbers where the missing column is the whole point. */
+  var S3 = [607, 160, 480, 205, 903];
+  var s3=document.getElementById('s3list');
+  S3.forEach(function(n){
+    var p=N.parts(n);
+    var box=document.createElement('div');
+    box.className='quest';
+    var gap = p.t===0 ? 'no tens' : 'no ones';
+    box.innerHTML='<div class="q">Parcel '+n+'</div>'+
+      '<div class="counters" role="img" aria-label="'+p.h+' hundreds, '+p.t+' tens, '+p.o+' ones">'+
+        countersHTML(p)+'</div>'+
+      '<p style="font-weight:700;color:var(--kraft)">This parcel has <b>'+gap+'</b>.</p>';
+    s3.appendChild(box);
+    Post.ask(box,{
+      words:true,
+      prompt:'Write '+n+' in words.',
+      accept:function(v){ return N.wordsMatch(v, N.toWords(n)); },
+      task:'U3L2 Place holder '+n,
+      nudge:'We do not say the zero. Just say what is really there.',
+      hint:'It is "'+N.toWords(n)+'". The zero is written but never spoken.',
+      praise:'Correct — the zero holds the column but stays silent.'
+    });
+  });
+
+  /* ================= Badge Office ================= */
+  var lic=document.getElementById('licAsk');
+  [
+    {prompt:'In the number 467, what is the 4 worth?', answer:400,
+     nudge:'The 4 is in the hundreds column. How much is each one worth?',
+     hint:'4 hundreds is 400.', praise:'Yes — 4 hundreds is 400.'},
+    {prompt:'In the number 467, what is the 6 worth?', answer:60,
+     nudge:'The 6 is in the tens column.',
+     hint:'6 tens is 60.', praise:'Yes.'},
+    {prompt:'Write "five hundred and eight" as a numeral.', answer:508,
+     nudge:'There are no tens. What digit holds the tens column?',
+     hint:'Zero holds the tens place: 508.', praise:'Yes.'},
+    {prompt:'Write 350 in words.', words:true,
+     accept:function(v){ return N.wordsMatch(v,'three hundred and fifty'); },
+     nudge:'There are no ones, so nothing comes after the tens.',
+     hint:'It is "three hundred and fifty".', praise:'Yes.'}
+  ].forEach(function(q,i){ q.task='U3L2 Badge Q'+(i+1); Post.ask(lic,q); });
+})();
+</script>
+</body>
+</html>

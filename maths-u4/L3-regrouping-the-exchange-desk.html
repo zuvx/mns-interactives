@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Souq · Lesson 3: The Exchange Desk</title>
+<link rel="stylesheet" href="souq.css">
+<style>
+  .deskwrap{display:grid;grid-template-columns:2fr 1fr;gap:1rem;align-items:start;margin:.5rem 0}
+  .desk{display:grid;grid-template-columns:repeat(auto-fit,minmax(7rem,1fr));gap:.875rem}
+  .col{background:var(--sand);border-radius:14px;padding:.75rem;border:3px solid var(--sand-2)}
+  .col h3{margin:0 0 .5rem;text-align:center;color:var(--wood);font-size:1rem}
+  .bay{min-height:7.5rem;display:flex;flex-wrap:wrap;gap:.375rem;align-content:flex-start;justify-content:center}
+  .flat{width:3.25rem;height:3.25rem;border-radius:4px;background:var(--pom);border:2px solid var(--pom-deep);
+    background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.3) 0 5px,transparent 5px 8px),
+                     repeating-linear-gradient(90deg,rgba(255,255,255,.3) 0 5px,transparent 5px 8px);
+    animation:drop .25s ease}
+  .rod{width:1rem;height:5.5rem;border-radius:4px;background:var(--teal-2);border:2px solid var(--teal);
+    background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.35) 0 6px,transparent 6px 9px);
+    animation:drop .25s ease}
+  .cube{width:1.125rem;height:1.125rem;border-radius:3px;background:var(--gold);
+    border:2px solid var(--gold-deep);animation:drop .25s ease}
+  @keyframes drop{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+  .count{text-align:center;font-family:var(--display);font-size:1.125rem;color:var(--pom-deep);margin-top:.375rem}
+
+  /* Column method laid out as a real grid so the carry sits in its column */
+  .column{background:var(--paper);border:3px solid var(--teal-2);border-radius:14px;padding:.875rem;
+    font-family:var(--display);min-width:9rem}
+  .column .lbl{font-size:.8125rem;color:var(--wood);text-align:center;margin-bottom:.5rem;font-weight:700}
+  .cgrid{display:grid;grid-template-columns:1.4rem 1.6rem 1.6rem 1.6rem;justify-content:center;
+    font-size:1.375rem;text-align:center;row-gap:.1rem}
+  .cgrid .sml{font-size:.8125rem;color:var(--pom);min-height:1rem;line-height:1}
+  .cgrid .strike{position:relative;color:var(--wood);opacity:.55}
+  .cgrid .strike::after{content:"";position:absolute;left:15%;right:15%;top:50%;
+    border-top:2px solid var(--pom)}
+  .cgrid .ruleRow{grid-column:1/-1;border-top:3px solid var(--ink);margin:.15rem 0}
+  .cgrid .q{color:var(--wood);opacity:.4}
+
+  .calc{font-family:var(--display);font-size:1.5rem;text-align:center;color:var(--teal);margin:.75rem 0}
+  .step{background:var(--sand);border-radius:14px;padding:.75rem 1rem;font-weight:400;
+    min-height:1.75rem;text-align:center;font-size:1.0625rem}
+  .step b{color:var(--pom-deep)}
+
+  .gate{background:var(--paper);border:3px dashed var(--pom);border-radius:16px;
+    padding:1rem;margin:.75rem 0;text-align:center}
+  .gate p{margin:0 0 .625rem;font-family:var(--display);font-weight:700;font-size:1.0625rem;color:var(--pom-deep)}
+  .gatebtns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  .gatebtns button{border:3px solid var(--teal);background:var(--paper);color:var(--ink);cursor:pointer;
+    font-family:var(--display);font-weight:700;font-size:1.0625rem;min-height:var(--tap);
+    padding:.625rem 1.25rem;border-radius:12px}
+  .gatebtns button:active{transform:translateY(2px)}
+  .gatefb{margin-top:.625rem;font-weight:700;min-height:1.5rem}
+  .gatefb.good{color:var(--ok-deep)}
+  .gatefb.bad{color:var(--pom-deep)}
+
+  @media (max-width:760px){.deskwrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-lesson="l3">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-exchange"></use></svg>
+      <div><h1>The Exchange Desk</h1><p class="sub">Lesson 3 · Estimating, adding and subtracting 2-digit numbers</p></div>
+      <div class="pill">Unit 4 · Stage 3 · 3Ni.04</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="partition"><div class="ktext"><b>partition</b><span>Split a number into tens and ones.</span></div></div>
+      <div class="kcard" data-word="regroup"><div class="ktext"><b>exchange / regroup</b><span>Trade 10 ones for 1 ten (or 1 ten for 10 ones).</span></div></div>
+      <div class="kcard" data-word="estimate"><div class="ktext"><b>estimate</b><span>A sensible near answer, worked out first.</span></div></div>
+      <div class="kcard" data-word="difference"><div class="ktext"><b>difference</b><span>The answer to a subtraction.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-exchange"></use></svg> Money-changer training</span>
+    <h2>Welcome to the exchange desk</h2>
+    <p class="lead" data-read="Here is the whole secret of regrouping in one move. Ten small coins trade for one big coin, and back again.">
+      The whole secret in one move: <b>10 small coins trade for 1 big coin</b> — and back again.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-exchange"></use></svg>
+      <div><b>How this works.</b> For every calculation you do three things yourself:
+      <b>estimate</b> first, then <b>decide</b> whether you need an exchange, then <b>work out</b>
+      each step. Not every calculation needs the desk — spotting which is the real skill.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the desk</button></div>
+  </div></section>
+
+  <!-- Addition -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag">Adding at the desk</span>
+    <h2>Add the ones — then decide</h2>
+    <div class="pickrow" id="addPick" role="group" aria-label="Choose an addition"></div>
+    <div class="calc" id="addCalc"></div>
+    <div id="addEstZone"></div>
+
+    <div class="deskwrap">
+      <div class="desk" id="addDesk"></div>
+      <div class="column"><div class="lbl">Written method</div><div class="cgrid" id="addCol"></div></div>
+    </div>
+
+    <div class="gate" id="addGate" hidden>
+      <p id="addGateQ"></p>
+      <div class="gatebtns">
+        <button type="button" onclick="answerGate('add',true)">Yes — I must exchange</button>
+        <button type="button" onclick="answerGate('add',false)">No — no exchange needed</button>
+      </div>
+      <p class="gatefb" id="addGateFb" role="status"></p>
+    </div>
+
+    <div class="step" id="addStep"></div>
+    <div id="addWork"></div>
+    <div class="btnrow">
+      <button class="btn teal" type="button" id="addBtn" onclick="advance('add')"></button>
+      <button class="btn ghost" type="button" onclick="go(2)">Next: subtraction</button>
+    </div>
+  </div></section>
+
+  <!-- Subtraction -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag">Subtracting at the desk</span>
+    <h2>Not enough ones? Trade one ten for ten ones</h2>
+    <div class="pickrow" id="subPick" role="group" aria-label="Choose a subtraction"></div>
+    <div class="calc" id="subCalc"></div>
+    <div id="subEstZone"></div>
+
+    <div class="deskwrap">
+      <div class="desk" id="subDesk"></div>
+      <div class="column"><div class="lbl">Written method</div><div class="cgrid" id="subCol"></div></div>
+    </div>
+
+    <div class="gate" id="subGate" hidden>
+      <p id="subGateQ"></p>
+      <div class="gatebtns">
+        <button type="button" onclick="answerGate('sub',true)">No — I must exchange</button>
+        <button type="button" onclick="answerGate('sub',false)">Yes — there are enough ones</button>
+      </div>
+      <p class="gatefb" id="subGateFb" role="status"></p>
+    </div>
+
+    <div class="step" id="subStep"></div>
+    <div id="subWork"></div>
+    <div class="btnrow">
+      <button class="btn teal" type="button" id="subBtn" onclick="advance('sub')"></button>
+      <button class="btn ghost" type="button" onclick="go(3)">Licence office</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Licence Office</span>
+    <h2>Earn your Money-changer licence</h2>
+    <p class="lead" data-read="Answer these on screen. Then write the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Which of these needs an exchange? <b>34 + 5 · 26 + 28 · 47 − 3 · 62 − 25</b>.
+      Explain how you can tell <i>before</i> you start.<br>
+      2. Arrange <b>2, 5, 6, 3</b> into two 2-digit numbers. What is the greatest total you can make?
+      Show your working.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Souq Licence · Tier 3: Money-changer</h3>
+      <div style="font-weight:700">Stamp this when you can explain when and why you exchanged.</div>
+      <div><span class="stamp" id="stamp">APPROVED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my licence</button></div>
+    </div>
+    <p class="note">Teacher tip: this is the two-day lesson. Addition on day 1, subtraction on day 2.
+      Check the book work and the Session summary before recording the tier.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Souq · Stage 3 · Unit 4 Lesson 3 (3Ni.04). Works offline. No scores, no timers.</p>
+</div>
+
+<script src="souq.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Souq.init([
+    {icon:'exchange', label:'Welcome'},
+    {icon:'plus',     label:'Add'},
+    {icon:'minus',    label:'Subtract'},
+    {icon:'scroll',   label:'Licence'}
+  ], {onEnter:function(n){ if(n===3) Souq.renderMyWork(); }});
+
+  /* Collins WB p34 q2 and p35 q3. Both lists deliberately mix calculations
+     that DO and DO NOT regroup — without the contrast the rule a child
+     infers is "always exchange". */
+  var ADD=[[24,65],[36,28],[55,43],[45,37],[68,87]];
+  var SUB=[[77,23],[53,8],[64,35],[82,56],[93,45]];
+
+  var st={
+    add:{i:0, step:0, estOK:false, gateOK:false, workOK:false},
+    sub:{i:0, step:0, estOK:false, gateOK:false, workOK:false}
+  };
+
+  function pair(k){ return (k==='add'?ADD:SUB)[st[k].i]; }
+  function opSym(k){ return k==='add' ? ' + ' : ' − '; }
+  function answerOf(k){ var p=pair(k); return k==='add' ? p[0]+p[1] : p[0]-p[1]; }
+  function needsExchange(k){
+    var p=pair(k);
+    return k==='add' ? (p[0]%10)+(p[1]%10)>=10 : (p[1]%10)>(p[0]%10);
+  }
+
+  /* ---- Base-10 drawing, with a HUNDREDS column when the answer needs one.
+     68 + 87 = 155 must show 1 flat, 5 rods, 5 cubes — not 15 rods. ---- */
+  function drawDesk(kind, h, t, o, showH, hideCounts){
+    var host=document.getElementById(kind+'Desk');
+    var cols='';
+    if(showH){
+      cols+='<div class="col"><h3>HUNDREDS</h3><div class="bay" id="'+kind+'H" role="img"></div>'+
+            '<div class="count" id="'+kind+'Hn"></div></div>';
+    }
+    cols+='<div class="col"><h3>TENS</h3><div class="bay" id="'+kind+'T" role="img"></div>'+
+          '<div class="count" id="'+kind+'Tn"></div></div>'+
+          '<div class="col"><h3>ONES</h3><div class="bay" id="'+kind+'O" role="img"></div>'+
+          '<div class="count" id="'+kind+'On"></div></div>';
+    host.innerHTML=cols;
+
+    function fill(id, n, cls, label){
+      var el=document.getElementById(id);
+      if(!el) return;
+      var s='';
+      for(var i=0;i<n;i++) s+='<div class="'+cls+'"></div>';
+      el.innerHTML=s;
+      el.setAttribute('aria-label', n+' '+label);
+    }
+    // While a step is still asking for a quantity, show the blocks but NOT the
+    // number — otherwise the label counts them for the child.
+    var tLbl = hideCounts ? '? tens'  : t+' tens';
+    var oLbl = hideCounts ? '? ones'  : o+' ones';
+    if(showH){
+      fill(kind+'H', h, 'flat', 'hundred squares');
+      document.getElementById(kind+'Hn').textContent = hideCounts ? '? hundreds' : h+' hundred'+(h===1?'':'s');
+    }
+    fill(kind+'T', t, 'rod', 'tens rods');
+    fill(kind+'O', o, 'cube', 'ones cubes');
+    document.getElementById(kind+'Tn').textContent=tLbl;
+    document.getElementById(kind+'On').textContent=oLbl;
+  }
+
+  /* ---- Column method. The carry sits above its own column; the crossed-out
+     ten sits above the tens column. Question marks until the child answers. ---- */
+  function drawColumn(kind, cfg){
+    var p=pair(kind), a=p[0], b=p[1];
+    var at=Math.floor(a/10), ao=a%10, bt=Math.floor(b/10), bo=b%10;
+    var g=document.getElementById(kind+'Col');
+    var ans=cfg.answer;
+    var aStr = ans===undefined ? null : String(ans);
+    var h='';
+
+    // Row 1: small marks (carry for addition, exchange for subtraction)
+    h+='<div class="sml"></div>';
+    if(kind==='sub' && cfg.borrow){
+      h+='<div class="sml"></div><div class="sml">'+(at-1)+'</div><div class="sml">1'+ao+'</div>';
+    } else {
+      h+='<div class="sml"></div><div class="sml"></div><div class="sml"></div>';
+    }
+    // Row 2: first number
+    h+='<div></div>';
+    h+='<div></div>';
+    h+='<div'+(kind==='sub'&&cfg.borrow?' class="strike"':'')+'>'+at+'</div>';
+    h+='<div'+(kind==='sub'&&cfg.borrow?' class="strike"':'')+'>'+ao+'</div>';
+    // Row 3: operator + second number
+    h+='<div>'+(kind==='add'?'+':'−')+'</div><div></div><div>'+bt+'</div><div>'+bo+'</div>';
+    h+='<div class="ruleRow"></div>';
+    // Row 4: answer digits
+    if(aStr===null){
+      h+='<div></div><div class="q">?</div><div class="q">?</div><div class="q">?</div>';
+    } else {
+      var pad=aStr.length<3 ? new Array(4-aStr.length).join(' ') : '';
+      var digits=aStr.split('');
+      while(digits.length<3) digits.unshift('');
+      h+='<div></div>'+digits.map(function(d){ return '<div>'+d+'</div>'; }).join('');
+    }
+    // Row 5: addition carry, under the rule in the tens column
+    if(kind==='add' && cfg.carry){
+      h+='<div class="sml"></div><div class="sml"></div><div class="sml">1</div><div class="sml"></div>';
+    }
+    g.innerHTML=h;
+  }
+
+  /* ---- Estimates are a RANGE, not one right answer ----
+     Collins SB p20 estimates 65 + 28 as 60 + 30 = 90; strict "round half up"
+     would give 70 + 30 = 100. Both are sensible. Accept any multiple of ten
+     within 20 of the true answer, so the child is judged on sensibleness,
+     not on a rounding convention the book does not follow. */
+  function estimateOK(kind, v){
+    var real=answerOf(kind);
+    return v % 10 === 0 && Math.abs(v-real) <= 20;
+  }
+
+  function buildEstimate(kind){
+    var zone=document.getElementById(kind+'EstZone');
+    zone.innerHTML='';
+    var p=pair(kind);
+    Souq.ask(zone,{
+      prompt:'Estimate first. Round each number to the nearest 10, then '+
+             (kind==='add'?'add':'subtract')+'. Roughly what will '+p[0]+opSym(kind)+p[1]+' be?',
+      accept:function(v){ return estimateOK(kind,v); },
+      task:'L3 estimate '+p[0]+opSym(kind)+p[1],
+      nudge:'That is not close enough. Round '+p[0]+' and '+p[1]+' to the nearest 10 first, then '+
+            (kind==='add'?'add':'subtract')+' those.',
+      hint:'A sensible estimate is any multiple of 10 near the real answer. Try rounding '+
+           p[0]+' and '+p[1]+' each to the nearest ten.',
+      praise:'That is a sensible estimate.',
+      onSolved:function(){ st[kind].estOK=true; render(kind); }
+    });
+  }
+
+  window.answerGate=function(kind, saidExchange){
+    var need=needsExchange(kind);
+    var fb=document.getElementById(kind+'GateFb');
+    if(saidExchange===need){
+      fb.className='gatefb good';
+      fb.textContent = need
+        ? 'Correct — you will need the desk.'
+        : 'Correct — no exchange needed here.';
+      st[kind].gateOK=true;
+      Souq.record({task:'L3 predict '+pair(kind).join('/'), result:'correct in 1'});
+      render(kind);
+    } else {
+      fb.className='gatefb bad';
+      var p=pair(kind);
+      fb.textContent = kind==='add'
+        ? 'Look at the ones again: '+(p[0]%10)+' and '+(p[1]%10)+'. Do they make 10 or more?'
+        : 'Look at the ones again: you have '+(p[0]%10)+' and need to take away '+(p[1]%10)+'. Is that possible?';
+      Souq.record({task:'L3 predict '+pair(kind).join('/'), result:'tried wrong'});
+    }
+  };
+
+  /* ---- Step plans. Each step the child must WORK OUT is an ask. ---- */
+  function steps(kind){
+    var p=pair(kind), a=p[0], b=p[1];
+    var at=Math.floor(a/10), ao=a%10, bt=Math.floor(b/10), bo=b%10;
+    var ans=answerOf(kind), need=needsExchange(kind);
+    var showH = ans>99;
+
+    if(kind==='add'){
+      var onesSum=ao+bo;
+      var s=[
+        {cap:'Partition <b>'+a+'</b> into '+at*10+' and '+ao+'.',
+         h:0,t:at,o:ao, col:{}, cta:'Bring in '+b},
+        {cap:'Now add the ones.', h:0,t:at+bt,o:onesSum, col:{}, gate:true,
+         ask:{prompt:'How many ones altogether?  '+ao+' + '+bo+' = ?', answer:onesSum,
+              nudge:'Count the gold cubes in the ONES column.',
+              hint:ao+' + '+bo+' = '+onesSum+'.', praise:'Yes.'},
+         cta:'Next'}
+      ];
+      if(need){
+        s.push({cap:'You traded 10 ones for 1 ten at the desk.',
+          h:0,t:at+bt+1,o:onesSum-10, col:{carry:true},
+          ask:{prompt:'After the trade, how many tens are there?', answer:at+bt+1,
+               nudge:'You had '+(at+bt)+' tens and the desk gave you 1 more.',
+               hint:(at+bt)+' tens + 1 traded ten = '+(at+bt+1)+' tens.', praise:'Yes.'},
+          cta:'Next'});
+      } else {
+        s.push({cap:'No exchange needed — the ones stayed under ten.',
+          h:0,t:at+bt,o:onesSum, col:{},
+          ask:{prompt:'How many tens altogether?  '+at+' tens + '+bt+' tens = ?', answer:at+bt,
+               nudge:'Count the tens rods.',
+               hint:at+' + '+bt+' = '+(at+bt)+' tens.', praise:'Yes.'},
+          cta:'Next'});
+      }
+      s.push({cap:'Put the tens and the ones back together.',
+        h:showH?1:0, t:showH?Math.floor((ans-100)/10):Math.floor(ans/10), o:ans%10,
+        col:{carry:need, answer:ans}, showH:showH, done:true,
+        ask:{prompt:'So what is '+a+' + '+b+' ?', answer:ans,
+             nudge:'Add the tens and the ones you just found.',
+             hint:Math.floor(ans/10)*10+' + '+(ans%10)+' = '+ans+'.', praise:'Correct.'},
+        cta:'Pick another'});
+      s.forEach(function(x){ if(x.showH===undefined) x.showH=false; });
+      return s;
+    }
+
+    // subtraction
+    var s2=[
+      {cap:'Partition <b>'+a+'</b> into '+at*10+' and '+ao+'. You must take away '+b+'.',
+       h:0,t:at,o:ao, col:{}, cta:'Look at the ones'},
+      {cap:'You have '+ao+' ones and need to take away '+bo+'.',
+       h:0,t:at,o:ao, col:{}, gate:true, cta:'Next'}
+    ];
+    if(need){
+      s2.push({cap:'You traded 1 ten for 10 ones at the desk.',
+        h:0,t:at-1,o:ao+10, col:{borrow:true},
+        ask:{prompt:'After the trade, how many ones are there?', answer:ao+10,
+             nudge:'You had '+ao+' ones and the desk gave you 10 more.',
+             hint:ao+' + 10 = '+(ao+10)+' ones.', praise:'Yes.'},
+        cta:'Take the ones away'});
+      s2.push({cap:'Take away '+bo+' ones.',
+        h:0,t:at-1,o:(ao+10)-bo, col:{borrow:true},
+        ask:{prompt:'What is '+(ao+10)+' − '+bo+' ?', answer:(ao+10)-bo,
+             nudge:'Count back '+bo+' from '+(ao+10)+'.',
+             hint:(ao+10)+' − '+bo+' = '+((ao+10)-bo)+'.', praise:'Yes.'},
+        cta:'Take the tens away'});
+      s2.push({cap:'Now take away '+bt+' tens.',
+        h:0,t:at-1-bt,o:(ao+10)-bo, col:{borrow:true},
+        ask:{prompt:'You have '+(at-1)+' tens. What is '+(at-1)+' − '+bt+' tens?', answer:at-1-bt,
+             nudge:'Remember you gave one ten away at the desk.',
+             hint:(at-1)+' − '+bt+' = '+(at-1-bt)+' tens.', praise:'Yes.'},
+        cta:'Show the difference'});
+    } else {
+      s2.push({cap:'Enough ones — no exchange needed.',
+        h:0,t:at,o:ao-bo, col:{},
+        ask:{prompt:'What is '+ao+' − '+bo+' ones?', answer:ao-bo,
+             nudge:'Count back '+bo+' from '+ao+'.',
+             hint:ao+' − '+bo+' = '+(ao-bo)+'.', praise:'Yes.'},
+        cta:'Take the tens away'});
+      s2.push({cap:'Now take away '+bt+' tens.',
+        h:0,t:at-bt,o:ao-bo, col:{},
+        ask:{prompt:'What is '+at+' − '+bt+' tens?', answer:at-bt,
+             nudge:'Count back '+bt+' tens from '+at+' tens.',
+             hint:at+' − '+bt+' = '+(at-bt)+' tens.', praise:'Yes.'},
+        cta:'Show the difference'});
+    }
+    s2.push({cap:'Put the tens and the ones back together.',
+      h:0,t:Math.floor(ans/10),o:ans%10, col:{borrow:need, answer:ans}, done:true,
+      ask:{prompt:'So what is '+a+' − '+b+' ?', answer:ans,
+           nudge:'Put the tens and ones you just found together.',
+           hint:Math.floor(ans/10)*10+' + '+(ans%10)+' = '+ans+'.', praise:'Correct.'},
+      cta:'Pick another'});
+    s2.forEach(function(x){ if(x.showH===undefined) x.showH=false; });
+    return s2;
+  }
+
+  var currentAsk={add:null, sub:null};
+
+  function render(kind){
+    var s=st[kind], plan=steps(kind), f=plan[Math.min(s.step, plan.length-1)];
+    var p=pair(kind);
+
+    document.getElementById(kind+'Calc').textContent =
+      p[0]+opSym(kind)+p[1]+' =' + (f.done && s.workOK ? ' '+answerOf(kind) : '');
+
+    var btn=document.getElementById(kind+'Btn');
+    var gate=document.getElementById(kind+'Gate');
+    var stepEl=document.getElementById(kind+'Step');
+    var workEl=document.getElementById(kind+'Work');
+
+    if(!s.estOK){
+      drawDesk(kind, 0, 0, 0, false, false);
+      drawColumn(kind, {});
+      stepEl.innerHTML='Make your estimate first. A trader always knows roughly what to expect.';
+      workEl.innerHTML='';
+      btn.disabled=true; btn.textContent='Estimate first';
+      gate.hidden=true;
+      return;
+    }
+
+    // Hide the counts and the written answer while this step is still asking.
+    var pending = !!f.ask && !(currentAsk[kind] && currentAsk[kind].step===s.step
+                               && currentAsk[kind].handle.isSolved());
+    var col = {};
+    for(var ck in f.col) col[ck]=f.col[ck];
+    if(pending) delete col.answer;
+
+    drawDesk(kind, f.h, f.t, f.o, f.showH, pending);
+    drawColumn(kind, col);
+    stepEl.innerHTML=f.cap;
+
+    if(f.gate && !s.gateOK){
+      gate.hidden=false;
+      document.getElementById(kind+'GateQ').textContent = kind==='add'
+        ? 'The ones are '+(p[0]%10)+' and '+(p[1]%10)+'. Will you need an exchange?'
+        : 'You have '+(p[0]%10)+' ones and must take away '+(p[1]%10)+'. Are there enough?';
+      workEl.innerHTML='';
+      btn.disabled=true; btn.textContent='Decide first';
+      return;
+    }
+    gate.hidden=true;
+
+    // One ask per step; the child must solve it before moving on.
+    if(f.ask){
+      if(currentAsk[kind] && currentAsk[kind].step===s.step){
+        btn.disabled = !currentAsk[kind].handle.isSolved();
+      } else {
+        workEl.innerHTML='';
+        var cfg={};
+        for(var k in f.ask) cfg[k]=f.ask[k];
+        cfg.task='L3 '+p[0]+opSym(kind)+p[1]+' step '+(s.step+1);
+        cfg.onSolved=function(){
+          if(f.done){ s.workOK=true; }
+          btn.disabled=false;
+          render(kind);
+        };
+        currentAsk[kind]={step:s.step, handle:Souq.ask(workEl,cfg)};
+        btn.disabled=true;
+      }
+    } else {
+      workEl.innerHTML='';
+      currentAsk[kind]=null;
+      btn.disabled=false;
+    }
+
+    btn.textContent=f.cta;
+
+    if(f.done && s.workOK){
+      stepEl.innerHTML=f.cap+'<br><b>'+p[0]+opSym(kind)+p[1]+' = '+answerOf(kind)+'.</b> '+
+        'Check it against your estimate — were you close?';
+    }
+  }
+
+  window.advance=function(kind){
+    var plan=steps(kind);
+    if(st[kind].step < plan.length-1){ st[kind].step++; }
+    else { reset(kind, st[kind].i); return; }
+    render(kind);
+  };
+
+  function reset(kind, i){
+    st[kind]={i:i, step:0, estOK:false, gateOK:false, workOK:false};
+    currentAsk[kind]=null;
+    document.getElementById(kind+'GateFb').textContent='';
+    document.getElementById(kind+'Work').innerHTML='';
+    buildEstimate(kind);
+    render(kind);
+  }
+
+  function buildPick(kind, list){
+    var host=document.getElementById(kind+'Pick');
+    list.forEach(function(p,i){
+      var b=document.createElement('button');
+      b.type='button';
+      b.textContent=p[0]+opSym(kind)+p[1];
+      b.setAttribute('aria-pressed', i===0?'true':'false');
+      b.setAttribute('aria-label','Work out '+p[0]+opSym(kind)+p[1]);
+      b.addEventListener('click',function(){
+        Array.prototype.forEach.call(host.children,function(x,j){ x.setAttribute('aria-pressed',String(i===j)); });
+        reset(kind, i);
+      });
+      host.appendChild(b);
+    });
+  }
+
+  buildPick('add', ADD);
+  buildPick('sub', SUB);
+  reset('add', 0);
+  reset('sub', 0);
+
+  /* ============ Licence Office ============ */
+  var licHost=document.getElementById('licAsk');
+  [
+    {prompt:'Estimate first, then work it out: 45 + 38 = ?', answer:83,
+     nudge:'Add the ones: 5 + 8 = 13, so you will need an exchange.',
+     hint:'40 + 30 = 70, and 5 + 8 = 13. 70 + 13 = 83.', praise:'Correct.'},
+    {prompt:'82 − 47 = ?', answer:35,
+     nudge:'Are there enough ones? You have 2 and need to take away 7.',
+     hint:'Trade a ten: 82 becomes 7 tens and 12 ones. 12 − 7 = 5, and 7 − 4 = 3 tens. So 35.',
+     praise:'Correct.'},
+    {prompt:'Does 47 − 3 need an exchange? Type 1 for yes, 0 for no.', answer:0,
+     nudge:'You have 7 ones and need to take away 3. Is that possible without trading?',
+     hint:'7 is bigger than 3, so no trade is needed. Type 0.',
+     praise:'Right — not every calculation needs the desk.'},
+    {prompt:'Does 26 + 28 need an exchange? Type 1 for yes, 0 for no.', answer:1,
+     nudge:'Add the ones: 6 + 8. Is that 10 or more?',
+     hint:'6 + 8 = 14, which is more than ten, so you must trade. Type 1.',
+     praise:'Right.'}
+  ].forEach(function(q,i){
+    q.task='L3 Licence Q'+(i+1);
+    Souq.ask(licHost,q);
+  });
+
+})();
+</script>
+</body>
+</html>

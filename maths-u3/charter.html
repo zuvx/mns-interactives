@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Post Office · Postal Round</title>
+<link rel="stylesheet" href="post.css">
+<style>
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1rem 0}
+  .tier{background:var(--paper);border:4px solid var(--sand-2);border-radius:18px;padding:1.125rem;
+    text-align:center;transition:border-color .25s ease,background .25s ease}
+  .tier h3{margin:.25rem 0;color:var(--teal);font-size:1.1875rem}
+  .tier .obj{font-size:.8125rem;font-weight:700;color:var(--wood);margin-bottom:.5rem}
+  .tier .can{font-size:.9375rem;min-height:3.5rem}
+  .tier .mark{width:4rem;height:4rem;margin:0 auto .5rem;border-radius:50%;
+    background:var(--sand-2);color:var(--wood);display:flex;align-items:center;justify-content:center}
+  .tier .mark .icon{width:2.25rem;height:2.25rem}
+  .tier button{margin-top:.75rem;border:3px solid var(--teal);background:var(--paper);color:var(--teal);
+    font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;
+    min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;width:100%}
+  .tier[data-earned="true"]{border-color:var(--ok);background:#F1FAF4}
+  .tier[data-earned="true"] .mark{background:var(--ok);color:#fff}
+  .tier[data-earned="true"] button{background:var(--ok);border-color:var(--ok-deep);color:#fff}
+
+  .full{margin-top:1.25rem;background:var(--teal);color:var(--paper);border-radius:18px;
+    padding:1.5rem;text-align:center;opacity:.45;transition:opacity .4s ease}
+  .full.on{opacity:1}
+  .full h2{margin:0 0 .5rem;color:var(--paper);font-size:1.625rem}
+  .full .stamp{opacity:0}
+  .full.on .stamp{opacity:1;animation:thud .4s ease}
+</style>
+</head>
+<body data-lesson="u3charter">
+<div class="wrap">
+  <header>
+    <div class="franking"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-postbag"></use></svg>
+      <div><h1>Post Office's Charter</h1><p class="sub">Unit 3 · Reading and writing numbers to 1000 — all five levels</p></div>
+      <div class="pill">Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <div class="card">
+    <h2>Your round through the Post Office</h2>
+    <p class="lead">One level per lesson. A level is awarded when the team can <b>explain</b> the idea —
+      never for finishing first. Tap a level when you have earned it.</p>
+
+    <div class="tiers" id="tiers"></div>
+
+    <div class="full" id="full">
+      <h2>Full Post Office's Charter</h2>
+      <div style="font-weight:700">Awarded when all five levels are earned.</div>
+      <div><span class="stamp">CHARTER GRANTED</span></div>
+    </div>
+
+    <p class="note">Teacher: project this at the start of each lesson so the class sees the arc of the unit. Levels are tapped in class and are <b>not saved</b> — reopening the page clears them, by
+      design. Record the real award on the printed Badge Card.</p>
+  </div>
+
+  <p class="note">The Number Post Office · Cambridge Primary Stage 3 · Unit 3. Works offline. No scores, no timers.</p>
+</div>
+
+<script src="post.js"></script>
+<script>
+(function(){
+  'use strict';
+  Post.init([{icon:'medal', label:'Round'}]);
+
+  var TIERS=[
+    {n:1, name:'Sorter',      obj:'3Ni.01 · Numerals and words', mark:'sort',
+     can:'Can write any 3-digit number in words and in digits, and spell the number names.',
+     file:'L1-numerals-and-words-the-sorting-room.html'},
+    {n:2, name:'Weigher',     obj:'3Np.01 · Place value', mark:'scales',
+     can:'Can say what every digit is worth, and use zero to hold an empty column.',
+     file:'L2-place-value-the-parcel-scales.html'},
+    {n:3, name:'Deliverer',   obj:'3Nc.03 / 3Nc.05 · Even numbers', mark:'house',
+     can:'Can spot even numbers and carry on a sequence, saying the rule.',
+     file:'L3-even-numbers-even-street.html'},
+    {n:4, name:'Postmaster',  obj:'3Nc.03 / 3Nc.05 · Odd numbers', mark:'street',
+     can:'Can spot odd numbers whatever the other digits are, and extend a sequence.',
+     file:'L4-odd-numbers-odd-street.html'},
+    {n:5, name:'Ready',       obj:'Revision · Progress Check', mark:'clipboard',
+     can:'Has practised all five exam skills and is ready for the paper.',
+     file:'L5-revision-the-postal-exam.html'}
+  ];
+
+  var host=document.getElementById('tiers');
+  var earned=[false,false,false,false,false];
+
+  TIERS.forEach(function(t,i){
+    var d=document.createElement('div');
+    d.className='tier';
+    d.setAttribute('data-earned','false');
+    d.innerHTML=
+      '<div class="mark">'+Post.icon(t.mark)+'</div>'+
+      '<div class="obj">Level '+t.n+' · '+t.obj+'</div>'+
+      '<h3>'+t.name+'</h3>'+
+      '<p class="can">'+t.can+'</p>'+
+      '<button type="button" aria-pressed="false">Not yet earned</button>'+
+      '<p style="margin:.5rem 0 0"><a href="'+t.file+'" style="color:var(--teal);font-weight:700">Open lesson '+t.n+'</a></p>';
+    var btn=d.querySelector('button');
+    btn.setAttribute('aria-label','Mark level '+t.n+', '+t.name+', as earned');
+    btn.addEventListener('click',function(){
+      earned[i]=!earned[i];
+      d.setAttribute('data-earned', String(earned[i]));
+      btn.setAttribute('aria-pressed', String(earned[i]));
+      btn.textContent = earned[i] ? 'Earned' : 'Not yet earned';
+      var all=earned.every(Boolean);
+      document.getElementById('full').classList.toggle('on', all);
+      var live=document.getElementById('live');
+      if(live) live.textContent = all
+        ? 'All five levels earned. Full Postal Round complete.'
+        : 'Level '+t.n+' '+(earned[i]?'earned':'cleared')+'.';
+    });
+    host.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

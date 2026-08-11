@@ -1,0 +1,316 @@
+/* ============================================================
+   The Sweet Factory — shared stylesheet
+   Cambridge Primary Maths Stage 3 · Unit 1 · Counting and sequences (A)
+
+   Structure follows the proven Post Office sheet; the palette, the header and
+   the manipulatives are this unit's own.
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+
+/* ---- Typeface: Century Gothic, the school font ----
+   Monotype face that ships with Microsoft Office. NOT redistributable, so it
+   is never bundled, and iPads do not carry it. This stack resolves to the real
+   thing on any machine with Office and falls back to the geometric sans faces
+   iOS ships with: single-storey 'a', circular bowls, same genre. */
+
+:root{
+  --cream:#FFF6E9; --cream-2:#F6E7D2; --paper:#FFFDF8;
+  --liquorice:#2B2A4C; --liquorice-2:#454279;   /* darks, safe for text */
+  --rasp:#C8306A; --rasp-deep:#96154A;          /* the accent */
+  --lemon:#F0B429; --lemon-deep:#B9821A;        /* fills only, never text */
+  --mint:#2E9E7E; --mint-deep:#1C6E56;
+  --cocoa:#7A5C42; --ink:#241F1B;
+  --ok:#2E8B57; --ok-deep:#1B5E3A;
+  /* the three packing sizes, kept identical everywhere in the unit */
+  --crate:#2B2A4C; --crate-deep:#16152B;        /* 100 */
+  --tray:#F0B429;  --tray-deep:#B9821A;         /* 10  */
+  --one:#C8306A;   --one-deep:#96154A;          /* 1   */
+  --shadow:0 8px 0 rgba(122,92,66,.20);
+  --tap:56px;          /* primary manipulative */
+  --tap-min:48px;      /* everything else clickable */
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --display:var(--school);
+  --body:var(--school);
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{
+  margin:0;font-family:var(--body);font-size:1rem;line-height:1.5;
+  color:var(--ink);background:var(--cream);
+  background-image:
+    radial-gradient(circle at 14% 16%, rgba(200,48,106,.08), transparent 30%),
+    radial-gradient(circle at 86% 10%, rgba(46,158,126,.10), transparent 28%);
+  min-height:100vh;
+}
+h1,h2,h3,.display{font-family:var(--display);font-weight:700}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 3.75rem}
+
+:focus-visible{outline:4px solid var(--rasp);outline-offset:3px;border-radius:6px}
+:root[data-board] :focus-visible{outline-width:5px}
+
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-lg{width:1.6em;height:1.6em}
+
+/* ---- Header: a stick of seaside rock ---- */
+header{position:relative;margin-top:.5rem;border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.candy{height:1.625rem;background:repeating-linear-gradient(115deg,
+  var(--rasp) 0 16px, var(--paper) 16px 30px, var(--mint) 30px 46px, var(--paper) 46px 60px)}
+.head-body{background:var(--liquorice);color:var(--paper);padding:1rem 1.375rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-mark{font-size:2.125rem;line-height:1;color:var(--lemon);flex:0 0 auto}
+.head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.375rem);letter-spacing:.3px}
+.head-body .sub{margin:.125rem 0 0;font-weight:700;opacity:.94;font-size:.9375rem}
+.pill{margin-left:auto;background:var(--lemon);color:var(--ink);font-family:var(--display);
+  font-weight:600;padding:.5rem .875rem;border-radius:999px;font-size:.875rem;
+  box-shadow:0 3px 0 var(--lemon-deep)}
+
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0 0;justify-content:flex-end;align-items:center}
+.tool{border:3px solid var(--liquorice);background:var(--paper);color:var(--liquorice);
+  font-family:var(--display);font-weight:600;font-size:.9375rem;cursor:pointer;
+  min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;
+  display:inline-flex;align-items:center;gap:.5rem;transition:background .2s ease,color .2s ease}
+.tool[aria-pressed="true"]{background:var(--liquorice);color:var(--paper)}
+
+/* ---- Key words (EAL) ---- */
+.keys{margin:.875rem 0;background:var(--paper);border:3px dashed var(--lemon);
+  border-radius:16px;padding:.625rem .875rem}
+.keys summary{cursor:pointer;font-family:var(--display);font-weight:600;color:var(--liquorice);
+  font-size:1.0625rem;list-style:none;min-height:var(--tap-min);display:flex;align-items:center;gap:.5rem}
+.keys summary::-webkit-details-marker{display:none}
+.krow{display:flex;flex-wrap:wrap;gap:.625rem;margin-top:.75rem}
+.kcard{flex:1 1 200px;background:var(--cream);border-radius:12px;padding:.625rem .75rem;
+  border-left:6px solid var(--liquorice-2);display:flex;align-items:flex-start;gap:.5rem}
+.kcard .ktext{flex:1}
+.kcard b{font-family:var(--display);color:var(--rasp-deep);display:block;font-size:1rem}
+.kcard span{font-size:.875rem;font-weight:400}
+.say{flex:0 0 auto;border:none;background:var(--liquorice-2);color:var(--paper);cursor:pointer;
+  width:var(--tap-min);height:var(--tap-min);border-radius:10px;box-shadow:0 3px 0 var(--liquorice);
+  display:inline-flex;align-items:center;justify-content:center;font-size:1.125rem}
+.say:active{transform:translateY(2px)}
+
+.rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
+.rail button{flex:1 1 0;min-width:130px;min-height:var(--tap-min);border:none;cursor:pointer;
+  font-family:var(--display);font-weight:600;font-size:.875rem;padding:.625rem .5rem;
+  border-radius:12px;background:var(--cream-2);color:var(--cocoa);
+  box-shadow:0 3px 0 rgba(122,92,66,.18);transition:transform .08s,background .2s ease;
+  display:inline-flex;align-items:center;justify-content:center;gap:.375rem}
+.rail button[aria-current="step"]{background:var(--rasp);color:var(--paper);box-shadow:0 3px 0 var(--rasp-deep)}
+.rail button:active{transform:translateY(2px)}
+
+.screen{display:none;animation:pop .25s ease}
+.screen.on{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:20px;padding:1.375rem;box-shadow:var(--shadow);margin-top:.75rem}
+.card h2{margin:0 0 .25rem;font-size:clamp(1.3125rem,3.4vw,1.75rem);color:var(--liquorice)}
+.card h2:focus{outline:none}
+.lead{font-size:1.0625rem;font-weight:400;margin:.2em 0 1em}
+.tag{display:inline-flex;align-items:center;gap:.375rem;background:var(--lemon);color:var(--ink);
+  font-family:var(--display);font-weight:600;font-size:.8125rem;padding:.25rem .75rem;
+  border-radius:999px;margin-bottom:.5rem}
+
+.think{background:var(--cream);border-radius:14px;padding:.75rem 1rem;font-weight:400;
+  border-left:6px solid var(--liquorice-2);margin:.75rem 0;display:flex;gap:.625rem;align-items:flex-start}
+.think b{color:var(--rasp-deep)}
+.think .icon{flex:0 0 auto;margin-top:.15em;color:var(--liquorice)}
+
+.btn{border:none;cursor:pointer;font-family:var(--display);font-weight:600;font-size:1.125rem;
+  color:var(--paper);background:var(--rasp);padding:.8125rem 1.625rem;border-radius:14px;
+  min-height:var(--tap-min);box-shadow:0 4px 0 var(--rasp-deep);transition:transform .08s;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn:active{transform:translateY(3px)}
+.btn.dark{background:var(--liquorice);box-shadow:0 4px 0 #16152B}
+.btn.mint{background:var(--mint);box-shadow:0 4px 0 var(--mint-deep)}
+.btn.lemon{background:var(--lemon);color:var(--ink);box-shadow:0 4px 0 var(--lemon-deep)}
+.btn.ghost{background:transparent;color:var(--liquorice);box-shadow:none;border:3px solid var(--liquorice)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
+
+.pickrow{display:flex;gap:.75rem;flex-wrap:wrap;margin:.375rem 0 .875rem}
+.pickrow button{border:none;cursor:pointer;font-family:var(--display);font-weight:600;
+  font-size:1.0625rem;background:var(--cream-2);color:var(--cocoa);min-height:var(--tap-min);
+  padding:.625rem 1.125rem;border-radius:12px;box-shadow:0 3px 0 rgba(122,92,66,.18);
+  transition:background .2s ease,color .2s ease}
+.pickrow button[aria-pressed="true"]{background:var(--liquorice);color:var(--paper);box-shadow:0 3px 0 #16152B}
+.pickrow button:active{transform:translateY(2px)}
+
+/* ---- Ask box: where the child does the work ---- */
+.ask{background:var(--paper);border:3px solid var(--lemon);border-radius:16px;
+  padding:.875rem 1rem;margin:.75rem 0}
+.ask.solved{border-color:var(--ok);background:#F1FAF4}
+.ask-q{display:block;font-family:var(--display);font-weight:700;font-size:1.0625rem;
+  color:var(--rasp-deep);margin-bottom:.5rem}
+.ask.solved .ask-q{color:var(--ok-deep)}
+.ask-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.ask-row input{min-height:var(--tap);font-family:var(--display);font-size:1.5rem;
+  text-align:center;padding:.5rem;border-radius:12px;border:3px solid var(--lemon);
+  background:var(--paper);color:var(--ink);width:7rem}
+.ask-row input.words{width:min(22rem,100%);text-align:left;font-size:1.25rem}
+.ask-row input:disabled{background:var(--cream-2);opacity:1;border-color:var(--ok)}
+.ask-fb{margin:.5rem 0 0;font-weight:700;min-height:1.4rem;font-size:.9375rem}
+.ask-fb.good{color:var(--ok-deep)}
+.ask-fb.bad{color:var(--rasp-deep)}
+
+/* ---- Choice question: for answers a text box cannot mark fairly ---- */
+.choices{display:flex;flex-wrap:wrap;gap:.625rem;margin:.5rem 0}
+.choice{border:3px solid var(--liquorice);background:var(--paper);color:var(--ink);cursor:pointer;
+  font-family:var(--display);font-weight:700;font-size:1rem;min-height:var(--tap-min);
+  padding:.5rem 1rem;border-radius:12px;text-align:left}
+.choice:active:not(:disabled){transform:translateY(2px)}
+.choice[data-state="right"]{background:#E7F5EC;border-color:var(--ok);color:var(--ok-deep)}
+.choice[data-state="wrong"]{background:#FBE9EC;border-color:var(--rasp);color:var(--rasp-deep)}
+.choice:disabled{cursor:default}
+
+/* ---- The three packing sizes ---- */
+.packrow{display:flex;flex-wrap:wrap;gap:.625rem;justify-content:center;margin:.75rem 0;min-height:3.5rem}
+.pack{display:inline-flex;align-items:center;justify-content:center;color:#fff;
+  font-family:var(--display);font-weight:700;animation:drop .25s ease}
+.pack.crate{width:3.5rem;height:3.5rem;border-radius:8px;background:var(--crate);
+  border:3px solid var(--crate-deep);font-size:1rem}
+.pack.tray{width:3.5rem;height:1.75rem;border-radius:6px;background:var(--tray);
+  border:3px solid var(--tray-deep);color:var(--ink);font-size:.875rem}
+.pack.one{width:1.75rem;height:1.75rem;border-radius:50%;background:var(--one);
+  border:3px solid var(--one-deep);font-size:.75rem}
+@keyframes drop{from{transform:translateY(-10px);opacity:0}to{transform:none;opacity:1}}
+
+/* ---- Digit display: which digits changed, which stayed ---- */
+.digits{display:flex;gap:.625rem;justify-content:center;margin:.75rem 0}
+.digit{width:4rem;min-height:var(--tap);border-radius:12px;border:3px solid var(--cream-2);
+  background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:2rem;color:var(--liquorice)}
+.digit .lbl{font-size:.6875rem;color:var(--cocoa);letter-spacing:.5px}
+.digit.h{border-color:var(--crate)} .digit.t{border-color:var(--tray-deep)} .digit.o{border-color:var(--one)}
+.digit.changed{background:#FFF3D6;animation:flash .5s ease}
+@keyframes flash{0%{background:var(--lemon)}100%{background:#FFF3D6}}
+
+/* ---- Pairing machine: even is pairs, odd is pairs and one left over ---- */
+.pairs{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;align-items:flex-end;
+  margin:.75rem 0;min-height:4.5rem}
+.pair{display:flex;flex-direction:column;gap:.25rem;padding:.25rem;border-radius:10px;
+  background:var(--cream);border:3px solid var(--mint)}
+.pair.lonely{border-color:var(--rasp);border-style:dashed}
+.sweet{width:1.75rem;height:1.75rem;border-radius:50%;background:var(--one);
+  border:3px solid var(--one-deep)}
+.pair.lonely .sweet{background:var(--lemon);border-color:var(--lemon-deep)}
+.leftover-note{text-align:center;font-family:var(--display);font-weight:700;color:var(--rasp-deep)}
+
+/* ---- Sharing chute: two equal chutes, or one left in the hopper ---- */
+.chutes{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.75rem 0}
+.chute{flex:1 1 8rem;max-width:12rem;min-height:6rem;border-radius:14px;background:var(--cream);
+  border:3px solid var(--cream-2);padding:.5rem;display:flex;flex-wrap:wrap;gap:.375rem;
+  align-content:flex-start;justify-content:center}
+.chute h4{width:100%;margin:0 0 .25rem;text-align:center;font-size:.875rem;color:var(--cocoa)}
+.chute.equal{border-color:var(--mint)}
+.chute.spare{border-color:var(--rasp);border-style:dashed}
+
+/* ---- Carroll diagram (Collins uses one in the Student's Book) ---- */
+.carroll{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0}
+.carroll-col{flex:1 1 14rem;background:var(--cream);border:3px solid var(--cream-2);
+  border-radius:14px;padding:.625rem;min-height:6rem}
+.carroll-col h4{margin:0 0 .5rem;text-align:center;font-size:1rem;color:var(--liquorice)}
+.carroll-col .slot{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.numchip{border:3px solid var(--cocoa);background:var(--paper);color:var(--ink);cursor:pointer;
+  min-width:4.5rem;min-height:var(--tap);border-radius:12px;font-family:var(--display);
+  font-weight:700;font-size:1.125rem;padding:.5rem .625rem}
+.numchip[data-state="right"]{background:#E7F5EC;border-color:var(--ok);color:var(--ok-deep)}
+.numchip[data-state="wrong"]{background:#FBE9EC;border-color:var(--rasp);color:var(--rasp-deep)}
+.numchip:disabled{cursor:default}
+
+/* ---- The estimating jar ----
+   The lid closes so the child cannot count. No countdown is shown: the point
+   is that there was not enough time, not that time is running out. */
+.jar{position:relative;margin:.75rem auto;max-width:26rem;min-height:13rem;border-radius:0 0 24px 24px;
+  border:5px solid var(--liquorice);border-top-width:14px;background:var(--paper);
+  padding:.75rem;overflow:hidden}
+.jar .scatter{position:relative;height:11rem}
+.jar .scatter i{position:absolute;width:1.125rem;height:1.125rem;border-radius:50%;display:block}
+.jar[data-lid="closed"] .scatter{visibility:hidden}
+.jar .lidmsg{position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+  text-align:center;font-family:var(--display);font-weight:700;color:var(--cocoa);padding:1rem}
+.jar[data-lid="closed"] .lidmsg{display:flex}
+.jar .grouped{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.jar .tenbox{display:grid;grid-template-columns:repeat(5,1fr);gap:.25rem;padding:.25rem;
+  border:3px solid var(--tray-deep);border-radius:8px;background:#FFF7E4}
+.jar .tenbox i{width:1rem;height:1rem;border-radius:50%;display:block}
+.jar .tenbox.part{border-style:dashed;border-color:var(--rasp)}
+
+.rangecards{display:flex;flex-wrap:wrap;gap:.625rem;justify-content:center;margin:.75rem 0}
+
+/* ---- Sequence strip ---- */
+.seq{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;align-items:center;margin:.75rem 0}
+/* Each step is one unit so a wrap can never leave a "+10" at the end of a line
+   pointing at nothing, with its box orphaned on the line below. */
+.seqstep{display:inline-flex;align-items:center;gap:.5rem}
+.seqbox{min-width:5.5rem;min-height:var(--tap);border-radius:12px;border:3px solid var(--liquorice);
+  background:var(--paper);display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:1.375rem;color:var(--liquorice)}
+.seqbox.blank{border-style:dashed;border-color:var(--cocoa);color:var(--cocoa)}
+.seq .arrow{font-family:var(--display);font-weight:700;color:var(--cocoa);font-size:1.125rem}
+
+/* ---- Feedback ---- */
+.verdict{font-family:var(--display);font-size:1.25rem;text-align:center;min-height:1.75rem;margin-top:.625rem}
+.verdict.good{color:var(--ok-deep)}
+.verdict.bad{color:var(--rasp-deep)}
+
+/* ---- The Jar: points ---- */
+.sweetjar{display:inline-flex;align-items:center;gap:.5rem;margin-right:auto;
+  background:var(--lemon);color:var(--ink);border:3px solid var(--lemon-deep);
+  border-radius:999px;padding:.375rem 1rem;min-height:var(--tap-min);
+  font-family:var(--display);font-weight:700}
+.sweetjar .icon-lg{color:var(--rasp-deep)}
+.sweetjar-n{font-size:1.5rem;line-height:1}
+.sweetjar-l{font-size:.8125rem;opacity:.85}
+.sweetjar.pop{animation:jarpop .45s ease}
+@keyframes jarpop{
+  0%{transform:scale(1)} 35%{transform:scale(1.18);box-shadow:0 0 0 8px rgba(240,180,41,.35)}
+  100%{transform:scale(1);box-shadow:none}
+}
+
+/* ---- Badge ---- */
+.quest{background:var(--cream);border-radius:14px;padding:.875rem 1rem;margin:.625rem 0;
+  border-left:6px solid var(--liquorice-2);font-weight:400}
+.quest .q{font-family:var(--display);font-weight:700;color:var(--rasp-deep);font-size:1rem;margin-bottom:.25rem}
+.badge{margin-top:1rem;background:var(--liquorice);color:var(--paper);border-radius:18px;
+  padding:1.25rem;text-align:center}
+.badge h3{margin:0 0 .375rem;font-size:1.5rem}
+.stamp{display:inline-block;margin-top:.625rem;border:5px double var(--paper);border-radius:50%;
+  padding:.75rem 1.25rem;font-family:var(--display);font-size:1.125rem;transform:rotate(-8deg);
+  opacity:0;transition:opacity .3s}
+.stamp.on{opacity:1;animation:thud .4s ease}
+@keyframes thud{0%{transform:rotate(-8deg) scale(1.6);opacity:0}60%{opacity:1}100%{transform:rotate(-8deg) scale(1)}}
+
+/* ---- End-of-lesson panel the child shows the teacher ---- */
+.mywork{background:var(--liquorice);color:var(--paper);border-radius:18px;padding:1.125rem;
+  text-align:center;margin-top:1rem}
+.mywork h3{margin:0 0 .375rem;color:var(--paper);font-size:1.25rem}
+.mywork .big{font-family:var(--display);font-size:3rem;line-height:1.1;color:var(--lemon)}
+.mywork .code{margin-top:.625rem;font-family:var(--display);font-size:1rem;
+  background:rgba(255,255,255,.15);border-radius:10px;padding:.375rem .75rem;display:inline-block}
+.mywork .breakdown{margin-top:.75rem;text-align:left;background:rgba(255,255,255,.1);
+  border-radius:12px;padding:.625rem .875rem}
+.mywork .breakdown summary{cursor:pointer;font-family:var(--display);font-weight:700;
+  min-height:var(--tap-min);display:flex;align-items:center}
+.mywork .breakdown ul{margin:.5rem 0 0;padding-left:1.25rem}
+.mywork .breakdown li{font-size:.875rem;margin-bottom:.25rem}
+.mywork .jar-note{margin:.75rem 0 0;font-weight:700;font-size:.9375rem}
+
+/* ---- Teacher session summary ---- */
+.summary{margin-top:1rem;background:var(--paper);border:3px solid var(--liquorice-2);
+  border-radius:16px;padding:1rem 1.125rem;display:none}
+.summary.show{display:block}
+.summary h3{margin:0 0 .5rem;color:var(--liquorice);font-size:1.1875rem}
+.summary ul{margin:.5rem 0 0;padding-left:1.25rem}
+.summary li{font-size:.9375rem;margin-bottom:.25rem}
+.summary .none{font-weight:400;opacity:.8}
+.summary .privacy{font-size:.8125rem;color:var(--cocoa);margin-top:.75rem;font-weight:700}
+
+.note{font-size:.8125rem;font-weight:700;color:var(--cocoa);margin-top:1.125rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}}

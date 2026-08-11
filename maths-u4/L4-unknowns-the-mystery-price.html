@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Souq · Lesson 4: The Mystery Price</title>
+<link rel="stylesheet" href="souq.css">
+<style>
+  .stall{background:var(--sand);border-radius:16px;padding:1.375rem;text-align:center;
+    border:3px solid var(--sand-2);margin:.375rem 0}
+  .eq{font-family:var(--display);font-size:clamp(1.5rem,5vw,2.125rem);color:var(--teal);line-height:1.6}
+  .unknown{display:inline-block;background:var(--pom);color:var(--paper);border-radius:12px;
+    padding:.125rem .875rem;box-shadow:0 3px 0 var(--pom-deep);font-style:normal}
+  .story{font-weight:700;margin-top:.5rem;color:var(--wood)}
+  .reveal{background:var(--paper);border:3px dashed var(--teal-2);border-radius:14px;
+    padding:.875rem 1rem;margin-top:.75rem;display:none;font-weight:700;font-size:1.0625rem}
+  .reveal.show{display:block;animation:pop .25s ease}
+  .opq{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0}
+  .opq button{flex:1 1 200px;border:3px solid var(--teal);background:var(--paper);color:var(--ink);
+    cursor:pointer;font-family:var(--display);font-weight:700;font-size:1.0625rem;
+    min-height:var(--tap);padding:.75rem;border-radius:14px}
+  .opq button:active{transform:translateY(2px)}
+  .forms{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.625rem;margin:.75rem 0}
+  .form{background:var(--paper);border:3px solid var(--gold);border-radius:12px;padding:.75rem;
+    text-align:center;font-family:var(--display);font-weight:700;font-size:1.25rem;
+    cursor:pointer;color:var(--ink);min-height:var(--tap)}
+  .form.wrong{background:#FBE7E4;border-color:var(--pom);color:var(--pom-deep)}
+  .form.right{background:#E5F4EB;border-color:var(--ok);color:var(--ok-deep)}
+</style>
+</head>
+<body data-lesson="l4">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><h1>The Mystery Price</h1><p class="sub">Lesson 4 · Using objects for unknown quantities</p></div>
+      <div class="pill">Unit 4 · Stage 3 · 3Nc.04</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="unknown"><div class="ktext"><b>unknown</b><span>A value we do not know yet — an object stands in for it.</span></div></div>
+      <div class="kcard" data-word="inverse"><div class="ktext"><b>inverse</b><span>The opposite operation. Use it to find the unknown.</span></div></div>
+      <div class="kcard" data-word="sum"><div class="ktext"><b>sum / total</b><span>The answer to an addition.</span></div></div>
+      <div class="kcard" data-word="difference"><div class="ktext"><b>difference</b><span>The answer to a subtraction.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Merchant training</span>
+    <h2>A price tag has fallen off!</h2>
+    <p class="lead" data-read="In the souq, an object can stand for a price we do not know. Use the link between adding and taking away to uncover it.">
+      In the souq, an object can stand for a price we do not know. Use the link between adding and
+      taking away to uncover it.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><b>How this works.</b> You work out every hidden price yourself. After each one you
+      say <b>which operation</b> you used. A hint appears if you get stuck twice — try first.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Enter the mystery stall</button></div>
+  </div></section>
+
+  <!-- Equals sign -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-balance"></use></svg> Before we start</span>
+    <h2>The equals sign means "the same as"</h2>
+    <p class="lead" data-read="It does not mean the answer comes next. All four of these say the same thing.">
+      It does <b>not</b> mean "the answer comes next". All four of these say the same thing:</p>
+    <div class="stall"><div class="eq">4 + 5 = 9 &nbsp;·&nbsp; 5 + 4 = 9 &nbsp;·&nbsp; 9 = 5 + 4 &nbsp;·&nbsp; 9 = 4 + 5</div></div>
+    <p class="lead" id="formQ"></p>
+    <div class="forms" id="forms" role="group" aria-label="Choose every correct way to write it"></div>
+    <p class="verdict" id="formV"></p>
+    <div class="btnrow">
+      <button class="btn teal" type="button" onclick="nextForm()">Another one</button>
+      <button class="btn ghost" type="button" onclick="go(2)">Next: the mystery prices</button>
+    </div>
+  </div></section>
+
+  <!-- Solve -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Solve the mystery price</span>
+    <h2>Find the hidden value</h2>
+    <div class="pickrow" id="pick" role="group" aria-label="Choose a puzzle"></div>
+    <div class="stall">
+      <div class="eq" id="eq"></div>
+      <div class="story" id="story"></div>
+    </div>
+    <div id="solveAsk"></div>
+
+    <div id="opZone" hidden>
+      <p style="font-weight:700" data-read="Which operation did you use to find the hidden price?">
+        Which operation did you use to find it?</p>
+      <div class="opq">
+        <button type="button" onclick="chooseOp('add')">I added</button>
+        <button type="button" onclick="chooseOp('sub')">I subtracted</button>
+      </div>
+      <p class="verdict" id="opV"></p>
+    </div>
+
+    <div class="reveal" id="rev" role="status"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: make your own</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-puzzle"></use></svg> Make your own mystery</span>
+    <h2>Set a puzzle for someone else</h2>
+    <p class="lead" data-read="In your maths book, choose a shape to hide a price. Write a true fact about it. Solve your own puzzle first to check it has one clear answer, then swap with a partner.">
+      In your <b>maths book</b>: choose a shape to hide a price and write a true fact about it.</p>
+    <div class="stall">
+      <div class="eq">▲ + ____ = ____</div>
+      <div class="story">…or ____ − ▲ = ____ . You decide the numbers so it works.</div>
+    </div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Rule check:</b> solve your own puzzle first, to be sure it has <b>one</b> clear answer.
+      Then swap with a partner.</div></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Back</button>
+      <button class="btn" type="button" onclick="go(4)">Licence office</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Licence Office</span>
+    <h2>Earn your Merchant licence</h2>
+    <p class="lead" data-read="Answer these on screen. Then write the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Rewrite <b>6 + 3 = 9</b> in three more ways. Then do the same for <b>7 = 2 + 5</b>.<br>
+      2. Choose <b>☐ + 25 = 50</b> or <b>40 − ☐ = 23</b>. Solve it, then write a number story to match.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Souq Licence · Tier 4: Merchant</h3>
+      <div style="font-weight:700">Stamp this when you can explain which inverse you used.</div>
+      <div><span class="stamp" id="stamp">APPROVED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my licence</button></div>
+    </div>
+    <p class="note">All four tiers done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the tier.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Souq · Stage 3 · Unit 4 Lesson 4 (3Nc.04). Works offline. No scores, no timers.</p>
+</div>
+
+<script src="souq.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Souq.init([
+    {icon:'search', label:'Welcome'},
+    {icon:'balance',label:'Equals'},
+    {icon:'search', label:'Solve'},
+    {icon:'puzzle', label:'Create'},
+    {icon:'scroll', label:'Licence'}
+  ], {onEnter:function(n){ if(n===4) Souq.renderMyWork(); }});
+
+  /* ============ Equation forms (WB p36 q1) ============ */
+  var FORMS=[
+    {base:'4 + 6 = 10', ok:['6 + 4 = 10','10 = 4 + 6','10 = 6 + 4'], no:['10 + 4 = 6','4 = 10 + 6']},
+    {base:'10 = 8 + 2', ok:['8 + 2 = 10','2 + 8 = 10','10 = 2 + 8'], no:['8 = 10 + 2','2 = 8 + 10']},
+    {base:'6 + 3 = 9',  ok:['3 + 6 = 9','9 = 6 + 3','9 = 3 + 6'],    no:['9 + 3 = 6','6 = 9 + 3']},
+    {base:'7 = 2 + 5',  ok:['2 + 5 = 7','5 + 2 = 7','7 = 5 + 2'],    no:['7 + 2 = 5','2 = 7 + 5']}
+  ];
+  var formI=-1;
+  function shuffle(a){
+    var r=a.slice();
+    for(var i=r.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=r[i]; r[i]=r[j]; r[j]=t; }
+    return r;
+  }
+  window.nextForm=function(){
+    formI=(formI+1)%FORMS.length;
+    var f=FORMS[formI];
+    document.getElementById('formQ').innerHTML='Here is <b>'+f.base+'</b>. Tap <b>every</b> box that says the same thing.';
+    var host=document.getElementById('forms');
+    host.innerHTML='';
+    shuffle(f.ok.concat(f.no)).forEach(function(txt){
+      var b=document.createElement('button');
+      b.type='button'; b.className='form'; b.textContent=txt;
+      b.addEventListener('click',function(){
+        if(b.classList.contains('right')||b.classList.contains('wrong')) return;
+        var correct=f.ok.indexOf(txt)!==-1;
+        b.classList.add(correct?'right':'wrong');
+        var vv=document.getElementById('formV');
+        if(correct){
+          vv.className='verdict good';
+          vv.textContent=txt+' — yes. Both sides are worth the same.';
+        } else {
+          vv.className='verdict bad';
+          vv.textContent=txt+' — no. Work out each side. Are they really equal?';
+        }
+        Souq.record({task:'L4 Equals ('+f.base+')', result:correct?'correct in 1':'tried '+txt});
+      });
+      host.appendChild(b);
+    });
+    var v=document.getElementById('formV'); v.className='verdict'; v.textContent='';
+  };
+  nextForm();
+
+  /* ============ Mystery prices ============
+     Collins SB p21 and WB pp36-37. The two-car puzzle is in the source; the
+     hint reasons through equal shares because this unit is addition and
+     subtraction, and Collins uses no division sign here. */
+  var P=[
+    {icon:'⚽', name:'ball', eq:'<span class="unknown">⚽</span> + $12 = $20', ans:8, op:'sub',
+     story:"We do not know the price of the ball.",
+     nudge:'The ball and $12 together make $20. What takes you from $12 up to $20?',
+     hint:'$20 − $12 = $8, so the ball costs $8. Check: $8 + $12 = $20.'},
+    {icon:'🧸', name:'doll', eq:'$20 − <span class="unknown">🧸</span> = $15', ans:5, op:'sub',
+     story:"We do not know the price of the doll.",
+     nudge:'You start with $20 and end with $15. How much was taken away?',
+     hint:'$20 − $15 = $5, so the doll costs $5. Check: $20 − $5 = $15.'},
+    {icon:'🚗', name:'toy car', eq:'<span class="unknown">🚗</span> + <span class="unknown">🚗</span> + $4 = $16', ans:6, op:'sub',
+     story:'Two toy cars cost the same as each other. Find the price of ONE car.',
+     nudge:'Take the $4 off first. What is left is the price of TWO cars.',
+     hint:'$16 − $4 = $12 for two cars. The cars cost the same, so half of $12 is $6 each. Check: $6 + $6 + $4 = $16.'},
+    {icon:'▲', name:'triangle', eq:'17 − <span class="unknown">▲</span> = 9', ans:8, op:'sub',
+     story:'Find the missing number.',
+     nudge:'You start at 17 and end at 9. How far apart are they?',
+     hint:'17 − 9 = 8, so the triangle is 8. Check: 17 − 8 = 9.'},
+    {icon:'■', name:'square', eq:'<span class="unknown">■</span> + 40 = 70', ans:30, op:'sub',
+     story:'Find the missing number.',
+     nudge:'Something plus 40 makes 70. What is the gap between 40 and 70?',
+     hint:'70 − 40 = 30, so the square is 30. Check: 30 + 40 = 70.'},
+    {icon:'●', name:'circle', eq:'<span class="unknown">●</span> − 29 = 21', ans:50, op:'add',
+     story:'Careful — this one goes the other way.',
+     nudge:'Something take away 29 leaves 21. To get back to the start, put the 29 back.',
+     hint:'21 + 29 = 50, so the circle is 50. Check: 50 − 29 = 21.'}
+  ];
+
+  var cur=0;
+  var pick=document.getElementById('pick');
+  P.forEach(function(p,i){
+    var b=document.createElement('button');
+    b.type='button'; b.textContent=p.icon; b.style.fontSize='1.5rem';
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','Puzzle '+(i+1)+': the '+p.name);
+    b.addEventListener('click',function(){ load(i); });
+    pick.appendChild(b);
+  });
+
+  function load(i){
+    cur=i;
+    Array.prototype.forEach.call(pick.children,function(b,j){ b.setAttribute('aria-pressed',String(i===j)); });
+    document.getElementById('eq').innerHTML=P[i].eq;
+    document.getElementById('eq').setAttribute('aria-label',
+      P[i].eq.replace(/<[^>]+>/g,'').replace(P[i].icon,'the '+P[i].name));
+    document.getElementById('story').textContent=P[i].story;
+    document.getElementById('rev').classList.remove('show');
+    document.getElementById('opZone').hidden=true;
+    var ov=document.getElementById('opV'); ov.className='verdict'; ov.textContent='';
+
+    var host=document.getElementById('solveAsk');
+    host.innerHTML='';
+    Souq.ask(host,{
+      prompt:'What is the hidden value of the '+P[i].name+'?',
+      answer:P[i].ans,
+      task:'L4 '+P[i].name,
+      nudge:P[i].nudge,
+      hint:P[i].hint,
+      praise:'Correct.',
+      onSolved:function(){
+        document.getElementById('opZone').hidden=false;
+        var r=document.getElementById('rev');
+        r.textContent='Inverse: '+P[i].hint;
+        r.classList.add('show');
+      }
+    });
+  }
+
+  // One award per puzzle, however many times the buttons are tapped.
+  var opAwarded={}, opTries={};
+  window.chooseOp=function(op){
+    var v=document.getElementById('opV');
+    opTries[cur]=(opTries[cur]||0)+1;
+    if(op===P[cur].op){
+      v.className='verdict good';
+      v.textContent = op==='sub'
+        ? 'Yes — you subtracted to undo an addition. That is the inverse.'
+        : 'Yes — you added to undo a subtraction. That is the inverse.';
+      if(!opAwarded[cur]){
+        opAwarded[cur]=true;
+        Souq.record({task:'L4 which inverse ('+P[cur].name+')', result:'correct in '+opTries[cur]});
+      }
+    } else {
+      v.className='verdict bad';
+      v.textContent = P[cur].op==='sub'
+        ? 'Look again. The unknown was being added to something, so you undo it by taking away.'
+        : 'Look again. Something was taken away from the unknown, so you undo it by adding it back.';
+      Souq.record({task:'L4 which inverse ('+P[cur].name+')', result:'tried '+op});
+    }
+  };
+
+  load(0);
+
+  /* ============ Licence Office ============ */
+  var licHost=document.getElementById('licAsk');
+  [
+    {prompt:'14 + ? = 20', answer:6,
+     nudge:'How far is it from 14 up to 20?',
+     hint:'20 − 14 = 6, so the missing number is 6.', praise:'Yes.'},
+    {prompt:'18 − ? = 13', answer:5,
+     nudge:'You start at 18 and end at 13. How much was taken away?',
+     hint:'18 − 13 = 5, so the missing number is 5.', praise:'Yes.'},
+    {prompt:'? − 11 = 19', answer:30,
+     nudge:'Careful — this one goes the other way. Put the 11 back.',
+     hint:'19 + 11 = 30, so the missing number is 30.', praise:'Yes — you added to undo a subtraction.'},
+    {prompt:'5 more than an unknown number is 50. What is the number?', answer:45,
+     nudge:'The number plus 5 makes 50. Take the 5 back off.',
+     hint:'50 − 5 = 45.', praise:'Yes.'}
+  ].forEach(function(q,i){
+    q.task='L4 Licence Q'+(i+1);
+    Souq.ask(licHost,q);
+  });
+
+})();
+</script>
+</body>
+</html>

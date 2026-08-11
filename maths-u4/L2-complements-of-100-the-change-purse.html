@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Souq · Lesson 2: The Change Purse</title>
+<link rel="stylesheet" href="souq.css">
+<style>
+  .grid100{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:26rem;
+    margin:.625rem auto;padding:.5rem;background:var(--sand);border-radius:12px}
+  .cell{aspect-ratio:1;border-radius:3px;background:var(--paper);border:1px solid var(--sand-2)}
+  .cell.paid{background:var(--gold);border-color:var(--gold-deep)}
+  .cell.change{background:var(--teal-2);border-color:var(--teal)}
+  .cell.over{background:var(--pom);border-color:var(--pom-deep)}
+  .eqline{font-family:var(--display);font-size:1.625rem;text-align:center;color:var(--pom-deep);margin:.5rem 0}
+  .coinbtns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.375rem}
+  .coin{border:none;cursor:pointer;border-radius:999px;font-family:var(--display);font-weight:700;
+    color:var(--ink);background:var(--gold);box-shadow:0 3px 0 var(--gold-deep);
+    min-height:var(--tap);min-width:var(--tap);padding:.625rem 1.125rem;font-size:1.0625rem}
+  .coin.minus{background:var(--wood);color:var(--paper);box-shadow:0 3px 0 #3f2716}
+  .coin:active{transform:translateY(2px)}
+  .coinbtns[hidden]{display:none}
+
+  .family{background:var(--sand);border-radius:16px;padding:1rem;margin:.75rem 0;
+    border-left:6px solid var(--teal-2);display:none}
+  .family.show{display:block;animation:pop .25s ease}
+  .family h3{margin:0 0 .5rem;color:var(--teal);font-size:1.0625rem}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.5rem}
+  .fact{background:var(--paper);border:3px solid var(--gold);border-radius:12px;
+    padding:.625rem;text-align:center;font-family:var(--display);font-weight:700;font-size:1.125rem}
+  .fact.sub{border-color:var(--teal-2)}
+
+  .balloons{display:flex;flex-wrap:wrap;gap:.625rem;justify-content:center;margin:.75rem 0}
+  .balloon{border:3px solid var(--teal);background:var(--paper);color:var(--ink);cursor:pointer;
+    width:var(--tap);height:var(--tap);border-radius:50%;font-family:var(--display);
+    font-weight:700;font-size:1.0625rem}
+  .balloon[aria-pressed="true"]{background:var(--teal);color:var(--paper)}
+  .balloon.matched{background:var(--ok);border-color:var(--ok-deep);color:#fff;cursor:default}
+</style>
+</head>
+<body data-lesson="l2">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-purse"></use></svg>
+      <div><h1>The Change Purse</h1><p class="sub">Lesson 2 · Complements of 100 and multiples of 100</p></div>
+      <div class="pill">Unit 4 · Stage 3 · 3Ni.03</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="complement"><div class="ktext"><b>complement</b><span>The amount you add to reach a total (to 100).</span></div></div>
+      <div class="kcard" data-word="commutative"><div class="ktext"><b>commutative</b><span>Swap the order — the total stays the same.</span></div></div>
+      <div class="kcard" data-word="inverse"><div class="ktext"><b>inverse</b><span>The opposite fact: if 65 + 35 = 100 then 100 − 35 = 65.</span></div></div>
+      <div class="kcard" data-word="total"><div class="ktext"><b>total</b><span>The whole amount — here, 100.</span></div></div>
+      <div class="kcard" data-word="multiple of one hundred"><div class="ktext"><b>multiple of 100</b><span>100, 200, 300 … up to 1000.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-coin"></use></svg> Cashier training</span>
+    <h2>Welcome to the change purse, cashier!</h2>
+    <p class="lead" data-read="A customer pays. Your job is to give the exact change so the purse always makes one hundred. You work it out first, then build it with coins to check.">
+      A customer pays. Your job: give the exact change so the purse makes <b>100</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-purse"></use></svg>
+      <div><b>How this works.</b> You <b>work out</b> the change first and type it in.
+      Only then do you get the coins, to build it and check you were right.
+      The secret: if you know pairs to <b>10</b>, you know pairs to <b>100</b> and <b>1000</b>.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the purse</button></div>
+  </div></section>
+
+  <!-- Make 100 -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-coin"></use></svg> Make 100</span>
+    <h2>Give the exact change to 100</h2>
+    <p class="lead" data-read="Choose an amount the customer paid. Work out the change in your head, then type it in.">
+      Choose what the customer paid. Then <b>work out the change</b> in your head.</p>
+    <div class="pickrow" id="parts" role="group" aria-label="Choose the amount paid"></div>
+
+    <div id="mainAsk"></div>
+
+    <div class="grid100" id="grid" role="img" aria-label="A hundred square"></div>
+    <p class="eqline" id="eq">? + ? = ?</p>
+    <div class="coinbtns" id="coins" hidden>
+      <button class="coin minus" type="button" onclick="chg(-10)" aria-label="Take away ten">−10</button>
+      <button class="coin minus" type="button" onclick="chg(-1)" aria-label="Take away one">−1</button>
+      <button class="coin" type="button" onclick="chg(1)" aria-label="Add one">+1</button>
+      <button class="coin" type="button" onclick="chg(5)" aria-label="Add five">+5</button>
+      <button class="coin" type="button" onclick="chg(10)" aria-label="Add ten">+10</button>
+    </div>
+    <p class="verdict" id="v"></p>
+
+    <div class="family" id="fam">
+      <h3>You now know all four facts</h3>
+      <div class="facts" id="famFacts"></div>
+    </div>
+
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: pair the balloons</button></div>
+  </div></section>
+
+  <!-- Balloons -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-puzzle"></use></svg> Pair the balloons</span>
+    <h2>Find the pairs that total 100</h2>
+    <p class="lead" data-read="Tap two balloons that add up to one hundred. There are five pairs to find.">
+      Tap two balloons that add up to <b>100</b>. There are <b>five</b> pairs.</p>
+    <div class="balloons" id="balloons" role="group" aria-label="Balloons to pair"></div>
+    <p class="verdict" id="bv"></p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Think:</b> what do the ones digits always add up to? What about the tens?</div></div>
+    <div class="btnrow">
+      <button class="btn ghost" type="button" onclick="resetBalloons()">Start again</button>
+      <button class="btn ghost" type="button" onclick="go(3)">Next: the big purse</button>
+    </div>
+  </div></section>
+
+  <!-- Big purse -->
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-purse"></use></svg> The big purse</span>
+    <h2>One fact you know unlocks three more</h2>
+    <p class="lead" data-read="You already know your pairs to ten. Use them to work out the bigger ones.">
+      You already know your pairs to <b>10</b>. Use them to work out the bigger ones.</p>
+    <div class="pickrow" id="tenpick" role="group" aria-label="Choose a pairs to ten fact"></div>
+    <div id="growAsk"></div>
+
+    <h3 style="color:var(--teal);margin-top:1.5rem">Complements of a multiple of 100</h3>
+    <p class="lead" data-read="It does not have to be one hundred or one thousand. Choose a target and work out the missing part.">
+      It does not have to be 100 or 1000. Choose a target and find the missing part.</p>
+    <div class="pickrow" id="multiPick" role="group" aria-label="Choose a target total"></div>
+    <div id="multiAsk"></div>
+
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Malachi says:</b> <i>"I know 7 + 2 = 9, so 70 + 20 = 90 and 700 + 200 = 900."</i>
+      Is he right? You will answer this at the Licence Office.</div></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Back</button>
+      <button class="btn" type="button" onclick="go(4)">Licence office</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Licence Office</span>
+    <h2>Earn your Cashier licence</h2>
+    <p class="lead" data-read="Answer these on screen. Then write the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Choose the pair <b>61 and 39</b>. Write the <b>two addition</b> facts and the <b>two subtraction</b> facts.<br>
+      2. Ruth thinks <b>57 + 43 = 90</b>. Do you agree? Explain why.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Souq Licence · Tier 2: Cashier</h3>
+      <div style="font-weight:700">Stamp this when you can explain the pairs-to-10 secret.</div>
+      <div><span class="stamp" id="stamp">APPROVED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my licence</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the tier.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Souq · Stage 3 · Unit 4 Lesson 2 (3Ni.03). Works offline. No scores, no timers.</p>
+</div>
+
+<script src="souq.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Souq.init([
+    {icon:'coin',   label:'Welcome'},
+    {icon:'coin',   label:'Make 100'},
+    {icon:'puzzle', label:'Balloons'},
+    {icon:'purse',  label:'Big purse'},
+    {icon:'scroll', label:'Licence'}
+  ], {onEnter:function(n){ if(n===4) Souq.renderMyWork(); }});
+
+  /* ============ Make 100 ============
+     The child works out the complement BEFORE getting the coins. The page
+     never prints "x more to reach 100" — that was the answer, given away. */
+  var PARTS=[65,40,85,33,76,92];
+  var part=PARTS[0], change=0, unlocked=false;
+
+  var partsRow=document.getElementById('parts');
+  PARTS.forEach(function(p,i){
+    var b=document.createElement('button');
+    b.type='button';
+    b.textContent='Paid '+p;
+    b.setAttribute('aria-pressed', i===0?'true':'false');
+    b.setAttribute('aria-label','The customer paid '+p);
+    b.addEventListener('click',function(){ setPart(i); });
+    partsRow.appendChild(b);
+  });
+
+  var grid=document.getElementById('grid');
+  for(var i=0;i<100;i++){ var c=document.createElement('div'); c.className='cell'; grid.appendChild(c); }
+
+  function tensOnes(n){
+    var t=Math.floor(n/10), o=n%10;
+    return t+' tens and '+o+' one'+(o===1?'':'s');
+  }
+
+  function setPart(i){
+    part=PARTS[i]; change=0; unlocked=false;
+    Array.prototype.forEach.call(partsRow.children,function(b,j){
+      b.setAttribute('aria-pressed', String(i===j));
+    });
+    document.getElementById('fam').classList.remove('show');
+    document.getElementById('coins').hidden=true;
+    var v=document.getElementById('v'); v.className='verdict'; v.textContent='';
+
+    var host=document.getElementById('mainAsk');
+    host.innerHTML='';
+    Souq.ask(host,{
+      prompt:'The customer paid '+part+'. How much change makes it up to 100?',
+      answer:100-part,
+      task:'L2 complement of '+part,
+      nudge:'Not quite. '+part+' is '+tensOnes(part)+'. How many more ones make a ten, and how many more tens make 100?',
+      hint:'Fill the ones first: '+(part%10)+' needs '+((10-part%10)%10)+' more to make a ten. '+
+           'Then count the tens up to 100.',
+      praise:'Correct.',
+      onSolved:function(){
+        unlocked=true;
+        document.getElementById('coins').hidden=false;
+        document.getElementById('v').textContent='Now build it with the coins to check.';
+        paint();
+      }
+    });
+    paint();
+  }
+
+  /* Overshooting IS allowed now. A child who cannot make the mistake
+     never learns to spot and correct it. */
+  window.chg=function(d){
+    if(!unlocked) return;
+    change=Math.max(0, Math.min(100-part+20, change+d));
+    paint();
+  };
+
+  function paint(){
+    var cells=grid.children;
+    for(var i=0;i<100;i++){
+      cells[i].className='cell';
+      if(i<part) cells[i].classList.add('paid');
+      else if(i<part+change) cells[i].classList.add('change');
+    }
+    var total=part+change;
+    document.getElementById('eq').textContent = unlocked
+      ? part+' + '+change+' = '+total
+      : part+' + ? = 100';
+    grid.setAttribute('aria-label', unlocked
+      ? 'Hundred square: '+part+' paid, '+change+' change'
+      : 'Hundred square: '+part+' paid, change not worked out yet');
+
+    if(!unlocked) return;
+
+    var v=document.getElementById('v');
+    if(total===100){
+      v.className='verdict good';
+      v.textContent='The purse makes exactly 100.';
+      showFamily(part, change);
+    } else if(total>100){
+      v.className='verdict bad';
+      v.textContent='That is over 100. Take some change back.';
+      document.getElementById('fam').classList.remove('show');
+    } else {
+      v.className='verdict';
+      v.textContent='Keep building — the purse is not full yet.';
+      document.getElementById('fam').classList.remove('show');
+    }
+  }
+
+  function showFamily(a,b){
+    document.getElementById('famFacts').innerHTML=
+      '<div class="fact">'+a+' + '+b+' = 100</div>'+
+      '<div class="fact">'+b+' + '+a+' = 100</div>'+
+      '<div class="fact sub">100 − '+a+' = '+b+'</div>'+
+      '<div class="fact sub">100 − '+b+' = '+a+'</div>';
+    document.getElementById('fam').classList.add('show');
+  }
+
+  setPart(0);
+
+  /* ============ Balloons ============ */
+  var BV=[5,15,25,35,45,55,65,75,85,95];
+  var selected=[], matched=[];
+  var bHost=document.getElementById('balloons');
+
+  function buildBalloons(){
+    bHost.innerHTML='';
+    BV.forEach(function(val,i){
+      var b=document.createElement('button');
+      b.type='button'; b.className='balloon'; b.textContent=val;
+      b.setAttribute('aria-pressed','false');
+      b.setAttribute('aria-label','Balloon '+val);
+      b.addEventListener('click',function(){ pickBalloon(i,b); });
+      bHost.appendChild(b);
+    });
+  }
+  function pickBalloon(i,btn){
+    if(matched.indexOf(i)!==-1) return;
+    var at=selected.indexOf(i);
+    if(at!==-1){ selected.splice(at,1); btn.setAttribute('aria-pressed','false'); return; }
+    selected.push(i);
+    btn.setAttribute('aria-pressed','true');
+    if(selected.length===2) checkPair();
+  }
+  function checkPair(){
+    var a=BV[selected[0]], b=BV[selected[1]], v=document.getElementById('bv');
+    if(a+b===100){
+      selected.forEach(function(i){
+        matched.push(i);
+        var el=bHost.children[i];
+        el.classList.add('matched');
+        el.setAttribute('aria-pressed','false');
+        el.setAttribute('aria-label','Balloon '+BV[i]+', matched');
+      });
+      var left=5-matched.length/2;
+      v.className='verdict good';
+      v.textContent=a+' + '+b+' = 100. '+(left===0 ? 'All five pairs found.' : left+' pair'+(left===1?'':'s')+' left.');
+      Souq.record({task:'L2 Balloons', result:'correct in 1'});
+    } else {
+      v.className='verdict bad';
+      v.textContent='Those two do not make 100. Look at the ones digits — what do they need to add up to?';
+      selected.forEach(function(i){ bHost.children[i].setAttribute('aria-pressed','false'); });
+      Souq.record({task:'L2 Balloons', result:'tried '+a+' + '+b});
+    }
+    selected=[];
+  }
+  window.resetBalloons=function(){
+    selected=[]; matched=[]; buildBalloons();
+    var v=document.getElementById('bv'); v.className='verdict'; v.textContent='';
+  };
+  buildBalloons();
+
+  /* ============ Big purse ============ */
+  var TENS=[[7,3],[6,4],[8,2],[5,5],[9,1]];
+  var tp=document.getElementById('tenpick');
+  TENS.forEach(function(t,i){
+    var b=document.createElement('button');
+    b.type='button';
+    b.textContent=t[0]+' + '+t[1]+' = 10';
+    b.setAttribute('aria-pressed','false');
+    b.setAttribute('aria-label','Use the fact '+t[0]+' plus '+t[1]+' equals 10');
+    b.addEventListener('click',function(){
+      Array.prototype.forEach.call(tp.children,function(x,j){ x.setAttribute('aria-pressed',String(i===j)); });
+      var host=document.getElementById('growAsk');
+      host.innerHTML='';
+      Souq.ask(host,{
+        prompt:'You know '+t[0]+' + '+t[1]+' = 10.  So what is '+(t[0]*10)+' + '+(t[1]*10)+' ?',
+        answer:100,
+        task:'L2 grow to 100 ('+t[0]+'+'+t[1]+')',
+        nudge:'These are tens. '+t[0]+' tens and '+t[1]+' tens — how many tens altogether?',
+        hint:t[0]+' tens + '+t[1]+' tens = 10 tens, and 10 tens is 100.',
+        praise:'Yes.'
+      });
+      Souq.ask(host,{
+        prompt:'And what is '+(t[0]*100)+' + '+(t[1]*100)+' ?',
+        answer:1000,
+        task:'L2 grow to 1000 ('+t[0]+'+'+t[1]+')',
+        nudge:'These are hundreds now. '+t[0]+' hundreds and '+t[1]+' hundreds.',
+        hint:t[0]+' hundreds + '+t[1]+' hundreds = 10 hundreds, and 10 hundreds is 1000.',
+        praise:'Yes — one fact you knew unlocked three.'
+      });
+    });
+    tp.appendChild(b);
+  });
+
+  /* Complements of a MULTIPLE of 100 (WB p33 q5) */
+  var MULTI=[[400,200],[700,300],[600,100],[900,400],[1000,700]];
+  var mp=document.getElementById('multiPick');
+  MULTI.forEach(function(m,i){
+    var totalV=m[0], known=m[1], miss=totalV-known;
+    var b=document.createElement('button');
+    b.type='button';
+    b.textContent=known+' + ? = '+totalV;
+    b.setAttribute('aria-pressed','false');
+    b.setAttribute('aria-label','Find what adds to '+known+' to make '+totalV);
+    b.addEventListener('click',function(){
+      Array.prototype.forEach.call(mp.children,function(x,j){ x.setAttribute('aria-pressed',String(i===j)); });
+      var host=document.getElementById('multiAsk');
+      host.innerHTML='';
+      Souq.ask(host,{
+        prompt:known+' + ? = '+totalV,
+        answer:miss,
+        task:'L2 multiples '+known+' to '+totalV,
+        nudge:'Think in hundreds. '+(known/100)+' hundreds — how many more make '+(totalV/100)+' hundreds?',
+        hint:(known/100)+' + '+(miss/100)+' = '+(totalV/100)+', so '+known+' + '+miss+' = '+totalV+'.',
+        praise:'Yes.',
+        onSolved:function(){
+          Souq.ask(host,{
+            prompt:'Now the inverse: '+totalV+' − '+known+' = ?',
+            answer:miss,
+            task:'L2 multiples inverse '+totalV+' − '+known,
+            nudge:'You just found this number. Taking away undoes adding.',
+            hint:'Because '+known+' + '+miss+' = '+totalV+', we know '+totalV+' − '+known+' = '+miss+'.',
+            praise:'Yes — the same fact family.'
+          });
+        }
+      });
+    });
+    mp.appendChild(b);
+  });
+
+  /* ============ Licence Office ============ */
+  var licHost=document.getElementById('licAsk');
+  [
+    {prompt:'What is the complement of 100 for 76?', answer:24,
+     nudge:'76 is 7 tens and 6 ones. How many more ones make a ten?',
+     hint:'6 + 4 = 10, so you need 4 ones. Then 80 + 20 = 100, so the answer is 24.',
+     praise:'Yes.'},
+    {prompt:'If 45 + 55 = 100, what is 100 − 55 ?', answer:45,
+     nudge:'Use the fact you were just given. Taking away undoes adding.',
+     hint:'45 + 55 = 100, so 100 − 55 must be 45.',
+     praise:'Yes — that is the inverse.'},
+    {prompt:'Malachi says 700 + 200 = 900. What is 900 − 200 ?', answer:700,
+     nudge:'Think in hundreds: 9 hundreds take away 2 hundreds.',
+     hint:'9 − 2 = 7, so 900 − 200 = 700. Malachi was right.',
+     praise:'Yes — Malachi was right.'},
+    {prompt:'700 + ? = 1000', answer:300,
+     nudge:'Think in hundreds: 7 hundreds, how many more make 10 hundreds?',
+     hint:'7 + 3 = 10, so 700 + 300 = 1000.',
+     praise:'Yes.'}
+  ].forEach(function(q,i){
+    q.task='L2 Licence Q'+(i+1);
+    Souq.ask(licHost,q);
+  });
+
+})();
+</script>
+</body>
+</html>

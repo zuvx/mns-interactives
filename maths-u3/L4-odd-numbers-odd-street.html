@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Post Office · Lesson 4: Odd Street</title>
+<link rel="stylesheet" href="post.css">
+</head>
+<body data-lesson="u3l4">
+<div class="wrap">
+
+  <header>
+    <div class="franking"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-street"></use></svg>
+      <div>
+        <h1>Odd Street</h1>
+        <p class="sub">Lesson 4 · Reading and writing odd numbers to 1000</p>
+      </div>
+      <div class="pill">Unit 3 · Stage 3 · 3Nc.05</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-letter"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="sequence"><div class="ktext"><b>sequence</b><span>Numbers that follow a pattern, like 214, 216, 218.</span></div></div>
+      <div class="kcard" data-word="odd number"><div class="ktext"><b>odd number</b><span>A number that cannot be shared into two equal groups. There is always 1 left over.</span></div></div>
+      <div class="kcard" data-word="increase"><div class="ktext"><b>increase</b><span>Make bigger. The sequence increases each step.</span></div></div>
+      <div class="kcard" data-word="digit"><div class="ktext"><b>digit</b><span>One of the symbols 0 to 9.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-van"></use></svg> Today&#8217;s round</span>
+    <h2>Welcome to Odd Street</h2>
+    <p class="lead" data-read="Every house on Odd Street has an odd number. The even ones are on the road opposite.">Every house on <b>Odd Street</b> has an odd number. The even ones are on the road opposite.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-house"></use></svg>
+      <div><b>How to spot them.</b> Look at the last digit only. If it is 1, 3, 5, 7 or 9, the number is odd. A number can have an 8 in it and still be odd: 189 ends in 9, so it is odd.</div></div>
+    <p style="font-weight:700">Three stops, then your badge:</p>
+    <ul style="line-height:2">
+      <li><b>Stop 1</b> — deliver only to the houses on Odd Street.</li>
+      <li><b>Stop 2</b> — the round follows a sequence. Work out the next doors.</li>
+      <li><b>Stop 3</b> — write the door numbers on the labels, in words and digits.</li>
+    </ul>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-house"></use></svg> Stop 1 · Deliver to the right side</span>
+    <h2>Which houses are on Odd Street?</h2>
+    <p class="lead" data-read="Tap only the houses with odd numbers. The others are on the road opposite.">
+      Tap only the houses with <b>odd</b> numbers. The rest are on the road opposite.</p>
+    <div id="sortHost"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Think:</b> you only need to look at the <b>last digit</b>. The hundreds and tens
+      make no difference at all.</div></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next stop</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-van"></use></svg> Stop 2 · The round in order</span>
+    <h2>Work out the next doors</h2>
+    <p class="lead" data-read="The van drives along the street in order. Find the rule, then work out the doors that come next.">
+      The van drives along in order. Find the <b>rule</b> first, then the next doors.</p>
+    <h3 style="color:var(--navy)">Round A — along the street</h3>
+    <div id="seqA"></div>
+    <h3 style="color:var(--navy);margin-top:1.5rem">Round B — a different street each time</h3>
+    <p style="font-weight:700;color:var(--kraft)">Same door number, but the hundreds go up.</p>
+    <div id="seqB"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next stop</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pencil"></use></svg> Stop 3 · Write the labels</span>
+    <h2>Numbers into words, words into numbers</h2>
+    <p class="lead" data-read="Write each door number in words. Then do the same the other way round.">
+      Write each door number <b>in words</b>. Then the same the other way round.</p>
+    <h3 style="color:var(--navy)">Digits to words</h3>
+    <div id="wordsHost"></div>
+    <h3 style="color:var(--navy);margin-top:1.5rem">Words to digits</h3>
+    <div id="numHost"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Go to the badge office</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-stamp"></use></svg> Badge Office</span>
+    <h2>Earn your Postmaster badge</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+    <div id="licAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Write all the different 3-digit <b>odd</b> numbers you can make from the digits
+      <b>7, 5 and 6</b>. Write each one as a numeral and in words.<br>
+      2. Manu thinks it is impossible to make an odd 3-digit number that has an 8 in it. Is he right? Explain your thinking and give examples.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Post Office Badge · Level 4: Postmaster</h3>
+      <div style="font-weight:700">Stamp this when you can spot odd numbers and carry on a sequence.</div>
+      <div><span class="stamp" id="stamp">DELIVERED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn brass" type="button" id="stampBtn">Stamp my badge</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the level.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Number Post Office · Stage 3 · Unit 3 Lesson 4 (3Ni.01, 3Np.01, 3Nc.02, 3Nc.03, 3Nc.05). Works offline. No timers.</p>
+</div>
+
+<script src="numwords.js"></script>
+<script src="post.js"></script>
+<script src="street.js"></script>
+<script>
+(function(){
+  'use strict';
+  var N = window.NumWords;
+
+  Post.init([
+    {icon:'van',    label:'Start'},
+    {icon:'house',  label:'The street'},
+    {icon:'van',    label:'Sequence'},
+    {icon:'pencil', label:'Labels'},
+    {icon:'stamp',  label:'Badge'}
+  ], {onEnter:function(n){ if(n===4) Post.renderMyWork(); }});
+
+  Street.buildSort({
+    host: document.getElementById('sortHost'),
+    houses: [143, 705, 267, 409, 452, 352, 811, 630],
+    want: 'odd',
+    streetName: 'Odd Street',
+    taskPrefix: 'U3L4 Street'
+  });
+
+  Street.buildSequence({
+    host: document.getElementById('seqA'),
+    start: 219, step: 2, shown: 3, blanks: 3,
+    taskPrefix: 'U3L4 Round A'
+  });
+  Street.buildSequence({
+    host: document.getElementById('seqB'),
+    start: 223, step: 100, shown: 3, blanks: 2,
+    taskPrefix: 'U3L4 Round B'
+  });
+
+  Street.buildWordsSet({
+    host: document.getElementById('wordsHost'),
+    numbers: [231, 453, 579, 117, 805],
+    taskPrefix: 'U3L4 Words'
+  });
+  Street.buildNumeralSet({
+    host: document.getElementById('numHost'),
+    numbers: [513, 307, 845, 911, 209],
+    taskPrefix: 'U3L4 Numeral'
+  });
+
+  var lic = document.getElementById('licAsk');
+  [
+    {prompt:'Is 189 odd? Type 1 for yes, 0 for no.', answer:1,
+     nudge:'Look at the last digit only. Does the 8 matter?',
+     hint:'189 ends in 9, so it is odd. The 8 in the middle makes no difference.',
+     praise:'Yes — only the last digit decides.'},
+    {prompt:'What is the next odd number after 499?', answer:501,
+     nudge:'Add 2 to 499.',
+     hint:'499 + 2 = 501.', praise:'Correct.'},
+    {prompt:'Write the odd number 805 in words.', words:true,
+     accept:function(v){ return N.wordsMatch(v,'eight hundred and five'); },
+     nudge:'There are no tens. We do not say the zero.',
+     hint:'It is "eight hundred and five".', praise:'Correct.'},
+    {prompt:'Write "nine hundred and eleven" as a numeral.', answer:911,
+     nudge:'9 hundreds, 1 ten, 1 one.',
+     hint:'It is 911.', praise:'Correct.'}
+  ].forEach(function(q,i){ q.task='U3L4 Badge Q'+(i+1); Post.ask(lic,q); });
+})();
+</script>
+</body>
+</html>

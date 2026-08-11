@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sweet Factory · Lesson 4: The Sweet Jar</title>
+<link rel="stylesheet" href="factory.css">
+</head>
+<body data-lesson="u1l4">
+<div class="wrap">
+
+  <header>
+    <div class="candy"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg>
+      <div>
+        <h1>The Sweet Jar</h1>
+        <p class="sub">Lesson 4 · Estimating</p>
+      </div>
+      <div class="pill">Unit 1 · Stage 3 · 3Nc.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-sweet"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="estimate"><div class="ktext"><b>estimate</b><span>A sensible guess. Not a wild one, and not the exact answer.</span></div></div>
+      <div class="kcard" data-word="approximately"><div class="ktext"><b>approximately</b><span>About. Close to, but not exactly.</span></div></div>
+      <div class="kcard" data-word="range"><div class="ktext"><b>range</b><span>Two numbers with the answer somewhere in between, like 40 to 50.</span></div></div>
+      <div class="kcard" data-word="sensible"><div class="ktext"><b>sensible</b><span>It could really be true. 1000 sweets in a small jar is not sensible.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <!-- 0 Welcome -->
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Quality control</span>
+    <h2>Nobody has time to count them all</h2>
+    <p class="lead" data-read="Jars come past you fast. You cannot count every sweet, so you estimate. An estimate is a sensible guess, and a range is even better than a single number.">
+      Jars come past you fast. You cannot count every sweet, so you <b>estimate</b>.
+      An estimate is a <b>sensible guess</b> — and a <b>range</b> is even better than one number,
+      because it gives the answer somewhere to hide.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>You will not be marked on being exact.</b> An estimate is allowed to be a bit out.
+      What it must be is <b>sensible</b>. Getting a sensible range is the skill.</div></div>
+    <p style="font-weight:700">How each jar works:</p>
+    <ul style="line-height:2">
+      <li>Press <b>Look!</b> The lid opens for a moment, then shuts again.</li>
+      <li>Choose a <b>range</b> you think the answer sits inside.</li>
+      <li>Then tip the jar out, group the sweets in <b>tens</b>, and count for real.</li>
+    </ul>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start quality control</button></div>
+  </div></section>
+
+  <!-- 1 Sensible or silly -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Station 1 · Sensible or silly?</span>
+    <h2>Which estimates make sense?</h2>
+    <p class="lead" data-read="Before you estimate anything yourself, judge somebody else's. Four workers looked at the same jar of about forty sweets.">
+      Before you estimate anything yourself, judge somebody else's. Four workers looked at the
+      <b>same</b> jar and wrote these down.</p>
+    <div id="sensible"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Think:</b> an estimate that is a bit out is a good estimate. An estimate that could
+      never be true is not an estimate at all — it is a wild guess.</div></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next station</button></div>
+  </div></section>
+
+  <!-- 2 Jar one -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Station 2 · Jar A</span>
+    <h2>Take a look, then estimate</h2>
+    <p class="lead" data-read="Press Look. The lid opens for a moment. Do not try to count them, just get a feel for how full it is.">
+      Press <b>Look!</b> Do not try to count — just get a feel for how full it is.</p>
+    <div id="jarA"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next jar</button></div>
+  </div></section>
+
+  <!-- 3 Jar two -->
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Station 3 · Jar B</span>
+    <h2>A fuller jar</h2>
+    <p class="lead" data-read="This jar has more in it. Use what you learned from Jar A to help you.">
+      This jar has more in it. Use what you learned from Jar A.</p>
+    <div id="jarB"></div>
+    <div id="whyRange"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Go to the badge office</button></div>
+  </div></section>
+
+  <!-- 4 Badge -->
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Badge Office</span>
+    <h2>Earn your Inspector badge</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Without looking, estimate how many <b>pages</b> are in your exercise book. Write it as a
+      range. Then count the first ten pages, change your range if you want to, and finally count
+      them all. Were you inside your range?<br>
+      2. Write down <b>three</b> times you would estimate instead of counting, and say why
+      counting would be silly each time.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Sweet Factory Badge · Level 4: Inspector</h3>
+      <div style="font-weight:700">Stamp this when you can give a sensible range and explain why a range beats a single number.</div>
+      <div><span class="stamp" id="stamp">APPROVED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn lemon" type="button" id="stampBtn">Stamp my badge</button></div>
+    </div>
+    <p class="note">Teacher: the badge is self-stamped. Check the book work and the Session summary before recording the level.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Sweet Factory · Cambridge Primary Stage 3 · Unit 1 Lesson 4 (3Nc.01). Works offline. The jar lid shuts by itself, but nothing is timed and nothing is scored on speed.</p>
+</div>
+
+<script src="factory.js"></script>
+<script src="sweets.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Factory.init([
+    {icon:'jar',    label:'Start'},
+    {icon:'search', label:'Sensible?'},
+    {icon:'jar',    label:'Jar A'},
+    {icon:'jar',    label:'Jar B'},
+    {icon:'medal',  label:'Badge'}
+  ], {onEnter:function(n){ if(n===4) Factory.renderMyWork(); }});
+
+  /* The Teacher's Guide opens the lesson by writing wild estimates on the
+     board next to sensible ones, and asking which are sensible. Same move. */
+  var sensible = document.getElementById('sensible');
+  Factory.choose(sensible, {
+    prompt: 'The jar holds about 40 sweets. Which estimate is NOT sensible?',
+    task: 'U1L4 Silly estimate',
+    options: [
+      {label:'About 35', why:'That is sensible. A little under, but it could be right.'},
+      {label:'About 45', why:'That is sensible. A little over, but it could be right.'},
+      {label:'About 900', right:true,
+       why:'Correct. 900 sweets would never fit in that jar, so it is a wild guess, not an estimate.'},
+      {label:'Between 30 and 50', why:'That is sensible, and giving a range is a good move.'}
+    ]
+  });
+  Factory.choose(sensible, {
+    prompt: 'Two workers guess. Amina says "about 40". Ben says "exactly 41". Who has made an estimate?',
+    task: 'U1L4 What is an estimate',
+    options: [
+      {label:'Amina', right:true,
+       why:'Yes. An estimate says about. Ben is claiming to know the exact number without counting.'},
+      {label:'Ben', why:'Ben has given an exact number. You cannot know that without counting.'},
+      {label:'Both of them', why:'Only one of them said "about". The other claimed to be exact.'}
+    ]
+  });
+
+  /* Two jars, deliberately different sizes so the second is judged against the
+     feel of the first rather than from nothing. */
+  Sweets.buildJar({ host: document.getElementById('jarA'), count: 34, taskPrefix: 'U1L4 Jar A' });
+  Sweets.buildJar({ host: document.getElementById('jarB'), count: 58, taskPrefix: 'U1L4 Jar B' });
+
+  Factory.choose(document.getElementById('whyRange'), {
+    prompt: 'Why is a range easier to get right than a single number?',
+    task: 'U1L4 Why a range',
+    options: [
+      {label:'The answer has more room to be inside it', right:true,
+       why:'Yes. One number has to be exactly right. A range only has to contain the answer.'},
+      {label:'Ranges are always bigger numbers',
+       why:'No. A range is two numbers with a gap, not a bigger number.'},
+      {label:'It is not easier, just quicker',
+       why:'It really is easier. You had to hit 34 exactly, but 30 to 40 caught it comfortably.'}
+    ]
+  });
+
+  /* ============ Badge ============ */
+  var lic = document.getElementById('licAsk');
+  [
+    {prompt:'A tray holds 10 sweets. You count 7 full trays and 3 spare sweets. How many altogether?',
+     answer:73,
+     nudge:'Count the trays in tens: 10, 20, 30 … then add the spare ones.',
+     hint:'7 tens is 70, and 3 more is 73.', praise:'Yes — grouping in tens turns a guess into a count.'},
+    {prompt:'You estimate 60 and the real answer is 58. Type 1 if that was a good estimate, 0 if it was not.',
+     answer:1,
+     nudge:'How far out were you? Is that close?',
+     hint:'You were only 2 out. An estimate is allowed to be a little out — that was a good one.',
+     praise:'Yes. Close is what an estimate is for.'},
+    {prompt:'A jar has between 80 and 90 sweets. Type the smallest number it could be.', answer:80,
+     nudge:'Look at the two ends of the range.',
+     hint:'The range starts at 80.', praise:'Yes.'},
+    {prompt:'There are 5 full boxes of ten and 6 left over. How many is that?', answer:56,
+     nudge:'Five tens first, then the leftovers.',
+     hint:'5 tens is 50, add 6 to get 56.', praise:'Yes.'}
+  ].forEach(function(q,i){ q.task = 'U1L4 Badge Q' + (i+1); Factory.ask(lic, q); });
+})();
+</script>
+</body>
+</html>

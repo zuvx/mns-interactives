@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Number Souq · Trader's Charter</title>
+<link rel="stylesheet" href="souq.css">
+<style>
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1rem 0}
+  .tier{background:var(--paper);border:4px solid var(--sand-2);border-radius:18px;padding:1.125rem;
+    text-align:center;transition:border-color .25s ease,background .25s ease}
+  .tier h3{margin:.25rem 0;color:var(--teal);font-size:1.1875rem}
+  .tier .obj{font-size:.8125rem;font-weight:700;color:var(--wood);margin-bottom:.5rem}
+  .tier .can{font-size:.9375rem;min-height:3.5rem}
+  .tier .mark{width:4rem;height:4rem;margin:0 auto .5rem;border-radius:50%;
+    background:var(--sand-2);color:var(--wood);display:flex;align-items:center;justify-content:center}
+  .tier .mark .icon{width:2.25rem;height:2.25rem}
+  .tier button{margin-top:.75rem;border:3px solid var(--teal);background:var(--paper);color:var(--teal);
+    font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;
+    min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;width:100%}
+  .tier[data-earned="true"]{border-color:var(--ok);background:#F1FAF4}
+  .tier[data-earned="true"] .mark{background:var(--ok);color:#fff}
+  .tier[data-earned="true"] button{background:var(--ok);border-color:var(--ok-deep);color:#fff}
+
+  .full{margin-top:1.25rem;background:var(--teal);color:var(--paper);border-radius:18px;
+    padding:1.5rem;text-align:center;opacity:.45;transition:opacity .4s ease}
+  .full.on{opacity:1}
+  .full h2{margin:0 0 .5rem;color:var(--paper);font-size:1.625rem}
+  .full .stamp{opacity:0}
+  .full.on .stamp{opacity:1;animation:thud .4s ease}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
+      <div><h1>Souq Trader's Charter</h1><p class="sub">Unit 4 · Addition and subtraction (A) — all four tiers</p></div>
+      <div class="pill">Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <div class="card">
+    <h2>Your stall's journey through the souq</h2>
+    <p class="lead">One tier per lesson. A tier is awarded when the team can <b>explain</b> the idea —
+      never for finishing first. Tap a tier when your team has earned it.</p>
+
+    <div class="tiers" id="tiers"></div>
+
+    <div class="full" id="full">
+      <h2>Full Souq Trader's Charter</h2>
+      <div style="font-weight:700">Awarded when all four tiers are earned.</div>
+      <div><span class="stamp">CHARTER GRANTED</span></div>
+    </div>
+
+    <p class="note">Teacher: project this at the start of each lesson so the class sees the arc of the
+      unit. Tiers are tapped in class and are <b>not saved</b> — reopening the page clears them, by
+      design. Record the real award on the printed Licence Card.</p>
+  </div>
+
+  <p class="note">The Number Souq · Cambridge Primary Stage 3 · Unit 4. Works offline. No scores, no timers.</p>
+</div>
+
+<script src="souq.js"></script>
+<script>
+(function(){
+  'use strict';
+  Souq.init([{icon:'medal', label:'Charter'}]);
+
+  var TIERS=[
+    {n:1, name:'Trader',       obj:'3Ni.02 · Commutativity', mark:'balance',
+     can:'Can explain why addition works in any order, and why subtraction does not.',
+     file:'L1-commutativity-the-balance.html'},
+    {n:2, name:'Cashier',      obj:'3Ni.03 · Complements of 100', mark:'coin',
+     can:'Can use pairs to 10 to make 100, 1000 and any multiple of 100, and give all four facts.',
+     file:'L2-complements-of-100-the-change-purse.html'},
+    {n:3, name:'Money-changer',obj:'3Ni.04 · Regrouping', mark:'exchange',
+     can:'Can estimate first, and say before starting whether a calculation needs an exchange.',
+     file:'L3-regrouping-the-exchange-desk.html'},
+    {n:4, name:'Merchant',     obj:'3Nc.04 · Unknowns', mark:'search',
+     can:'Can find an unknown with the inverse, and explain which inverse was used and why.',
+     file:'L4-unknowns-the-mystery-price.html'}
+  ];
+
+  var host=document.getElementById('tiers');
+  var earned=[false,false,false,false];
+
+  TIERS.forEach(function(t,i){
+    var d=document.createElement('div');
+    d.className='tier';
+    d.setAttribute('data-earned','false');
+    d.innerHTML=
+      '<div class="mark">'+Souq.icon(t.mark)+'</div>'+
+      '<div class="obj">Tier '+t.n+' · '+t.obj+'</div>'+
+      '<h3>'+t.name+'</h3>'+
+      '<p class="can">'+t.can+'</p>'+
+      '<button type="button" aria-pressed="false">Not yet earned</button>'+
+      '<p style="margin:.5rem 0 0"><a href="'+t.file+'" style="color:var(--teal);font-weight:700">Open lesson '+t.n+'</a></p>';
+    var btn=d.querySelector('button');
+    btn.setAttribute('aria-label','Mark tier '+t.n+', '+t.name+', as earned');
+    btn.addEventListener('click',function(){
+      earned[i]=!earned[i];
+      d.setAttribute('data-earned', String(earned[i]));
+      btn.setAttribute('aria-pressed', String(earned[i]));
+      btn.textContent = earned[i] ? 'Earned' : 'Not yet earned';
+      var all=earned.every(Boolean);
+      document.getElementById('full').classList.toggle('on', all);
+      var live=document.getElementById('live');
+      if(live) live.textContent = all
+        ? 'All four tiers earned. Full Trader’s Charter granted.'
+        : 'Tier '+t.n+' '+(earned[i]?'earned':'cleared')+'.';
+    });
+    host.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

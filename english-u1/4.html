@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rescue Station · Week 3b: The Report Desk</title>
+<link rel="stylesheet" href="station.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .headline{font-family:var(--display);font-size:1.375rem;color:var(--navy);margin:.25rem 0 .5rem}
+  .byline{font-weight:700;color:var(--slate);font-size:.9375rem;margin-bottom:.5rem}
+  .plan{display:grid;gap:.5rem;margin:.75rem 0}
+  .plan div{background:var(--paper);border-left:6px solid var(--navy-2);border-radius:12px;padding:.625rem .875rem}
+  .plan b{color:var(--red-deep)}
+</style>
+</head>
+<body data-lesson="w3b">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-news"></use></svg>
+      <div><h1>The Report Desk</h1><p class="sub">Week 3 · Scanning a report and writing a news story</p></div>
+      <div class="pill">Unit 1 · Stage 3 · 3Ri.14 · 3Wc.05</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="non-fiction"><div class="ktext"><b>non-fiction</b><span>Writing about real things that really happened.</span></div></div>
+      <div class="kcard" data-word="scan"><div class="ktext"><b>scan</b><span>To move your eyes quickly over a text to find one piece of information.</span></div></div>
+      <div class="kcard" data-word="keyword"><div class="ktext"><b>keyword</b><span>The important word in the question. Look for it in the text.</span></div></div>
+      <div class="kcard" data-word="equipment"><div class="ktext"><b>equipment</b><span>The tools people need to do a job: hoses, ladders, helmets.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-news"></use></svg> Reporter training</span>
+    <h2>Welcome to the Report Desk</h2>
+    <p class="lead" data-read="Scanning is not the same as reading every word. Find the keyword in the question, then hunt for that word in the text.">
+      Scanning is <b>not</b> reading every word. Find the <b>keyword</b> in the question, then hunt
+      for that word in the report.</p>
+    <div class="plan">
+      <div><b>Step 1.</b> Read the question twice.</div>
+      <div><b>Step 2.</b> Pick the keyword: <i>when</i>, <i>where</i>, <i>how many</i>, a name.</div>
+      <div><b>Step 3.</b> Run your finger down the report until you find it.</div>
+    </div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Note.</b> The report below was written for this activity, so nobody in your class has
+      read it before. Everything you need is in it.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Read the report</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> The report</span>
+    <h2>A busy afternoon for Green Lane fire station</h2>
+    <div class="passage" id="report" tabindex="0" aria-label="Report: A busy afternoon for Green Lane fire station">
+      <p class="byline">Report from Green Lane fire station, Tuesday</p>
+      <p>The first call came in at half past two. A fire had started in the kitchen of a small
+      cafe on Bridge Street. Six firefighters climbed into the engine and were on the road in
+      ninety seconds.</p>
+      <p>When the crew arrived, thick smoke was pouring from the window. The cafe owner, Mrs Patel,
+      had already brought everybody outside and shut the door behind her. "Shutting that door kept
+      the fire in one room," said crew leader Sam Doyle.</p>
+      <p>The firefighters used one hose and two ladders. They put the fire out in twenty minutes.
+      Nobody was hurt.</p>
+      <p>At four o'clock the same crew was called out again, this time to the river. A dog had run
+      onto thin ice and could not get back. A firefighter in a bright orange suit crawled out on a
+      board and carried the dog to the bank.</p>
+      <p>"People forget that we do far more than fires," said Sam Doyle. "Last month we rescued a
+      cat, a horse and a lorry driver."</p>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: answer the questions</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Scan for the answer</span>
+    <h2>Find it in the report</h2>
+    <p class="lead" data-read="Scroll up to the report whenever you need it. Short answers are fine.">
+      You can go back to the report at any time with the step buttons. Short answers are fine — this
+      is about finding the information, not about long sentences.</p>
+    <div id="scanAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: order the instructions</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clipboard"></use></svg> Fire drill</span>
+    <h2>Put the instructions in order</h2>
+    <p class="lead" data-read="Instructions only work if they are in the right order. Tap one card, then tap another to swap them.">
+      Instructions only work in the <b>right order</b>. Tap one card, then tap another to swap them.</p>
+    <div id="orderAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Write your own news story about the dog on the ice. Give it a <b>headline</b>, then say
+      <b>what</b> happened, <b>where</b> it happened and <b>who</b> helped. Four or five sentences.
+      Include one line of what a firefighter said, with speech marks.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: crew card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Crew office</span>
+    <h2>Earn your Reporter badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last two go in your English book.">
+      Answer these on screen. The last two go in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      1. Write a headline of six words or fewer for the cafe fire.<br>
+      2. List three pieces of equipment a fire crew needs, and say what each one is for.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Rescue Station · Badge 4: Reporter</h3>
+      <div style="font-weight:700">Stamp this when you can explain how you scan for an answer instead of reading everything.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my crew card</button></div>
+    </div>
+    <p class="note">All four badges done? Open <b>charter.html</b>. Teacher: check the book work and the
+      Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Rescue Station · Stage 3 · Unit 1 Week 3 (3Ri.14, 3Ri.04, 3Ri.05, 3Wc.05). Report text written for this activity. Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="station.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'news',      label:'Welcome'},
+    {icon:'book',      label:'Report'},
+    {icon:'search',    label:'Scan'},
+    {icon:'clipboard', label:'Instructions'},
+    {icon:'medal',     label:'Crew card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Scanning questions ============
+     Answers are marked on the information, not the spelling: capitals,
+     punctuation and extra words are all ignored by Station.ask. */
+  var scanHost=document.getElementById('scanAsk');
+  [
+    {prompt:'WHEN did the first call come in?',
+     answers:['half past two','2.30','230','2:30','half past 2','half past two in the afternoon','2 30'],
+     nudge:'Your keyword is a time. Look in the very first sentence.',
+     hint:'"The first call came in at half past two."',
+     task:'W3b Scan when'},
+    {prompt:'WHERE was the fire?',
+     answers:['bridge street','a cafe on bridge street','cafe on bridge street','the cafe','a cafe','in the kitchen of a cafe','kitchen of a cafe','the kitchen'],
+     nudge:'Your keyword is a place. Look for a street name in the first paragraph.',
+     hint:'The fire started in the kitchen of a cafe on Bridge Street.',
+     task:'W3b Scan where'},
+    {prompt:'HOW MANY firefighters climbed into the engine?',
+     answers:['six','6'],
+     nudge:'Your keyword is a number. Scan for a number word in the first paragraph.',
+     hint:'"Six firefighters climbed into the engine."',
+     task:'W3b Scan how many'},
+    {prompt:'WHO is the crew leader? Write the name.',
+     answers:['sam doyle','sam','doyle','mr doyle'],
+     nudge:'Your keyword is a name. Look for the words "crew leader".',
+     hint:'The crew leader is Sam Doyle.',
+     task:'W3b Scan who'},
+    {prompt:'What did Mrs Patel do that kept the fire in one room?',
+     answers:['shut the door','she shut the door','closed the door','shut the door behind her','she closed the door'],
+     nudge:'Look at what Sam Doyle said in the speech marks.',
+     hint:'She shut the door behind her, which kept the fire in one room.',
+     task:'W3b Scan why'},
+    {prompt:'Write ONE word from the report that tells us about the smoke.',
+     answers:['thick','pouring'],
+     nudge:'Find the word smoke in the report. Which word is next to it?',
+     hint:'"thick smoke was pouring from the window" — thick or pouring.',
+     task:'W3b Scan word choice'}
+  ].forEach(function(q){
+    q.type='text';
+    q.praise='Found it.';
+    Station.ask(scanHost,q);
+  });
+
+  /* ============ Instructions in order (Week 3 Lesson 4) ============ */
+  Station.order(document.getElementById('orderAsk'),{
+    prompt:'A teacher gives these fire drill instructions. Put them in the right order.',
+    items:[
+      {text:'Walk outside in a line. Do not run.',            pos:3},
+      {text:'Stop what you are doing and stand up.',          pos:1},
+      {text:'Wait quietly while your teacher checks the register.', pos:4},
+      {text:'Leave your bag on your chair and go to the door.', pos:2}
+    ],
+    nudge:'What must happen first, before anybody moves anywhere?',
+    hint:'Stand up, go to the door without your bag, walk outside in a line, then wait for the register.',
+    praise:'Yes. Those instructions would work.',
+    task:'W3b Order the instructions'
+  });
+
+  /* ============ Crew card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'You need to find WHEN something happened. What do you scan for?',
+    options:[
+      {text:'A name.',   why:'A name answers WHO, not WHEN.'},
+      {text:'A time.',   why:'Yes. Scan for a clock time or a word like morning or Tuesday.'},
+      {text:'A place.',  why:'A place answers WHERE, not WHEN.'}
+    ],
+    answer:1, task:'W3b Badge Q1'
+  });
+  Station.choose(badgeHost,{
+    prompt:'Which of these is non-fiction?',
+    options:[
+      {text:'A story about a dragon who guards a castle.', why:'That is made up, so it is fiction.'},
+      {text:'A report about what a fire crew did on Tuesday.', why:'Yes. It tells us about real events.'},
+      {text:'A poem about a talking helicopter.', why:'Helicopters do not talk, so this one is fiction.'}
+    ],
+    answer:1, task:'W3b Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'How long did the crew take to put the fire out?',
+    answers:['twenty minutes','20 minutes','twenty','20'],
+    nudge:'Scan the third paragraph for a number.',
+    hint:'"They put the fire out in twenty minutes."',
+    praise:'Found it.',
+    task:'W3b Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

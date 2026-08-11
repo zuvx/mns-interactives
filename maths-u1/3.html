@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sweet Factory · Lesson 3: The Sharing Chute</title>
+<link rel="stylesheet" href="factory.css">
+</head>
+<body data-lesson="u1l3">
+<div class="wrap">
+
+  <header>
+    <div class="candy"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-share"></use></svg>
+      <div>
+        <h1>The Sharing Chute</h1>
+        <p class="sub">Lesson 3 · More about even and odd numbers</p>
+      </div>
+      <div class="pill">Unit 1 · Stage 3 · 3Nc.03</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-sweet"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="shared equally"><div class="ktext"><b>shared equally</b><span>Both boxes get exactly the same amount.</span></div></div>
+      <div class="kcard" data-word="divided by 2"><div class="ktext"><b>divided by 2</b><span>Split into two equal groups.</span></div></div>
+      <div class="kcard" data-word="even number"><div class="ktext"><b>even number</b><span>It shares equally between 2 with nothing left.</span></div></div>
+      <div class="kcard" data-word="odd number"><div class="ktext"><b>odd number</b><span>It does not share equally. One is always left.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <!-- 0 Welcome -->
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Two boxes, one hopper</span>
+    <h2>Share the batch between two boxes</h2>
+    <p class="lead" data-read="Yesterday you wrapped sweets in pairs. Today you share the whole batch between two boxes. Both boxes must get exactly the same. Anything that will not go stays in the hopper.">
+      Yesterday you wrapped sweets in <b>pairs</b>. Today you share the whole batch between
+      <b>two boxes</b>. Both boxes must get exactly the same. Anything that will not go stays
+      in the hopper.</p>
+    <div class="chutes" role="img" aria-label="Two boxes and a hopper">
+      <div class="chute equal"><h4>Box 1</h4><span class="sweet"></span><span class="sweet"></span><span class="sweet"></span></div>
+      <div class="chute equal"><h4>Box 2</h4><span class="sweet"></span><span class="sweet"></span><span class="sweet"></span></div>
+      <div class="chute spare"><h4>Left in the hopper</h4><span class="sweet"></span></div>
+    </div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Same idea, new question.</b> Pairing asked "does everything have a partner?"
+      Sharing asks "can it be <b>divided by 2</b>?" They give the same answer, every time.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the chute</button></div>
+  </div></section>
+
+  <!-- 1 Sharing -->
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-share"></use></svg> Station 1 · Share them out</span>
+    <h2>Does it share equally?</h2>
+    <p class="lead" data-read="Press Share them out. Count what goes into one box, then look at the hopper.">
+      Press <b>Share them out</b>. Count what goes into <b>one</b> box, then look at the hopper.</p>
+    <div id="shareHost"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next station</button></div>
+  </div></section>
+
+  <!-- 2 Always, sometimes, never -->
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Station 2 · Always, sometimes or never?</span>
+    <h2>Say what is always true</h2>
+    <p class="lead" data-read="You have shared four batches. Now decide which of these statements are always true.">
+      You have shared four batches. Now decide which of these is <b>always</b> true.</p>
+    <div id="always"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Tricky one:</b> is <b>1</b> odd? You cannot make a pair with one sweet, and you
+      cannot put half a sweet in each box. So yes — 1 is odd.</div></div>
+    <div id="oneOdd"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next station</button></div>
+  </div></section>
+
+  <!-- 3 Big batches -->
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clipboard"></use></svg> Station 3 · The big batches</span>
+    <h2>Too big to share by hand</h2>
+    <p class="lead" data-read="These batches are far too big to tip out. Sort them without sharing them. You already know how.">
+      These batches are far too big to tip out. Sort them <b>without</b> sharing them —
+      you already know how.</p>
+    <div id="bigSort"></div>
+    <div id="bigAsk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Go to the badge office</button></div>
+  </div></section>
+
+  <!-- 4 Badge -->
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Badge Office</span>
+    <h2>Earn your Sorter badge</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the last two in your maths book.">
+      Answer these on screen. The last two go in your <b>maths book</b>.</p>
+    <div id="licAsk"></div>
+
+    <div class="quest"><div class="q">In your maths book</div>
+      1. Sam says "<b>all numbers with a 2 in them are even</b>". Show that Sam is wrong.
+      Write down the number you used and explain it.<br>
+      2. A batch shares equally between 2, and each box gets <b>37</b>. How big was the batch?
+      Is that number even or odd? How do you know?</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="badge">
+      <h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Sweet Factory Badge · Level 3: Sorter</h3>
+      <div style="font-weight:700">Stamp this when you can explain even and odd using sharing, not just the last digit.</div>
+      <div><span class="stamp" id="stamp">SORTED</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn lemon" type="button" id="stampBtn">Stamp my badge</button></div>
+    </div>
+    <p class="note">Teacher: the badge is self-stamped. Check the book work and the Session summary before recording the level.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Sweet Factory · Cambridge Primary Stage 3 · Unit 1 Lesson 3 (3Nc.03). Works offline. No timers.</p>
+</div>
+
+<script src="factory.js"></script>
+<script src="sweets.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Factory.init([
+    {icon:'jar',       label:'Start'},
+    {icon:'share',     label:'Share them'},
+    {icon:'search',    label:'Always true?'},
+    {icon:'clipboard', label:'Big batches'},
+    {icon:'medal',     label:'Badge'}
+  ], {onEnter:function(n){ if(n===4) Factory.renderMyWork(); }});
+
+  /* Alternating so the leftover appears and disappears, and small enough that
+     a child can check the drawing by counting it. */
+  Sweets.buildSharing({
+    host: document.getElementById('shareHost'),
+    numbers: [8, 11, 14, 17],
+    taskPrefix: 'U1L3 Share'
+  });
+
+  var always = document.getElementById('always');
+  Factory.choose(always, {
+    prompt: 'Which one is ALWAYS true?',
+    task: 'U1L3 Always',
+    options: [
+      {label:'An even number can be divided by 2 with nothing left over', right:true,
+       why:'Yes. That is what even means, and it worked for 8 and for 14.'},
+      {label:'An odd number can be divided by 2 with nothing left over',
+       why:'No. 11 and 17 both left one sweet in the hopper.'},
+      {label:'Every number leaves one in the hopper',
+       why:'No. 8 and 14 shared perfectly and left the hopper empty.'}
+    ]
+  });
+  Factory.choose(always, {
+    prompt: 'When an odd number is shared between 2, how much is left in the hopper?',
+    task: 'U1L3 Leftover size',
+    options: [
+      {label:'Always exactly 1', right:true,
+       why:'Yes. Never 2 — two more would just make another pair.'},
+      {label:'Sometimes 1, sometimes 2',
+       why:'Think about it: if 2 were left over, one would go in each box.'},
+      {label:'It depends how big the number is',
+       why:'No. 11 and 17 are different sizes and both left exactly 1.'}
+    ]
+  });
+  Factory.choose(document.getElementById('oneOdd'), {
+    prompt: 'Is 1 an odd number?',
+    task: 'U1L3 Is one odd',
+    options: [
+      {label:'Yes, it cannot be shared between 2', right:true,
+       why:'Yes. One sweet on its own has no partner and cannot be split in half.'},
+      {label:'No, it is too small to be odd',
+       why:'Size does not matter. 1 has no partner, so it is odd.'}
+    ]
+  });
+
+  /* Now the rule does the work. These are deliberately too big to draw, which
+     is the point of the lesson: the generalisation saves you the counting. */
+  Sweets.buildCarroll({
+    host: document.getElementById('bigSort'),
+    numbers: [56, 71, 134, 209, 480, 63, 812, 27],
+    leftLabel: 'Shares equally between 2',
+    rightLabel: 'Leaves 1 over',
+    test: function(n){ return n % 2 === 0; },
+    taskPrefix: 'U1L3 Big'
+  });
+  Factory.ask(document.getElementById('bigAsk'), {
+    prompt: 'A batch of 480 is shared equally between 2 boxes. How many go in each box?',
+    answer: 240,
+    task: 'U1L3 Half 480',
+    nudge: 'Half of 4 hundreds is 2 hundreds. Now do the tens.',
+    hint: 'Half of 480 is 240.',
+    praise: 'Correct.'
+  });
+
+  /* ============ Badge ============ */
+  var lic = document.getElementById('licAsk');
+  [
+    {prompt:'A batch of 26 is shared between 2 boxes. How many in each box?', answer:13,
+     nudge:'Half of 20 is 10. Now halve the 6.',
+     hint:'Half of 26 is 13.', praise:'Yes.'},
+    {prompt:'Type 1 if 209 shares equally between 2, or 0 if one is left over.', answer:0,
+     nudge:'Look at the last digit of 209.',
+     hint:'209 ends in 9, so it is odd and one is left over.',
+     praise:'Correct.'},
+    {prompt:'Each box gets 45 sweets and the hopper is empty. How big was the batch?', answer:90,
+     nudge:'Two boxes, both with 45 in.',
+     hint:'45 and 45 is 90.', praise:'Yes — and 90 is even.'},
+    {prompt:'Type 1 if this is true, 0 if false: 812 is even because it ends in 2.', answer:1,
+     nudge:'Only the last digit decides. Is 2 an even ending?',
+     hint:'True. 812 ends in 2, so it shares equally between 2.',
+     praise:'Yes.'}
+  ].forEach(function(q,i){ q.task = 'U1L3 Badge Q' + (i+1); Factory.ask(lic, q); });
+})();
+</script>
+</body>
+</html>
