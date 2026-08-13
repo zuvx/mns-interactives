@@ -36,7 +36,7 @@
     <div class="awning"></div>
     <div class="head-body">
       <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
-      <div><h1>Rescue Station Crew Charter</h1><p class="sub">Unit 1 · Danger! — all four badges</p></div>
+      <div><h1>Rescue Station Crew Charter</h1><p class="sub">Unit 1 · Danger! — all five badges</p></div>
       <div class="pill">Stage 3</div>
     </div>
   </header>
@@ -53,7 +53,7 @@
 
     <div class="full" id="full">
       <h2>Full Rescue Station Charter</h2>
-      <div style="font-weight:700">Awarded when all four badges are earned.</div>
+      <div style="font-weight:700">Awarded when all five badges are earned.</div>
       <div><span class="stamp">CHARTER GRANTED</span></div>
     </div>
 
@@ -83,11 +83,14 @@
      file:'L3-speech-and-recount-the-radio-room.html'},
     {n:4, name:'Reporter', obj:'Week 3 · 3Ri.14 · 3Wc.05', mark:'news',
      can:'Can scan a report for one piece of information, and write for a real purpose.',
-     file:'L4-non-fiction-the-report-desk.html'}
+     file:'L4-non-fiction-the-report-desk.html'},
+    {n:5, name:'Reading Detective', obj:'Review · 3Ri.07 · 3Rv.01', mark:'search',
+     can:'Can find the evidence in the text for an answer, instead of guessing it.',
+     file:'L5-reading-detective.html'}
   ];
 
   var host=document.getElementById('tiers');
-  var earned=[false,false,false,false];
+  var earned=[false,false,false,false,false];
 
   TIERS.forEach(function(t,i){
     var d=document.createElement('div');
@@ -111,7 +114,7 @@
       document.getElementById('full').classList.toggle('on', all);
       var live=document.getElementById('live');
       if(live) live.textContent = all
-        ? 'All four badges earned. Full Crew Charter granted.'
+        ? 'All five badges earned. Full Crew Charter granted.'
         : 'Badge '+t.n+' '+(earned[i]?'earned':'cleared')+'.';
     });
     host.appendChild(d);

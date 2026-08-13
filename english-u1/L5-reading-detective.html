@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rescue Station · Reading Detective</title>
+<link rel="stylesheet" href="station.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .story{background:var(--paper);border:3px solid var(--sky-2);border-radius:14px;
+    padding:1rem 1.125rem;margin:.75rem 0;line-height:1.85;font-size:1.0625rem;max-height:26rem;overflow:auto}
+  .story p{margin:0 0 .625rem}
+  .story .sp{font-weight:700}
+  .steps{display:grid;gap:.5rem;margin:.75rem 0}
+  .steps div{background:var(--paper);border-left:6px solid var(--hi);border-radius:12px;padding:.625rem .875rem}
+  .steps b{color:var(--red-deep)}
+</style>
+</head>
+<body data-lesson="detective">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><h1>Reading Detective</h1><p class="sub">Reading review · the six questions that catch people out</p></div>
+      <div class="pill">Unit 1 · Stage 3 · 3Ri.07 · 3Ri.14 · 3Rv.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="narrator"><div class="ktext"><b>who tells it</b><span>If the story says <i>I</i>, the person telling it is in the story.</span></div></div>
+      <div class="kcard" data-word="evidence"><div class="ktext"><b>evidence</b><span>The words in the text that prove your answer.</span></div></div>
+      <div class="kcard" data-word="harness"><div class="ktext"><b>harness</b><span>A set of straps that holds a person safely.</span></div></div>
+      <div class="kcard" data-word="coastguard"><div class="ktext"><b>coastguard</b><span>The people who keep everybody safe by the sea.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Detective training</span>
+    <h2>Six questions that catch people out</h2>
+    <p class="lead" data-read="A reading question is not a memory test. The answer is nearly always in the text, and your job is to find it.">
+      A reading question is not a memory test. The answer is nearly always <b>in the text</b>, and
+      your job is to find it.</p>
+    <div class="steps">
+      <div><b>1.</b> Who is telling the story?</div>
+      <div><b>2.</b> Where are they, and how do they feel? Prove it with the words.</div>
+      <div><b>3.</b> What does that word mean?</div>
+      <div><b>4.</b> Which words tell us about a sound?</div>
+      <div><b>5.</b> Who said this line?</div>
+      <div><b>6.</b> How does the writer make it exciting?</div>
+    </div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Detective rule.</b> Read the question twice. Underline the keyword. Then hunt for that
+      word in the text before you write anything.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Read the story</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> The story</span>
+    <h2>The cliff path</h2>
+    <div class="story" id="story" tabindex="0" aria-label="Story: the cliff path">
+      <p>I was halfway along the cliff path when the rain came. My boots slipped on the wet stones
+      and I sat down hard. Below me the sea crashed against the rocks. I could not go back and I
+      could not go on.</p>
+      <p>Then I heard it. First a low rumble, then a rattle, then a roar that filled the whole sky.
+      An orange boat was cutting through the waves far below.</p>
+      <p>A woman in a yellow helmet climbed up towards me. Her rope scraped against the rock as she
+      moved.</p>
+      <p><span class="sp">“Stay exactly where you are,”</span> she called. <span class="sp">“Do not
+      stand up.”</span></p>
+      <p>She clipped a harness round my waist and pulled the strap tight.</p>
+      <p><span class="sp">“Ready?”</span> she asked.</p>
+      <p>I nodded, although my legs were shaking.</p>
+      <p><span class="sp">“Then hold on to me, and do not look down,”</span> she said.</p>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: the questions</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Detective work</span>
+    <h2>Answer with the text in front of you</h2>
+    <p class="lead" data-read="Go back to the story whenever you need it. Use the step buttons at the top.">
+      Go back to the story whenever you need it, with the step buttons at the top.</p>
+    <div id="storyAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: the report</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-news"></use></svg> The report</span>
+    <h2>Now a real report about the same day</h2>
+    <div class="story" id="report" tabindex="0" aria-label="Report: storm rescue at Cove Bay">
+      <p><b>Storm rescue at Cove Bay</b></p>
+      <p>On Sunday afternoon the coastguard was called to Cove Bay, where four walkers were stuck on
+      the cliff path in heavy rain. The lifeboat crew reached them in eleven minutes.</p>
+      <p>Before the crew climbed up, the coastguard spoke to the walkers through a loudspeaker.
+      “Stay together,” she said. “Sit down. Keep away from the edge. Wait for us.”</p>
+      <p>All four walkers were brought down safely. Nobody was hurt, although one walker was taken
+      to hospital to be checked.</p>
+    </div>
+    <div id="reportAsk"></div>
+    <div id="orderAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Two walkers are talking about the rescue afterwards. Write what each one says in a speech
+      bubble, then write both lines out properly with speech marks.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: crew card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Crew office</span>
+    <h2>Earn your Reading Detective badge</h2>
+    <p class="lead" data-read="Two last questions. Then show your log to your teacher.">
+      Two last questions. Then show your log to your teacher.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Rescue Station · Badge 5: Reading Detective</h3>
+      <div style="font-weight:700">Stamp this when you can find the evidence for an answer instead of guessing it.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my crew card</button></div>
+    </div>
+    <p class="note">Teacher: this page rehearses the shape of the Reading Progress Check with a
+      different story, so nothing here gives the check away.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Rescue Station · Stage 3 · Unit 1 reading review (3Ri.07, 3Ri.14, 3Ri.16, 3Rv.01). Story and report written for this page. Works offline.</p>
+</div>
+
+<script src="station.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'search', label:'Training'},
+    {icon:'book',   label:'Story'},
+    {icon:'search', label:'Questions'},
+    {icon:'news',   label:'Report'},
+    {icon:'medal',  label:'Crew card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ The six question types, on our own story ============ */
+  var host = document.getElementById('storyAsk');
+
+  Station.choose(host,{
+    prompt:'Who is telling this story?',
+    options:[
+      {text:'The woman in the yellow helmet.', why:'She is in the story, but she is not telling it. She is called "she".'},
+      {text:'The person stuck on the path.',   why:'Yes. The story says "I", so the person it happened to is telling it.'},
+      {text:'Somebody watching from the boat.',why:'Nobody watching would say "my boots" and "my legs". Look for the word I.'}
+    ],
+    answer:1, task:'RD Who tells it'
+  });
+
+  Station.ask(host,{
+    type:'text',
+    prompt:'Where is the person when the rain starts?',
+    answers:['on the cliff path','the cliff path','halfway along the cliff path','cliff path',
+             'on a cliff path','on the path','on the cliff'],
+    nudge:'Your keyword is a place. Look at the very first sentence.',
+    hint:'"I was halfway along the cliff path when the rain came."',
+    praise:'Found it.',
+    task:'RD Where'
+  });
+
+  Station.choose(host,{
+    prompt:'Which words show us that the person is frightened?',
+    options:[
+      {text:'"my legs were shaking"',            why:'Yes. That is the evidence. The story never says "I was scared", it shows it.'},
+      {text:'"I was halfway along the cliff path"', why:'That tells us where they are, not how they feel.'},
+      {text:'"An orange boat"',                  why:'That is a colour. It tells us nothing about feelings.'}
+    ],
+    answer:0, task:'RD Feelings evidence'
+  });
+
+  Station.choose(host,{
+    prompt:'What is a harness?',
+    options:[
+      {text:'A kind of small boat.',             why:'No. Read the sentence again: she clipped it round a waist and pulled a strap.'},
+      {text:'A set of straps that holds you safely.', why:'Yes. The words round my waist and pulled the strap tight tell you.'},
+      {text:'A rope ladder.',                    why:'Close, but a ladder is something you climb. This one goes round your waist.'}
+    ],
+    answer:1, task:'RD Word meaning'
+  });
+
+  Station.ask(host,{
+    type:'text',
+    prompt:'Write ONE word from the story that tells us about a sound.',
+    answers:['rumble','rattle','roar','crashed','scraped','crash','scrape'],
+    nudge:'Go to the paragraph that begins "Then I heard it".',
+    hint:'rumble, rattle and roar are all sound words. So are crashed and scraped.',
+    praise:'Yes, that is a sound word.',
+    task:'RD Sound word 1'
+  });
+
+  Station.ask(host,{
+    type:'text',
+    prompt:'Now write a DIFFERENT sound word from the story.',
+    answers:['rumble','rattle','roar','crashed','scraped','crash','scrape'],
+    nudge:'There are five to choose from. Two are in the first paragraph.',
+    hint:'rumble · rattle · roar · crashed · scraped.',
+    praise:'Two out of two.',
+    task:'RD Sound word 2'
+  });
+
+  Station.choose(host,{
+    prompt:'Who said, “Stay exactly where you are”?',
+    options:[
+      {text:'The person stuck on the path.', why:'Read the words just after the speech. They name somebody else.'},
+      {text:'The woman in the yellow helmet.', why:'Yes. "she called" points back to the woman who was climbing up.'},
+      {text:'The coastguard on the radio.',  why:'The coastguard is in the report, not in this story.'}
+    ],
+    answer:1, task:'RD Who said it'
+  });
+
+  Station.choose(host,{
+    prompt:'How does the writer make this part exciting?',
+    options:[
+      {text:'By using interesting words and dialogue.', why:'Yes. Sound words like roar, and the woman speaking, put you there.'},
+      {text:'By making the sentences very long.',       why:'The sentences here are short. Length is not what makes it exciting.'},
+      {text:'By telling you the ending first.',         why:'The writer does the opposite: you find out what happens as it happens.'}
+    ],
+    answer:0, task:'RD Author craft'
+  });
+
+  /* ============ The report: retrieval, then instructions in order ============ */
+  var rep = document.getElementById('reportAsk');
+  [
+    {prompt:'WHEN was the coastguard called?',
+     answers:['sunday afternoon','on sunday afternoon','sunday','in the afternoon','the afternoon'],
+     nudge:'Your keyword is a day or a time. Look at the first line of the report.',
+     hint:'"On Sunday afternoon the coastguard was called to Cove Bay."',
+     task:'RD Report when'},
+    {prompt:'WHERE were the walkers stuck?',
+     answers:['cove bay','on the cliff path','the cliff path','at cove bay','on the cliff path at cove bay','cliff path'],
+     nudge:'Your keyword is a place. It is in the same sentence as the day.',
+     hint:'They were stuck on the cliff path at Cove Bay.',
+     task:'RD Report where'},
+    {prompt:'HOW MANY minutes did the lifeboat crew take?',
+     answers:['eleven','11','eleven minutes','11 minutes'],
+     nudge:'Scan for a number word in the first paragraph.',
+     hint:'"The lifeboat crew reached them in eleven minutes."',
+     task:'RD Report how many'}
+  ].forEach(function(q){ q.type='text'; q.praise='Found it.'; Station.ask(rep,q); });
+
+  Station.order(document.getElementById('orderAsk'),{
+    prompt:'List the coastguard’s instructions in the order she said them.',
+    items:[
+      {text:'Keep away from the edge.', pos:3},
+      {text:'Stay together.',           pos:1},
+      {text:'Wait for us.',             pos:4},
+      {text:'Sit down.',                pos:2}
+    ],
+    nudge:'Go back to the report and read the speech marks from left to right.',
+    hint:'Stay together. Sit down. Keep away from the edge. Wait for us.',
+    praise:'That is the order she said them in.',
+    task:'RD Instructions in order'
+  });
+
+  /* ============ Crew card ============ */
+  var badge = document.getElementById('badgeAsk');
+  Station.choose(badge,{
+    prompt:'A question asks you to write TWO words from the text. What should you do?',
+    options:[
+      {text:'Copy the words straight out of the text.', why:'Yes. When the question says "from the text", the exact words earn the marks.'},
+      {text:'Write two words of your own that mean the same.', why:'That loses the marks. The question asked for words from the text.'},
+      {text:'Write one word and explain it.',            why:'Two words means two words. Check how many the question wants.'}
+    ],
+    answer:0, task:'RD Badge Q1'
+  });
+  Station.choose(badge,{
+    prompt:'You are asked how somebody feels, and the story never says it. What do you do?',
+    options:[
+      {text:'Guess, and hope for the best.',        why:'You do not have to guess. The writer shows feelings through what people do.'},
+      {text:'Say the story does not tell you.',     why:'It does tell you, just not directly. Look at what the person does with their body.'},
+      {text:'Find what they DO, and work it out.',  why:'Yes. Shaking legs, holding on tight, not looking down: all evidence.'}
+    ],
+    answer:2, task:'RD Badge Q2'
+  });
+
+})();
+</script>
+</body>
+</html>
