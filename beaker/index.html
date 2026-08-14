@@ -73,6 +73,19 @@ button:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .trays button{min-height:var(--tap);font-size:15px;background:var(--paper);
               box-shadow:inset 0 0 0 2px var(--rule)}
 .trays button[aria-pressed=true]{background:var(--teal);box-shadow:none}
+
+/* A phone held upright.
+
+   Side by side, the beaker took a fixed 120px and the three cards had to share
+   whatever was left. On a 390px screen that squeezed the third card off the
+   edge, and because the page hides sideways overflow the card was simply gone
+   rather than reachable. So below 560px the beaker goes above the cards and
+   the cards get the full width of the screen. */
+@media (max-width:560px){
+  .stage{grid-template-columns:1fr}
+  .glass{min-height:240px}
+  .deal button{min-height:76px;font-size:21px}
+}
 </style>
 </head>
 <body>
