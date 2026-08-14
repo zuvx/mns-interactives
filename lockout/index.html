@@ -45,8 +45,16 @@ button:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .pad button{min-height:0;aspect-ratio:1;padding:0;border-radius:14px;background:var(--paper);
             box-shadow:inset 0 0 0 2px var(--rule);
             font:800 clamp(17px,4.4vw,26px)/1 "Archivo Narrow",system-ui,sans-serif;color:var(--ink)}
-.pad button.out{background:var(--cream-deep);color:var(--rule);text-decoration:line-through}
+/* A crossed-out number still has to be readable. A child checking their own
+   work reads the numbers they have already ruled out as often as the ones they
+   have not, so this is greyed, not faded away. */
+.pad button.out{background:var(--cream-deep);color:var(--ink-soft);
+                text-decoration:line-through;opacity:1}
+/* What they have crossed this turn, before they commit to it. */
+.pad button.mark{background:var(--coral);color:var(--ink);opacity:1;
+                 box-shadow:inset 0 0 0 3px var(--coral-deep);text-decoration:line-through}
 .pad button.win{background:var(--yellow);color:var(--ink);box-shadow:inset 0 0 0 3px var(--coral-deep)}
+.pad button:disabled{opacity:1}
 .clues{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:10px}
 .clues button{min-height:var(--tap);text-align:left;padding:12px 14px;border-radius:14px;
               background:var(--cream-deep);font-size:15px;font-weight:700;line-height:1.25}
@@ -73,11 +81,15 @@ input[type=text]{font:inherit;font-size:20px;font-weight:800;padding:12px 14px;b
     </div>
   </div>
   <div class="pad" id="pad"></div>
+  <div class="row" id="crossRow" style="display:none;margin-top:4px">
+    <button id="done" type="button">I have crossed them all out</button>
+    <button class="ghost" id="undo" type="button">Undo</button>
+  </div>
 </div>
 
 <div class="status" id="status">Tap a clue card to ask a question.</div>
 
-<div class="card">
+<div class="card" id="cluesCard">
   <div class="kicker">Clue cards</div>
   <div class="clues" id="clues"></div>
 </div>
@@ -109,6 +121,18 @@ var PAD = [10,12,14,15,16,18,20,25,27,28,30,35,36,42,45,49,53,54,56,60,63,64,65,
 var CARDS = [{"id":1,"q":"Is it a multiple of 2?","strand":"multiples","yes":[10,12,14,16,18,20,28,30,36,42,54,56,60,64,70,72,74,76,78,80,84,88,90,96]},{"id":2,"q":"Is it a multiple of 3?","strand":"multiples","yes":[12,15,18,27,30,36,42,45,54,60,63,72,78,81,84,87,90,96]},{"id":3,"q":"Is it a multiple of 5?","strand":"multiples","yes":[10,15,20,25,30,35,45,60,65,70,80,90]},{"id":4,"q":"Is it a multiple of 4?","strand":"multiples","yes":[12,16,20,28,36,56,60,64,72,76,80,84,88,96]},{"id":5,"q":"Is it divisible by 9?","strand":"divisibility","yes":[18,27,36,45,54,63,72,81,90]},{"id":6,"q":"Is 7 one of its factors?","strand":"factors","yes":[14,28,35,42,49,56,63,70,77,84]},{"id":7,"q":"Is it divisible by 10?","strand":"divisibility","yes":[10,20,30,60,70,80,90]},{"id":8,"q":"Does it have exactly two factors?","strand":"factors","yes":[53]},{"id":9,"q":"Is it a square number?","strand":"factors","yes":[16,25,36,49,64,81]},{"id":10,"q":"Does it have more than six factors?","strand":"factors","yes":[30,36,42,54,56,60,64,70,72,78,80,84,88,90,96]},{"id":11,"q":"Is it a multiple of both 2 and 3?","strand":"multiples","yes":[12,18,30,36,42,54,60,72,78,84,90,96]},{"id":12,"q":"Can it be written as 2 x 2 x something?","strand":"products","yes":[12,16,20,28,36,56,60,64,72,76,80,84,88,96]}];
 var secret = null, live = [], asked = 0, usedCards = [];
 
+/* The board is only ever narrowed by the student.
+
+   The first version of this page crossed the numbers out itself as soon as the
+   setter answered. That turned the game into tapping twelve cards in order:
+   the code appeared at the end and nobody had divided anything. So now the
+   page answers yes or no, and then the student has to find every number that
+   answer rules out and cross it out by hand, exactly as they would on the
+   printed keypad. Deciding whether 63 is a multiple of 4 is the lesson, and
+   that decision has to be theirs thirty-five times a game. */
+var pending = null;          // the card just answered, while crossing out
+var marked = [];             // what the student has crossed this turn
+
 function draw(){
   var pad = $("pad");
   pad.innerHTML = "";
@@ -117,13 +141,23 @@ function draw(){
     b.type = "button";
     b.textContent = n;
     var alive = live.indexOf(n) >= 0;
-    b.className = alive ? "" : "out";
-    if (live.length === 1 && alive) b.className = "win";
-    b.setAttribute("aria-label", n + (alive ? "" : ", crossed out"));
-    b.disabled = true;                       // the board is read, not tapped
+    var justMarked = marked.indexOf(n) >= 0;
+    b.className = justMarked ? "mark" : (alive ? "" : "out");
+    if (!pending && live.length === 1 && alive) b.className = "win";
+    b.setAttribute("aria-label", n + (justMarked ? ", crossed out this turn"
+                                                 : (alive ? "" : ", crossed out")));
+    /* Live numbers are tappable only while there is an answer to act on. */
+    b.disabled = !pending || !alive;
+    if (pending && alive) b.onclick = function(){ toggle(n); };
     pad.appendChild(b);
   });
   $("asked").textContent = asked;
+}
+
+function toggle(n){
+  var at = marked.indexOf(n);
+  if (at >= 0) marked.splice(at, 1); else marked.push(n);
+  draw();
 }
 
 function drawClues(){
@@ -134,42 +168,78 @@ function drawClues(){
     b.type = "button";
     b.textContent = c.q;
     b.className = usedCards.indexOf(c.id) >= 0 ? "used" : "";
+    b.disabled = !!pending;                 // finish crossing out first
     b.onclick = function(){ ask(c); };
     box.appendChild(b);
   });
 }
 
 function ask(card){
-  if (live.length <= 1) return;
+  if (live.length <= 1 || pending) return;
   var answer = card.yes.indexOf(secret) >= 0;
-  var before = live.length;
-  live = live.filter(function(n){ return (card.yes.indexOf(n) >= 0) === answer; });
   asked++;
   if (usedCards.indexOf(card.id) < 0) usedCards.push(card.id);
-
-  var gone = before - live.length;
-  if (gone === 0){
-    /* A question everything answers the same way. The printed teacher notes
-       call this the one rule that matters, so the page says the same thing. */
-    say((answer ? "Yes" : "No") + ". That crossed nothing off: everything left answers it the same way.");
-    speak("wasted");
-  } else if (live.length === 1){
-    say((answer ? "Yes" : "No") + ". One number left. That is the code.");
-    speak("one");
-    $("disarm").style.display = "block";
-  } else {
-    say((answer ? "Yes" : "No") + ". Crossed off " + gone + ". " + live.length + " left.");
-    if (gone >= before / 3) speak("narrow");
-  }
+  pending = { card: card, answer: answer };
+  marked = [];
+  $("crossRow").style.display = "flex";
+  say((answer ? "Yes." : "No.") + " Now cross out every number on the keypad that this rules out.");
+  speak("howto");
   draw();
   drawClues();
 }
+
+$("done").onclick = function(){
+  if (!pending) return;
+  /* What the answer really rules out. The page knows; it just will not do it
+     for them. */
+  var shouldGo = live.filter(function(n){
+    return (pending.card.yes.indexOf(n) >= 0) !== pending.answer;
+  });
+  var wrongly = marked.filter(function(n){ return shouldGo.indexOf(n) < 0; });
+  var missed = shouldGo.filter(function(n){ return marked.indexOf(n) < 0; });
+
+  if (wrongly.length || missed.length){
+    /* Say how many, never which: finding them is the work. */
+    var parts = [];
+    if (missed.length) parts.push(missed.length + " still to cross out");
+    if (wrongly.length) parts.push(wrongly.length + " that should stay");
+    say("Not yet. There " + (parts.length === 1 && (missed.length === 1 || wrongly.length === 1)
+        ? "is " : "are ") + parts.join(" and ") + ". Check them against the question.");
+    return;
+  }
+
+  live = live.filter(function(n){ return marked.indexOf(n) < 0; });
+  var gone = marked.length;
+  pending = null;
+  marked = [];
+  $("crossRow").style.display = "none";
+
+  if (gone === 0){
+    say("Correct: that question crossed nothing off, because everything left answers it the " +
+        "same way. It cost you a turn.");
+    speak("wasted");
+  } else if (live.length === 1){
+    say("All correct. One number left, and that is the code.");
+    speak("one");
+    $("disarm").style.display = "block";
+  } else {
+    say("All correct. " + gone + " crossed off, " + live.length + " left.");
+    if (gone >= live.length) speak("narrow");
+  }
+  draw();
+  drawClues();
+};
+
+$("undo").onclick = function(){ marked = []; draw(); };
 
 function reset(){
   secret = PAD[Math.floor(Math.random() * PAD.length)];
   live = PAD.slice();
   asked = 0;
   usedCards = [];
+  pending = null;
+  marked = [];
+  $("crossRow").style.display = "none";
   $("disarm").style.display = "none";
   $("factors").value = "";
   say("Tap a clue card to ask a question.");

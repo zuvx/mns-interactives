@@ -132,6 +132,11 @@ function say(msg){ var el = $("status"); if (el) el.textContent = msg; }
 var TRAYS = [{"id":"A","name":"TRAY A","badge":"STARTER","target":50,"cards":[{"v":5,"name":"FIZZ"},{"v":10,"name":"GLOW"},{"v":4,"name":"MIST"},{"v":10,"name":"FOAM"},{"v":3,"name":"DRIP"},{"v":20,"name":"SLIME"},{"v":2,"name":"SPARK"},{"v":10,"name":"BUBBLE"},{"v":5,"name":"CLOUD"},{"v":1,"name":"DUST"},{"v":20,"name":"GOO"},{"v":4,"name":"JELLY"},{"v":-10,"name":"COOLANT"},{"v":-5,"name":"COOLANT"},{"v":1,"name":"DROPPER"},{"v":2,"name":"DROPPER"}]},{"id":"B","name":"TRAY B","badge":"BRIDGING","target":70,"cards":[{"v":7,"name":"FIZZ"},{"v":8,"name":"GLOW"},{"v":6,"name":"MIST"},{"v":15,"name":"FOAM"},{"v":9,"name":"DRIP"},{"v":12,"name":"SLIME"},{"v":14,"name":"SPARK"},{"v":8,"name":"BUBBLE"},{"v":16,"name":"CLOUD"},{"v":7,"name":"DUST"},{"v":13,"name":"GOO"},{"v":6,"name":"JELLY"},{"v":-10,"name":"COOLANT"},{"v":-5,"name":"COOLANT"},{"v":1,"name":"DROPPER"},{"v":2,"name":"DROPPER"}]},{"id":"C","name":"TRAY C","badge":"NEAR TENS","target":100,"cards":[{"v":9,"name":"FIZZ"},{"v":11,"name":"GLOW"},{"v":19,"name":"MIST"},{"v":21,"name":"FOAM"},{"v":9,"name":"DRIP"},{"v":11,"name":"SLIME"},{"v":18,"name":"SPARK"},{"v":22,"name":"BUBBLE"},{"v":19,"name":"CLOUD"},{"v":12,"name":"GOO"},{"v":8,"name":"JELLY"},{"v":21,"name":"DUST"},{"v":-10,"name":"COOLANT"},{"v":-5,"name":"COOLANT"},{"v":1,"name":"DROPPER"},{"v":2,"name":"DROPPER"}]}];
 var TOP = 110;
 var tray = TRAYS[0], level = 0, turns = 8, hand = [], typed = "";
+/* A ten-key pad can be guessed at, so the page counts. Not to punish a Year 2,
+   who should be allowed to think again, but so the number a teacher sees at
+   the end is how many gaps were right first time. Guessing your way through
+   still finishes the game and still shows up as nought out of eight. */
+var tries = 0, firstTime = 0, answered = 0;
 
 function drawTrays(){
   var box = $("trays");
@@ -212,24 +217,31 @@ function showTyped(){
 $("check").onclick = function(){
   if (!typed){ say("Tap the numbers to say how much more it needs."); return; }
   var want = tray.target - level;
+  tries++;
   if (Number(typed) === want){
+    answered++;
+    if (tries === 1) firstTime++;
     turns--;
+    var score = " (" + firstTime + " of " + answered + " right first time)";
     if (level === tray.target){
-      say("Exactly on the line. A perfect fill.");
+      say("Exactly on the line. A perfect fill." + score);
       speak("perfect");
     } else if (turns <= 0){
-      say("That is eight turns. Your beaker was short by " + want + ".");
+      say("That is eight turns. Your beaker was short by " + want + "." + score);
       speak("done");
     } else {
-      say("Right. " + level + " and " + want + " more makes " + tray.target + ".");
+      say("Right. " + level + " and " + want + " more makes " + tray.target + "." + score);
       speak("right");
     }
+    tries = 0;
     $("gap").style.display = "none";
     paint();
     if (turns > 0 && level !== tray.target) deal();
     else $("deal").innerHTML = "";
   } else {
-    say("Not quite. The beaker is on " + level + ". Count up to " + tray.target + ".");
+    /* Say where the liquid is, never how far it is from the line: working out
+       the difference is the whole turn. */
+    say("Not quite. The beaker is on " + level + ". Count up from there to " + tray.target + ".");
     speak("wrong");
     typed = "";
     showTyped();
@@ -239,6 +251,7 @@ $("clear").onclick = function(){ typed = ""; showTyped(); };
 
 function reset(){
   level = 0; turns = 8; typed = "";
+  tries = 0; firstTime = 0; answered = 0;
   $("gap").style.display = "none";
   say("Pick a card to pour in.");
   drawTrays(); paint(); deal();
