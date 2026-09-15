@@ -104,7 +104,8 @@ var Lighthouse = (function () {
            LETTERS[(total * 13 + tasks * 29 + 7) % 20];
   }
   function paintCode() {
-    $('#code-out').textContent = checkCode(stars, done.length);
+    // A code of zero is not worth typing into an assignment, so say so instead.
+    $('#code-out').textContent = stars ? checkCode(stars, done.length) : 'Play a room first';
     $('#code-tally').innerHTML = '<span>' + stars + ' stars</span><span>' +
       done.length + ' task' + (done.length === 1 ? '' : 's') + ' finished</span>';
   }
