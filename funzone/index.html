@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MNS · Year 3 Fun Zone</title>
+<link rel="stylesheet" href="funzone.css">
+</head>
+<body>
+
+<!-- The plant drawing. The puzzle pieces are six crops of this one picture. -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <g id="plant-scene">
+    <rect x="0" y="0" width="300" height="200" fill="#EAF6FF"/>
+    <rect x="0" y="140" width="300" height="60" fill="#8B5E3C"/>
+    <rect x="0" y="140" width="300" height="8" fill="#6F4728"/>
+    <!-- sun -->
+    <g stroke="#C08E04" stroke-width="5" stroke-linecap="round">
+      <path d="M35 4v10M35 62v-10M4 35h10M66 35h-10M13 13l7 7M57 57l-7-7M13 57l7-7M57 13l-7 7"/>
+    </g>
+    <circle cx="35" cy="35" r="20" fill="#F2B705" stroke="#C08E04" stroke-width="4"/>
+    <!-- flower head -->
+    <g fill="#C62828" stroke="#8E1F1F" stroke-width="3">
+      <circle cx="150" cy="26" r="13"/><circle cx="174" cy="40" r="13"/>
+      <circle cx="174" cy="66" r="13"/><circle cx="150" cy="80" r="13"/>
+      <circle cx="126" cy="66" r="13"/><circle cx="126" cy="40" r="13"/>
+    </g>
+    <circle cx="150" cy="53" r="15" fill="#F2B705" stroke="#C08E04" stroke-width="3"/>
+    <!-- top leaf, right -->
+    <path d="M296 44c-30-14-52 2-58 26 26 8 50-4 58-26z" fill="#2A7F51" stroke="#1C5C39" stroke-width="3"/>
+    <path d="M238 70c14-10 34-18 58-26" stroke="#1C5C39" stroke-width="3" fill="none"/>
+    <!-- stem -->
+    <path d="M150 68v76" stroke="#2A7F51" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <!-- stem leaf, left -->
+    <path d="M148 112c-14-16-32-18-44-10 6 16 26 24 44 10z" fill="#2A7F51" stroke="#1C5C39" stroke-width="3"/>
+    <!-- roots -->
+    <g stroke="#6F4728" stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M150 144v18M150 162c-12 4-18 12-22 24M150 162c12 4 18 12 22 24M150 162v30"/>
+    </g>
+    <!-- seed and shoot, bottom left -->
+    <ellipse cx="46" cy="170" rx="11" ry="8" fill="#F6E0B8" stroke="#6F4728" stroke-width="3"/>
+    <path d="M46 162v-18" stroke="#2A7F51" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <path d="M46 148c-10-8-20-6-24 2 8 8 18 8 24-2z" fill="#2A7F51" stroke="#1C5C39" stroke-width="3"/>
+    <!-- watering can, bottom right -->
+    <path d="M222 152h44v28a6 6 0 01-6 6h-32a6 6 0 01-6-6z" fill="#2F5FA8" stroke="#1D3B6E" stroke-width="3"/>
+    <path d="M266 158l22-10v14" fill="none" stroke="#1D3B6E" stroke-width="4" stroke-linecap="round"/>
+    <path d="M226 152c0-8 8-12 14-12" fill="none" stroke="#1D3B6E" stroke-width="4"/>
+    <g stroke="#2F5FA8" stroke-width="4" stroke-linecap="round">
+      <path d="M288 162v6M282 170v5M294 170v5"/>
+    </g>
+  </g>
+</svg>
+
+<div class="wrap">
+
+  <header>
+    <div class="bunting"></div>
+    <div class="head-body">
+      <div>
+        <h1>Year 3 Fun Zone</h1>
+        <p class="sub">Words, puzzles and four locked rooms</p>
+      </div>
+      <span class="stars" id="stars" aria-live="polite" aria-label="stars"></span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button type="button" class="tool" data-act="board" aria-pressed="false">Board mode</button>
+    <button type="button" class="tool" data-act="new-pupil">New pupil</button>
+  </div>
+
+  <nav id="rail" aria-label="the games">
+    <button type="button" data-go="hub" aria-pressed="true">Fun Zone</button>
+    <button type="button" data-go="zone-word" aria-pressed="false">Word Builder</button>
+    <button type="button" data-go="zone-hunt" aria-pressed="false">Word Hunt</button>
+    <button type="button" data-go="zone-jig" aria-pressed="false">Plant Puzzle</button>
+    <button type="button" data-go="zone-esc" aria-pressed="false">Escape Rooms</button>
+  </nav>
+
+  <!-- ---------------- hub ---------------- -->
+  <section class="screen on" id="hub">
+    <h2 class="sr-only" style="position:absolute;left:-9999px">Choose a game</h2>
+    <div class="hub">
+      <button type="button" class="zone" id="card-word" data-go="zone-word"
+              style="--zone:#C62828;--zone-deep:#8E1F1F">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-word"></use></svg></span>
+        <h2>Word Builder</h2>
+        <p>Four letters, six tries. Guess the word from our unit.</p>
+      </button>
+      <button type="button" class="zone" id="card-hunt" data-go="zone-hunt"
+              style="--zone:#7A3E9D;--zone-deep:#57206F">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-hunt"></use></svg></span>
+        <h2>Word Hunt</h2>
+        <p>Twelve words are hiding in the letters. Find them all.</p>
+      </button>
+      <button type="button" class="zone" id="card-jig" data-go="zone-jig"
+              style="--zone:#2A7F51;--zone-deep:#1C5C39">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-leaf"></use></svg></span>
+        <h2>Plant Puzzle</h2>
+        <p>Six pieces make one plant. Put them back together.</p>
+      </button>
+      <button type="button" class="zone" id="card-esc" data-go="zone-esc"
+              style="--zone:#0F6E6E;--zone-deep:#0A4E4E">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-lock"></use></svg></span>
+        <h2>Escape Rooms</h2>
+        <p>Four rooms, four numbers, one lock. Work them out and get out.</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- ---------------- word builder ---------------- -->
+  <section id="zone-word" class="screen panel" style="--zone:#C62828;--zone-deep:#8E1F1F">
+    <div class="bar">
+      <button type="button" class="btn" data-act="word-new">Another word</button>
+      <button type="button" class="btn ghost" data-act="word-wall" id="word-wall-btn" aria-pressed="false">Word wall</button>
+    </div>
+    <h2>Word Builder</h2>
+    <p class="lead">Every word has four letters and comes from our lessons. Green means the letter
+      is in the right place. Yellow means it is in the word, but somewhere else.</p>
+    <div class="rows" id="word-board" role="grid" aria-label="your guesses"></div>
+    <div class="wall" id="word-wall" hidden aria-label="words to choose from"></div>
+    <p class="say" id="word-say" aria-live="polite"></p>
+    <div class="keys" id="word-keys">
+      <div class="krow">
+        <button type="button" class="key" data-key="Q">q</button><button type="button" class="key" data-key="W">w</button><button type="button" class="key" data-key="E">e</button><button type="button" class="key" data-key="R">r</button><button type="button" class="key" data-key="T">t</button><button type="button" class="key" data-key="Y">y</button><button type="button" class="key" data-key="U">u</button><button type="button" class="key" data-key="I">i</button><button type="button" class="key" data-key="O">o</button><button type="button" class="key" data-key="P">p</button>
+      </div>
+      <div class="krow">
+        <button type="button" class="key" data-key="A">a</button><button type="button" class="key" data-key="S">s</button><button type="button" class="key" data-key="D">d</button><button type="button" class="key" data-key="F">f</button><button type="button" class="key" data-key="G">g</button><button type="button" class="key" data-key="H">h</button><button type="button" class="key" data-key="J">j</button><button type="button" class="key" data-key="K">k</button><button type="button" class="key" data-key="L">l</button>
+      </div>
+      <div class="krow">
+        <button type="button" class="key wide" data-act="go">Go</button><button type="button" class="key" data-key="Z">z</button><button type="button" class="key" data-key="X">x</button><button type="button" class="key" data-key="C">c</button><button type="button" class="key" data-key="V">v</button><button type="button" class="key" data-key="B">b</button><button type="button" class="key" data-key="N">n</button><button type="button" class="key" data-key="M">m</button><button type="button" class="key wide" data-act="rub">Rub out</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- word hunt ---------------- -->
+  <section id="zone-hunt" class="screen panel" style="--zone:#7A3E9D;--zone-deep:#57206F">
+    <div class="bar">
+      <button type="button" class="btn" data-act="hunt-new">New letters</button>
+    </div>
+    <h2>Word Hunt</h2>
+    <p class="lead">Words go across, down, or down to the right. Tap the first letter, then the
+      last letter.</p>
+    <div class="hunt-wrap">
+      <div class="scroll"><div class="grid" id="hunt-grid"></div></div>
+      <ul class="list" id="hunt-list"></ul>
+    </div>
+    <p class="say" id="hunt-say" aria-live="polite"></p>
+  </section>
+
+  <!-- ---------------- plant puzzle ---------------- -->
+  <section id="zone-jig" class="screen panel" style="--zone:#2A7F51;--zone-deep:#1C5C39">
+    <div class="bar">
+      <button type="button" class="btn" data-act="jig-new">Mix them up again</button>
+    </div>
+    <h2>Plant Puzzle</h2>
+    <p class="lead">Drag a piece into a space, or tap the piece and then tap the space. Each piece
+      only fits where it belongs.</p>
+    <div class="jig">
+      <figure class="peek">
+        <svg viewBox="0 0 300 200" aria-label="the finished plant"><use href="#plant-scene"></use></svg>
+        <figcaption>What you are building</figcaption>
+      </figure>
+      <div class="board" id="jig-board" aria-label="the puzzle board"></div>
+      <div class="tray" id="jig-tray" aria-label="the pieces"></div>
+    </div>
+    <div class="labels" id="jig-labels" hidden>
+      <span>sun</span><span>flower</span><span>leaf</span><span>stem</span><span>roots</span><span>water</span>
+    </div>
+    <p class="say" id="jig-say" aria-live="polite"></p>
+  </section>
+
+  <!-- ---------------- escape rooms ---------------- -->
+  <section id="zone-esc" class="screen panel" style="--zone:#0F6E6E;--zone-deep:#0A4E4E">
+    <div class="bar">
+      <button type="button" class="btn" data-act="esc-new">Start again</button>
+    </div>
+    <h2>Escape Rooms</h2>
+    <p class="lead">Open each room and answer what is inside. Every room gives you one number.
+      Four numbers open the last lock.</p>
+    <div class="code" id="esc-code" aria-label="the code so far"><b></b><b></b><b></b><b></b></div>
+    <div class="doors" id="esc-doors"></div>
+    <div id="esc-room" hidden></div>
+    <div class="task" id="esc-final" hidden>
+      <p class="q">Tap the four numbers into the lock, in room order.</p>
+      <p class="say" id="esc-typed" aria-live="polite"></p>
+      <div class="opts">
+        <button type="button" class="opt" data-lock="0">0</button><button type="button" class="opt" data-lock="1">1</button><button type="button" class="opt" data-lock="2">2</button><button type="button" class="opt" data-lock="3">3</button><button type="button" class="opt" data-lock="4">4</button><button type="button" class="opt" data-lock="5">5</button><button type="button" class="opt" data-lock="6">6</button><button type="button" class="opt" data-lock="7">7</button><button type="button" class="opt" data-lock="8">8</button><button type="button" class="opt" data-lock="9">9</button>
+      </div>
+    </div>
+    <p class="say" id="esc-say" aria-live="polite"></p>
+  </section>
+
+</div>
+
+<script src="wordgrid.js"></script>
+<script src="funzone.js"></script>
+</body>
+</html>

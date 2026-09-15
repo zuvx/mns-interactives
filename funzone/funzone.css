@@ -1,0 +1,208 @@
+/* ============================================================
+   Year 3 Fun Zone — shared stylesheet
+   Rules: design-system/mns-classroom/pages/fun-zone.md
+
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+
+/* ---- Typeface: Century Gothic, the school font ----
+   Monotype face, not redistributable, so it is never bundled or fetched.
+   The stack resolves to the real thing on any machine with Office and falls
+   back to the geometric sans faces iOS ships with. */
+
+:root{
+  --paper:#FFFFFF;
+  --canvas:#FFF6EC; --canvas-2:#FBE7CE;
+  --ink:#16202B; --slate:#3F4C5C;
+  --plum:#5B2A86; --plum-2:#7A3E9D;
+  --sun:#F2B705; --sun-deep:#C08E04;
+  /* one colour per zone, the same meaning as in the unit pages */
+  --word:#C62828; --word-deep:#8E1F1F;      /* English, verbs */
+  --hunt:#7A3E9D; --hunt-deep:#57206F;      /* mixed vocabulary */
+  --grow:#2A7F51; --grow-deep:#1C5C39;      /* Science, plants */
+  --lock:#0F6E6E; --lock-deep:#0A4E4E;      /* escape rooms */
+  --ok:#2A7F51; --no:#8E1F1F;
+  --shadow:0 8px 0 rgba(90,58,34,.16);
+  --shadow-sm:0 4px 0 rgba(90,58,34,.14);
+  --tap:56px; --tap-min:48px;
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{
+  margin:0;font-family:var(--school);font-size:1rem;line-height:1.5;
+  color:var(--ink);background:var(--canvas);
+  background-image:
+    radial-gradient(circle at 10% 14%, rgba(242,183,5,.16), transparent 32%),
+    radial-gradient(circle at 90% 10%, rgba(122,62,157,.12), transparent 30%),
+    radial-gradient(circle at 50% 96%, rgba(42,127,81,.10), transparent 34%);
+  background-attachment:fixed;min-height:100vh;
+}
+h1,h2,h3{font-weight:700;margin:0 0 .5rem}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 4rem}
+:focus-visible{outline:4px solid var(--plum);outline-offset:3px;border-radius:8px}
+[hidden]{display:none !important}
+
+/* ---- Icons: inline SVG sprite, injected by funzone.js. No emoji. ---- */
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-lg{width:2.4em;height:2.4em}
+
+/* ---- Header ---- */
+header{border-radius:22px;overflow:hidden;box-shadow:var(--shadow);margin-top:.5rem}
+.bunting{height:1.5rem;background:repeating-linear-gradient(90deg,
+  var(--word) 0 30px,var(--sun) 30px 60px,var(--grow) 60px 90px,var(--hunt) 90px 120px)}
+.head-body{background:var(--plum);color:var(--paper);padding:1rem 1.25rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-body h1{font-size:clamp(1.5rem,4.5vw,2.25rem);margin:0}
+.head-body .sub{margin:.125rem 0 0;font-size:.9375rem;opacity:.94;font-weight:700}
+.stars{margin-left:auto;background:var(--sun);color:var(--ink);font-weight:700;
+  padding:.5rem .875rem;border-radius:999px;font-size:1rem;box-shadow:0 3px 0 var(--sun-deep);
+  display:inline-flex;align-items:center;gap:.5rem;min-height:var(--tap-min)}
+
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0 0;justify-content:flex-end}
+.tool{border:3px solid var(--plum);background:var(--paper);color:var(--plum);
+  font-family:inherit;font-weight:700;font-size:.9375rem;cursor:pointer;
+  min-height:var(--tap-min);padding:.5rem 1rem;border-radius:14px;
+  display:inline-flex;align-items:center;gap:.5rem;transition:background .2s ease,color .2s ease}
+.tool[aria-pressed="true"]{background:var(--plum);color:var(--paper)}
+
+/* ---- Hub cards (claymorphism: thick border, double shadow, chunky radius) ---- */
+.hub{display:grid;gap:1.125rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:1.25rem}
+.zone{position:relative;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);
+  background:var(--paper);border:4px solid var(--zone,var(--plum));border-radius:24px;
+  padding:1.25rem;min-height:9.5rem;display:flex;flex-direction:column;gap:.375rem;
+  box-shadow:inset 0 -6px 12px rgba(255,255,255,.7),0 8px 0 var(--zone-deep,var(--plum));
+  transition:transform .2s ease-out,box-shadow .2s ease-out}
+.zone:active{transform:translateY(4px);box-shadow:inset 0 -4px 10px rgba(255,255,255,.7),0 4px 0 var(--zone-deep,var(--plum))}
+.zone .zmark{color:var(--zone);}
+.zone h2{font-size:1.25rem;margin:.25rem 0 0;color:var(--zone-deep)}
+.zone p{margin:0;color:var(--slate);font-size:.9375rem}
+.zone .done{position:absolute;top:.875rem;right:.875rem;color:var(--sun-deep)}
+
+/* ---- Rail: the game switcher, always reachable ---- */
+#rail{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0 0}
+#rail button{font-family:inherit;font-weight:700;font-size:.9375rem;cursor:pointer;
+  background:var(--paper);color:var(--plum);border:3px solid var(--canvas-2);border-radius:14px;
+  min-height:var(--tap-min);padding:.5rem 1rem;transition:background .2s ease,color .2s ease,border-color .2s ease}
+#rail button[aria-pressed="true"]{background:var(--plum);border-color:var(--plum);color:var(--paper)}
+
+/* ---- Screens: one at a time ---- */
+.screen{display:none}
+.screen.on{display:block}
+
+/* ---- Panels ---- */
+.panel{background:var(--paper);border:4px solid var(--zone,var(--plum));border-radius:24px;
+  padding:1.125rem;margin-top:1.25rem;box-shadow:var(--shadow)}
+.panel h2{color:var(--zone-deep);font-size:1.375rem}
+.panel .lead{color:var(--slate);margin:0 0 1rem}
+.bar{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.btn{font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;border:none;
+  min-height:var(--tap-min);padding:.625rem 1.125rem;border-radius:14px;
+  background:var(--zone,var(--plum));color:var(--paper);box-shadow:0 5px 0 var(--zone-deep,var(--plum));
+  transition:transform .2s ease-out,box-shadow .2s ease-out}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--zone-deep,var(--plum))}
+.btn.ghost{background:var(--paper);color:var(--zone-deep);border:3px solid var(--zone);box-shadow:var(--shadow-sm)}
+.say{min-height:1.75rem;font-weight:700;margin:.75rem 0 0}
+.say.good{color:var(--ok)} .say.try{color:var(--no)}
+
+/* ---- Word Builder ---- */
+.rows{display:grid;gap:.5rem;justify-content:center;margin:.5rem 0 1rem}
+.row{display:grid;grid-template-columns:repeat(4,var(--tap));gap:.5rem}
+.cell{width:var(--tap);height:var(--tap);border:3px solid var(--canvas-2);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.75rem;font-weight:700;
+  text-transform:uppercase;background:var(--paper)}
+.cell.here{border-color:var(--word)}
+.cell.spot{background:var(--ok);border-color:var(--grow-deep);color:var(--paper)}
+.cell.near{background:var(--sun);border-color:var(--sun-deep);color:var(--ink)}
+.cell.gone{background:var(--canvas-2);border-color:var(--canvas-2);color:var(--slate)}
+.keys{display:grid;gap:.5rem;justify-items:center}
+.keys .krow{display:flex;gap:.375rem;flex-wrap:wrap;justify-content:center}
+.key{font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;background:var(--canvas);
+  border:3px solid var(--canvas-2);border-radius:12px;color:var(--ink);
+  min-width:var(--tap-min);min-height:var(--tap-min);padding:.25rem .5rem;text-transform:uppercase}
+.key.wide{min-width:5.5rem;background:var(--word);border-color:var(--word-deep);color:var(--paper)}
+.key.spot{background:var(--ok);border-color:var(--grow-deep);color:var(--paper)}
+.key.near{background:var(--sun);border-color:var(--sun-deep)}
+.key.gone{background:var(--canvas-2);color:var(--slate)}
+.wall{display:flex;flex-wrap:wrap;gap:.5rem;margin:.75rem 0 0;padding:.75rem;
+  background:var(--canvas);border-radius:16px}
+.wall span{background:var(--paper);border:2px solid var(--canvas-2);border-radius:999px;
+  padding:.25rem .75rem;font-weight:700;text-transform:uppercase}
+
+/* ---- Word Hunt ---- */
+.hunt-wrap{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:flex-start}
+/* The grid never shrinks below the 44px tap floor. On a phone it scrolls
+   inside its own box instead, which is the one place sideways scroll is allowed. */
+.scroll{overflow-x:auto;max-width:100%;flex:0 1 auto;padding-bottom:.25rem}
+.grid{display:grid;gap:3px;background:var(--canvas-2);padding:3px;border-radius:14px;
+  width:max-content;touch-action:manipulation}
+.gcell{width:var(--tap-min);height:var(--tap-min);font-family:inherit;font-size:1.125rem;
+  font-weight:700;text-transform:uppercase;cursor:pointer;border:none;border-radius:8px;
+  background:var(--paper);color:var(--ink);transition:background .15s ease,color .15s ease}
+.gcell.pick{background:var(--hunt);color:var(--paper)}
+.gcell.found{background:var(--ok);color:var(--paper)}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;max-width:16rem}
+.list li{border:3px solid var(--canvas-2);border-radius:999px;padding:.375rem .875rem;
+  font-weight:700;text-transform:uppercase;min-height:var(--tap-min);display:flex;align-items:center}
+.list li.got{border-color:var(--ok);color:var(--ok);text-decoration:line-through}
+
+/* ---- Plant Puzzle ---- */
+.jig{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:flex-start}
+.peek{margin:0;flex:0 0 auto;width:min(100%,13rem)}
+.peek svg{display:block;width:100%;border:3px solid var(--grow);border-radius:14px;background:var(--paper)}
+.peek figcaption{font-weight:700;color:var(--slate);font-size:.875rem;margin-top:.375rem;text-align:center}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--canvas-2);
+  padding:6px;border-radius:18px;flex:0 0 auto;width:min(100%,24rem)}
+.slot{aspect-ratio:1;background:var(--canvas);border-radius:12px;position:relative;
+  display:flex;align-items:center;justify-content:center;min-height:var(--tap-min)}
+.slot.over{outline:4px dashed var(--grow)}
+.tray{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 13rem;min-width:min(100%,13rem);background:var(--canvas);
+  padding:6px;border-radius:18px;min-height:6rem;align-content:flex-start}
+.piece{width:5.25rem;height:5.25rem;border:3px solid var(--grow);border-radius:12px;
+  background:var(--paper);cursor:grab;touch-action:none;padding:0;overflow:hidden;
+  box-shadow:var(--shadow-sm)}
+.piece svg{display:block;width:100%;height:100%}
+.piece.lift{outline:4px solid var(--sun-deep);cursor:grabbing}
+.piece.set{cursor:default;border-color:var(--grow-deep);box-shadow:none}
+.slot .piece{width:100%;height:100%;border-radius:10px}
+.labels{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.labels span{background:var(--canvas);border-radius:999px;padding:.25rem .75rem;font-weight:700}
+
+/* ---- Escape rooms ---- */
+.doors{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.door{cursor:pointer;font-family:inherit;text-align:left;background:var(--paper);
+  border:4px solid var(--lock);border-radius:20px;padding:1rem;min-height:7rem;color:var(--ink);
+  box-shadow:0 6px 0 var(--lock-deep);display:flex;flex-direction:column;gap:.25rem}
+.door[data-open="yes"]{border-color:var(--ok);box-shadow:0 6px 0 var(--grow-deep)}
+.door .icon{color:var(--lock)}
+.door strong{font-size:1.125rem;color:var(--lock-deep)}
+.door .digit{font-size:2rem;font-weight:700;color:var(--ok)}
+.task{background:var(--canvas);border-radius:18px;padding:1rem;margin:.75rem 0}
+.task p.q{font-weight:700;font-size:1.125rem;margin:0 0 .75rem}
+.opts{display:flex;flex-wrap:wrap;gap:.75rem}
+.opt{font-family:inherit;min-width:var(--tap);font-size:1.0625rem;font-weight:700;cursor:pointer;background:var(--paper);
+  border:3px solid var(--lock);color:var(--lock-deep);border-radius:14px;
+  min-height:var(--tap);padding:.5rem 1.125rem;transition:background .2s ease,color .2s ease}
+.opt.good{background:var(--ok);border-color:var(--grow-deep);color:var(--paper)}
+.opt.bad{background:var(--canvas-2);border-color:var(--canvas-2);color:var(--slate)}
+.why{margin:.75rem 0 0;font-weight:700;color:var(--slate)}
+.code{display:flex;gap:.5rem;justify-content:center;margin:1rem 0}
+.code b{width:var(--tap);height:var(--tap);border:3px dashed var(--lock);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.75rem;background:var(--paper)}
+.code b.on{border-style:solid;border-color:var(--ok);background:var(--canvas)}
+
+/* ---- Motion: CSS only, 150-300ms, off when the device asks ---- */
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.pop{animation:pop .25s ease-out}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+@media (max-width:480px){
+  .wrap{padding:.75rem .875rem 3rem}
+  .piece{width:4.25rem;height:4.25rem}
+}
