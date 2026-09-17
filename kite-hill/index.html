@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MNS · Kite Hill (weeks 3 and 4)</title>
+<link rel="stylesheet" href="kite.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="beam"></div>
+    <div class="head-body">
+      <div>
+        <h1>Kite Hill</h1>
+        <p class="sub">Weeks 3 and 4 practice. Five places to go, one kite to fly.</p>
+      </div>
+      <span class="stars" id="stars" aria-live="polite" aria-label="stars"></span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button type="button" class="tool" data-act="board" aria-pressed="false">Board mode</button>
+    <button type="button" class="tool" data-act="new-pupil">New pupil</button>
+  </div>
+
+  <nav id="rail" aria-label="the rooms">
+    <button type="button" data-go="hub" aria-pressed="true">Kite Hill</button>
+    <button type="button" data-go="room-spell" aria-pressed="false">Spell Beam</button>
+    <button type="button" data-go="room-build" aria-pressed="false">Number Build</button>
+    <button type="button" data-go="room-stairs" aria-pressed="false">Making 100</button>
+    <button type="button" data-go="room-lamp" aria-pressed="false">The Kite Sheds</button>
+    <button type="button" data-go="room-read" aria-pressed="false">Reading Room</button>
+    <button type="button" data-go="room-code" aria-pressed="false">My code</button>
+  </nav>
+
+  <!-- ---------------- hub ---------------- -->
+  <section class="screen on" id="hub">
+    <h2 style="position:absolute;left:-9999px">Choose a room</h2>
+    <div class="hub">
+      <button type="button" class="room" id="card-spell" data-go="room-spell"
+              style="--zone:#C62828;--zone-deep:#8E1F1F">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-spell"></use></svg></span>
+        <h2>Spell Beam</h2>
+        <p>Guess the spelling word. Six tries, one letter colour at a time.</p>
+        <span class="tag">Week 3 and 4 spellings</span>
+      </button>
+      <button type="button" class="room" id="card-build" data-go="room-build"
+              style="--zone:#0F6E6E;--zone-deep:#0A4E4E">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-build"></use></svg></span>
+        <h2>Number Build</h2>
+        <p>Build the number from hundreds, tens and ones, then say what a digit is worth.</p>
+        <span class="tag">Week 3 maths</span>
+      </button>
+      <button type="button" class="room" id="card-stairs" data-go="room-stairs"
+              style="--zone:#7A3E9D;--zone-deep:#57206F">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-stairs"></use></svg></span>
+        <h2>Making 100</h2>
+        <p>Find the number that finishes each 100, then sort the sums that make 100 from the ones that do not.</p>
+        <span class="tag">Week 4 maths</span>
+      </button>
+      <button type="button" class="room" id="card-lamp" data-go="room-lamp"
+              style="--zone:#1D3B6E;--zone-deep:#14294D">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-lamp"></use></svg></span>
+        <h2>The Kite Sheds</h2>
+        <p>Four locked sheds, four numbers, one code. Verbs, word choice, speech marks and numbers.</p>
+        <span class="tag">Escape room</span>
+      </button>
+      <button type="button" class="room" id="card-read" data-go="room-read"
+              style="--zone:#2A7F51;--zone-deep:#1C5C39">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-read"></use></svg></span>
+        <h2>The Reading Room</h2>
+        <p>Both stories from the practice packs, with questions to answer and a good answer to compare with.</p>
+        <span class="tag">Extra practice weeks 3 and 4</span>
+      </button>
+      <button type="button" class="room" id="card-code" data-go="room-code"
+              style="--zone:#C08E04;--zone-deep:#8A6403">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-code"></use></svg></span>
+        <h2>My code</h2>
+        <p>Your code for Teams. Type it into the assignment when you have finished.</p>
+        <span class="tag">Hand in</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ---------------- spell beam ---------------- -->
+  <section class="screen panel" id="room-spell" style="--zone:#C62828;--zone-deep:#8E1F1F">
+    <div class="bar">
+      <button type="button" class="btn" data-act="spell-new">Another word</button>
+    </div>
+    <h2>Spell Beam</h2>
+    <p class="lead">A word from the week 3 or week 4 spelling list. Green means the letter is in
+      the right place. Yellow means it is in the word, but somewhere else.</p>
+    <p class="clue" id="spell-clue" aria-live="polite"></p>
+    <div class="rows" id="spell-board" role="grid" aria-label="your guesses"></div>
+    <p class="say" id="spell-say" aria-live="polite"></p>
+    <div class="keys" id="spell-keys">
+      <div class="krow">
+        <button type="button" class="key" data-key="Q">q</button><button type="button" class="key" data-key="W">w</button><button type="button" class="key" data-key="E">e</button><button type="button" class="key" data-key="R">r</button><button type="button" class="key" data-key="T">t</button><button type="button" class="key" data-key="Y">y</button><button type="button" class="key" data-key="U">u</button><button type="button" class="key" data-key="I">i</button><button type="button" class="key" data-key="O">o</button><button type="button" class="key" data-key="P">p</button>
+      </div>
+      <div class="krow">
+        <button type="button" class="key" data-key="A">a</button><button type="button" class="key" data-key="S">s</button><button type="button" class="key" data-key="D">d</button><button type="button" class="key" data-key="F">f</button><button type="button" class="key" data-key="G">g</button><button type="button" class="key" data-key="H">h</button><button type="button" class="key" data-key="J">j</button><button type="button" class="key" data-key="K">k</button><button type="button" class="key" data-key="L">l</button>
+      </div>
+      <div class="krow">
+        <button type="button" class="key wide" data-act="go">Go</button><button type="button" class="key" data-key="Z">z</button><button type="button" class="key" data-key="X">x</button><button type="button" class="key" data-key="C">c</button><button type="button" class="key" data-key="V">v</button><button type="button" class="key" data-key="B">b</button><button type="button" class="key" data-key="N">n</button><button type="button" class="key" data-key="M">m</button><button type="button" class="key wide" data-act="rub">Rub out</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- number build ---------------- -->
+  <section class="screen panel" id="room-build" style="--zone:#0F6E6E;--zone-deep:#0A4E4E">
+    <div class="bar">
+      <button type="button" class="btn" data-act="build-new">Start again</button>
+      <span class="count" id="build-count"></span>
+    </div>
+    <h2>Number Build</h2>
+    <p class="lead">Say the number out loud first. What you say is what you build: hundreds, then
+      tens, then ones.</p>
+    <div id="build-task"></div>
+    <p class="say" id="build-say" aria-live="polite"></p>
+  </section>
+
+  <!-- ---------------- the stairs ---------------- -->
+  <section class="screen panel" id="room-stairs" style="--zone:#7A3E9D;--zone-deep:#57206F">
+    <div class="bar">
+      <button type="button" class="btn" data-act="stairs-new">Start again</button>
+      <span class="count" id="stairs-count"></span>
+    </div>
+    <h2>Making 100</h2>
+    <p class="lead">Two numbers that add up to 100 are a pair to 100. Do the tens first, then the ones.</p>
+    <div id="stairs-task"></div>
+    <p class="say" id="stairs-say" aria-live="polite"></p>
+  </section>
+
+  <!-- ---------------- the lamp room ---------------- -->
+  <section class="screen panel" id="room-lamp" style="--zone:#1D3B6E;--zone-deep:#14294D">
+    <div class="bar">
+      <button type="button" class="btn" data-act="lamp-new">Start again</button>
+    </div>
+    <h2>The Kite Sheds</h2>
+    <p class="lead">Open each shed and answer what is inside. Every shed gives you one number,
+      and the four numbers open the last lock.</p>
+    <div class="code" id="lamp-code" aria-label="the code so far"><b></b><b></b><b></b><b></b></div>
+    <div class="doors" id="lamp-doors"></div>
+    <div id="lamp-room" hidden></div>
+    <div class="task" id="lamp-final" hidden>
+      <p class="q">Tap the four numbers into the lock, in door order.</p>
+      <p class="say" id="lamp-typed" aria-live="polite"></p>
+      <div class="opts">
+        <button type="button" class="opt" data-lock="0">0</button><button type="button" class="opt" data-lock="1">1</button><button type="button" class="opt" data-lock="2">2</button><button type="button" class="opt" data-lock="3">3</button><button type="button" class="opt" data-lock="4">4</button><button type="button" class="opt" data-lock="5">5</button><button type="button" class="opt" data-lock="6">6</button><button type="button" class="opt" data-lock="7">7</button><button type="button" class="opt" data-lock="8">8</button><button type="button" class="opt" data-lock="9">9</button>
+      </div>
+    </div>
+    <p class="say" id="lamp-say" aria-live="polite"></p>
+  </section>
+
+  <!-- ---------------- the reading room ---------------- -->
+  <section class="screen panel" id="room-read" style="--zone:#2A7F51;--zone-deep:#1C5C39">
+    <div class="bar">
+      <button type="button" class="btn" data-act="read-next">The other story</button>
+      <span class="count" id="read-count"></span>
+    </div>
+    <h2>The Reading Room</h2>
+    <p class="lead">Read the story, answer the questions, then write your own answer and compare
+      it with a good one. Nobody marks the writing but you.</p>
+    <div id="read-task"></div>
+    <p class="say" id="read-say" aria-live="polite"></p>
+  </section>
+
+  <!-- ---------------- my code ---------------- -->
+  <section class="screen panel" id="room-code" style="--zone:#C08E04;--zone-deep:#8A6403">
+    <h2>My code</h2>
+    <p class="lead">This is your code for the Teams assignment. It changes as you earn more stars,
+      so copy it when you have finished for the day.</p>
+    <div class="codebox">
+      <p>Type this into Teams</p>
+      <p class="big" id="code-out" aria-live="polite">KH0</p>
+      <p>Then write one thing you found hard.</p>
+    </div>
+    <div class="tally" id="code-tally"></div>
+  </section>
+
+</div>
+
+<script src="kite.js"></script>
+</body>
+</html>

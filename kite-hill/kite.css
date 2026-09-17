@@ -1,0 +1,221 @@
+/* ============================================================
+   The Lighthouse — weeks 2 and 3 practice, shared stylesheet
+   Rules: design-system/mns-classroom/pages/lighthouse.md
+
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+
+/* ---- Typeface: Century Gothic, the school font ----
+   Monotype face, not redistributable, so it is never bundled or fetched.
+   Office machines resolve the real thing, iPads fall back to Futura or
+   Avenir Next, everything else lands on system-ui. */
+
+:root{
+  --paper:#FFFFFF;
+  --sea:#EDF3F9; --sea-2:#D7E4F1;
+  --ink:#16202B; --stone:#42526380;
+  --slate:#3F4C5C;
+  --navy:#1D3B6E; --navy-2:#2F5FA8; --deep:#14294D;
+  --lamp:#F2B705; --lamp-deep:#C08E04;
+  /* one colour per room, matching the subject colours used across the unit */
+  --spell:#C62828; --spell-deep:#8E1F1F;    /* English spelling */
+  --build:#0F6E6E; --build-deep:#0A4E4E;    /* place value */
+  --stairs:#7A3E9D; --stairs-deep:#57206F;  /* counting, odd and even */
+  --room:#1D3B6E; --room-deep:#14294D;      /* the lamp room */
+  --read:#2A7F51; --read-deep:#1C5C39;      /* reading */
+  --ok:#2A7F51; --no:#8E1F1F;
+  --shadow:0 8px 0 rgba(29,59,110,.16);
+  --shadow-sm:0 4px 0 rgba(29,59,110,.14);
+  --tap:56px; --tap-min:48px;
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{
+  margin:0;font-family:var(--school);font-size:1rem;line-height:1.5;
+  color:var(--ink);background:var(--sea);
+  background-image:
+    radial-gradient(circle at 88% 6%, rgba(242,183,5,.22), transparent 26%),
+    radial-gradient(circle at 8% 22%, rgba(47,95,168,.12), transparent 30%),
+    linear-gradient(180deg, transparent 60%, rgba(29,59,110,.08) 100%);
+  background-attachment:fixed;min-height:100vh;
+}
+h1,h2,h3{font-weight:700;margin:0 0 .5rem}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 4rem}
+:focus-visible{outline:4px solid var(--navy);outline-offset:3px;border-radius:8px}
+[hidden]{display:none !important}
+
+/* ---- Icons: inline SVG sprite, injected by lighthouse.js. No emoji. ---- */
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-lg{width:2.4em;height:2.4em}
+
+/* ---- Header ---- */
+header{border-radius:22px;overflow:hidden;box-shadow:var(--shadow);margin-top:.5rem}
+.beam{height:1.5rem;background:repeating-linear-gradient(115deg,
+  var(--lamp) 0 22px,var(--navy) 22px 44px)}
+.head-body{background:var(--navy);color:var(--paper);padding:1rem 1.25rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-body h1{font-size:clamp(1.5rem,4.5vw,2.25rem);margin:0}
+.head-body .sub{margin:.125rem 0 0;font-size:.9375rem;opacity:.94;font-weight:700}
+.stars{margin-left:auto;background:var(--lamp);color:var(--ink);font-weight:700;
+  padding:.5rem .875rem;border-radius:999px;font-size:1rem;box-shadow:0 3px 0 var(--lamp-deep);
+  display:inline-flex;align-items:center;gap:.5rem;min-height:var(--tap-min)}
+
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0 0;justify-content:flex-end}
+.tool{border:3px solid var(--navy);background:var(--paper);color:var(--navy);
+  font-family:inherit;font-weight:700;font-size:.9375rem;cursor:pointer;
+  min-height:var(--tap-min);padding:.5rem 1rem;border-radius:14px;
+  display:inline-flex;align-items:center;gap:.5rem;transition:background .2s ease,color .2s ease}
+.tool[aria-pressed="true"]{background:var(--navy);color:var(--paper)}
+
+/* ---- Rail: the room switcher, always reachable ---- */
+#rail{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0 0}
+#rail button{font-family:inherit;font-weight:700;font-size:.9375rem;cursor:pointer;
+  background:var(--paper);color:var(--navy);border:3px solid var(--sea-2);border-radius:14px;
+  min-height:var(--tap-min);padding:.5rem 1rem;transition:background .2s ease,color .2s ease,border-color .2s ease}
+#rail button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+
+/* ---- Screens: one at a time ---- */
+.screen{display:none}
+.screen.on{display:block}
+
+/* ---- Hub cards ---- */
+.hub{display:grid;gap:1.125rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:1.25rem}
+.room{position:relative;text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);
+  background:var(--paper);border:4px solid var(--zone,var(--navy));border-radius:24px;
+  padding:1.25rem;min-height:9.5rem;display:flex;flex-direction:column;gap:.375rem;
+  box-shadow:inset 0 -6px 12px rgba(255,255,255,.7),0 8px 0 var(--zone-deep,var(--navy));
+  transition:transform .2s ease-out,box-shadow .2s ease-out}
+.room:active{transform:translateY(4px);box-shadow:inset 0 -4px 10px rgba(255,255,255,.7),0 4px 0 var(--zone-deep,var(--navy))}
+.room .zmark{color:var(--zone)}
+.room h2{font-size:1.25rem;margin:.25rem 0 0;color:var(--zone-deep)}
+.room p{margin:0;color:var(--slate);font-size:.9375rem}
+.room .tag{font-size:.8125rem;font-weight:700;color:var(--slate)}
+.room .done{position:absolute;top:.875rem;right:.875rem;color:var(--lamp-deep)}
+
+/* ---- Panels ---- */
+.panel{background:var(--paper);border:4px solid var(--zone,var(--navy));border-radius:24px;
+  padding:1.125rem;margin-top:1.25rem;box-shadow:var(--shadow)}
+.panel h2{color:var(--zone-deep);font-size:1.375rem}
+.panel .lead{color:var(--slate);margin:0 0 1rem}
+.bar{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.btn{font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;border:none;
+  min-height:var(--tap-min);padding:.625rem 1.125rem;border-radius:14px;
+  background:var(--zone,var(--navy));color:var(--paper);box-shadow:0 5px 0 var(--zone-deep,var(--navy));
+  transition:transform .2s ease-out,box-shadow .2s ease-out}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--zone-deep,var(--navy))}
+.btn.ghost{background:var(--paper);color:var(--zone-deep);border:3px solid var(--zone);box-shadow:var(--shadow-sm)}
+.say{min-height:1.75rem;font-weight:700;margin:.75rem 0 0}
+.say.good{color:var(--ok)} .say.try{color:var(--no)}
+.count{font-weight:700;color:var(--slate);font-size:.9375rem}
+
+/* ---- Spell Beam ---- */
+.clue{background:var(--sea);border-left:6px solid var(--spell);border-radius:0 14px 14px 0;
+  padding:.75rem 1rem;margin:0 0 1rem;font-weight:700}
+.rows{display:grid;gap:.5rem;justify-content:center;margin:.5rem 0 1rem}
+.row{display:grid;gap:.375rem}
+.cell{width:var(--tap-min);height:var(--tap-min);border:3px solid var(--sea-2);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;
+  text-transform:uppercase;background:var(--paper)}
+.cell.here{border-color:var(--spell)}
+.cell.spot{background:var(--ok);border-color:var(--read-deep);color:var(--paper)}
+.cell.near{background:var(--lamp);border-color:var(--lamp-deep);color:var(--ink)}
+.cell.gone{background:var(--sea-2);border-color:var(--sea-2);color:var(--slate)}
+.keys{display:grid;gap:.5rem;justify-items:center}
+.keys .krow{display:flex;gap:.375rem;flex-wrap:wrap;justify-content:center}
+.key{font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;background:var(--sea);
+  border:3px solid var(--sea-2);border-radius:12px;color:var(--ink);
+  min-width:var(--tap-min);min-height:var(--tap-min);padding:.25rem .5rem;text-transform:uppercase}
+.key.wide{min-width:5.5rem;background:var(--spell);border-color:var(--spell-deep);color:var(--paper)}
+.key.spot{background:var(--ok);border-color:var(--read-deep);color:var(--paper)}
+.key.near{background:var(--lamp);border-color:var(--lamp-deep)}
+.key.gone{background:var(--sea-2);color:var(--slate)}
+
+/* ---- Number Build: three rows of digits, hundreds, tens and ones ---- */
+.target{font-size:1.375rem;font-weight:700;text-align:center;background:var(--sea);
+  border-radius:16px;padding:.875rem;margin:0 0 1rem}
+.place{display:grid;gap:.625rem;margin-bottom:1rem}
+.place .prow{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.place .plabel{font-weight:700;min-width:6.5rem;color:var(--build-deep)}
+.digits{display:flex;gap:.375rem;flex-wrap:wrap}
+.digit{font-family:inherit;font-size:1.125rem;font-weight:700;cursor:pointer;
+  min-width:var(--tap-min);min-height:var(--tap-min);border-radius:12px;
+  border:3px solid var(--sea-2);background:var(--paper);color:var(--ink);
+  transition:background .2s ease,color .2s ease,border-color .2s ease}
+.digit[aria-pressed="true"]{background:var(--build);border-color:var(--build-deep);color:var(--paper)}
+.built{font-size:1.75rem;font-weight:700;text-align:center;letter-spacing:.1em;
+  color:var(--build-deep);min-height:2.25rem}
+
+/* ---- The Stairs ---- */
+.steps{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;align-items:center;margin:1rem 0}
+.step{background:var(--sea);border-radius:14px;padding:.75rem 1rem;font-size:1.25rem;font-weight:700;
+  min-width:var(--tap);text-align:center}
+.step.blank{border:3px dashed var(--stairs);background:var(--paper)}
+.chutes{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.chute{font-family:inherit;font-size:1.25rem;font-weight:700;cursor:pointer;flex:1 1 9rem;
+  min-height:5rem;border-radius:18px;border:4px solid var(--stairs);background:var(--paper);
+  color:var(--stairs-deep);box-shadow:0 6px 0 var(--stairs-deep)}
+.chute:active{transform:translateY(3px);box-shadow:0 3px 0 var(--stairs-deep)}
+
+/* ---- Rooms, questions and options ---- */
+.doors{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.door{cursor:pointer;font-family:inherit;text-align:left;background:var(--paper);
+  border:4px solid var(--room);border-radius:20px;padding:1rem;min-height:7rem;color:var(--ink);
+  box-shadow:0 6px 0 var(--room-deep);display:flex;flex-direction:column;gap:.25rem}
+.door[data-open="yes"]{border-color:var(--ok);box-shadow:0 6px 0 var(--read-deep)}
+.door .icon{color:var(--room)}
+.door strong{font-size:1.125rem;color:var(--room-deep)}
+.door .digit-out{font-size:2rem;font-weight:700;color:var(--ok)}
+.task{background:var(--sea);border-radius:18px;padding:1rem;margin:.75rem 0}
+.task p.q{font-weight:700;font-size:1.125rem;margin:0 0 .75rem}
+.opts{display:flex;flex-wrap:wrap;gap:.75rem}
+.opt{font-family:inherit;font-size:1.0625rem;font-weight:700;cursor:pointer;background:var(--paper);
+  min-width:var(--tap);border:3px solid var(--zone,var(--navy));color:var(--zone-deep,var(--deep));
+  border-radius:14px;min-height:var(--tap);padding:.5rem 1.125rem;
+  transition:background .2s ease,color .2s ease}
+.opt.good{background:var(--ok);border-color:var(--read-deep);color:var(--paper)}
+.opt.bad{background:var(--sea-2);border-color:var(--sea-2);color:var(--slate)}
+.why{margin:.75rem 0 0;font-weight:700;color:var(--slate)}
+.code{display:flex;gap:.5rem;justify-content:center;margin:1rem 0}
+.code b{width:var(--tap);height:var(--tap);border:3px dashed var(--room);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.75rem;background:var(--paper)}
+.code b.on{border-style:solid;border-color:var(--ok);background:var(--sea)}
+
+/* ---- Reading room ---- */
+.passage{background:var(--sea);border-radius:18px;padding:1rem 1.125rem;margin-bottom:1rem}
+.passage h3{color:var(--read-deep);margin-bottom:.5rem}
+.passage p{margin:0 0 .625rem;font-size:1.0625rem;line-height:1.7}
+.vocab{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.vocab span{background:var(--paper);border:2px solid var(--sea-2);border-radius:999px;
+  padding:.25rem .75rem;font-size:.9375rem;font-weight:700}
+.write label{display:block;font-weight:700;margin-bottom:.5rem;font-size:1.0625rem}
+.write textarea{width:100%;min-height:5.5rem;font-family:inherit;font-size:1.0625rem;
+  border:3px solid var(--sea-2);border-radius:14px;padding:.75rem;background:var(--paper);color:var(--ink)}
+.write textarea:focus{border-color:var(--read);outline:none}
+.model{background:var(--paper);border-left:6px solid var(--read);border-radius:0 14px 14px 0;
+  padding:.75rem 1rem;margin-top:.75rem}
+.model b{display:block;color:var(--read-deep);margin-bottom:.25rem}
+.selfmark{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem}
+
+/* ---- The check code for Teams ---- */
+.codebox{background:var(--navy);color:var(--paper);border-radius:20px;padding:1.25rem;text-align:center}
+.codebox .big{font-size:2.5rem;font-weight:700;letter-spacing:.12em;color:var(--lamp);margin:.5rem 0}
+.codebox p{margin:.25rem 0}
+.tally{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+.tally span{background:var(--sea);border-radius:999px;padding:.375rem .875rem;font-weight:700}
+
+/* ---- Motion: CSS only, 150-300ms, off when the device asks ---- */
+@keyframes pop{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.pop{animation:pop .25s ease-out}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+@media (max-width:480px){
+  .wrap{padding:.75rem .875rem 3rem}
+  .place .plabel{min-width:100%}
+}
