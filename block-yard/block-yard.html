@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Block Yard · Guided Bays</title>
+<meta name="description" content="Base ten blocks you can move: adding and subtracting with regrouping, and finding unknown numbers. Cambridge Primary Maths Stage 3, Unit 4.">
+<link rel="stylesheet" href="yard.css">
+</head>
+<body data-lesson="block-yard">
+
+<header>
+  <div class="hd">
+    <h1>The Block Yard</h1>
+    <p>Unit 4: adding and subtracting with trading, and finding the load under the tarpaulin.</p>
+  </div>
+  <div class="toolbar" id="toolbar"></div>
+  <nav id="rail" aria-label="Steps"></nav>
+</header>
+
+<p id="live" class="sr" role="status" aria-live="polite"></p>
+
+<main class="wrap">
+
+<!-- ============================ 0. The gate ============================ -->
+<section class="screen" data-s="0" aria-labelledby="h0">
+  <h2 id="h0">The yard gate</h2>
+  <p class="lead" data-read="In this yard every number is built from blocks. A little cube is one. A rod is ten ones joined together. A flat is one hundred. Tap a shelf button to bring a block onto the mat. Tap the pile itself to take one block back.">
+    In this yard every number is built from blocks. A little cube is one. A rod is ten ones
+    joined together. A flat is one hundred. Tap a shelf button to bring a block onto the mat.
+    Tap the pile itself to take one block back.
+  </p>
+
+  <div class="card">
+    <h3>Key words</h3>
+    <div class="words">
+      <div class="kcard" data-word="ones"><div><b>ones</b><span>Single cubes.</span></div></div>
+      <div class="kcard" data-word="tens"><div><b>tens</b><span>A rod of ten ones.</span></div></div>
+      <div class="kcard" data-word="regroup"><div><b>regroup</b><span>Trade ten ones for one ten, or one ten for ten ones.</span></div></div>
+      <div class="kcard" data-word="estimate"><div><b>estimate</b><span>A sensible close answer, worked out quickly.</span></div></div>
+      <div class="kcard" data-word="total"><div><b>total</b><span>What you get when you add.</span></div></div>
+      <div class="kcard" data-word="difference"><div><b>difference</b><span>What is left when you subtract.</span></div></div>
+      <div class="kcard" data-word="unknown"><div><b>unknown</b><span>A number we have not been told yet.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Job 1: build 47 on the mat</h3>
+    <p>Bring on 4 tens and 7 ones. The mat counts what you put down.</p>
+    <div id="gateMat"></div>
+    <div id="gateQ"></div>
+  </div>
+</section>
+
+<!-- ==================== 1. Adding with no trade ==================== -->
+<section class="screen" data-s="1" aria-labelledby="h1">
+  <h2 id="h1">Bay 1: a load that needs no trading</h2>
+  <p class="lead" data-read="Not every addition needs a trade. Build the first number, then bring on the second number, and look hard at the ones pile before you decide.">
+    Not every addition needs a trade. Build the first number, then bring on the second number,
+    and look hard at the ones pile before you decide.
+  </p>
+  <div class="card">
+    <h3>24 + 65</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay1Mat"></div>
+      <div class="side" id="bay1Side"></div>
+    </div>
+    <div id="bay1Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 2. The first trade ==================== -->
+<section class="screen" data-s="2" aria-labelledby="h2h">
+  <h2 id="h2h">Bay 2: ten ones make one ten</h2>
+  <p class="lead" data-read="This is the one from your Student's Book. Build thirty six, bring on twenty eight, and count the ones pile before you trade.">
+    This is the one from your Student's Book. Build 36, bring on 28, and count the ones pile
+    before you trade.
+  </p>
+  <div class="card">
+    <h3>36 + 28</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay2Mat"></div>
+      <div class="side" id="bay2Side"></div>
+    </div>
+    <div id="bay2Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 3. Trading twice ==================== -->
+<section class="screen" data-s="3" aria-labelledby="h3h">
+  <h2 id="h3h">Bay 3: a load too big for the mat</h2>
+  <p class="lead" data-read="Sometimes ten tens turn up as well. Ten rods are traded for one flat, which is one hundred.">
+    Sometimes ten tens turn up as well. Ten rods are traded for one flat, which is one hundred.
+  </p>
+  <div class="card">
+    <h3>68 + 87</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay3Mat"></div>
+      <div class="side" id="bay3Side"></div>
+    </div>
+    <div id="bay3Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 4. Taking away, no break ==================== -->
+<section class="screen" data-s="4" aria-labelledby="h4h">
+  <h2 id="h4h">Bay 4: taking a load away</h2>
+  <p class="lead" data-read="To subtract, build the first number and then take blocks back off the mat. Check the ones first: sometimes there are plenty.">
+    To subtract, build the first number and then take blocks back off the mat. Check the ones
+    first: sometimes there are plenty.
+  </p>
+  <div class="card">
+    <h3>77 &minus; 23</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay4Mat"></div>
+      <div class="side" id="bay4Side"></div>
+    </div>
+    <div id="bay4Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 5. Breaking a ten ==================== -->
+<section class="screen" data-s="5" aria-labelledby="h5h">
+  <h2 id="h5h">Bay 5: breaking a ten open</h2>
+  <p class="lead" data-read="When there are not enough ones, break one rod open. Ten ones fall out. The load is worth exactly the same as before.">
+    When there are not enough ones, break one rod open. Ten ones fall out. The load is worth
+    exactly the same as before.
+  </p>
+  <div class="card">
+    <h3>64 &minus; 35</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay5Mat"></div>
+      <div class="side" id="bay5Side"></div>
+    </div>
+    <div id="bay5Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 6. Unknowns ==================== -->
+<section class="screen" data-s="6" aria-labelledby="h6h">
+  <h2 id="h6h">Bay 6: what is under the tarpaulin?</h2>
+  <p class="lead" data-read="Part of the load is hidden under a tarpaulin. You know the total and you know one part, so you can work out the part you cannot see. Build your answer on the mat and the tarpaulin will lift.">
+    Part of the load is hidden under a tarpaulin. You know the total and you know one part, so
+    you can work out the part you cannot see. Build your answer on the mat and the tarpaulin
+    will lift.
+  </p>
+  <div class="card" id="unk1"><h3>14 + ? = 20</h3></div>
+  <div class="card" id="unk2"><h3>76 + ? = 100</h3></div>
+  <div class="card" id="unk3"><h3>40 &minus; ? = 23</h3></div>
+  <div class="card">
+    <h3>No blocks this time</h3>
+    <p>You have done these with blocks. Now do them in your head, the way a yard foreman does.</p>
+    <div id="unk4"></div>
+    <div class="note">
+      <strong>In your maths book.</strong> Write your own tarpaulin question for a partner. Give
+      them the total and one part, and keep the answer to yourself.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 7. Report ==================== -->
+<section class="screen" data-s="7" aria-labelledby="h7h">
+  <h2 id="h7h">The foreman's report</h2>
+  <p class="lead">Show this to your teacher before you close the page.</p>
+  <div class="card">
+    <h3>My work today</h3>
+    <div id="myWork"></div>
+  </div>
+  <div class="card">
+    <h3>In your maths book</h3>
+    <ul>
+      <li>Draw the blocks for 55 + 43. Did you need to trade? Write why.</li>
+      <li>Ravi says 64 &minus; 35 is 31, because 5 &minus; 4 is 1. What has he done wrong?</li>
+      <li>Write a subtraction where you must break a ten, and one where you must not.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="panel" id="summary">
+  <h3>Session summary</h3>
+  <div data-summary-body></div>
+</div>
+
+</main>
+
+<script src="yard.js"></script>
+<script>
+(function () {
+  'use strict';
+  var Y = window.Yard;
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function parts(n) { return { h: Math.floor(n / 100), t: Math.floor(n / 10) % 10, o: n % 10 }; }
+  function same(a, b) { return a.h === b.h && a.t === b.t && a.o === b.o; }
+
+  /* A "Check the build" button. The child has to say when they are done, which
+     is the moment they look at what they made instead of tapping on. */
+  function checkStep(host, cfg) {
+    var wrap = el('div', 'note');
+    var p = el('p', null, cfg.text);
+    p.style.margin = '0 0 .5rem';
+    wrap.appendChild(p);
+    var btn = el('button', 'btn go', cfg.label || 'Check the build');
+    btn.type = 'button';
+    var fb = el('p', 'ask-fb');
+    fb.setAttribute('role', 'status');
+    var done = false;
+    btn.addEventListener('click', function () {
+      if (done) return;
+      var want = cfg.want, got = cfg.mat.get();
+      if (same(got, want)) {
+        done = true;
+        fb.className = 'ask-fb good';
+        fb.textContent = cfg.praise || 'That is right. Carry on.';
+        btn.disabled = true;
+        Y.record({ task: cfg.task, result: 'build correct' });
+        if (cfg.onDone) cfg.onDone();
+      } else {
+        fb.className = 'ask-fb bad';
+        fb.textContent = cfg.nudge || 'Not yet. Count the piles and compare them with the number.';
+        Y.record({ task: cfg.task, result: 'build ' + got.h + 'h ' + got.t + 't ' + got.o + 'o' });
+      }
+    });
+    wrap.appendChild(btn);
+    wrap.appendChild(fb);
+    host.appendChild(wrap);
+    return { isDone: function () { return done; } };
+  }
+
+  /* ---------------- 0. The gate ---------------- */
+  var gateMat = Y.mat(document.getElementById('gateMat'), {
+    label: 'Mat at the gate', goal: 'Build 47', places: ['t', 'o'], trade: true
+  });
+  var gateQ = document.getElementById('gateQ');
+  checkStep(gateQ, {
+    mat: gateMat, want: parts(47), task: 'Gate: build 47',
+    text: 'Bring on 4 tens and 7 ones, then press the button.',
+    nudge: 'Count again. 47 needs 4 rods and 7 cubes.'
+  });
+  Y.ask(gateQ, {
+    task: 'Gate: 5 more ones',
+    prompt: 'Now tap the ones shelf 5 more times. How many ones are on the mat?',
+    answer: 12,
+    nudge: 'Count the gold cubes one at a time.',
+    hint: 'You had 7 ones and you added 5 more. 7 + 5 = 12.',
+    praise: 'Yes, 12 ones.'
+  });
+  Y.choose(gateQ, {
+    task: 'Gate: why trade',
+    prompt: 'You have more than nine ones. What does the yard rule say?',
+    options: [
+      { label: 'Trade ten ones for one ten', right: true,
+        why: 'Right. Ten loose cubes are packed into one rod. Press the trade button now.' },
+      { label: 'Leave them loose', why: 'The yard never keeps ten or more loose ones. They get packed into a rod.' },
+      { label: 'Throw one away', why: 'Nothing is ever thrown away. Trading keeps the load exactly the same size.' }
+    ]
+  });
+  Y.ask(gateQ, {
+    task: 'Gate: value after trading',
+    prompt: 'Press the trade button. What number is on the mat now?',
+    answer: 52,
+    nudge: 'Read the piles: how many tens, and how many ones are left over?',
+    hint: 'Trading made 5 tens and 2 ones. That is 52.',
+    praise: 'Yes, 52.'
+  });
+  Y.choose(gateQ, {
+    task: 'Gate: does trading change the value',
+    prompt: 'Did trading change how much is on the mat?',
+    options: [
+      { label: 'No, it is the same amount', right: true,
+        why: 'Exactly. 4 tens and 12 ones and 5 tens and 2 ones are both 52. Only the packing changed.' },
+      { label: 'Yes, it went up', why: 'Nothing was added. Count it again: the pile is worth the same.' },
+      { label: 'Yes, it went down', why: 'Nothing was taken away. Ten loose ones and one rod are worth the same.' }
+    ]
+  });
+
+  /* ---------------- Addition bay ---------------- */
+  function additionBay(cfg) {
+    var matHost = document.getElementById(cfg.ids.mat);
+    var side = document.getElementById(cfg.ids.side);
+    var qs = document.getElementById(cfg.ids.q);
+    var places = cfg.places || ['t', 'o'];
+    var total = cfg.a + cfg.b;
+    var combined = false;
+
+    var m = Y.mat(matHost, {
+      label: 'Yard mat', goal: 'Build ' + cfg.a, places: places, trade: true,
+      cap: { h: 3, t: 19, o: 24 }
+    });
+    var written = Y.col(side, { a: cfg.a, b: cfg.b, op: '+' });
+    var ch = Y.chart(side);
+    // The chart follows the mat only while the first number is going on, so a
+    // rod is a row down and a cube is a step across. The moment that number is
+    // built it freezes and covers: from there on it would print the answer.
+    m.onChange(function (api) {
+      if (combined) return;
+      var n = api.total();
+      if (n >= cfg.a) { combined = true; ch.set(cfg.a); ch.cover(true); }
+      else ch.set(n);
+    });
+
+    checkStep(qs, {
+      mat: m, want: parts(cfg.a), task: cfg.name + ': build ' + cfg.a,
+      text: 'Build ' + cfg.a + ' on the mat.',
+      nudge: 'Not yet. ' + cfg.a + ' needs ' + parts(cfg.a).t + ' tens and ' + parts(cfg.a).o + ' ones.'
+    });
+
+    Y.ask(qs, {
+      task: cfg.name + ': estimate',
+      prompt: 'Estimate first. Round ' + cfg.a + ' and ' + cfg.b + ' to the nearest ten and add those.',
+      accept: function (v) { return v % 10 === 0 && Math.abs(v - total) <= 20; },
+      answer: Math.round(total / 10) * 10,
+      nudge: 'An estimate is a multiple of ten that lands close to the real answer.',
+      hint: 'Round each number to the nearest ten, then add. Any sensible multiple of ten is accepted.',
+      praise: 'Sensible estimate.'
+    });
+
+    var pb = parts(cfg.b);
+    checkStep(qs, {
+      mat: m, want: { h: parts(cfg.a).h + pb.h, t: parts(cfg.a).t + pb.t, o: parts(cfg.a).o + pb.o },
+      task: cfg.name + ': bring on ' + cfg.b,
+      text: 'Now bring on ' + cfg.b + ': tap the shelf for ' + pb.t + ' more tens and ' +
+        pb.o + ' more ones. Do not trade yet.',
+      nudge: 'Careful. Put the blocks on without trading, so we can look at the ones pile first.',
+      praise: 'Both numbers are on the mat. Now look at the ones pile.'
+    });
+
+    Y.choose(qs, {
+      task: cfg.name + ': do we trade',
+      prompt: 'Look at the ones pile. Is there ten or more?',
+      options: cfg.trades ? [
+        { label: 'Yes, trade ten ones for a ten', right: true,
+          why: 'Yes. Press the trade button on the mat.' },
+        { label: 'No, it is under ten',
+          why: 'Count the loose cubes again. ' + parts(cfg.a).o + ' + ' + pb.o + ' makes ten or more.' }
+      ] : [
+        { label: 'No, it is under ten', right: true,
+          why: 'Right. ' + parts(cfg.a).o + ' + ' + pb.o + ' stays under ten, so nothing is traded.' },
+        { label: 'Yes, trade ten ones for a ten',
+          why: 'Count the loose cubes again. ' + parts(cfg.a).o + ' + ' + pb.o +
+               ' is less than ten, so the pile stays as it is.' }
+      ],
+      onSolved: function () {
+        if (cfg.trades) written.carry(1, '1');
+      }
+    });
+
+    if (cfg.trades) {
+      Y.ask(qs, {
+        task: cfg.name + ': ones after trading',
+        prompt: 'Press the trade button on the mat. How many loose ones are left?',
+        answer: total % 10,
+        nudge: 'Ten cubes went into the rod. Count what is still loose.',
+        hint: parts(cfg.a).o + ' + ' + pb.o + ' = ' + (parts(cfg.a).o + pb.o) + '. Ten of those were packed away, so ' +
+          (total % 10) + ' are left loose.',
+        praise: 'Yes.'
+      });
+    }
+
+    // A total over 100 means the rods pile reaches ten as well, so the yard
+    // trades a second time: ten rods for one flat. Without this step the class
+    // meets a pile of fourteen rods and no rule for what to do with it.
+    if (places.indexOf('h') !== -1 && total >= 100) {
+      Y.ask(qs, {
+        task: cfg.name + ': tens after trading',
+        prompt: 'Now count the rods. There are ten or more, so press trade again. ' +
+          'How many rods are left beside the flat?',
+        answer: parts(total).t,
+        nudge: 'Ten rods were packed into one flat. Count the rods that are still loose.',
+        hint: 'There were ' + (parts(total).t + 10) + ' rods. Ten of them became one flat, so ' +
+          parts(total).t + ' rods are left.',
+        praise: 'Yes, and the flat is worth one hundred.',
+        onSolved: function () { written.carry(0, '1'); }
+      });
+    }
+
+    Y.ask(qs, {
+      task: cfg.name + ': ' + cfg.a + ' + ' + cfg.b,
+      prompt: 'What is ' + cfg.a + ' + ' + cfg.b + '?',
+      answer: total,
+      miss: function (v) {
+        if (v === Number(String(parts(cfg.a).t + pb.t) + String(parts(cfg.a).o + pb.o))) {
+          return 'You wrote the ones pile as two digits. Ten of those ones must be packed into a rod first.';
+        }
+        if (v === total - 10) return 'Close. Did you count the ten you traded across?';
+        return 'Not quite. Read the mat: count the rods, then the loose ones.';
+      },
+      hint: 'The mat shows ' + parts(total).t + ' tens and ' + parts(total).o + ' ones' +
+        (parts(total).h ? ' and ' + parts(total).h + ' hundred' : '') + ', which is ' + total + '.',
+      praise: 'Correct.',
+      onSolved: function () {
+        written.answer(total);
+        ch.cover(false);
+        ch.hop(cfg.a, cfg.b);
+      }
+    });
+  }
+
+  /* ---------------- Subtraction bay ---------------- */
+  function subtractionBay(cfg) {
+    var matHost = document.getElementById(cfg.ids.mat);
+    var side = document.getElementById(cfg.ids.side);
+    var qs = document.getElementById(cfg.ids.q);
+    var answer = cfg.a - cfg.b;
+    var pa = parts(cfg.a), pb = parts(cfg.b);
+    var locked = false;
+
+    var m = Y.mat(matHost, {
+      label: 'Yard mat', goal: 'Build ' + cfg.a, places: ['t', 'o'],
+      trade: false, breakTen: true, cap: { h: 0, t: 19, o: 24 }
+    });
+    var written = Y.col(side, { a: cfg.a, b: cfg.b, op: '-' });
+    var ch = Y.chart(side);
+    // Following the mat while blocks come off would walk the highlight to the
+    // answer, so the chart freezes as soon as the first number is built.
+    m.onChange(function (api) {
+      if (locked) return;
+      var n = api.total();
+      if (n >= cfg.a) { locked = true; ch.set(cfg.a); ch.cover(true); }
+      else ch.set(n);
+    });
+
+    checkStep(qs, {
+      mat: m, want: pa, task: cfg.name + ': build ' + cfg.a,
+      text: 'Build ' + cfg.a + ' on the mat.',
+      nudge: 'Not yet. ' + cfg.a + ' needs ' + pa.t + ' tens and ' + pa.o + ' ones.'
+    });
+
+    Y.ask(qs, {
+      task: cfg.name + ': estimate',
+      prompt: 'Estimate first. Round ' + cfg.a + ' and ' + cfg.b + ' to the nearest ten and subtract.',
+      accept: function (v) { return v % 10 === 0 && Math.abs(v - answer) <= 20; },
+      answer: Math.round(answer / 10) * 10,
+      nudge: 'An estimate is a multiple of ten that lands close to the real answer.',
+      hint: 'Round each number to the nearest ten, then subtract. Any sensible multiple of ten is accepted.',
+      praise: 'Sensible estimate.'
+    });
+
+    Y.choose(qs, {
+      task: cfg.name + ': can we take the ones',
+      prompt: 'You must take ' + pb.o + ' ones away. There are ' + pa.o +
+        ' ones on the mat. Can you do it without breaking a ten?',
+      options: cfg.breaks ? [
+        { label: 'No, I must break a ten', right: true,
+          why: 'Right. ' + pa.o + ' is smaller than ' + pb.o + ', so one rod has to be broken open.' },
+        { label: 'Yes, there are enough ones',
+          why: 'Count again: there are only ' + pa.o + ' loose ones and you need ' + pb.o + '.' }
+      ] : [
+        { label: 'Yes, there are enough ones', right: true,
+          why: 'Right. ' + pa.o + ' is enough to take ' + pb.o + ' away, so nothing is broken.' },
+        { label: 'No, I must break a ten',
+          why: 'Count again: ' + pa.o + ' ones is already more than ' + pb.o + '.' }
+      ]
+    });
+
+    if (cfg.breaks) {
+      Y.ask(qs, {
+        task: cfg.name + ': ones after breaking',
+        prompt: 'Press the break button on the mat. How many ones are on the mat now?',
+        answer: pa.o + 10,
+        nudge: 'Ten ones fell out of the rod. Add them to the ones you already had.',
+        hint: cfg.a + ' is now ' + (pa.t - 1) + ' tens and ' + (pa.o + 10) + ' ones. It is still ' + cfg.a + '.',
+        praise: 'Yes, and the load is still worth ' + cfg.a + '.',
+        onSolved: function () {
+          written.carry(1, String(pa.t - 1));
+          written.carry(2, String(pa.o + 10));
+        }
+      });
+    }
+
+    checkStep(qs, {
+      mat: m, want: parts(answer), task: cfg.name + ': take ' + cfg.b + ' away',
+      text: 'Now take ' + cfg.b + ' off the mat: tap the piles to send back ' + pb.t +
+        ' tens and ' + pb.o + ' ones.',
+      nudge: 'Not yet. Tap a pile to take one block off it. Send back ' + pb.t + ' tens and ' +
+        pb.o + ' ones altogether.',
+      praise: 'The load left on the mat is the difference.'
+    });
+
+    Y.ask(qs, {
+      task: cfg.name + ': ' + cfg.a + ' minus ' + cfg.b,
+      prompt: 'What is ' + cfg.a + ' take away ' + cfg.b + '?',
+      answer: answer,
+      miss: function (v) {
+        var flipped = Math.abs(pa.o - pb.o) + Math.abs(pa.t - pb.t) * 10;
+        if (cfg.breaks && v === flipped) {
+          return 'You took the small ones digit from the big one. Subtraction does not swap round: ' +
+                 pa.o + ' take away ' + pb.o + ' is not possible, so a ten must be broken.';
+        }
+        return 'Not quite. Read what is left on the mat: rods first, then loose ones.';
+      },
+      hint: 'What is left is ' + parts(answer).t + ' tens and ' + parts(answer).o + ' ones, which is ' + answer + '.',
+      praise: 'Correct.',
+      onSolved: function () {
+        written.answer(answer);
+        ch.cover(false);
+        ch.hop(cfg.a, -cfg.b);
+      }
+    });
+  }
+
+  additionBay({ name: 'Bay 1', a: 24, b: 65, trades: false, ids: { mat: 'bay1Mat', side: 'bay1Side', q: 'bay1Q' } });
+  additionBay({ name: 'Bay 2', a: 36, b: 28, trades: true, ids: { mat: 'bay2Mat', side: 'bay2Side', q: 'bay2Q' } });
+  additionBay({ name: 'Bay 3', a: 68, b: 87, trades: true, places: ['h', 't', 'o'],
+                ids: { mat: 'bay3Mat', side: 'bay3Side', q: 'bay3Q' } });
+  subtractionBay({ name: 'Bay 4', a: 77, b: 23, breaks: false, ids: { mat: 'bay4Mat', side: 'bay4Side', q: 'bay4Q' } });
+  subtractionBay({ name: 'Bay 5', a: 64, b: 35, breaks: true, ids: { mat: 'bay5Mat', side: 'bay5Side', q: 'bay5Q' } });
+
+  /* ---------------- 6. Unknowns under the tarpaulin ---------------- */
+  function tarpBay(hostId, cfg) {
+    var host = document.getElementById(hostId);
+    var lifted = false;
+
+    var line = el('p', null, cfg.story);
+    host.appendChild(line);
+
+    // The part the child is told, drawn in the same blocks as the part they
+    // have to find. Without it the tarpaulin is a riddle rather than a model.
+    Y.strip(host, cfg.known, cfg.knownLabel);
+
+    var tarp = el('div', 'tarp');
+    tarp.textContent = cfg.tarpLabel;
+    host.appendChild(tarp);
+
+    var m = Y.mat(host, {
+      label: 'Your guess at the hidden load', goal: cfg.sentence,
+      places: ['t', 'o'], trade: true, cap: { h: 0, t: 12, o: 24 }
+    });
+
+    var check = el('button', 'btn go wide', 'Lift the tarpaulin');
+    check.type = 'button';
+    var fb = el('p', 'ask-fb');
+    fb.setAttribute('role', 'status');
+    host.appendChild(check);
+    host.appendChild(fb);
+
+    check.addEventListener('click', function () {
+      if (lifted) return;
+      var built = m.total();
+      if (built === cfg.hidden) {
+        lifted = true;
+        tarp.classList.add('lifted');
+        tarp.textContent = cfg.sentence.replace('?', String(cfg.hidden)) + '. The tarpaulin is off.';
+        fb.className = 'ask-fb good';
+        fb.textContent = 'That is the hidden load. Now write the number below.';
+        Y.record({ task: cfg.name + ': tarpaulin', result: 'lifted' });
+      } else {
+        fb.className = 'ask-fb bad';
+        fb.textContent = cfg.test(built);
+        Y.record({ task: cfg.name + ': tarpaulin', result: 'tried ' + built });
+      }
+    });
+
+    Y.ask(host, {
+      task: cfg.name + ': ' + cfg.sentence,
+      prompt: 'Write the unknown number. ' + cfg.sentence,
+      answer: cfg.hidden,
+      nudge: cfg.nudge,
+      hint: cfg.hint,
+      praise: 'Correct.'
+    });
+  }
+
+  tarpBay('unk1', {
+    name: 'Unknown 1', sentence: '14 + ? = 20', hidden: 6,
+    known: 14, knownLabel: 'The 14 blocks you can see',
+    tarpLabel: 'The load that arrived, still under the tarpaulin',
+    story: 'The yard had 14 blocks, then a hidden load arrived. Now there are 20 altogether.',
+    test: function (n) {
+      return 'Your load is ' + n + '. 14 + ' + n + ' = ' + (14 + n) + ', and we need 20. ' +
+        (14 + n > 20 ? 'Take some blocks back off.' : 'Put a few more on.');
+    },
+    nudge: 'The inverse of add is subtract. Try 20 take away 14.',
+    hint: '20 take away 14 is 6, so the hidden load is 6. Check it: 14 + 6 = 20.'
+  });
+
+  tarpBay('unk2', {
+    name: 'Unknown 2', sentence: '76 + ? = 100', hidden: 24,
+    known: 76, knownLabel: 'The 76 blocks you can see',
+    tarpLabel: 'The rest of the hundred, under the tarpaulin',
+    story: 'A full yard holds 100. There are 76 blocks here and the rest are under the tarpaulin.',
+    test: function (n) {
+      return 'Your load is ' + n + '. 76 + ' + n + ' = ' + (76 + n) + ', and a full yard is 100. ' +
+        (76 + n > 100 ? 'That is over the top. Take some off.' : 'The yard is not full yet.');
+    },
+    nudge: 'Count on from 76 to 100 on the hundred chart. How many steps?',
+    hint: '100 take away 76 is 24, so the hidden load is 24. Check it: 76 + 24 = 100.'
+  });
+
+  tarpBay('unk3', {
+    name: 'Unknown 3', sentence: '40 − ? = 23', hidden: 17,
+    known: 23, knownLabel: 'The 23 blocks still in the yard',
+    tarpLabel: 'The load on the lorry, under the tarpaulin',
+    story: 'There were 40 blocks. A lorry took a hidden load away and 23 blocks are left.',
+    test: function (n) {
+      return 'Your load is ' + n + '. 40 take away ' + n + ' leaves ' + (40 - n) + ', and 23 were left. ' +
+        (40 - n > 23 ? 'The lorry took more than that.' : 'The lorry took less than that.');
+    },
+    nudge: 'What is taken away is the difference between 40 and 23.',
+    hint: '40 take away 23 is 17, so the lorry took 17. Check it: 40 take away 17 leaves 23.'
+  });
+
+  var unk4 = document.getElementById('unk4');
+  Y.ask(unk4, {
+    task: 'Unknown 4: ? + 25 = 50',
+    prompt: 'Write the unknown number. ? + 25 = 50',
+    answer: 25,
+    nudge: 'Use the inverse: 50 take away 25.',
+    hint: '50 take away 25 is 25, so the unknown is 25. Check it: 25 + 25 = 50.',
+    praise: 'Correct.'
+  });
+  Y.ask(unk4, {
+    task: 'Unknown 5: ? minus 29 = 21',
+    prompt: 'Write the unknown number. ? − 29 = 21',
+    answer: 50,
+    nudge: 'This one starts unknown. If 29 were taken away and 21 were left, put them back together.',
+    hint: '21 + 29 = 50, so the unknown is 50. Check it: 50 take away 29 leaves 21.',
+    praise: 'Correct. Adding the two known parts finds the start.'
+  });
+
+  Y.init([
+    { label: 'Gate', icon: 'blocks' },
+    { label: 'Bay 1', icon: 'plus' },
+    { label: 'Bay 2', icon: 'swap' },
+    { label: 'Bay 3', icon: 'grid' },
+    { label: 'Bay 4', icon: 'minus' },
+    { label: 'Bay 5', icon: 'swap' },
+    { label: 'Bay 6', icon: 'tarp' },
+    { label: 'Report', icon: 'check' }
+  ]);
+})();
+</script>
+</body>
+</html>

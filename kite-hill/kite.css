@@ -1,5 +1,5 @@
 /* ============================================================
-   The Lighthouse — weeks 2 and 3 practice, shared stylesheet
+   Kite Hill — weeks 3 and 4 practice, shared stylesheet
    Rules: design-system/mns-classroom/pages/lighthouse.md
 
    NO external requests. No @font-face, no CDN, nothing off-device.
@@ -49,7 +49,7 @@ h1,h2,h3{font-weight:700;margin:0 0 .5rem}
 :focus-visible{outline:4px solid var(--navy);outline-offset:3px;border-radius:8px}
 [hidden]{display:none !important}
 
-/* ---- Icons: inline SVG sprite, injected by lighthouse.js. No emoji. ---- */
+/* ---- Icons: inline SVG sprite, injected by kite.js. No emoji. ---- */
 .icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;
   fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .icon-lg{width:2.4em;height:2.4em}
