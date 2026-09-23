@@ -167,6 +167,12 @@
     <div id="myWork"></div>
   </div>
   <div class="card">
+    <h3>Want more practice?</h3>
+    <p>The Open Bench has the same blocks and the same hundred chart, but you
+      choose the numbers.</p>
+    <a class="btn go wide golink" href="block-yard-open.html">Go to the Open Bench</a>
+  </div>
+  <div class="card">
     <h3>In your maths book</h3>
     <ul>
       <li>Draw the blocks for 55 + 43. Did you need to trade? Write why.</li>
@@ -198,6 +204,28 @@
   function parts(n) { return { h: Math.floor(n / 100), t: Math.floor(n / 10) % 10, o: n % 10 }; }
   function same(a, b) { return a.h === b.h && a.t === b.t && a.o === b.o; }
 
+  /* What is wrong with the mat in front of the child, in one sentence.
+     One place at a time, worst first, so the next tap is never ambiguous. */
+  function diff(got, want) {
+    var places = [
+      { k: 'h', one: 'hundred', many: 'hundreds' },
+      { k: 't', one: 'ten', many: 'tens' },
+      { k: 'o', one: 'one', many: 'ones' }
+    ];
+    for (var i = 0; i < places.length; i++) {
+      var p = places[i], off = got[p.k] - want[p.k];
+      if (off === 0) continue;
+      var n = Math.abs(off), word = n === 1 ? p.one : p.many;
+      if (off > 0) {
+        return n === 1
+          ? 'Nearly. There is one ' + word + ' too many on the mat. Tap that pile to take it back.'
+          : 'Nearly. There are ' + n + ' ' + word + ' too many on the mat. Tap that pile to take them back.';
+      }
+      return 'Nearly. You need ' + (n === 1 ? 'one' : n) + ' more ' + word + '. Tap the shelf.';
+    }
+    return '';
+  }
+
   /* A "Check the build" button. The child has to say when they are done, which
      is the moment they look at what they made instead of tapping on. */
   function checkStep(host, cfg) {
@@ -209,7 +237,7 @@
     btn.type = 'button';
     var fb = el('p', 'ask-fb');
     fb.setAttribute('role', 'status');
-    var done = false;
+    var done = false, tries = 0;
     btn.addEventListener('click', function () {
       if (done) return;
       var want = cfg.want, got = cfg.mat.get();
@@ -221,8 +249,17 @@
         Y.record({ task: cfg.task, result: 'build correct' });
         if (cfg.onDone) cfg.onDone();
       } else {
+        tries++;
         fb.className = 'ask-fb bad';
-        fb.textContent = cfg.nudge || 'Not yet. Count the piles and compare them with the number.';
+        // Say what is wrong with THIS mat, not what the target was. Restating
+        // the target leaves a child comparing two piles by eye with no idea
+        // which one to touch, and the rest of the page does better than that.
+        var say = diff(got, want) ||
+          cfg.nudge || 'Not yet. Count the piles and compare them with the number.';
+        // Second try onwards, the diagnosis alone has not been enough: add the
+        // target spelled out, so nobody is left going round the same loop.
+        if (tries >= 2 && cfg.nudge) say += ' ' + cfg.nudge;
+        fb.textContent = say;
         Y.record({ task: cfg.task, result: 'build ' + got.h + 'h ' + got.t + 't ' + got.o + 'o' });
       }
     });

@@ -133,8 +133,44 @@ header p{margin:0 0 .6rem;opacity:.9;font-size:.9rem}
   font:inherit;color:inherit}
 .pile[disabled]{cursor:default;opacity:1}
 .pile.hunplace{min-width:calc(var(--unit) * 10 + 16px)}
-.pile.onesplace{max-width:calc(var(--unit) * 5 + 24px)}
 .pile.tensplace{max-width:calc(var(--unit) * 8 + 40px)}
+
+/* ---- The ones pile is a ten frame ----
+   The question this whole unit turns on is "are there ten or more ones?".
+   Cubes wrapping freely answered it only by counting: fourteen ones came out
+   as rows of four and a child had to tally them one at a time. Five to a row,
+   over a drawn grid of slots, answers it by looking: two full rows are ten,
+   and the empty slots say how many more would make ten.
+
+   The slot grid is a background, not a pseudo-element: inside a CSS grid a
+   pseudo-element becomes a grid item and pushes the cubes out of place. It is
+   anchored to the bottom because cubes stack up from there. */
+.pile.onesplace{
+  display:grid;grid-template-columns:repeat(5,var(--unit));
+  gap:3px;align-content:start;justify-content:center;
+  width:calc(var(--unit) * 5 + 24px);max-width:none;
+  /* Two rows tall to start, growing downward. Cubes fill from the top, so the
+     frame is anchored there too: the first ten land inside it and the eleventh
+     onwards sit underneath it, where they read as the overflow they are. */
+  /* Two rows of cubes come to 39px, under the tap floor, and this pile is a
+     button: tapping it takes a cube back. The floor wins. */
+  min-height:max(var(--tap-min), calc(var(--unit) * 2 + 15px));
+  background-image:
+    repeating-linear-gradient(to right,
+      var(--line) 0 1px, transparent 1px calc(var(--unit) + 3px)),
+    repeating-linear-gradient(to bottom,
+      var(--line) 0 1px, transparent 1px calc(var(--unit) + 3px));
+  background-origin:content-box;
+  background-position:top left;
+  background-clip:content-box;
+  /* Exactly one frame: five slots by two rows, which is ten and nothing more.
+     Drawing slots all the way up the pile would say the target was twenty five.
+     Cubes past the tenth land above the frame, and a full frame with cubes
+     spilling over it is the moment to trade, visible without counting. */
+  background-repeat:no-repeat;
+  background-size:calc(var(--unit) * 5 + 12px) calc(var(--unit) * 2 + 3px);
+}
+.pile.onesplace:empty::after{grid-column:1 / -1}
 
 .blk{display:block;border-radius:3px;border:1px solid rgba(0,0,0,.28)}
 .blk.one{width:var(--unit);height:var(--unit);background:var(--ones)}
@@ -257,9 +293,15 @@ header p{margin:0 0 .6rem;opacity:.9;font-size:.9rem}
    44px tap target per cell never forces the page to scroll sideways. */
 .chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;
   border:2px solid var(--line);background:var(--panel);padding:.4rem}
-.chart.interactive{grid-template-columns:repeat(10,44px);width:462px;max-width:none;
-  border:0;padding:0}
-.chart.interactive button{min-width:44px;min-height:44px;font-size:.8rem;font:inherit;
+/* 44px is the tap floor, not a fixed size: in board mode the rest of the page
+   grows 1.45x and a chart left at 462px is the one thing the class cannot read
+   from the back of the room. Both the cells and the grid scale with --scale. */
+.chart.interactive{grid-template-columns:repeat(10,calc(44px * var(--scale)));
+  width:calc(462px * var(--scale));max-width:none;border:0;padding:0}
+/* font:inherit first, then the size: the shorthand resets font-size, so the
+   other way round (as this rule first shipped) silently threw the size away. */
+.chart.interactive button{font:inherit;font-size:.82rem;
+  min-width:calc(44px * var(--scale));min-height:calc(44px * var(--scale));
   border:1px solid var(--line);background:var(--panel-2);color:var(--ink);cursor:pointer;border-radius:4px}
 .chart.interactive button.tenth{background:var(--yard-2)}
 .chart.interactive button.trail{background:var(--ones);color:#3A2500}
@@ -272,3 +314,8 @@ header p{margin:0 0 .6rem;opacity:.9;font-size:.9rem}
 .card input[type="number"]{min-height:var(--tap-min);width:8rem;font:inherit;font-size:1.1rem;
   font-weight:700;text-align:center;border:2px solid var(--line);border-radius:12px;
   padding:.3rem .5rem;background:var(--panel);color:var(--ink)}
+
+/* A link styled as a button still has to behave like one: centred text, and a
+   real tap target rather than a text-height strip. */
+.golink{display:inline-flex;align-items:center;justify-content:center;
+  text-decoration:none;text-align:center;box-sizing:border-box}
