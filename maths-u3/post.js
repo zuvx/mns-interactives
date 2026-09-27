@@ -133,15 +133,46 @@
     }
   }
 
+  function utter(text) {
+    var u = new SpeechSynthesisUtterance(text);
+    u.voice = chosenVoice;
+    u.lang = chosenVoice.lang;
+    u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+  }
+
   function speak(text) {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(text);
     if (!chosenVoice) chosenVoice = pickVoice();
-    if (chosenVoice) { u.voice = chosenVoice; u.lang = chosenVoice.lang; }
-    else { u.lang = 'en-GB'; }
-    u.rate = 0.85;
-    window.speechSynthesis.speak(u);
+    if (chosenVoice) return utter(text);
+
+    /* No English voice in hand yet. It is never spoken anyway: English read
+       out by a Spanish or Arabic voice is not English to a child learning to
+       read it, and silence is the better of the two. On iOS the voice list is
+       routinely empty until the engine wakes up, which is usually on the very
+       first tap, so it is worth asking once more before giving up. */
+    var settled = false;
+    var retry = function () {
+      if (settled) return;
+      settled = true;
+      chosenVoice = pickVoice();
+      if (chosenVoice) utter(text);
+      else noEnglishVoice();
+    };
+    if (window.speechSynthesis.addEventListener) {
+      window.speechSynthesis.addEventListener('voiceschanged', retry, { once: true });
+    }
+    setTimeout(retry, 400);
+  }
+
+  /* Say so rather than failing silently: a speaker that does nothing looks
+     broken, and the teacher is the one who can install a voice. */
+  function noEnglishVoice() {
+    var live = document.getElementById('live');
+    if (live) {
+      live.textContent = 'This device has no English voice installed, so reading aloud is off.';
+    }
   }
 
   /** Attach a "read this to me" button. Children working alone may still be
