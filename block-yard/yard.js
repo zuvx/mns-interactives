@@ -63,11 +63,76 @@
   }
 
   /* ---------- Read aloud, on the device's own speech engine ---------- */
+  /* ---------- Which voice reads to the class ----------
+     Setting utterance.lang is only a hint. With no voice chosen the engine
+     falls back to the device default, and on a tablet or laptop set to
+     another language that default is a voice of THAT language sounding out
+     English words with the wrong phonetics. Measured on the teacher's own
+     Mac: the default voice came back as Monica (es-ES). For a class of EAL
+     readers that is worse than no audio at all, so the voice is picked here
+     and never left to the device.
+
+     The novelty list matters as well: macOS ships joke English voices (Bad
+     News, Boing, Bubbles) and stylised character ones, any of which a plain
+     "first English voice" would happily choose to read out instructions. */
+  var VOICE_PREFERRED = [
+    'daniel', 'serena', 'kate', 'martha', 'arthur', 'sonia', 'libby', 'ryan',
+    'google uk english', 'samantha', 'alex', 'google us english'
+  ];
+  var VOICE_NOVELTY = [
+    'bad news', 'good news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos',
+    'jester', 'organ', 'superstar', 'trinoids', 'whisper', 'wobble', 'zarvox',
+    'albert', 'fred', 'junior', 'ralph', 'kathy', 'princess', 'deranged',
+    'hysterical', 'grandma', 'grandpa', 'rocko', 'shelley', 'sandy', 'flo',
+    'eddy', 'reed'
+  ];
+  var chosenVoice = null;
+
+  function pickVoice() {
+    var all = [];
+    try { all = window.speechSynthesis.getVoices() || []; } catch (e) { return null; }
+    var english = all.filter(function (v) { return /^en([-_]|$)/i.test(v.lang || ''); });
+    if (!english.length) return null;
+    var plain = function (v) {
+      var n = (v.name || '').toLowerCase();
+      return !VOICE_NOVELTY.some(function (bad) { return n.indexOf(bad) !== -1; });
+    };
+    var british = english.filter(function (v) { return /^en[-_]gb/i.test(v.lang || ''); });
+    // Best first: a plain British voice, then any plain English one, then
+    // whatever English is left rather than dropping to another language.
+    var pools = [british.filter(plain), english.filter(plain), british, english];
+    for (var i = 0; i < pools.length; i++) {
+      if (!pools[i].length) continue;
+      for (var j = 0; j < VOICE_PREFERRED.length; j++) {
+        var want = VOICE_PREFERRED[j];
+        var hit = pools[i].filter(function (v) {
+          return (v.name || '').toLowerCase().indexOf(want) !== -1;
+        })[0];
+        if (hit) return hit;
+      }
+      return pools[i][0];
+    }
+    return null;
+  }
+
+  /* getVoices() is empty until the engine has loaded them, so it is asked
+     again on voiceschanged and again lazily on the first tap. */
+  if ('speechSynthesis' in window) {
+    chosenVoice = pickVoice();
+    if (window.speechSynthesis.addEventListener) {
+      window.speechSynthesis.addEventListener('voiceschanged', function () {
+        chosenVoice = pickVoice();
+      });
+    }
+  }
+
   function speak(text) {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-GB';
+    if (!chosenVoice) chosenVoice = pickVoice();
+    if (chosenVoice) { u.voice = chosenVoice; u.lang = chosenVoice.lang; }
+    else { u.lang = 'en-GB'; }
     u.rate = 0.85;
     window.speechSynthesis.speak(u);
   }
