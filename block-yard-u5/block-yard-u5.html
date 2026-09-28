@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Block Yard Unit 5 · Guided Bays</title>
+<meta name="description" content="Base ten blocks to 1000: adding three numbers in any grouping, multiples of ten, pairs that make a thousand, and three digit calculations with regrouping. Cambridge Primary Maths Stage 3, Unit 5.">
+<link rel="stylesheet" href="yard.css">
+</head>
+<body data-lesson="block-yard-u5">
+
+<header>
+  <div class="hd">
+    <h1>The Block Yard: Unit 5</h1>
+    <p>Bigger loads. Hundreds, tens and ones, all the way to a thousand.</p>
+  </div>
+  <div class="toolbar" id="toolbar"></div>
+  <nav id="rail" aria-label="Steps"></nav>
+</header>
+
+<p id="live" class="sr" role="status" aria-live="polite"></p>
+
+<main class="wrap">
+
+<!-- ==================== 0. Gate ==================== -->
+<section class="screen" data-s="0" aria-labelledby="h0">
+  <h2 id="h0">Back at the yard</h2>
+  <p class="lead" data-read="You know this yard. A cube is one, a rod is ten, a flat is one hundred. This term the loads are bigger, so you will be counting flats as well.">
+    You know this yard. A cube is one, a rod is ten, a flat is one hundred. This term the loads
+    are bigger, so you will be counting flats as well.
+  </p>
+
+  <div class="card">
+    <h3>Key words</h3>
+    <div class="words">
+      <div class="kcard" data-word="hundreds"><div><b>hundreds</b><span>A flat is ten rods joined together.</span></div></div>
+      <div class="kcard" data-word="regroup"><div><b>regroup</b><span>Trade ten ones for a ten, or ten tens for a hundred.</span></div></div>
+      <div class="kcard" data-word="estimate"><div><b>estimate</b><span>A sensible close answer, worked out quickly.</span></div></div>
+      <div class="kcard" data-word="multiple of ten"><div><b>multiple of ten</b><span>A number you land on counting in tens: 40, 260, 900.</span></div></div>
+      <div class="kcard" data-word="unknown"><div><b>unknown</b><span>A number we have not been told yet.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Job 1: build 245 on the mat</h3>
+    <p>That is 2 flats, 4 rods and 5 cubes.</p>
+    <div id="gateMat"></div>
+    <div id="gateQ"></div>
+  </div>
+</section>
+
+<!-- ==================== 1. Associative ==================== -->
+<section class="screen" data-s="1" aria-labelledby="h1">
+  <h2 id="h1">Bay 1: pick your pair</h2>
+  <p class="lead" data-read="When you add three numbers you can start with any two of them. The total comes out the same every time. So start with the pair that is easiest, and the one that makes ten is usually the easiest of all.">
+    When you add three numbers you can start with any two of them. The total comes out the same
+    every time. So start with the pair that is easiest, and the pair that makes ten is usually
+    the easiest of all.
+  </p>
+  <div class="card"><h3>8 + 2 + 4</h3><div id="chain1"></div></div>
+  <div class="card"><h3>6 + 7 + 4</h3><div id="chain2"></div></div>
+  <div class="card"><h3>5 + 7 + 7</h3><div id="chain3"></div></div>
+  <div class="note">
+    <strong>In your maths book.</strong> Write 30 + 60 + 70. Which pair would you add first,
+    and why?
+  </div>
+</section>
+
+<!-- ==================== 2. Multiples of ten ==================== -->
+<section class="screen" data-s="2" aria-labelledby="h2h">
+  <h2 id="h2h">Bay 2: loads of ten</h2>
+  <p class="lead" data-read="If you know twenty six add twelve, you already know two hundred and sixty add one hundred and twenty. The digits are the same, the blocks are ten times bigger.">
+    If you know 26 + 12, you already know 260 + 120. The digits are the same, the blocks are ten
+    times bigger.
+  </p>
+  <div class="card">
+    <h3>260 + 120</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay2Mat"></div>
+      <div class="side" id="bay2Side"></div>
+    </div>
+    <div id="bay2Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 3. Pairs to 1000 ==================== -->
+<section class="screen" data-s="3" aria-labelledby="h3h">
+  <h2 id="h3h">Bay 3: filling the yard to a thousand</h2>
+  <p class="lead" data-read="A full yard holds a thousand. If you know the pairs that make ten, you know the pairs that make a hundred, and the pairs that make a thousand too.">
+    A full yard holds a thousand. If you know the pairs that make ten, you know the pairs that
+    make a hundred, and the pairs that make a thousand too.
+  </p>
+  <div class="card"><h3>Counting up in tens</h3><div id="bay3Q"></div></div>
+  <div class="card" id="unk1000"><h3>360 + ? = 1000</h3></div>
+</section>
+
+<!-- ==================== 4. Three digits, one digit ==================== -->
+<section class="screen" data-s="4" aria-labelledby="h4h">
+  <h2 id="h4h">Bay 4: a big load and a few ones</h2>
+  <p class="lead" data-read="These are the two from your Student's Book. Watch the ones pile: it is the only place anything changes.">
+    These are the two from your Student's Book. Watch the ones pile: it is the only place
+    anything changes.
+  </p>
+  <div class="card">
+    <h3>245 + 6</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay4Mat"></div>
+      <div class="side" id="bay4Side"></div>
+    </div>
+    <div id="bay4Q"></div>
+  </div>
+  <div class="card">
+    <h3>453 &minus; 8</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay5Mat"></div>
+      <div class="side" id="bay5Side"></div>
+    </div>
+    <div id="bay5Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 5. Three digits, a tens number ==================== -->
+<section class="screen" data-s="5" aria-labelledby="h5h">
+  <h2 id="h5h">Bay 5: ten rods make a flat</h2>
+  <p class="lead" data-read="Now the rods pile is the one to watch. Ten rods are traded for one flat, exactly the way ten ones are traded for one rod.">
+    Now the rods pile is the one to watch. Ten rods are traded for one flat, exactly the way ten
+    ones are traded for one rod.
+  </p>
+  <div class="card">
+    <h3>385 + 40</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay6Mat"></div>
+      <div class="side" id="bay6Side"></div>
+    </div>
+    <div id="bay6Q"></div>
+  </div>
+  <div class="card">
+    <h3>460 + 90</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay7Mat"></div>
+      <div class="side" id="bay7Side"></div>
+    </div>
+    <div id="bay7Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 6. Three digits, a hundreds number ==================== -->
+<section class="screen" data-s="6" aria-labelledby="h6h">
+  <h2 id="h6h">Bay 6: whole flats on and off</h2>
+  <p class="lead" data-read="Adding or taking away a hundreds number only touches the flats. Nothing is traded at all, so check before you reach for the trade button.">
+    Adding or taking away a hundreds number only touches the flats. Nothing is traded at all, so
+    check before you reach for the trade button.
+  </p>
+  <div class="card">
+    <h3>665 &minus; 200</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay8Mat"></div>
+      <div class="side" id="bay8Side"></div>
+    </div>
+    <div id="bay8Q"></div>
+  </div>
+  <div class="card">
+    <h3>342 + 300</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay9Mat"></div>
+      <div class="side" id="bay9Side"></div>
+    </div>
+    <div id="bay9Q"></div>
+  </div>
+</section>
+
+<!-- ==================== 7. Unknowns ==================== -->
+<section class="screen" data-s="7" aria-labelledby="h7h">
+  <h2 id="h7h">Bay 7: under the tarpaulin again</h2>
+  <p class="lead" data-read="You know the total and you know one part, so you can work out the part you cannot see. Build your answer on the mat and the tarpaulin lifts.">
+    You know the total and you know one part, so you can work out the part you cannot see. Build
+    your answer on the mat and the tarpaulin lifts.
+  </p>
+  <div class="card" id="unkA"><h3>? + 800 = 1000</h3></div>
+  <div class="card" id="unkB"><h3>100 &minus; ? = 40</h3></div>
+  <div class="card">
+    <h3>No blocks this time</h3>
+    <p>Do these the way a yard foreman does, in your head.</p>
+    <div id="unkC"></div>
+    <div class="note">
+      <strong>In your maths book.</strong> Three barrels weigh 15 kg altogether and they all
+      weigh the same. How heavy is one barrel? Draw it.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 8. Report ==================== -->
+<section class="screen" data-s="8" aria-labelledby="h8h">
+  <h2 id="h8h">The foreman's report</h2>
+  <p class="lead">Show this to your teacher before you close the page.</p>
+  <div class="card">
+    <h3>My work today</h3>
+    <div id="myWork"></div>
+  </div>
+  <div class="card">
+    <h3>Want more practice?</h3>
+    <p>The Open Bench has the same blocks and the same chart, but you choose the numbers.</p>
+    <a class="btn go wide golink" href="block-yard-u5-open.html">Go to the Open Bench</a>
+  </div>
+  <div class="card">
+    <h3>In your maths book</h3>
+    <ul>
+      <li>Draw the blocks for 527 + 8. Did you need to trade? Write why.</li>
+      <li>Nadia says 460 + 90 is 4150, because 46 + 9 is 55. What has she done wrong?</li>
+      <li>Write an addition where ten rods have to be traded for a flat.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="panel" id="summary">
+  <h3>Session summary</h3>
+  <div data-summary-body></div>
+</div>
+
+</main>
+
+<script src="yard.js"></script>
+<script>
+(function () {
+  'use strict';
+  var Y = window.Yard;
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function parts(n) { return { h: Math.floor(n / 100), t: Math.floor(n / 10) % 10, o: n % 10 }; }
+  function same(a, b) { return a.h === b.h && a.t === b.t && a.o === b.o; }
+  function opSign(op) { return op === '+' ? '+' : '−'; }
+
+  /* An estimate is sensible if it is a multiple of ten near the answer. The
+     window widens with the size of the number: twenty either side is fair at
+     251 and absurd at 550, where Collins itself would round to 560 or 600. */
+  function estimateOk(v, answer) {
+    return v % 10 === 0 && Math.abs(v - answer) <= Math.max(20, Math.round(answer * 0.1));
+  }
+
+  /* What is wrong with the mat in front of the child, one place at a time. */
+  function diff(got, want) {
+    var places = [
+      { k: 'h', one: 'hundred', many: 'hundreds' },
+      { k: 't', one: 'ten', many: 'tens' },
+      { k: 'o', one: 'one', many: 'ones' }
+    ];
+    for (var i = 0; i < places.length; i++) {
+      var p = places[i], off = got[p.k] - want[p.k];
+      if (off === 0) continue;
+      var n = Math.abs(off), word = n === 1 ? p.one : p.many;
+      if (off > 0) {
+        return n === 1
+          ? 'Nearly. There is one ' + word + ' too many on the mat. Tap that pile to take it back.'
+          : 'Nearly. There are ' + n + ' ' + word + ' too many on the mat. Tap that pile to take them back.';
+      }
+      return 'Nearly. You need ' + (n === 1 ? 'one' : n) + ' more ' + word + '. Tap the shelf.';
+    }
+    return '';
+  }
+
+  function checkStep(host, cfg) {
+    var wrap = el('div', 'note');
+    var p = el('p', null, cfg.text);
+    p.style.margin = '0 0 .5rem';
+    wrap.appendChild(p);
+    var btn = el('button', 'btn go', cfg.label || 'Check the build');
+    btn.type = 'button';
+    var fb = el('p', 'ask-fb');
+    fb.setAttribute('role', 'status');
+    var done = false, tries = 0;
+    btn.addEventListener('click', function () {
+      if (done) return;
+      var want = cfg.want, got = cfg.mat.get();
+      if (same(got, want)) {
+        done = true;
+        fb.className = 'ask-fb good';
+        fb.textContent = cfg.praise || 'That is right. Carry on.';
+        btn.disabled = true;
+        Y.record({ task: cfg.task, result: 'build correct' });
+        if (cfg.onDone) cfg.onDone();
+      } else {
+        tries++;
+        fb.className = 'ask-fb bad';
+        var say = diff(got, want) || cfg.nudge || 'Not yet. Count the piles again.';
+        if (tries >= 2 && cfg.nudge) say += ' ' + cfg.nudge;
+        fb.textContent = say;
+        Y.record({ task: cfg.task, result: 'build ' + got.h + 'h ' + got.t + 't ' + got.o + 'o' });
+      }
+    });
+    wrap.appendChild(btn);
+    wrap.appendChild(fb);
+    host.appendChild(wrap);
+    return { isDone: function () { return done; } };
+  }
+
+  function say(n) {
+    var p = parts(n), bits = [];
+    if (p.h) bits.push(p.h + (p.h === 1 ? ' flat' : ' flats'));
+    if (p.t) bits.push(p.t + (p.t === 1 ? ' rod' : ' rods'));
+    if (p.o) bits.push(p.o + (p.o === 1 ? ' cube' : ' cubes'));
+    return bits.join(', ');
+  }
+
+  /* ---------------- one calculation, built then changed ---------------- */
+  function calcBay(cfg) {
+    var matHost = document.getElementById(cfg.ids.mat);
+    var side = document.getElementById(cfg.ids.side);
+    var qs = document.getElementById(cfg.ids.q);
+    var answer = cfg.op === '+' ? cfg.a + cfg.b : cfg.a - cfg.b;
+    var pa = parts(cfg.a), pb = parts(cfg.b), pAns = parts(answer);
+    var locked = false;
+
+    var m = Y.mat(matHost, {
+      label: 'Yard mat', goal: 'Build ' + cfg.a, places: ['h', 't', 'o'],
+      trade: true, breakTen: true, cap: { h: 9, t: 19, o: 24 }
+    });
+    var written = Y.col(side, { a: cfg.a, b: cfg.b, op: cfg.op });
+    var ch = Y.chart(side);
+    m.onChange(function (api) {
+      if (locked) return;
+      var n = api.total();
+      if (n >= cfg.a) { locked = true; ch.set(cfg.a); ch.cover(true); }
+      else ch.set(n);
+    });
+
+    checkStep(qs, {
+      mat: m, want: pa, task: cfg.name + ': build ' + cfg.a,
+      text: 'Build ' + cfg.a + ' on the mat.',
+      nudge: cfg.a + ' is ' + say(cfg.a) + '.'
+    });
+
+    Y.ask(qs, {
+      task: cfg.name + ': estimate',
+      prompt: 'Estimate first. About what will ' + cfg.a + ' ' + opSign(cfg.op) + ' ' + cfg.b + ' be?',
+      accept: function (v) { return estimateOk(v, answer); },
+      answer: Math.round(answer / 10) * 10,
+      nudge: 'An estimate is a multiple of ten that lands close to the real answer.',
+      hint: 'Round to the nearest ten and work that out. Any sensible multiple of ten is taken.',
+      praise: 'Sensible estimate.'
+    });
+
+    Y.choose(qs, {
+      task: cfg.name + ': what changes',
+      prompt: cfg.predict,
+      options: cfg.options
+    });
+
+    if (cfg.op === '+') {
+      checkStep(qs, {
+        mat: m, want: { h: pa.h + pb.h, t: pa.t + pb.t, o: pa.o + pb.o },
+        task: cfg.name + ': bring on ' + cfg.b,
+        text: 'Bring on ' + cfg.b + ': tap the shelf for ' + say(cfg.b) + '. Do not trade yet.',
+        nudge: 'Put the blocks on first, so you can see the pile before you trade.',
+        praise: 'Both numbers are on the mat. Now look at the piles.'
+      });
+    }
+
+    if (cfg.trades) {
+      Y.ask(qs, {
+        task: cfg.name + ': after trading',
+        prompt: cfg.tradePrompt,
+        answer: cfg.tradeAnswer,
+        nudge: 'Press the trade button on the mat, then count that pile again.',
+        hint: cfg.tradeHint,
+        praise: 'Yes.'
+      });
+    }
+    if (cfg.breaks) {
+      Y.ask(qs, {
+        task: cfg.name + ': after breaking',
+        prompt: cfg.breakPrompt,
+        answer: cfg.breakAnswer,
+        nudge: 'Press the break button on the mat, then count the ones again.',
+        hint: cfg.breakHint,
+        praise: 'Yes, and the load is still worth ' + cfg.a + '.'
+      });
+    }
+
+    if (cfg.op === '-') {
+      checkStep(qs, {
+        mat: m, want: pAns, task: cfg.name + ': take ' + cfg.b + ' away',
+        text: 'Now take ' + cfg.b + ' off the mat: send back ' + say(cfg.b) + '.',
+        nudge: 'Tap a pile to take one block off it.',
+        praise: 'What is left on the mat is the answer.'
+      });
+    }
+
+    Y.ask(qs, {
+      task: cfg.name + ': ' + cfg.a + ' ' + opSign(cfg.op) + ' ' + cfg.b,
+      prompt: 'What is ' + cfg.a + ' ' + opSign(cfg.op) + ' ' + cfg.b + '?',
+      answer: answer,
+      nudge: 'Read the mat: flats first, then rods, then loose ones.',
+      hint: 'The mat shows ' + say(answer) + ', which is ' + answer + '.',
+      praise: 'Correct.',
+      onSolved: function () {
+        written.answer(answer);
+        ch.cover(false);
+        ch.hop(cfg.a, cfg.op === '+' ? cfg.b : -cfg.b);
+      }
+    });
+  }
+
+  /* ---------------- gate ---------------- */
+  var gateMat = Y.mat(document.getElementById('gateMat'), {
+    label: 'Mat at the gate', goal: 'Build 245', places: ['h', 't', 'o'],
+    trade: true, breakTen: true, cap: { h: 9, t: 19, o: 24 }
+  });
+  var gateQ = document.getElementById('gateQ');
+  checkStep(gateQ, {
+    mat: gateMat, want: parts(245), task: 'Gate: build 245',
+    text: 'Bring on 2 flats, 4 rods and 5 cubes.',
+    nudge: '245 is 2 flats, 4 rods and 5 cubes.'
+  });
+  Y.ask(gateQ, {
+    task: 'Gate: ten rods',
+    prompt: 'Now tap the tens shelf until there are 10 rods. Press trade. How many flats are there now?',
+    answer: 3,
+    nudge: 'Ten rods pack into one flat. Count the flats after trading.',
+    hint: 'You had 2 flats. Ten rods became one more, so there are 3.',
+    praise: 'Yes, ten rods make one flat.'
+  });
+  Y.choose(gateQ, {
+    task: 'Gate: value after trading',
+    prompt: 'Did trading ten rods for a flat change how much is on the mat?',
+    options: [
+      { label: 'No, it is the same amount', right: true,
+        why: 'Exactly. Ten rods and one flat are both a hundred. Only the packing changed.' },
+      { label: 'Yes, it went up', why: 'Nothing was added. A flat is worth exactly ten rods.' },
+      { label: 'Yes, it went down', why: 'Nothing was taken away. A flat is worth exactly ten rods.' }
+    ]
+  });
+
+  /* ---------------- Bay 1: associative ---------------- */
+  Y.chain(document.getElementById('chain1'), {
+    task: 'Bay 1: 8 + 2 + 4', parts: [8, 2, 4], easiest: [0, 1],
+    why: '8 and 2 make ten, and ten plus anything is easy.',
+    hintAtBest: 'Look for the pair that makes ten.'
+  });
+  Y.chain(document.getElementById('chain2'), {
+    task: 'Bay 1: 6 + 7 + 4', parts: [6, 7, 4], easiest: [0, 2],
+    why: '6 and 4 make ten, even though they are not next to each other.',
+    hintAtBest: 'Two of these make ten. They are not side by side.'
+  });
+  Y.chain(document.getElementById('chain3'), {
+    task: 'Bay 1: 5 + 7 + 7', parts: [5, 7, 7], easiest: [1, 2],
+    why: 'The two sevens are a double, and doubles are quick to remember.',
+    hintAtBest: 'No pair makes ten here. Look for the double instead.'
+  });
+
+  /* ---------------- Bay 2: multiples of ten ---------------- */
+  calcBay({
+    name: 'Bay 2', a: 260, b: 120, op: '+', trades: false, breaks: false,
+    predict: 'You know 26 + 12 = 38. What will 260 + 120 be?',
+    options: [
+      { label: '380', right: true, why: 'Yes. Ten times the blocks, ten times the answer.' },
+      { label: '38', why: 'That is 26 + 12. These numbers are ten times bigger.' },
+      { label: '3800', why: 'That is a hundred times bigger. Only go up by ten.' }
+    ],
+    ids: { mat: 'bay2Mat', side: 'bay2Side', q: 'bay2Q' }
+  });
+
+  /* ---------------- Bay 3: pairs to 1000 ---------------- */
+  var bay3 = document.getElementById('bay3Q');
+  Y.ask(bay3, {
+    task: 'Bay 3: 7 + 3', prompt: 'What is 7 + 3?', answer: 10,
+    nudge: 'Count on from 7.', hint: '7 + 3 = 10.', praise: 'Good. Now make it bigger.'
+  });
+  Y.ask(bay3, {
+    task: 'Bay 3: 70 + 30', prompt: 'So what is 70 + 30?', answer: 100,
+    nudge: 'Ten times the blocks means ten times the answer.',
+    hint: '7 + 3 = 10, so 70 + 30 = 100.', praise: 'Yes.'
+  });
+  Y.ask(bay3, {
+    task: 'Bay 3: 700 + 300', prompt: 'And what is 700 + 300?', answer: 1000,
+    nudge: 'Go up by ten again.',
+    hint: '70 + 30 = 100, so 700 + 300 = 1000. That is a full yard.',
+    praise: 'A full yard: one thousand.'
+  });
+
+  /* ---------------- tarpaulin bays ---------------- */
+  function tarpBay(hostId, cfg) {
+    var host = document.getElementById(hostId);
+    var lifted = false;
+    host.appendChild(el('p', null, cfg.story));
+    Y.strip(host, cfg.known, cfg.knownLabel);
+
+    var tarp = el('div', 'tarp');
+    tarp.textContent = cfg.tarpLabel;
+    host.appendChild(tarp);
+
+    var m = Y.mat(host, {
+      label: 'Your guess at the hidden load', goal: cfg.sentence,
+      places: ['h', 't', 'o'], trade: true, breakTen: true, cap: { h: 9, t: 19, o: 24 }
+    });
+
+    var check = el('button', 'btn go wide', 'Lift the tarpaulin');
+    check.type = 'button';
+    var fb = el('p', 'ask-fb');
+    fb.setAttribute('role', 'status');
+    host.appendChild(check);
+    host.appendChild(fb);
+
+    check.addEventListener('click', function () {
+      if (lifted) return;
+      var built = m.total();
+      if (built === cfg.hidden) {
+        lifted = true;
+        tarp.classList.add('lifted');
+        tarp.textContent = cfg.sentence.replace('?', String(cfg.hidden)) + '. The tarpaulin is off.';
+        fb.className = 'ask-fb good';
+        fb.textContent = 'That is the hidden load. Now write the number below.';
+        Y.record({ task: cfg.name + ': tarpaulin', result: 'lifted' });
+      } else {
+        fb.className = 'ask-fb bad';
+        fb.textContent = cfg.test(built);
+        Y.record({ task: cfg.name + ': tarpaulin', result: 'tried ' + built });
+      }
+    });
+
+    Y.ask(host, {
+      task: cfg.name + ': ' + cfg.sentence,
+      prompt: 'Write the unknown number. ' + cfg.sentence,
+      answer: cfg.hidden, nudge: cfg.nudge, hint: cfg.hint, praise: 'Correct.'
+    });
+  }
+
+  tarpBay('unk1000', {
+    name: 'Bay 3 unknown', sentence: '360 + ? = 1000', hidden: 640,
+    story: 'A full yard holds 1000. There are 360 blocks here and the rest are under the tarpaulin.',
+    known: 360, knownLabel: 'The 360 blocks you can see',
+    tarpLabel: 'The rest of the thousand, under the tarpaulin',
+    test: function (n) {
+      return 'Your load is ' + n + '. 360 + ' + n + ' = ' + (360 + n) + ', and a full yard is 1000. ' +
+        (360 + n > 1000 ? 'That is over the top. Take some off.' : 'The yard is not full yet.');
+    },
+    nudge: 'How many more tens would take 360 up to 1000?',
+    hint: '1000 take away 360 is 640. Check it: 360 + 640 = 1000.'
+  });
+
+  tarpBay('unkA', {
+    name: 'Bay 7 unknown A', sentence: '? + 800 = 1000', hidden: 200,
+    story: 'A lorry brought a hidden load, then 800 more arrived. Now the yard holds 1000.',
+    known: 800, knownLabel: 'The 800 you can see',
+    tarpLabel: 'What arrived first, under the tarpaulin',
+    test: function (n) {
+      return 'Your load is ' + n + '. ' + n + ' + 800 = ' + (n + 800) + ', and we need 1000. ' +
+        (n + 800 > 1000 ? 'Take some off.' : 'Put more on.');
+    },
+    nudge: 'The inverse of add is subtract. Try 1000 take away 800.',
+    hint: '1000 take away 800 is 200. Check it: 200 + 800 = 1000.'
+  });
+
+  tarpBay('unkB', {
+    name: 'Bay 7 unknown B', sentence: '100 − ? = 40', hidden: 60,
+    story: 'There were 100 blocks. A lorry took a hidden load away and 40 are left.',
+    known: 40, knownLabel: 'The 40 blocks still in the yard',
+    tarpLabel: 'The load on the lorry, under the tarpaulin',
+    test: function (n) {
+      return 'Your load is ' + n + '. 100 take away ' + n + ' leaves ' + (100 - n) + ', and 40 were left. ' +
+        (100 - n > 40 ? 'The lorry took more than that.' : 'The lorry took less than that.');
+    },
+    nudge: 'What is taken away is the difference between 100 and 40.',
+    hint: '100 take away 40 is 60, so the lorry took 60.'
+  });
+
+  var unkC = document.getElementById('unkC');
+  Y.ask(unkC, {
+    task: 'Bay 7: ? minus 15 = 50', prompt: 'Write the unknown number. ? − 15 = 50',
+    answer: 65,
+    nudge: 'If 15 were taken away and 50 were left, put them back together.',
+    hint: '50 + 15 = 65, so the unknown is 65.', praise: 'Correct.'
+  });
+  Y.ask(unkC, {
+    task: 'Bay 7: three cylinders', prompt: 'Three cylinders cost $15 altogether, and they all cost the same. What does one cylinder cost, in dollars?',
+    answer: 5,
+    nudge: 'Share the $15 equally between the three.',
+    hint: '15 shared between 3 is 5, so one cylinder is $5.',
+    praise: 'Yes, $5 each.'
+  });
+
+  /* ---------------- Bays 4 to 6 ---------------- */
+  calcBay({
+    name: 'Bay 4a', a: 245, b: 6, op: '+', trades: true, breaks: false,
+    predict: 'Look at the ones. 5 ones and 6 more. What happens?',
+    options: [
+      { label: 'They make more than ten, so trade', right: true,
+        why: 'Yes. 5 + 6 = 11, so ten of them pack into a rod.' },
+      { label: 'Nothing, they stay as they are',
+        why: 'Count again: 5 + 6 = 11, which is more than ten.' }
+    ],
+    tradePrompt: 'Press trade. How many loose ones are left?', tradeAnswer: 1,
+    tradeHint: '5 + 6 = 11. Ten were packed into a rod, so 1 is left loose.',
+    ids: { mat: 'bay4Mat', side: 'bay4Side', q: 'bay4Q' }
+  });
+  calcBay({
+    name: 'Bay 4b', a: 453, b: 8, op: '-', trades: false, breaks: true,
+    predict: 'You must take 8 ones away and there are only 3. What now?',
+    options: [
+      { label: 'Break a rod into ten ones', right: true,
+        why: 'Right. 453 becomes 4 flats, 4 rods and 13 ones. It is still 453.' },
+      { label: 'Take 3 away and stop',
+        why: 'That only takes away 3. You still owe 5 more.' },
+      { label: 'Take 8 from the rods instead',
+        why: 'The rods are tens. You can only take ones from the ones, so a rod must be broken first.' }
+    ],
+    breakPrompt: 'Press break. How many ones are on the mat now?', breakAnswer: 13,
+    breakHint: '453 is now 4 flats, 4 rods and 13 ones. Still 453.',
+    ids: { mat: 'bay5Mat', side: 'bay5Side', q: 'bay5Q' }
+  });
+  calcBay({
+    name: 'Bay 5a', a: 385, b: 40, op: '+', trades: true, breaks: false,
+    predict: 'This time watch the rods. 8 rods and 4 more. What happens?',
+    options: [
+      { label: 'Ten rods make a flat, so trade', right: true,
+        why: 'Yes. 8 + 4 = 12 rods, so ten of them pack into a flat.' },
+      { label: 'Nothing, the ones are under ten',
+        why: 'The ones are fine. It is the rods pile that has reached ten.' }
+    ],
+    tradePrompt: 'Press trade. How many rods are left beside the flats?', tradeAnswer: 2,
+    tradeHint: '8 + 4 = 12 rods. Ten became a flat, so 2 rods are left.',
+    ids: { mat: 'bay6Mat', side: 'bay6Side', q: 'bay6Q' }
+  });
+  calcBay({
+    name: 'Bay 5b', a: 460, b: 90, op: '+', trades: true, breaks: false,
+    predict: '6 rods and 9 more rods. What happens?',
+    options: [
+      { label: 'Ten rods make a flat, so trade', right: true,
+        why: 'Yes. 6 + 9 = 15 rods, so ten pack into a flat.' },
+      { label: 'Nothing, there are no loose ones',
+        why: 'There are no ones to worry about, but the rods have gone past ten.' }
+    ],
+    tradePrompt: 'Press trade. How many rods are left beside the flats?', tradeAnswer: 5,
+    tradeHint: '6 + 9 = 15 rods. Ten became a flat, so 5 rods are left.',
+    ids: { mat: 'bay7Mat', side: 'bay7Side', q: 'bay7Q' }
+  });
+  calcBay({
+    name: 'Bay 6a', a: 665, b: 200, op: '-', trades: false, breaks: false,
+    predict: 'You are taking away 200. Which pile does that touch?',
+    options: [
+      { label: 'Only the flats', right: true,
+        why: 'Right. Two flats come off and nothing else changes.' },
+      { label: 'The flats and the rods',
+        why: '200 is 2 flats exactly. The rods are not touched.' },
+      { label: 'You must break a flat first',
+        why: 'There are 6 flats and you only need to take 2, so nothing has to be broken.' }
+    ],
+    ids: { mat: 'bay8Mat', side: 'bay8Side', q: 'bay8Q' }
+  });
+  calcBay({
+    name: 'Bay 6b', a: 342, b: 300, op: '+', trades: false, breaks: false,
+    predict: 'Adding 300. Will anything need trading?',
+    options: [
+      { label: 'No, three flats just go on', right: true,
+        why: 'Right. 3 flats and 3 more make 6, which is under ten. Nothing is traded.' },
+      { label: 'Yes, the flats will reach ten',
+        why: 'Count: 3 flats and 3 more is 6 flats. That is well under ten.' }
+    ],
+    ids: { mat: 'bay9Mat', side: 'bay9Side', q: 'bay9Q' }
+  });
+
+  Y.init([
+    { label: 'Gate', icon: 'blocks' },
+    { label: 'Bay 1', icon: 'plus' },
+    { label: 'Bay 2', icon: 'swap' },
+    { label: 'Bay 3', icon: 'grid' },
+    { label: 'Bay 4', icon: 'plus' },
+    { label: 'Bay 5', icon: 'swap' },
+    { label: 'Bay 6', icon: 'minus' },
+    { label: 'Bay 7', icon: 'tarp' },
+    { label: 'Report', icon: 'check' }
+  ]);
+})();
+</script>
+</body>
+</html>

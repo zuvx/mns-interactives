@@ -15,6 +15,7 @@
      strip(host, n, lbl) a read-only pile: a number shown, not built
      ask(host, cfg)      a typed-answer question with nudge then worked hint
      choose(host, cfg)   a tap-an-option question
+     chain(host, cfg)    three addends, and a choice of which pair to add first
      award / record / speak / icon
    ============================================================ */
 (function () {
@@ -433,79 +434,106 @@
   function parts(n) { return { h: Math.floor(n / 100), t: Math.floor(n / 10) % 10, o: n % 10 }; }
 
   /* ============================================================
-     The 100 chart. Two personalities behind one grid:
-       - passive (default): driven by a mat, covers itself so it never
-         gives an answer away, replays a jump as a worked check.
-       - interactive (cfg.interactive): the child moves the marker
-         themselves, either by tapping any cell or with jump buttons,
-         and nothing is ever hidden because there is no answer to protect.
+     The hundred chart, one hundred at a time.
+
+     Unit 5 works up to 1000, and a chart of 1 to 100 is no use for 652. It
+     shows one hundred at a time instead: the cells are relabelled 601 to 700
+     and the window follows the number, so a jump that crosses a hundred slides
+     the chart with it. Collins asks for no chart at all in this unit, only
+     Base 10 equipment, so this is here as the support the class already knows
+     from Unit 4 rather than as something the source requires.
+
+     Two personalities behind the one grid, as in Unit 4: passive, driven by a
+     mat and covered so it never gives an answer away; and interactive, where
+     the child moves the marker themselves.
      ============================================================ */
+
+  /* 1 to 100 sits in window 0, 101 to 200 in window 100, 652 in window 600. */
+  function hundredBase(n) {
+    if (n <= 1) return 0;
+    return Math.floor((n - 1) / 100) * 100;
+  }
+
   function chart(host, cfg) {
     cfg = cfg || {};
     if (cfg.interactive) return interactiveChart(host, cfg);
 
     var wrap = el('div', 'chart-wrap');
+    var caption = el('p', 'chart-range');
+    wrap.appendChild(caption);
+    /* The cover goes over the grid alone. Stretched across the whole wrap it
+       also blacked out the caption saying which hundred is on screen. */
+    var frame = el('div', 'chart-frame');
     var grid = el('div', 'chart');
     grid.setAttribute('role', 'img');
-    grid.setAttribute('aria-label', 'A hundred chart, one to one hundred');
     var cells = [];
     for (var n = 1; n <= 100; n++) {
       var c = el('i', n % 10 === 0 ? 'tenth' : '', String(n));
       grid.appendChild(c);
       cells.push(c);
     }
-    wrap.appendChild(grid);
+    frame.appendChild(grid);
 
     var cover = el('div', 'chart-cover');
     cover.textContent = cfg.coverText || 'Answer first. Then the chart will show you.';
     cover.hidden = true;
-    wrap.appendChild(cover);
+    frame.appendChild(cover);
+    wrap.appendChild(frame);
     host.appendChild(wrap);
 
-    var over = el('p', 'chart-over');
-    over.hidden = true;
-    host.appendChild(over);
-
+    var base = 0;
+    var visited = {};
+    var current = null;
     var timer = null;
+
+    function relabel(newBase) {
+      base = newBase;
+      cells.forEach(function (c, i) { c.textContent = String(base + i + 1); });
+      caption.textContent = (base + 1) + ' to ' + (base + 100);
+      grid.setAttribute('aria-label', 'A hundred chart, ' + (base + 1) + ' to ' + (base + 100));
+      repaint();
+    }
+    function repaint() {
+      cells.forEach(function (c, i) {
+        var n = base + i + 1;
+        c.classList.toggle('trail', !!visited[n] && n !== current);
+        c.classList.toggle('here', n === current);
+      });
+    }
     function clear() {
       if (timer) { clearInterval(timer); timer = null; }
-      cells.forEach(function (c) { c.classList.remove('here', 'trail'); });
-      over.hidden = true;
+      visited = {};
+      current = null;
+      repaint();
     }
     function mark(n, cls) {
-      if (n >= 1 && n <= 100) cells[n - 1].classList.add(cls || 'here');
+      if (cls === 'trail') visited[n] = true; else current = n;
+      repaint();
     }
     function set(n) {
       clear();
-      if (n > 100) {
-        over.hidden = false;
-        over.textContent = n + ' is past the end of the chart. That is why it needs a hundred flat.';
-        mark(100, 'trail');
-        return;
-      }
-      mark(n, 'here');
+      current = n;
+      relabel(hundredBase(n));
     }
-    /* The jump strategy, shown as a check after the child has answered: move
-       the tens by going down the rows (or up, subtracting), then the ones by
-       going across. */
+    /* The jump strategy as a check once the child has answered: the hundreds,
+       then the tens down the rows, then the ones across. The window follows,
+       so crossing from 460 into the next hundred is something they watch. */
     function hop(from, add, done) {
       clear();
       var path = [from], at = from, left = Math.abs(add), dir = add < 0 ? -1 : 1;
-      while (left >= 10 && at + dir * 10 >= 1 && at + dir * 10 <= 100) { at += dir * 10; left -= 10; path.push(at); }
-      while (left > 0 && at + dir >= 1 && at + dir <= 100) { at += dir; left -= 1; path.push(at); }
+      while (left >= 100) { at += dir * 100; left -= 100; path.push(at); }
+      while (left >= 10) { at += dir * 10; left -= 10; path.push(at); }
+      while (left > 0) { at += dir; left -= 1; path.push(at); }
       var i = 0;
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       function step() {
-        if (i > 0) mark(path[i - 1], 'trail');
-        cells.forEach(function (c) { c.classList.remove('here'); });
-        mark(path[i], 'here');
+        if (i > 0) visited[path[i - 1]] = true;
+        current = path[i];
+        if (hundredBase(current) !== base) relabel(hundredBase(current));
+        else repaint();
         i++;
         if (i >= path.length) {
           if (timer) { clearInterval(timer); timer = null; }
-          if (from + add > 100 && add > 0) {
-            over.hidden = false;
-            over.textContent = 'The answer runs off the chart, so it needs a hundred flat.';
-          }
           if (done) done();
         }
       }
@@ -513,6 +541,7 @@
       step();
       timer = setInterval(step, 190);
     }
+    relabel(0);
     return {
       set: set, mark: mark, clear: clear, hop: hop,
       cover: function (on) { cover.hidden = !on; }
@@ -538,7 +567,7 @@
     startInp.type = 'number';
     startInp.inputMode = 'numeric';
     startInp.min = '1';
-    startInp.max = '100';
+    startInp.max = '1000';
     startLbl.appendChild(startInp);
     var startBtn = el('button', 'btn', 'Go');
     startBtn.type = 'button';
@@ -549,8 +578,11 @@
     startRow.appendChild(clearBtn);
     controls.appendChild(startRow);
 
+    /* Unit 5 adds and subtracts hundreds as well as tens and ones, so the
+       jumps go up to a hundred at a time. */
     var stepRow = el('div', 'shelf');
-    [['−10', -10], ['−1', -1], ['+1', 1], ['+10', 10]].forEach(function (pair) {
+    [['−100', -100], ['−10', -10], ['−1', -1],
+     ['+1', 1], ['+10', 10], ['+100', 100]].forEach(function (pair) {
       var b = el('button', null, pair[0]);
       b.type = 'button';
       b.addEventListener('click', function () { step(pair[1]); });
@@ -559,18 +591,30 @@
     controls.appendChild(stepRow);
     wrap.appendChild(controls);
 
+    /* Which hundred is on screen, and a way to page through them by hand. */
+    var pager = el('div', 'chart-pager');
+    var prev = el('button', 'btn', '◀');
+    prev.type = 'button';
+    prev.setAttribute('aria-label', 'Show the hundred before this one');
+    var caption = el('span', 'chart-range');
+    var next = el('button', 'btn', '▶');
+    next.type = 'button';
+    next.setAttribute('aria-label', 'Show the hundred after this one');
+    pager.appendChild(prev);
+    pager.appendChild(caption);
+    pager.appendChild(next);
+    wrap.appendChild(pager);
+
     var scroller = el('div', 'chart-scroll');
     var grid = el('div', 'chart interactive');
     grid.setAttribute('role', 'group');
-    grid.setAttribute('aria-label', 'A hundred chart, one to one hundred. Move around it yourself.');
     var cells = [];
     for (var n = 1; n <= 100; n++) {
       var c = el('button', n % 10 === 0 ? 'tenth' : '', String(n));
       c.type = 'button';
-      c.setAttribute('aria-label', 'Go to ' + n);
-      (function (num, btn) {
-        btn.addEventListener('click', function () { onCellTap(num); });
-      })(n, c);
+      (function (index, btn) {
+        btn.addEventListener('click', function () { onCellTap(base + index + 1); });
+      })(n - 1, c);
       grid.appendChild(c);
       cells.push(c);
     }
@@ -582,8 +626,29 @@
     wrap.appendChild(live);
     host.appendChild(wrap);
 
-    var mode = 'tap', current = null, visited = {};
+    var mode = 'tap', current = null, visited = {}, base = 0;
 
+    function relabel(newBase) {
+      base = Math.max(0, Math.min(900, newBase));
+      cells.forEach(function (c, i) {
+        var n = base + i + 1;
+        c.textContent = String(n);
+        c.setAttribute('aria-label', 'Go to ' + n);
+      });
+      caption.textContent = (base + 1) + ' to ' + (base + 100);
+      grid.setAttribute('aria-label', 'A hundred chart, ' + (base + 1) + ' to ' + (base + 100)
+        + '. Move around it yourself.');
+      prev.disabled = base === 0;
+      next.disabled = base === 900;
+      repaint();
+    }
+    function repaint() {
+      cells.forEach(function (c, i) {
+        var n = base + i + 1;
+        c.classList.toggle('trail', !!visited[n] && n !== current);
+        c.classList.toggle('here', n === current);
+      });
+    }
     function setMode(m) {
       mode = m;
       tapBtn.setAttribute('aria-pressed', String(m === 'tap'));
@@ -606,37 +671,39 @@
       go(current + delta);
     }
     function go(n) {
-      if (n < 1 || n > 100) { live.textContent = 'That is off the edge of the chart.'; return; }
+      if (n < 1 || n > 1000) { live.textContent = 'That is off the edge of the chart.'; return; }
       if (current != null) visited[current] = true;
       current = n;
-      repaint();
+      relabel(hundredBase(n));
       live.textContent = 'You are on ' + n + '.';
-    }
-    function repaint() {
-      cells.forEach(function (c, i) {
-        var n = i + 1;
-        c.classList.toggle('trail', !!visited[n] && n !== current);
-        c.classList.toggle('here', n === current);
-      });
     }
     function reset() {
       current = null;
       visited = {};
-      cells.forEach(function (c) { c.classList.remove('trail', 'here', 'answer'); });
+      relabel(0);
       live.textContent = 'Chart cleared.';
     }
+    prev.addEventListener('click', function () { relabel(base - 100); });
+    next.addEventListener('click', function () { relabel(base + 100); });
     startBtn.addEventListener('click', function () {
       var v = parseInt(startInp.value, 10);
-      if (isNaN(v)) { live.textContent = 'Type a number from 1 to 100 first.'; return; }
+      if (isNaN(v)) { live.textContent = 'Type a number from 1 to 1000 first.'; return; }
       go(v);
     });
     clearBtn.addEventListener('click', reset);
+    relabel(0);
 
     return {
       reset: reset,
       go: go,
       current: function () { return current; },
-      mark: function (n, cls) { if (n >= 1 && n <= 100) cells[n - 1].classList.add(cls || 'answer'); }
+      mark: function (n, cls) {
+        if (n < 1 || n > 1000) return;
+        if (cls === 'trail') visited[n] = true;
+        if (hundredBase(n) !== base) relabel(hundredBase(n)); else repaint();
+        var i = n - base - 1;
+        if (cells[i]) cells[i].classList.add(cls || 'answer');
+      }
     };
   }
 
@@ -686,6 +753,101 @@
         });
       }
     };
+  }
+
+  /* ============================================================
+     Three numbers, and a choice of which pair to add first.
+
+     This is Lesson 1, the associative property: 6 + 7 + 4 can be taken as
+     (6 + 7) + 4 or as 6 + (4 + 7), and one of those grouping choices lands on
+     ten and makes the rest easy. Every pair is allowed, because being allowed
+     is the property. The page only ever says which pair was kinder.
+     ============================================================ */
+  function chain(host, cfg) {
+    var parts = cfg.parts;
+    var total = parts.reduce(function (a, b) { return a + b; }, 0);
+    var picked = [];
+    var solvedAsk = null;
+
+    var box = el('div', 'chain');
+    var prompt = el('p', 'chain-q', 'Tap two of these to add them first.');
+    box.appendChild(prompt);
+
+    var tileRow = el('div', 'chain-row');
+    var tiles = parts.map(function (v, i) {
+      var t = el('button', 'tile', String(v));
+      t.type = 'button';
+      t.setAttribute('aria-label', 'Add ' + v + ' first');
+      t.addEventListener('click', function () { tap(i); });
+      tileRow.appendChild(t);
+      if (i < parts.length - 1) {
+        var plus = el('span', 'chain-op', '+');
+        tileRow.appendChild(plus);
+      }
+      return t;
+    });
+    box.appendChild(tileRow);
+
+    var working = el('p', 'chain-working');
+    working.setAttribute('role', 'status');
+    box.appendChild(working);
+
+    var again = el('button', 'btn', 'Try a different pair');
+    again.type = 'button';
+    again.hidden = true;
+    again.addEventListener('click', reset);
+    box.appendChild(again);
+
+    var askHost = el('div');
+    box.appendChild(askHost);
+    host.appendChild(box);
+
+    function tap(i) {
+      if (picked.length >= 2) return;
+      if (picked.indexOf(i) !== -1) return;
+      picked.push(i);
+      tiles[i].classList.add('chosen');
+      if (picked.length === 1) {
+        working.textContent = 'Now tap the second one.';
+        return;
+      }
+      resolve();
+    }
+
+    function resolve() {
+      var a = parts[picked[0]], b = parts[picked[1]];
+      var pairSum = a + b;
+      var restIndex = [0, 1, 2].filter(function (i) { return picked.indexOf(i) === -1; })[0];
+      var rest = parts[restIndex];
+      var best = cfg.easiest.slice().sort().join(',') === picked.slice().sort().join(',');
+
+      working.textContent = a + ' + ' + b + ' = ' + pairSum + ', then ' + pairSum + ' + ' + rest + '.'
+        + (best ? '  ' + cfg.why : '  That grouping is allowed too. ' + cfg.hintAtBest);
+      working.className = 'chain-working ' + (best ? 'good' : 'fair');
+      again.hidden = false;
+      record({ task: cfg.task + ': grouping', result: best ? 'took the easy pair' : 'took ' + a + ' + ' + b });
+
+      if (!solvedAsk) {
+        solvedAsk = ask(askHost, {
+          task: cfg.task,
+          prompt: 'What is ' + parts.join(' + ') + '?',
+          answer: total,
+          nudge: 'Add your pair first, then add the number that is left.',
+          hint: pairSum + ' + ' + rest + ' = ' + total + '.',
+          praise: 'Correct.'
+        });
+      }
+    }
+
+    function reset() {
+      picked = [];
+      tiles.forEach(function (t) { t.classList.remove('chosen'); });
+      working.textContent = 'Pick two again. The total will not change.';
+      working.className = 'chain-working';
+      again.hidden = true;
+    }
+
+    return { el: box };
   }
 
   /* ============================================================
@@ -963,6 +1125,7 @@
   window.Yard = {
     init: init, icon: icon, speak: speak, record: record, award: award,
     mat: mat, strip: strip, chart: chart, col: col, ask: ask, choose: choose,
+    chain: chain,
     renderMyWork: renderMyWork
   };
 })();

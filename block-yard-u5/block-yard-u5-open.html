@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Block Yard Unit 5 · Open Bench</title>
+<meta name="description" content="A free base ten blocks and hundred chart bench for any addition or subtraction up to 1000, with or without regrouping. Type your own numbers or press New problem.">
+<link rel="stylesheet" href="yard.css">
+</head>
+<body data-lesson="block-yard-u5-open">
+
+<header>
+  <div class="hd">
+    <h1>The Block Yard: Unit 5 Open Bench</h1>
+    <p>Any addition or subtraction up to 1000. Blocks, trading, and a chart that moves a hundred
+      at a time.</p>
+  </div>
+  <div class="toolbar" id="toolbar"></div>
+  <nav id="rail" aria-label="Steps"></nav>
+</header>
+
+<p id="live" class="sr" role="status" aria-live="polite"></p>
+
+<main class="wrap">
+
+<section class="screen" data-s="0" aria-labelledby="h0">
+  <h2 id="h0">Choose a calculation</h2>
+  <p class="lead" data-read="Pick add or subtract, type your own two numbers or press New problem, then press Set numbers to start working.">
+    Pick add or subtract, type your own two numbers or press New problem, then press Set numbers
+    to start working.
+  </p>
+
+  <div class="card">
+    <h3>Set up the calculation</h3>
+    <div class="seg" id="opSeg" role="group" aria-label="Operation">
+      <button type="button" data-op="+">Add (+)</button>
+      <button type="button" data-op="-">Subtract (&minus;)</button>
+    </div>
+
+    <div class="rowgap" style="margin-top:.6rem">
+      <label>First number<br>
+        <input type="number" id="aInput" min="0" max="1000" inputmode="numeric" value="245">
+      </label>
+      <label>Second number<br>
+        <input type="number" id="bInput" min="0" max="1000" inputmode="numeric" value="6">
+      </label>
+    </div>
+
+    <p class="note" style="margin-top:.7rem">
+      <strong>New problem</strong> picks two numbers for you. Choose what kind first. The first
+      three are the steps your lesson works through.
+    </p>
+    <div class="seg" id="rangeSeg" role="group" aria-label="Kind of problem">
+      <button type="button" data-range="ones">3 digits and ones</button>
+      <button type="button" data-range="tens">3 digits and tens</button>
+      <button type="button" data-range="hundreds">3 digits and hundreds</button>
+      <button type="button" data-range="free">Anything to 1000</button>
+    </div>
+
+    <div class="shelf" style="margin-top:.7rem">
+      <button type="button" class="btn act" id="randomBtn">New problem</button>
+      <button type="button" class="btn go" id="setBtn">Set numbers</button>
+    </div>
+    <p class="ask-fb" id="setupFb" role="status"></p>
+  </div>
+
+  <div class="card" id="workCard" hidden>
+    <h3 id="problemHead">Working out 245 + 6</h3>
+
+    <div class="mat" style="margin:0 0 .8rem">
+      <div class="mat-top"><div class="mat-name">The numbers you are given</div></div>
+      <div class="places" id="refStrips" style="align-items:stretch"></div>
+    </div>
+
+    <div class="rowgap">
+      <div class="grow" id="workMat"></div>
+      <div class="side">
+        <div id="workCol"></div>
+        <div class="note">
+          Use the shelf to build, tap a pile to take a block back, and trade or break whenever
+          you need to. The mat does not check you: use it however helps.
+        </div>
+      </div>
+    </div>
+
+    <h3>The hundred chart</h3>
+    <p>It shows one hundred at a time. Use the arrows to move to another hundred, tap a number,
+      or switch to the jump buttons and count on in ones, tens or hundreds.</p>
+    <div id="workChart"></div>
+
+    <div class="ask" id="answerBox">
+      <label class="ask-q" for="answerInp" id="answerPrompt">What is 245 + 6?</label>
+      <div class="ask-row">
+        <input type="number" inputmode="numeric" id="answerInp" placeholder="?">
+        <button type="button" class="btn" id="answerCheck">Check</button>
+      </div>
+      <p class="ask-fb" id="answerFb" role="status"></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>My work today</h3>
+    <div id="myWork"></div>
+  </div>
+
+  <div class="card">
+    <h3>Not sure what to do?</h3>
+    <p>The Guided Bays walk through each kind of calculation, one step at a time.</p>
+    <a class="btn wide golink" href="block-yard-u5.html">Go to the Guided Bays</a>
+  </div>
+</section>
+
+<div class="panel" id="summary">
+  <h3>Session summary</h3>
+  <div data-summary-body></div>
+</div>
+
+</main>
+
+<script src="yard.js"></script>
+<script>
+(function () {
+  'use strict';
+  var Y = window.Yard;
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function parts(n) { return { h: Math.floor(n / 100), t: Math.floor(n / 10) % 10, o: n % 10 }; }
+  function opSign(op) { return op === '+' ? '+' : '−'; }
+  function say(n) {
+    var p = parts(n), bits = [];
+    if (p.h) bits.push(p.h + (p.h === 1 ? ' flat' : ' flats'));
+    if (p.t) bits.push(p.t + (p.t === 1 ? ' rod' : ' rods'));
+    if (p.o) bits.push(p.o + (p.o === 1 ? ' cube' : ' cubes'));
+    return bits.length ? bits.join(', ') : 'nothing';
+  }
+
+  var opSeg = document.getElementById('opSeg');
+  var rangeSeg = document.getElementById('rangeSeg');
+  var aInput = document.getElementById('aInput');
+  var bInput = document.getElementById('bInput');
+  var setupFb = document.getElementById('setupFb');
+  var currentOp = '+', currentRange = 'ones';
+
+  function wireSeg(seg, attr, onPick, initial) {
+    Array.prototype.forEach.call(seg.children, function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute(attr) === initial));
+      b.addEventListener('click', function () {
+        Array.prototype.forEach.call(seg.children, function (o) { o.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        onPick(b.getAttribute(attr));
+      });
+    });
+  }
+  wireSeg(opSeg, 'data-op', function (v) { currentOp = v; }, currentOp);
+  wireSeg(rangeSeg, 'data-range', function (v) { currentRange = v; }, currentRange);
+
+  function pick(lo, hi, step) {
+    step = step || 1;
+    var n = Math.floor(Math.random() * ((hi - lo) / step + 1)) * step + lo;
+    return n;
+  }
+
+  document.getElementById('randomBtn').addEventListener('click', function () {
+    var a, b;
+    if (currentRange === 'ones') { a = pick(102, 989); b = pick(2, 9); }
+    else if (currentRange === 'tens') { a = pick(110, 890); b = pick(20, 90, 10); }
+    else if (currentRange === 'hundreds') { a = pick(110, 890); b = pick(100, 400, 100); }
+    else { a = pick(20, 999); b = pick(10, 999); }
+    aInput.value = a;
+    bInput.value = b;
+    apply();
+  });
+  document.getElementById('setBtn').addEventListener('click', apply);
+
+  function apply() {
+    var a = parseInt(aInput.value, 10), b = parseInt(bInput.value, 10);
+    if (isNaN(a) || isNaN(b) || a < 0 || b < 0) {
+      setupFb.className = 'ask-fb bad';
+      setupFb.textContent = 'Type two numbers of zero or more first.';
+      return;
+    }
+    if (a > 1000 || b > 1000) {
+      setupFb.className = 'ask-fb bad';
+      setupFb.textContent = 'This yard holds a thousand. Pick numbers up to 1000.';
+      return;
+    }
+    var swapped = false;
+    if (currentOp === '-' && a < b) { var t = a; a = b; b = t; swapped = true; aInput.value = a; bInput.value = b; }
+    if (currentOp === '+' && a + b > 1000) {
+      setupFb.className = 'ask-fb bad';
+      setupFb.textContent = 'That comes to more than a thousand, which is more than the yard holds. Try smaller numbers.';
+      return;
+    }
+    setupFb.className = swapped ? 'ask-fb bad' : 'ask-fb good';
+    setupFb.textContent = swapped
+      ? 'Swapped so the bigger number comes first: you cannot subtract past zero here.'
+      : 'Ready.';
+    renderProblem(a, b, currentOp);
+  }
+
+  var workCard = document.getElementById('workCard');
+  var problemHead = document.getElementById('problemHead');
+  var refStrips = document.getElementById('refStrips');
+  var workCol = document.getElementById('workCol');
+  var answerBox = document.getElementById('answerBox');
+  var answerPrompt = document.getElementById('answerPrompt');
+  var answerInp = document.getElementById('answerInp');
+  var answerCheck = document.getElementById('answerCheck');
+  var answerFb = document.getElementById('answerFb');
+
+  var mat = Y.mat(document.getElementById('workMat'), {
+    label: 'Your working mat', goal: '', places: ['h', 't', 'o'],
+    trade: true, breakTen: true, cap: { h: 10, t: 29, o: 29 }
+  });
+  var freeChart = Y.chart(document.getElementById('workChart'), { interactive: true });
+
+  var tries = 0, live = { a: 245, b: 6, op: '+', total: 251 };
+
+  function missAdd(a, b, total, v) {
+    var pa = parts(a), pb = parts(b);
+    if (v === Number(String(pa.h + pb.h) + String(pa.t + pb.t) + String(pa.o + pb.o))) {
+      return 'You wrote each pile as its own digit. A pile of ten or more has to be traded first.';
+    }
+    if (v === total - 10) return 'Close. Did you count the ten you traded across?';
+    if (v === total - 100) return 'Close. Did you count the hundred you traded across?';
+    return 'Not quite. Count the blocks on your mat: flats, then rods, then loose ones.';
+  }
+  function missSub(a, b, total, v) {
+    var pa = parts(a), pb = parts(b);
+    var flipped = Math.abs(pa.o - pb.o) + Math.abs(pa.t - pb.t) * 10 + Math.abs(pa.h - pb.h) * 100;
+    if (v === flipped) return 'You took the small digit from the big one in each column. If you cannot take them, break a block first.';
+    return 'Not quite. Count what is left on your mat: flats, then rods, then loose ones.';
+  }
+
+  function renderProblem(a, b, op) {
+    live = { a: a, b: b, op: op, total: op === '+' ? a + b : a - b };
+    tries = 0;
+    workCard.hidden = false;
+    problemHead.textContent = 'Working out ' + a + ' ' + opSign(op) + ' ' + b;
+
+    refStrips.innerHTML = '';
+    Y.strip(refStrips, a, 'First number: ' + a);
+    Y.strip(refStrips, b, 'Second number: ' + b);
+
+    mat.set({ h: 0, t: 0, o: 0 });
+    mat.setGoal('Work out ' + a + ' ' + opSign(op) + ' ' + b + ' with the blocks if it helps.');
+
+    workCol.innerHTML = '';
+    var written = Y.col(workCol, { a: a, b: b, op: op });
+
+    freeChart.reset();
+
+    answerInp.value = '';
+    answerInp.disabled = false;
+    answerCheck.disabled = false;
+    answerBox.classList.remove('solved');
+    answerFb.className = 'ask-fb';
+    answerFb.textContent = '';
+    answerPrompt.textContent = 'What is ' + a + ' ' + opSign(op) + ' ' + b + '?';
+
+    answerCheck.onclick = function () { submit(written); };
+    answerInp.onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); submit(written); } };
+
+    function submit(writtenCol) {
+      if (answerBox.classList.contains('solved')) return;
+      var v = parseInt(answerInp.value, 10);
+      if (isNaN(v)) { answerFb.className = 'ask-fb'; answerFb.textContent = 'Type a number first, then press Check.'; return; }
+      tries++;
+      var task = 'Open bench U5: ' + a + ' ' + opSign(op) + ' ' + b;
+      if (v === live.total) {
+        answerBox.classList.add('solved');
+        answerInp.disabled = true;
+        answerCheck.disabled = true;
+        answerFb.className = 'ask-fb good';
+        answerFb.textContent = 'Correct.' + (tries === 1 ? ' First try.' : ' You got there in ' + tries + '.');
+        writtenCol.answer(live.total);
+        freeChart.mark(live.total, 'answer');
+        Y.record({ task: task, result: 'correct in ' + tries });
+        Y.award(task, tries);
+      } else {
+        answerFb.className = 'ask-fb bad';
+        answerFb.textContent = tries >= 2
+          ? 'The blocks for the answer are ' + say(live.total) + ', which is ' + live.total + '.'
+          : (op === '+' ? missAdd(a, b, live.total, v) : missSub(a, b, live.total, v));
+        Y.record({ task: task, result: 'tried ' + v });
+      }
+    }
+  }
+
+  Y.init([{ label: 'Bench', icon: 'blocks' }]);
+  renderProblem(245, 6, '+');
+})();
+</script>
+</body>
+</html>
