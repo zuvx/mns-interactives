@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Feelings Detectives: Name it and choose</title>
+<meta name="description" content="Year 3 Citizenship: mime a feeling, then solve eight feelings cases. Built for iPads. No network, no data collected.">
+<style>
+/* ============================================================
+   Feelings Detectives — Citizenship, Year 3
+   Same shell as The Shake Station (design-system/mns-classroom/pages/shake-station.md),
+   recoloured: one colour per feeling, plum for the calm parts of the screen.
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+
+/* Century Gothic is the school font. It cannot be bundled (Monotype licence)
+   and iPads do not carry it, so: real Century Gothic -> iOS geometric sans ->
+   open clones -> system. Same stack as Number Souq. */
+:root{
+  --bg:#F4EFFF; --bg-2:#E7DDFB; --paper:#FFFFFF;
+  /* --plum and --berry sit behind white text: 11.9:1 and 5.6:1. */
+  --plum:#3A2873; --plum-deep:#26184F; --plum-2:#5B45A8;
+  --berry:#C2255C; --berry-deep:#8E1742;
+  --ink:#231942; --muted:#5E5282;
+  --ok:#2F8F5B; --ok-deep:#1C5C39;
+  --warn:#B3261E;
+  --shadow:0 8px 0 rgba(38,24,79,.14);
+  --tap:56px; --tap-min:48px;
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{
+  margin:0;font-family:var(--school);font-size:1rem;line-height:1.5;
+  color:var(--ink);background:var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 12%, rgba(255,210,63,.22), transparent 28%),
+    radial-gradient(circle at 92% 8%, rgba(255,126,182,.18), transparent 26%),
+    radial-gradient(circle at 50% 100%, rgba(92,201,138,.14), transparent 35%);
+  min-height:100vh;
+}
+h1,h2,h3{font-weight:700;margin-top:0}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 3.75rem}
+:focus-visible{outline:4px solid var(--plum);outline-offset:3px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;fill:none;
+  stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.face{display:block;width:100%;height:auto}
+
+/* ---- Header ---- */
+header{position:relative;margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.rainbow{height:1.25rem;display:flex}
+.rainbow span{flex:1}
+.head-body{background:var(--plum);color:#fff;padding:1rem 1.375rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-mark{width:3.25rem;flex:0 0 auto}
+.head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.25rem)}
+.head-body .sub{margin:.125rem 0 0;font-weight:700;font-size:.9375rem;opacity:.94}
+.pill{margin-left:auto;background:#FFD23F;color:var(--ink);font-weight:700;
+  padding:.5rem .875rem;border-radius:999px;font-size:.875rem;box-shadow:0 3px 0 #C99E12}
+
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem;justify-content:flex-end}
+.tool{border:3px solid var(--plum);background:var(--paper);color:var(--plum);
+  font-family:inherit;font-weight:700;font-size:.9375rem;cursor:pointer;min-height:var(--tap-min);
+  padding:.5rem 1rem;border-radius:12px;display:inline-flex;align-items:center;gap:.5rem;
+  transition:background .2s ease,color .2s ease}
+.tool[aria-pressed="true"]{background:var(--plum);color:#fff}
+
+/* ---- Feeling words (EAL) ---- */
+.keys{margin:.875rem 0;background:var(--paper);border:3px dashed var(--plum-2);
+  border-radius:16px;padding:.625rem .875rem}
+.keys summary{cursor:pointer;font-weight:700;color:var(--plum);font-size:1.0625rem;
+  list-style:none;min-height:var(--tap-min);display:flex;align-items:center;gap:.5rem}
+.keys summary::-webkit-details-marker{display:none}
+.krow{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.625rem;margin-top:.75rem}
+.kcard{border-radius:14px;padding:.5rem .625rem;display:flex;align-items:center;gap:.5rem;background:var(--bg)}
+.kcard .kface{width:3rem;flex:0 0 auto}
+.kcard b{display:block;font-size:1rem}
+.kcard span{font-size:.8125rem;color:var(--muted);display:block;line-height:1.35}
+.kcard .ktext{flex:1}
+.say{flex:0 0 auto;border:none;background:var(--plum-2);color:#fff;cursor:pointer;
+  width:var(--tap-min);height:var(--tap-min);border-radius:10px;box-shadow:0 3px 0 var(--plum-deep);
+  display:inline-flex;align-items:center;justify-content:center;font-size:1.125rem}
+.say:active{transform:translateY(2px)}
+
+/* ---- Progress rail ---- */
+.rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
+.rail button{flex:1 1 0;min-width:140px;min-height:var(--tap-min);border:none;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:.875rem;padding:.625rem .5rem;border-radius:12px;
+  background:var(--bg-2);color:var(--plum-deep);box-shadow:0 3px 0 rgba(38,24,79,.14);
+  transition:background .2s ease,color .2s ease}
+.rail button[aria-current="step"]{background:var(--berry);color:#fff;box-shadow:0 3px 0 var(--berry-deep)}
+.rail button:active{transform:translateY(2px)}
+
+/* ---- Score meter ---- */
+.meter{display:flex;align-items:center;gap:.75rem;background:var(--paper);border:3px solid var(--bg-2);
+  border-radius:16px;padding:.625rem .875rem;margin-top:.75rem}
+.meter .bar{flex:1;height:1rem;background:var(--bg-2);border-radius:999px;overflow:hidden}
+.meter .fill{height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,#6FA8DC,#5CC98A,#FFD23F,#FF7EB6);transition:width .35s ease}
+.meter .pts{font-weight:700;font-size:1.125rem;min-width:5.5rem;text-align:right;color:var(--plum-deep)}
+.meter.pop{animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+/* ---- Screens and cards ---- */
+.screen{display:none;animation:rise .25s ease}
+.screen.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:20px;padding:1.375rem;box-shadow:var(--shadow);margin-top:.75rem}
+.card h2{margin:0 0 .25rem;font-size:clamp(1.3rem,3.4vw,1.75rem);color:var(--plum)}
+.card h2:focus{outline:none}
+.lead{font-size:1.0625rem;margin:.2em 0 1em}
+.tag{display:inline-flex;align-items:center;gap:.375rem;background:#FFD23F;color:var(--ink);
+  font-weight:700;font-size:.8125rem;padding:.25rem .75rem;border-radius:999px;margin-bottom:.5rem}
+
+/* ---- Buttons ---- */
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:1.125rem;color:#fff;
+  background:var(--berry);padding:.8125rem 1.625rem;border-radius:14px;min-height:var(--tap);
+  box-shadow:0 4px 0 var(--berry-deep);transition:transform .08s;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn:active{transform:translateY(3px)}
+.btn.deep{background:var(--plum);box-shadow:0 4px 0 var(--plum-deep)}
+.btn.ghost{background:transparent;color:var(--plum);box-shadow:none;border:3px solid var(--plum)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
+
+/* ---- Round 1: mime ---- */
+.steps{margin:.25rem 0 1rem;padding-left:1.4rem;font-size:1.0625rem}
+.steps li{margin-bottom:.25rem}
+.secret{border:4px dashed var(--plum-2);border-radius:20px;padding:1.25rem;text-align:center;background:var(--bg)}
+.secret .face-big{width:9rem;margin:0 auto .5rem}
+.secret .word{font-size:2.25rem;font-weight:700;margin:0;line-height:1.1}
+.secret .hint{font-size:1.125rem;margin:.5rem 0 0}
+.secret .shh{font-size:1.25rem;font-weight:700;color:var(--plum);margin:0}
+.facegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:.75rem}
+@media (max-width:560px){.facegrid{grid-template-columns:repeat(2,1fr)}}
+.fbtn{border:3px solid var(--bg-2);background:var(--paper);color:var(--ink);cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:1.0625rem;border-radius:16px;padding:.625rem .5rem .5rem;
+  min-height:var(--tap);display:flex;flex-direction:column;align-items:center;gap:.25rem;
+  box-shadow:0 3px 0 rgba(38,24,79,.12);transition:background .2s ease,border-color .2s ease}
+.fbtn .fimg{width:4.25rem}
+.fbtn:active{transform:translateY(2px)}
+.fbtn[data-state="right"]{border-color:var(--ok);background:#EDF8F1}
+.fbtn[data-state="wrong"]{border-color:var(--warn);background:#FBEAE8}
+.fbtn.bad{animation:wobble .4s ease}
+.fbtn:disabled{cursor:default}
+@keyframes wobble{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}
+  40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.tally{font-weight:700;color:var(--muted);margin:.75rem 0 0}
+
+/* ---- Round 2: cases ---- */
+.case{border:3px solid var(--bg-2);border-radius:18px;padding:1rem 1.125rem;background:var(--paper)}
+.case-top{display:flex;align-items:center;gap:.75rem;justify-content:space-between;flex-wrap:wrap}
+.qnum{font-weight:700;color:var(--muted);font-size:.9375rem;margin:0}
+.story{font-size:1.25rem;font-weight:700;margin:.5rem 0 1rem;line-height:1.45}
+.q{font-size:1.125rem;font-weight:700;margin:.75rem 0 .5rem;color:var(--plum)}
+.feelrow{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.choices{display:flex;flex-direction:column;gap:.75rem}
+.opt{text-align:left;border:3px solid var(--bg-2);background:var(--paper);color:var(--ink);
+  font-family:inherit;font-size:1.0625rem;cursor:pointer;min-height:var(--tap);padding:.75rem 1rem;
+  border-radius:14px;box-shadow:0 3px 0 rgba(38,24,79,.12);display:flex;align-items:center;gap:.75rem;
+  transition:background .2s ease,border-color .2s ease}
+.opt .mark{flex:0 0 auto;width:2rem;height:2rem;border-radius:8px;background:var(--bg-2);
+  color:var(--plum-deep);font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.opt:active{transform:translateY(2px)}
+.opt[data-state="right"]{border-color:var(--ok);background:#EDF8F1}
+.opt[data-state="right"] .mark{background:var(--ok);color:#fff}
+.opt[data-state="wrong"]{border-color:var(--warn);background:#FBEAE8}
+.opt[data-state="wrong"] .mark{background:var(--warn);color:#fff}
+.opt:disabled{cursor:default}
+.part2{display:none}
+.part2.show{display:block;animation:rise .25s ease}
+.fb{margin-top:.875rem;border-radius:14px;padding:.875rem 1rem;font-weight:700;display:none}
+.fb.show{display:block;animation:rise .25s ease}
+.fb.good{background:#EDF8F1;border:3px solid var(--ok);color:var(--ok-deep)}
+.fb.bad{background:#FBEAE8;border:3px solid var(--warn);color:var(--warn)}
+
+/* ---- Badge ---- */
+.badge{margin-top:1rem;background:var(--plum);color:#fff;border-radius:20px;padding:1.25rem;text-align:center}
+.badge h3{margin:0 0 .25rem;font-size:1.5rem;color:#fff}
+.badge .big{font-size:3rem;line-height:1.1;font-weight:700;color:#FFD23F}
+.badge .rank{display:inline-block;margin-top:.5rem;border:5px double #fff;border-radius:12px;
+  padding:.5rem 1.125rem;font-size:1.1875rem;transform:rotate(-5deg)}
+.badge .note{margin:.75rem 0 0;font-size:.9375rem;font-weight:700;color:#E7DDFB}
+.toolbox{margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.625rem}
+.tbox{background:var(--bg);border-radius:14px;padding:.625rem .75rem;display:flex;gap:.625rem;align-items:center;font-weight:700}
+.tbox .icon{width:1.75rem;height:1.75rem;flex:0 0 auto;color:var(--plum-2)}
+.summary{margin-top:1rem;background:var(--paper);border:3px solid var(--plum-2);border-radius:16px;padding:1rem 1.125rem}
+.summary h3{margin:0 0 .5rem;color:var(--plum);font-size:1.125rem}
+.summary ul{margin:.5rem 0 0;padding-left:1.25rem}
+.summary li{font-size:.9375rem;margin-bottom:.25rem}
+.summary .privacy{font-size:.8125rem;color:var(--muted);margin-top:.75rem;font-weight:700}
+.note{font-size:.8125rem;font-weight:700;color:var(--muted);margin-top:1.125rem}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}.feelrow{grid-template-columns:1fr 1fr 1fr;gap:.5rem}.fbtn .fimg{width:3.25rem}}
+</style>
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-speak"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></g>
+  <g id="i-book"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M19 19v2H6"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+  <g id="i-eye"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g>
+  <g id="i-search"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-wind"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h7"/></g>
+  <g id="i-hash"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></g>
+  <g id="i-drop"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></g>
+  <g id="i-talk"><path d="M4 5h16v11H9l-5 4V5z"/></g>
+  <g id="i-hand"><path d="M7 11V6a2 2 0 0 1 4 0v5M11 10V4a2 2 0 0 1 4 0v6M15 10V6a2 2 0 0 1 4 0v7a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-3l-2.5-4a1.8 1.8 0 0 1 3-2L7 13"/></g>
+  <g id="i-pencil"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="m14 6 4 4"/></g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="rainbow" id="rainbow" aria-hidden="true"></div>
+    <div class="head-body">
+      <div class="head-mark" id="headFace" aria-hidden="true"></div>
+      <div>
+        <h1>Feelings Detectives</h1>
+        <p class="sub">Citizenship · Year 3 · Feelings</p>
+      </div>
+      <span class="pill">Name it, then choose</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <details class="keys">
+    <summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg> Feeling words</summary>
+    <div class="krow" id="keyWords"></div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Parts of the lesson">
+    <button type="button" data-go="0" aria-current="step">1. Mime it</button>
+    <button type="button" data-go="1">2. Detective cases</button>
+    <button type="button" data-go="2">3. Your badge</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:1.6em;height:1.6em;color:var(--berry)"><use href="#i-search"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="ptsNow">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <!-- ---------- Screen 1: mime ---------- -->
+  <section class="screen on" id="s0" data-s="0" aria-label="Mime it">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eye"/></svg> Round 1 · with a partner</span>
+      <h2 tabindex="-1" id="h0">Mime it</h2>
+      <ol class="steps">
+        <li><b>Actor:</b> look at your secret feeling. Don't let your partner see!</li>
+        <li>Show the feeling with your face and body. No words.</li>
+        <li><b>Detective:</b> tap the feeling you think it is.</li>
+        <li>Swap jobs and play again.</li>
+      </ol>
+      <div class="secret" id="secret"></div>
+      <div id="guessBox" hidden>
+        <p class="q" style="margin-top:1rem">Detective, which feeling is it?</p>
+        <div class="facegrid" id="guessGrid"></div>
+        <div class="fb" id="mfb"></div>
+      </div>
+      <div class="btnrow">
+        <button class="btn" id="showSecret" type="button">Actor: show my secret</button>
+        <button class="btn deep" id="hideSecret" type="button" hidden>Hide it and act</button>
+        <button class="btn deep" id="newSecret" type="button" hidden>Swap and play again</button>
+      </div>
+      <p class="tally" id="tally">Feelings guessed: 0</p>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 2: cases ---------- -->
+  <section class="screen" id="s1" data-s="1" aria-label="Detective cases">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg> Round 2</span>
+      <h2 tabindex="-1" id="h1">Detective cases</h2>
+      <p class="lead">Read each case with your partner. First find the feeling. Then choose the best thing to do.</p>
+      <div class="case" id="case">
+        <div class="case-top">
+          <p class="qnum" id="cnum">Case 1 of 8</p>
+          <button class="say" id="sayStory" type="button" aria-label="Read the case out loud">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-speak"/></svg>
+          </button>
+        </div>
+        <p class="story" id="story"></p>
+        <p class="q" id="q1"></p>
+        <div class="feelrow" id="feelOpts"></div>
+        <div class="fb" id="ffb"></div>
+        <div class="part2" id="part2">
+          <p class="q" id="q2"></p>
+          <div class="choices" id="doOpts"></div>
+          <div class="fb" id="dfb"></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="btn deep" id="nextCase" type="button" disabled>Next case</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 3: badge ---------- -->
+  <section class="screen" id="s2" data-s="2" aria-label="Your badge">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Round 3</span>
+      <h2 tabindex="-1" id="h2">Your badge</h2>
+      <p class="lead">Show this screen to your teacher before you close it.</p>
+      <div class="badge">
+        <h3>Feelings Detectives</h3>
+        <p class="big"><span id="finalPts">0</span> / 160</p>
+        <span class="rank" id="rank">Detective in training</span>
+        <p class="note" id="firstTry">Right first time: 0</p>
+      </div>
+      <div class="summary">
+        <h3>My calm-down toolbox</h3>
+        <div class="toolbox" id="toolbox"></div>
+      </div>
+      <div class="summary">
+        <h3>Cases to talk about</h3>
+        <ul id="tricky"><li>Nothing yet. Solve the cases in round 2 first.</li></ul>
+        <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="note">Citizenship · Year 3 · Feelings Detectives</p>
+    </div>
+  </section>
+</div>
+
+<script>
+'use strict';
+(function () {
+  /* ---------- content ----------
+     FEELINGS is also read by tools/unit-pipeline/build_feelings_ppt.js, which
+     draws the same faces on the slides, so the board and the iPad match. */
+  var FEELINGS = [
+    { k: 'happy', col: '#FFD23F', means: 'You feel good inside and you want to smile.',
+      mime: 'Big smile. Wave to a friend.',
+      parts: '<circle cx="36" cy="42" r="4.5" fill="#2B2140" stroke="none"/><circle cx="64" cy="42" r="4.5" fill="#2B2140" stroke="none"/><path d="M30 58 Q50 80 70 58"/>' },
+    { k: 'sad', col: '#6FA8DC', means: 'You feel down. You might want to cry.',
+      mime: 'Look down. Walk slowly. Wipe a pretend tear.',
+      parts: '<path d="M27 36 L41 31"/><path d="M73 36 L59 31"/><circle cx="36" cy="45" r="4.5" fill="#2B2140" stroke="none"/><circle cx="64" cy="45" r="4.5" fill="#2B2140" stroke="none"/><path d="M34 72 Q50 58 66 72"/><path d="M64 53 Q58 62 64 65 Q70 62 64 53Z" fill="#E3F0FF" stroke-width="2.5"/>' },
+    { k: 'angry', col: '#F26157', means: 'You feel hot and cross, often because something is not fair.',
+      mime: 'Cross your arms. Frown. Stamp one foot.',
+      parts: '<path d="M27 30 L43 38"/><path d="M73 30 L57 38"/><circle cx="37" cy="46" r="4.5" fill="#2B2140" stroke="none"/><circle cx="63" cy="46" r="4.5" fill="#2B2140" stroke="none"/><path d="M35 71 Q50 60 65 71"/>' },
+    { k: 'scared', col: '#B08BE0', means: 'You feel afraid. Your heart beats fast.',
+      mime: 'Eyes wide. Hands up by your face. Step back.',
+      parts: '<path d="M27 27 Q35 21 43 27"/><path d="M57 27 Q65 21 73 27"/><circle cx="36" cy="42" r="8" fill="#FFFFFF"/><circle cx="64" cy="42" r="8" fill="#FFFFFF"/><circle cx="36" cy="43" r="3.2" fill="#2B2140" stroke="none"/><circle cx="64" cy="43" r="3.2" fill="#2B2140" stroke="none"/><ellipse cx="50" cy="70" rx="7" ry="9" fill="#2B2140"/>' },
+    { k: 'worried', col: '#FFA24C', means: 'Your tummy feels funny. You keep thinking something bad might happen.',
+      mime: 'Bite your lip. Rub your hands. Look around.',
+      parts: '<path d="M27 35 L41 29"/><path d="M73 35 L59 29"/><circle cx="36" cy="44" r="4.5" fill="#2B2140" stroke="none"/><circle cx="64" cy="44" r="4.5" fill="#2B2140" stroke="none"/><path d="M32 69 Q38 63 44 69 T56 69 T68 69"/><path d="M80 24 Q75 32 80 35 Q85 32 80 24Z" fill="#E3F0FF" stroke-width="2.5"/>' },
+    { k: 'excited', col: '#FF7EB6', means: 'You can’t wait for something good to happen.',
+      mime: 'Bounce on your toes. Clap your hands.',
+      parts: '<path d="M29 45 Q36 35 43 45"/><path d="M57 45 Q64 35 71 45"/><path d="M30 57 L70 57 Q70 82 50 82 Q30 82 30 57Z" fill="#2B2140"/>' },
+    { k: 'proud', col: '#5CC98A', means: 'You did something hard, and you feel good about it.',
+      mime: 'Stand tall. Chin up. Hands on your hips.',
+      parts: '<path d="M29 41 Q36 48 43 41"/><path d="M57 41 Q64 48 71 41"/><circle cx="27" cy="57" r="6" fill="#FF9FB2" stroke="none"/><circle cx="73" cy="57" r="6" fill="#FF9FB2" stroke="none"/><path d="M36 62 Q50 74 64 62"/>' },
+    { k: 'lonely', col: '#9FB4C7', means: 'You feel on your own. You wish someone was with you.',
+      mime: 'Sit on your own. Hug your knees. Watch others play.',
+      parts: '<path d="M29 38 L41 36"/><path d="M71 38 L59 36"/><path d="M30 47 A6 6 0 0 0 42 47Z" fill="#2B2140"/><path d="M58 47 A6 6 0 0 0 70 47Z" fill="#2B2140"/><path d="M41 71 Q50 66 59 71"/>' }
+  ];
+
+  /* Eight cases, one per feeling. The right answer is written first in
+     feel and do; the page shuffles before showing. */
+  var CASES = [
+    { who: 'Omar', he: 'he',
+      story: 'Omar builds a tall tower of blocks. His little brother runs past and knocks it over.',
+      feel: ['angry', 'proud', 'excited'],
+      feelWhy: 'It isn’t fair when your hard work gets knocked down. Omar might feel a bit sad too.',
+      do: ['Take three slow breaths, then say, “Please be careful next time.”',
+           'Knock over his brother’s toys.',
+           'Shout and throw a block.'],
+      doWhy: 'Slow breaths make the angry feeling smaller. Then Omar can use calm, kind words.' },
+    { who: 'Maryam', he: 'she',
+      story: 'Maryam’s best friend is moving to another country. Tomorrow is her last day at school.',
+      feel: ['sad', 'excited', 'angry'],
+      feelWhy: 'Saying goodbye to a good friend is hard.',
+      do: ['Make a goodbye card and tell her mum how she feels.',
+           'Keep the feeling secret and not talk to anyone.',
+           'Tell her friend she doesn’t care.'],
+      doWhy: 'Talking about a sad feeling helps. A card is a kind way to say goodbye.' },
+    { who: 'Yusuf', he: 'he',
+      story: 'Yusuf has a spelling test tomorrow. He keeps thinking, “What if I get them all wrong?”',
+      feel: ['worried', 'happy', 'proud'],
+      feelWhy: 'That funny feeling about what might happen is worry.',
+      do: ['Practise the words with a grown-up and remember that trying his best is enough.',
+           'Stay up very late so he doesn’t have to think about it.',
+           'Tell everyone the test is silly.'],
+      doWhy: 'Practising helps, and so does sharing the worry. Worries get smaller when we talk about them.' },
+    { who: 'Aisha', he: 'she',
+      story: 'It’s the night before Eid. Aisha’s new clothes are ready, and tomorrow she will see all her cousins.',
+      feel: ['excited', 'scared', 'lonely'],
+      feelWhy: 'She can’t wait for tomorrow!',
+      do: ['Help her family get ready, then take slow breaths so she can fall asleep.',
+           'Jump on the bed until very late.',
+           'Wake everybody up in the middle of the night.'],
+      doWhy: 'Excited is a lovely feeling. Slow breaths help her body calm down so she can sleep.' },
+    { who: 'Ali', he: 'he',
+      story: 'Ali is at home when a big sandstorm starts. The wind howls, the windows rattle and the sky goes dark orange.',
+      feel: ['scared', 'proud', 'happy'],
+      feelWhy: 'Loud wind and a dark sky can feel frightening.',
+      do: ['Find a grown-up and stay close to them indoors.',
+           'Run outside to look at the storm.',
+           'Hide somewhere and not tell anyone.'],
+      doWhy: 'Grown-ups help us feel safe. In a sandstorm, the safe place is inside with them.' },
+    { who: 'Noor', he: 'she',
+      story: 'Noor has practised her reading every day. Today she read a whole page out loud to the class.',
+      feel: ['proud', 'angry', 'worried'],
+      feelWhy: 'She worked hard, and she did it!',
+      do: ['Smile, say thank you, and keep practising.',
+           'Laugh at children who read more slowly.',
+           'Stop practising because she’s already the best.'],
+      doWhy: 'Feeling proud is great. Proud and kind go together.' },
+    { who: 'Sami', he: 'he',
+      story: 'Sami is new at school. At break time everyone is playing, but Sami is sitting on his own.',
+      feel: ['lonely', 'excited', 'angry'],
+      feelWhy: 'It’s hard when you don’t know anyone yet.',
+      do: ['Ask a group, “Can I play too?” or tell the teacher on duty.',
+           'Sit on his own every day and say nothing.',
+           'Grab the ball so they have to play with him.'],
+      doWhy: 'Asking to join is brave. And if you see someone on their own, you can invite them!' },
+    { who: 'Layla', he: 'she',
+      story: 'Layla helps her grandma water the plants. Grandma gives her a big hug and says, “You’re a great helper!”',
+      feel: ['happy', 'sad', 'scared'],
+      feelWhy: 'Helping someone you love feels good.',
+      do: ['Say, “Thank you, Grandma!” and help again next time.',
+           'Say that helping is boring.',
+           'Ask for a present every time she helps.'],
+      doWhy: 'Sharing a happy feeling makes it grow. Grandma feels happy too!' }
+  ];
+
+  var TOOLS = [
+    ['i-wind', 'Take slow breaths'],
+    ['i-hash', 'Count to 10'],
+    ['i-drop', 'Drink some water'],
+    ['i-talk', 'Talk to a grown-up'],
+    ['i-hand', 'Squeeze, then let go'],
+    ['i-pencil', 'Draw how you feel']
+  ];
+
+  var TOTAL = CASES.length * 20;   /* 10 for the feeling, 10 for the choice; 5 after a miss */
+
+  var BY = {};
+  FEELINGS.forEach(function (f) { BY[f.k] = f; });
+  function faceSVG(k) {
+    var f = BY[k];
+    return '<svg class="face" viewBox="0 0 100 100" aria-hidden="true">' +
+      '<circle cx="50" cy="50" r="46" fill="' + f.col + '" stroke="#2B2140" stroke-width="3"/>' +
+      '<g fill="none" stroke="#2B2140" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">' +
+      f.parts + '</g></svg>';
+  }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ---------- state (in memory only, never stored) ---------- */
+  var pts = 0, firstTry = 0, ci = 0, feelDone = false, doDone = false;
+  var missFeel = false, missDo = false;
+  var tricky = [];
+  var deck = [], secretK = null, guessed = 0, guessDone = false;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function say(msg) { $('live').textContent = msg; }
+
+  function addPts(n) {
+    pts += n;
+    $('ptsNow').textContent = pts;
+    $('fill').style.width = Math.round(pts / TOTAL * 100) + '%';
+    var m = $('meter');
+    m.classList.remove('pop'); void m.offsetWidth; m.classList.add('pop');
+  }
+
+  /* ---------- read aloud: local speech only, no network ----------
+     Same voice picker as The Shake Station: choose an English voice rather
+     than trust the device default, which on a Spanish or Arabic iPad reads
+     English with the wrong sounds. Silence beats the wrong language. */
+  var VOICE_PREFERRED = [
+    'daniel', 'serena', 'kate', 'martha', 'arthur', 'sonia', 'libby', 'ryan',
+    'google uk english', 'samantha', 'alex', 'google us english'
+  ];
+  var VOICE_NOVELTY = [
+    'bad news', 'good news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos',
+    'jester', 'organ', 'superstar', 'trinoids', 'whisper', 'wobble', 'zarvox',
+    'albert', 'fred', 'junior', 'ralph', 'kathy', 'princess', 'deranged',
+    'hysterical', 'grandma', 'grandpa', 'rocko', 'shelley', 'sandy', 'flo',
+    'eddy', 'reed'
+  ];
+  var chosenVoice = null;
+
+  function pickVoice() {
+    var all = [];
+    try { all = window.speechSynthesis.getVoices() || []; } catch (e) { return null; }
+    var english = all.filter(function (v) { return /^en([-_]|$)/i.test(v.lang || ''); });
+    if (!english.length) return null;
+    var plain = function (v) {
+      var n = (v.name || '').toLowerCase();
+      return !VOICE_NOVELTY.some(function (bad) { return n.indexOf(bad) !== -1; });
+    };
+    var british = english.filter(function (v) { return /^en[-_]gb/i.test(v.lang || ''); });
+    var pools = [british.filter(plain), english.filter(plain), british, english];
+    for (var i = 0; i < pools.length; i++) {
+      if (!pools[i].length) continue;
+      for (var j = 0; j < VOICE_PREFERRED.length; j++) {
+        var want = VOICE_PREFERRED[j];
+        var hit = pools[i].filter(function (v) {
+          return (v.name || '').toLowerCase().indexOf(want) !== -1;
+        })[0];
+        if (hit) return hit;
+      }
+      return pools[i][0];
+    }
+    return null;
+  }
+
+  if ('speechSynthesis' in window) {
+    chosenVoice = pickVoice();
+    if (window.speechSynthesis.addEventListener) {
+      window.speechSynthesis.addEventListener('voiceschanged', function () {
+        chosenVoice = pickVoice();
+      });
+    }
+  }
+
+  function utter(text) {
+    var u = new SpeechSynthesisUtterance(text);
+    u.voice = chosenVoice;
+    u.lang = chosenVoice.lang;
+    u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+  }
+
+  function sayAloud(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    if (!chosenVoice) chosenVoice = pickVoice();
+    if (chosenVoice) return utter(text);
+    var settled = false;
+    var retry = function () {
+      if (settled) return;
+      settled = true;
+      chosenVoice = pickVoice();
+      if (chosenVoice) utter(text);
+      else say('This device has no English voice installed, so reading aloud is off.');
+    };
+    if (window.speechSynthesis.addEventListener) {
+      window.speechSynthesis.addEventListener('voiceschanged', retry, { once: true });
+    }
+    setTimeout(retry, 400);
+  }
+
+  /* ---------- chrome: rainbow, header face, word bank, toolbox ---------- */
+  FEELINGS.forEach(function (f) {
+    var s = document.createElement('span'); s.style.background = f.col; $('rainbow').appendChild(s);
+  });
+  $('headFace').innerHTML = faceSVG('happy');
+
+  FEELINGS.forEach(function (f) {
+    var card = document.createElement('div');
+    card.className = 'kcard';
+    card.innerHTML = '<div class="kface">' + faceSVG(f.k) + '</div>';
+    var txt = document.createElement('div'); txt.className = 'ktext';
+    var b = document.createElement('b'); b.textContent = f.k;
+    var s = document.createElement('span'); s.textContent = f.means;
+    txt.appendChild(b); txt.appendChild(s);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'say';
+    btn.setAttribute('aria-label', 'Say ' + f.k + ' out loud');
+    btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-speak"/></svg>';
+    btn.addEventListener('click', function () { sayAloud(f.k + '. ' + f.means); });
+    card.appendChild(txt); card.appendChild(btn);
+    $('keyWords').appendChild(card);
+  });
+
+  TOOLS.forEach(function (t) {
+    var d = document.createElement('div'); d.className = 'tbox';
+    d.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#' + t[0] + '"/></svg>';
+    d.appendChild(document.createTextNode(t[1]));
+    $('toolbox').appendChild(d);
+  });
+
+  /* ---------- screens ---------- */
+  function show(n) {
+    ['s0', 's1', 's2'].forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    document.querySelectorAll('.rail button').forEach(function (b, i) {
+      if (i === n) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
+    });
+    var h = $('h' + n); if (h) h.focus();
+    if (n === 2) fillBadge();
+  }
+  document.querySelectorAll('.rail button').forEach(function (b) {
+    b.addEventListener('click', function () { show(+b.dataset.go); });
+  });
+
+  $('boardBtn').addEventListener('click', function () {
+    var on = document.documentElement.hasAttribute('data-board');
+    if (on) { document.documentElement.removeAttribute('data-board'); }
+    else { document.documentElement.setAttribute('data-board', ''); }
+    this.setAttribute('aria-pressed', String(!on));
+  });
+
+  /* ---------- round 1: mime (no points, just play) ---------- */
+  function faceButton(k, onTap) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'fbtn';
+    b.innerHTML = '<span class="fimg">' + faceSVG(k) + '</span>';
+    b.appendChild(document.createTextNode(k));
+    b.addEventListener('click', function () { onTap(b); });
+    return b;
+  }
+
+  function newSecret() {
+    if (!deck.length) deck = shuffle(FEELINGS.map(function (f) { return f.k; }));
+    secretK = deck.pop();
+    guessDone = false;
+    $('secret').innerHTML = '<p class="shh">Actor only! Tap the pink button when your partner is not looking.</p>';
+    $('guessBox').hidden = true;
+    $('showSecret').hidden = false;
+    $('hideSecret').hidden = true;
+    $('newSecret').hidden = true;
+    var fb = $('mfb'); fb.className = 'fb'; fb.textContent = '';
+  }
+
+  $('showSecret').addEventListener('click', function () {
+    var f = BY[secretK], box = $('secret');
+    box.innerHTML = '<div class="face-big">' + faceSVG(f.k) + '</div>';
+    var w = document.createElement('p'); w.className = 'word'; w.textContent = f.k;
+    var h = document.createElement('p'); h.className = 'hint'; h.textContent = 'Idea: ' + f.mime;
+    box.appendChild(w); box.appendChild(h);
+    this.hidden = true;
+    $('hideSecret').hidden = false;
+  });
+
+  $('hideSecret').addEventListener('click', function () {
+    $('secret').innerHTML = '<p class="shh">Actor, show the feeling now. No words!</p>';
+    this.hidden = true;
+    var grid = $('guessGrid'); grid.textContent = '';
+    FEELINGS.forEach(function (f) {
+      grid.appendChild(faceButton(f.k, function (b) { guess(f.k, b); }));
+    });
+    $('guessBox').hidden = false;
+  });
+
+  function guess(k, btn) {
+    if (guessDone) return;
+    var fb = $('mfb');
+    if (k === secretK) {
+      guessDone = true;
+      guessed++;
+      btn.setAttribute('data-state', 'right');
+      $('guessGrid').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+      fb.className = 'fb good show';
+      fb.textContent = 'Yes! It was ' + k + '. Great acting and great detective work.';
+      say(fb.textContent);
+      $('tally').textContent = 'Feelings guessed: ' + guessed;
+      $('newSecret').hidden = false;
+    } else {
+      btn.setAttribute('data-state', 'wrong'); btn.disabled = true;
+      btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+      fb.className = 'fb bad show';
+      fb.textContent = 'Not ' + k + '. Actor, show it again. Detective, look at the face and the body.';
+      say(fb.textContent);
+    }
+  }
+
+  $('newSecret').addEventListener('click', newSecret);
+
+  /* ---------- round 2: detective cases ---------- */
+  function drawCase() {
+    var c = CASES[ci];
+    feelDone = false; doDone = false; missFeel = false; missDo = false;
+    $('cnum').textContent = 'Case ' + (ci + 1) + ' of ' + CASES.length;
+    $('story').textContent = c.story;
+    $('q1').textContent = 'How does ' + c.who + ' feel?';
+    $('q2').textContent = 'What could ' + c.who + ' do?';
+    ['ffb', 'dfb'].forEach(function (id) { var fb = $(id); fb.className = 'fb'; fb.textContent = ''; });
+    $('part2').classList.remove('show');
+    $('nextCase').disabled = true;
+    $('nextCase').textContent = ci === CASES.length - 1 ? 'Get my badge' : 'Next case';
+
+    var row = $('feelOpts'); row.textContent = '';
+    shuffle(c.feel.slice()).forEach(function (k) {
+      row.appendChild(faceButton(k, function (b) { pickFeel(k, b); }));
+    });
+
+    var box = $('doOpts'); box.textContent = '';
+    shuffle(c.do.map(function (_, i) { return i; })).forEach(function (src, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt';
+      b.innerHTML = '<span class="mark">' + 'ABC'.charAt(i) + '</span>';
+      var sp = document.createElement('span'); sp.textContent = c.do[src];
+      b.appendChild(sp);
+      b.addEventListener('click', function () { pickDo(src, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function noteTricky(c, what) {
+    var label = c.who + ': ' + what;
+    if (tricky.indexOf(label) === -1) tricky.push(label);
+  }
+
+  function pickFeel(k, btn) {
+    if (feelDone) return;
+    var c = CASES[ci], fb = $('ffb');
+    if (k === c.feel[0]) {
+      feelDone = true;
+      btn.setAttribute('data-state', 'right');
+      $('feelOpts').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+      addPts(missFeel ? 5 : 10);
+      if (!missFeel) firstTry++;
+      fb.className = 'fb good show';
+      fb.textContent = 'Yes, ' + c.who + ' feels ' + k + '. ' + c.feelWhy;
+      say(fb.textContent);
+      $('part2').classList.add('show');
+    } else {
+      missFeel = true; noteTricky(c, 'how ' + c.he + ' feels');
+      btn.setAttribute('data-state', 'wrong'); btn.disabled = true;
+      btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+      fb.className = 'fb bad show';
+      fb.textContent = 'Hmm, would ' + c.who + ' really feel ' + k + '? Read the case again and look for clues.';
+      say(fb.textContent);
+    }
+  }
+
+  function pickDo(i, btn) {
+    if (doDone || !feelDone) return;
+    var c = CASES[ci], fb = $('dfb');
+    if (i === 0) {
+      doDone = true;
+      btn.setAttribute('data-state', 'right');
+      $('doOpts').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+      addPts(missDo ? 5 : 10);
+      if (!missDo) firstTry++;
+      fb.className = 'fb good show';
+      fb.textContent = 'Good choice! ' + c.doWhy;
+      say(fb.textContent);
+      $('nextCase').disabled = false;
+    } else {
+      missDo = true; noteTricky(c, 'what ' + c.he + ' could do');
+      btn.setAttribute('data-state', 'wrong'); btn.disabled = true;
+      fb.className = 'fb bad show';
+      fb.textContent = 'Would that help ' + c.who + ', and would it be kind to others? Try another choice.';
+      say(fb.textContent);
+    }
+  }
+
+  $('sayStory').addEventListener('click', function () {
+    var c = CASES[ci];
+    sayAloud(c.story + ' How does ' + c.who + ' feel?');
+  });
+
+  $('nextCase').addEventListener('click', function () {
+    if (ci < CASES.length - 1) { ci++; drawCase(); $('h1').focus(); }
+    else { show(2); }
+  });
+
+  /* ---------- round 3: badge ---------- */
+  function fillBadge() {
+    $('finalPts').textContent = pts;
+    $('firstTry').textContent = 'Right first time: ' + firstTry + ' out of ' + (CASES.length * 2);
+    var share = pts / TOTAL;
+    $('rank').textContent = share >= 0.9 ? 'Chief detective'
+      : share >= 0.6 ? 'Feelings detective'
+      : share >= 0.3 ? 'Junior detective' : 'Detective in training';
+    var ul = $('tricky'); ul.textContent = '';
+    var lines = tricky.length ? tricky
+      : [ci || feelDone ? 'None! Every answer was right first time.' : 'Nothing yet. Solve the cases in round 2 first.'];
+    lines.forEach(function (t) {
+      var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
+    });
+  }
+
+  $('again').addEventListener('click', function () {
+    pts = 0; firstTry = 0; ci = 0; tricky = []; guessed = 0; deck = [];
+    $('ptsNow').textContent = '0'; $('fill').style.width = '0';
+    $('tally').textContent = 'Feelings guessed: 0';
+    newSecret(); drawCase(); show(0);
+  });
+
+  /* ---------- start ---------- */
+  newSecret();
+  drawCase();
+})();
+</script>
+</body>
+</html>
