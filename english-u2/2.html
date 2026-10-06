@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Telegraph Office · Week 2: The Message Room</title>
+<link rel="stylesheet" href="telegraph.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .score{font-family:var(--display);font-weight:700;color:var(--slate);margin-top:.5rem}
+  .picture{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0}
+  .picture div{flex:1 1 12rem;background:var(--paper);border:3px solid var(--hi);border-radius:14px;
+    padding:.75rem 1rem;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body data-lesson="u2w2a">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-radio"></use></svg>
+      <div><h1>The Message Room</h1><p class="sub">Week 2 · Pronouns and verbs</p></div>
+      <div class="pill">Unit 2 · Stage 3 · 3Rg.08 · 3Rg.10 · 3Rg.11</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="pronoun"><div class="ktext"><b>pronoun</b><span>A word we use in place of a noun: <i>he, she, it, they</i>. Say it in parts: pro / noun.</span></div></div>
+      <div class="kcard" data-word="singular"><div class="ktext"><b>singular</b><span>One of something. <i>She</i> is singular.</span></div></div>
+      <div class="kcard" data-word="plural"><div class="ktext"><b>plural</b><span>More than one. <i>They</i> is plural.</span></div></div>
+      <div class="kcard" data-word="verb"><div class="ktext"><b>verb</b><span>An action word: <i>run, write, send</i>.</span></div></div>
+      <div class="kcard" data-word="irregular"><div class="ktext"><b>irregular</b><span>A verb that changes shape in the past: <i>go</i> becomes <i>went</i>.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-radio"></use></svg> Message room</span>
+    <h2>Shorter messages cost less</h2>
+    <p class="lead" data-read="In a telegraph office every word costs money, so clerks learn to say the same thing with fewer words. Pronouns do exactly that job.">
+      In a telegraph office every word costs money, so clerks say the same thing with fewer words.
+      A <b>pronoun</b> does exactly that job: it stands in for a noun so you do not repeat it.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Listen to this.</b> Maggie and Maggie’s family went up the tower. Maggie’s family
+      waited in the lift. Now with pronouns: Maggie and <b>her</b> family went up the tower.
+      <b>They</b> waited in the lift. Easier to read, and shorter.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the message room</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-basket"></use></svg> Sort the pronouns</span>
+    <h2>Singular or plural?</h2>
+    <p class="lead" data-read="Tap a pronoun. Then tap singular if it means one, or plural if it means more than one.">
+      Tap <b>Singular</b> if it means one, or <b>Plural</b> if it means more than one.</p>
+    <div class="bay">
+      <h3 id="sortWord">—</h3>
+      <div class="choices" role="group" aria-label="Choose singular or plural">
+        <button type="button" onclick="sortPick('s')">Singular — one</button>
+        <button type="button" onclick="sortPick('p')">Plural — more than one</button>
+      </div>
+      <p class="verdict" id="sortV"></p>
+      <p class="score" id="sortScore"></p>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: swap the noun</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> Swap it out</span>
+    <h2>Tap the pronoun in the sentence</h2>
+    <p class="lead" data-read="Read the sentence. Tap the word that is standing in for a noun.">
+      Read the sentence, then tap the word that is standing in for a noun.</p>
+    <div class="bay">
+      <p class="sentence" id="patSent"></p>
+      <p style="font-weight:700" id="patQ"></p>
+      <div class="chips" id="patChips" role="group" aria-label="Tap the answer"></div>
+      <p class="verdict" id="patV"></p>
+    </div>
+    <div class="btnrow">
+      <button class="btn navy" type="button" onclick="nextPatrol()">Next sentence</button>
+      <button class="btn ghost" type="button" onclick="go(3)">Next: verbs</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> The past wire</span>
+    <h2>Send it in the past tense</h2>
+    <p class="lead" data-read="Regular verbs just add e d. Irregular verbs change shape completely. Write the past tense of each verb.">
+      Regular verbs add <b>-ed</b>. Irregular verbs change shape completely. Write the <b>past tense</b>.</p>
+    <div class="picture">
+      <div>Careful: these are all irregular. None of them takes -ed.</div>
+    </div>
+    <div id="gapAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Workbook page 8. Match each present tense verb to its past tense. Then choose three and write
+      a sentence for each, using the past tense.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: clerk card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Clerk’s office</span>
+    <h2>Earn your Signaller badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last one goes in your English book.">
+      Answer these on screen. The last one goes in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      Write these two sentences again, using a pronoun so you do not repeat the name.<br>
+      1. Sara packed Sara’s bag.<br>
+      2. Ali and Omar said Ali and Omar were ready.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Telegraph Office · Badge 2: Signaller</h3>
+      <div style="font-weight:700">Stamp this when you can swap a noun for the right pronoun and put a verb into the past.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my clerk card</button></div>
+    </div>
+    <p class="note">All five badges done? Open <b>charter.html</b>. Teacher: check the book work and the
+      Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Telegraph Office · Stage 3 · Unit 2 Week 2 (3Rg.08, 3Rg.10, 3Rg.11). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="telegraph.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'radio',  label:'Welcome'},
+    {icon:'basket', label:'Sort'},
+    {icon:'swap',   label:'Swap'},
+    {icon:'pen',    label:'Verbs'},
+    {icon:'medal',  label:'Clerk card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Sort: singular or plural pronoun (SB p15) ============ */
+  var WORDS=[
+    {w:'she',  t:'s', why:'She means one person, so it is singular.'},
+    {w:'they', t:'p', why:'They means more than one, so it is plural.'},
+    {w:'it',   t:'s', why:'It stands for one thing, so it is singular.'},
+    {w:'we',   t:'p', why:'We means me and somebody else, so it is plural.'},
+    {w:'he',   t:'s', why:'He means one person, so it is singular.'},
+    {w:'them', t:'p', why:'Them stands for more than one, so it is plural.'},
+    {w:'me',   t:'s', why:'Me is just one person, so it is singular.'},
+    {w:'us',   t:'p', why:'Us means me and others, so it is plural.'}
+  ];
+  var sortI=-1, sortTries=0, sortDone=0;
+
+  function nextSort(){
+    sortI++;
+    if(sortI>=WORDS.length){
+      document.getElementById('sortWord').textContent='All sorted. Well done.';
+      document.getElementById('sortV').className='verdict';
+      document.getElementById('sortV').textContent='';
+      return;
+    }
+    sortTries=0;
+    document.getElementById('sortWord').textContent=WORDS[sortI].w;
+    var v=document.getElementById('sortV'); v.className='verdict'; v.textContent='';
+    Station.speak(WORDS[sortI].w);
+  }
+
+  window.sortPick=function(kind){
+    if(sortI>=WORDS.length) return;
+    var item=WORDS[sortI], v=document.getElementById('sortV');
+    sortTries++;
+    if(kind===item.t){
+      v.className='verdict good';
+      v.textContent=item.why;
+      sortDone++;
+      document.getElementById('sortScore').textContent='Sorted: '+sortDone+' of '+WORDS.length;
+      Station.record({task:'U2W2 Pronoun "'+item.w+'"', result:'correct in '+sortTries});
+      window.setTimeout(nextSort, 1400);
+    } else {
+      v.className='verdict bad';
+      v.textContent = sortTries>=2 ? item.why
+        : 'Have another look. Could this word stand for a whole group of people?';
+      Station.record({task:'U2W2 Pronoun "'+item.w+'"', result:'tried '+kind});
+    }
+  };
+  nextSort();
+
+  /* ============ Tap the pronoun (SB p15, WB p7) ============ */
+  var PAT=[
+    {s:'They are on holiday in Dubai', q:'Tap the pronoun.',
+     ans:'They', why:'They stands in for the people, so it is the pronoun.'},
+    {s:'Aunty Nadia fetches me from school every day', q:'Tap the pronoun.',
+     ans:'me', why:'Me stands in for the writer. Aunty Nadia is a name, not a pronoun.'},
+    {s:'The lift took us to the top floor', q:'Tap the pronoun.',
+     ans:'us', why:'Us stands in for the writer and the people with them.'},
+    {s:'He has many aunts and uncles', q:'Tap the pronoun.',
+     ans:'He', why:'He stands in for one person, so it is the pronoun.'},
+    {s:'We stay with our cousins every summer', q:'Tap a pronoun.',
+     ans:['We','our'], why:'We and our are both pronouns here. Cousins is a noun.'}
+  ];
+  var patI=-1;
+
+  window.nextPatrol=function(){
+    patI=(patI+1)%PAT.length;
+    var p=PAT[patI];
+    document.getElementById('patSent').textContent=p.s;
+    document.getElementById('patSent').setAttribute('data-read', p.s);
+    document.getElementById('patQ').textContent=p.q;
+    var v=document.getElementById('patV'); v.className='verdict'; v.textContent='';
+
+    var host=document.getElementById('patChips');
+    host.innerHTML='';
+    var answers=[].concat(p.ans);
+    var tries=0, done=false;
+    p.s.replace(/\./g,'').split(' ').forEach(function(word){
+      var b=document.createElement('button');
+      b.type='button'; b.className='chip'; b.textContent=word;
+      b.addEventListener('click',function(){
+        if(done||b.dataset.state) return;
+        tries++;
+        var hit=answers.some(function(a){ return Station.norm(a)===Station.norm(word); });
+        b.dataset.state=hit?'right':'wrong';
+        if(hit){
+          done=true;
+          v.className='verdict good'; v.textContent=p.why;
+          Station.record({task:'U2W2 Swap '+(patI+1), result:'correct in '+tries});
+        } else {
+          v.className='verdict bad';
+          v.textContent = tries>=2 ? p.why : 'Not that one. Which word could you replace with a name?';
+          Station.record({task:'U2W2 Swap '+(patI+1), result:'tried '+word});
+        }
+      });
+      host.appendChild(b);
+    });
+  };
+  nextPatrol();
+
+  /* ============ Irregular verbs into the past (SB pp15-16, WB p8) ============ */
+  var gapHost=document.getElementById('gapAsk');
+  [
+    {prompt:'Today I go to the office. Yesterday I ______ to the office.',
+     answers:['went'], nudge:'Go does not take -ed. It changes completely.',
+     hint:'Go becomes went. "Yesterday I went to the office."', task:'U2W2 Verb go'},
+    {prompt:'Today I write a letter. Yesterday I ______ a letter.',
+     answers:['wrote'], nudge:'Write does not take -ed either.',
+     hint:'Write becomes wrote. "Yesterday I wrote a letter."', task:'U2W2 Verb write'},
+    {prompt:'Today I send a parcel. Yesterday I ______ a parcel.',
+     answers:['sent'], nudge:'Say it out loud. What sounds right?',
+     hint:'Send becomes sent. "Yesterday I sent a parcel."', task:'U2W2 Verb send'},
+    {prompt:'Today I buy a stamp. Yesterday I ______ a stamp.',
+     answers:['bought'], nudge:'This one is tricky to spell. It has a g and an h in it.',
+     hint:'Buy becomes bought. "Yesterday I bought a stamp."', task:'U2W2 Verb buy'}
+  ].forEach(function(q){
+    q.type='text';
+    q.praise='Yes. That is the past tense.';
+    Station.ask(gapHost,q);
+  });
+
+  /* ============ Clerk card questions ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which sentence uses the pronoun correctly?',
+    options:[
+      {text:'Sara and me went to the shop.', why:'Try it without Sara: "me went to the shop" does not work. It should be I.'},
+      {text:'Sara and I went to the shop.',  why:'Yes. Take Sara out and "I went to the shop" still works.'},
+      {text:'Sara and them went to the shop.', why:'Take Sara out and "them went" does not work. Them is not used that way.'}
+    ],
+    answer:1, task:'U2W2 Badge Q1'
+  });
+  Station.choose(badgeHost,{
+    prompt:'Pronouns and verbs have to agree. Which one is right?',
+    options:[
+      {text:'She have two sisters.', why:'She is singular, so it takes has. "She has two sisters."'},
+      {text:'She has two sisters.',  why:'Yes. She is singular and takes has.'},
+      {text:'They has two sisters.', why:'They is plural, so it takes have. "They have two sisters."'}
+    ],
+    answer:1, task:'U2W2 Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Rewrite this with a pronoun: "Omar collected Omar’s post." Write the whole sentence.',
+    answers:['omar collected his post','omar collected his post.','he collected his post','he collected his post.'],
+    nudge:'Which word can stand in for Omar the second time?',
+    hint:'Omar collected his post. The pronoun his stops you repeating the name.',
+    praise:'Yes. One name is enough.',
+    task:'U2W2 Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

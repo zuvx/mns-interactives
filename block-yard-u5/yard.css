@@ -119,15 +119,23 @@ header p{margin:0 0 .6rem;opacity:.9;font-size:.9rem}
 .kcard span{font-size:.85rem}
 
 /* ---- The mat: where the blocks live ---- */
-.mat{background:var(--panel-2);border:3px dashed var(--line);border-radius:16px;padding:.7rem;
+.mat{position:relative;background:var(--panel-2);border:3px dashed var(--line);border-radius:16px;padding:.7rem;
   margin:.5rem 0}
 .mat-top{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;justify-content:space-between}
 .mat-name{font-weight:700;color:var(--steel-deep)}
 .mat-goal{font-size:.9rem}
-.places{display:flex;gap:.9rem;flex-wrap:wrap;align-items:flex-end;margin:.6rem 0 .2rem}
-.place{display:flex;flex-direction:column;gap:.45rem;align-items:center}
-.place-n{font-size:.85rem;font-weight:700;text-align:center;min-height:1.3em}
-.pile{display:flex;flex-wrap:wrap;gap:4px;align-items:flex-end;justify-content:center;
+.places{display:grid;grid-auto-flow:column;grid-template-rows:auto auto auto;
+  justify-content:start;column-gap:.9rem;row-gap:.45rem;margin:.6rem 0 .2rem}
+/* Each column is pile, count, then its exchanges. The place box dissolves into
+   the grid so the piles line up at the bottom and the counts share one line,
+   however many buttons each column has under it. */
+.place{display:contents}
+.place-n{font-size:.85rem;font-weight:700;text-align:center;min-height:1.3em;justify-self:center}
+.place-acts{display:flex;flex-direction:column;gap:.4rem;align-self:start}
+.place-acts .btn{font-size:.8rem;line-height:1.2;padding:.4rem .6rem;max-width:9.5rem;
+  display:inline-flex;align-items:center;gap:.3rem;text-align:left}
+.pile{align-self:end;justify-self:center;
+  display:flex;flex-wrap:wrap;gap:4px;align-items:flex-end;justify-content:center;
   min-width:var(--tap);min-height:calc(var(--unit) * 10 + 8px);padding:6px;
   background:var(--panel);border:2px solid var(--line);border-radius:12px;cursor:pointer;
   font:inherit;color:inherit}
@@ -185,8 +193,8 @@ header p{margin:0 0 .6rem;opacity:.9;font-size:.9rem}
       rgba(0,0,0,.30) calc(var(--unit) - 1px),rgba(0,0,0,.30) var(--unit))}
 .blk.fresh{animation:drop .22s ease-out}
 @keyframes drop{from{transform:translateY(-10px) scale(.85);opacity:0}to{transform:none;opacity:1}}
-.pile.swap{animation:swap .34s ease-in-out}
-@keyframes swap{0%,100%{transform:none}40%{transform:scale(1.06) rotate(-1.5deg)}}
+/* A piece in flight during a trade, drawn over the mat and gone when it lands. */
+.blk.ghost{position:absolute;margin:0;pointer-events:none;z-index:2}
 
 .shelf{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 0}
 .shelf button{min-height:var(--tap);min-width:var(--tap);padding:.45rem .8rem;border-radius:14px;

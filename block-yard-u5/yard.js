@@ -241,6 +241,11 @@
     t: { cls: 'ten', name: 'tens', one: 'ten', worth: 10 },
     o: { cls: 'one', name: 'ones', one: 'one', worth: 1 }
   };
+  var UP = { o: 't', t: 'h' }, DOWN = { t: 'o', h: 't' };
+  var EXCHANGE_EASE = 'cubic-bezier(0.77, 0, 0.175, 1)';
+  function reduceMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
 
   function mat(host, cfg) {
     cfg = cfg || {};
@@ -262,7 +267,7 @@
     var row = el('div', 'places');
     box.appendChild(row);
 
-    var piles = {}, counts = {};
+    var piles = {}, counts = {}, tradeBtns = {}, breakBtns = {};
     places.forEach(function (p) {
       var col = el('div', 'place');
       var pile = el('button', 'pile ' + (p === 'h' ? 'hunplace' : p === 't' ? 'tensplace' : 'onesplace'));
@@ -272,10 +277,32 @@
       var cnt = el('div', 'place-n');
       col.appendChild(pile);
       col.appendChild(cnt);
+      /* The exchanges sit under the pile they act on. One break button that
+         chose for the child always broke a ten while any were left, so 412 - 30
+         could not be done: the hundred it needed was never on offer. */
+      var acts = el('div', 'place-acts');
+      var up = UP[p], down = DOWN[p];
+      if (cfg.trade !== false && up && places.indexOf(up) !== -1) {
+        tradeBtns[p] = actBtn(acts, 'Trade 10 ' + PLACE[p].name + ' for 1 ' + PLACE[up].one,
+          function () { tradeUp(p); });
+      }
+      if (cfg.breakTen && down && places.indexOf(down) !== -1) {
+        breakBtns[p] = actBtn(acts, 'Break 1 ' + PLACE[p].one + ' into 10 ' + PLACE[down].name,
+          function () { breakDown(p); });
+      }
+      col.appendChild(acts);
       row.appendChild(col);
       piles[p] = pile;
       counts[p] = cnt;
     });
+    function actBtn(host, label, fn) {
+      var b = el('button', 'btn act');
+      b.type = 'button';
+      b.innerHTML = icon('swap') + ' ' + label;
+      b.addEventListener('click', fn);
+      host.appendChild(b);
+      return b;
+    }
 
     var shelf = el('div', 'shelf');
     places.forEach(function (p) {
@@ -287,23 +314,6 @@
       b.dataset.place = p;
     });
 
-    var tradeBtn = null, breakBtn = null;
-    if (cfg.trade !== false) {
-      tradeBtn = el('button');
-      tradeBtn.type = 'button';
-      tradeBtn.className = 'btn act';
-      tradeBtn.innerHTML = icon('swap') + ' Trade 10 ones for 1 ten';
-      tradeBtn.addEventListener('click', tradeUp);
-      shelf.appendChild(tradeBtn);
-    }
-    if (cfg.breakTen) {
-      breakBtn = el('button');
-      breakBtn.type = 'button';
-      breakBtn.className = 'btn act';
-      breakBtn.innerHTML = icon('swap') + ' Break 1 ten into 10 ones';
-      breakBtn.addEventListener('click', breakDown);
-      shelf.appendChild(breakBtn);
-    }
     var clearBtn = el('button');
     clearBtn.type = 'button';
     clearBtn.textContent = 'Clear the mat';
@@ -332,23 +342,97 @@
       paint();
       say('One ' + PLACE[p].one + ' taken back.');
     }
-    function tradeUp() {
-      if (state.o >= 10) { state.o -= 10; state.t += 1; flash('t'); say('Ten ones traded for one ten.'); }
-      else if (state.t >= 10 && places.indexOf('h') !== -1) {
-        state.t -= 10; state.h += 1; flash('h'); say('Ten tens traded for one hundred.');
-      } else { live.textContent = 'You need ten in a pile before you can trade.'; return; }
+    /* With no place given these keep the old order, ones before tens, so a
+       caller that only ever had one trade button still gets the same move. */
+    function tradeUp(p) {
+      p = p || (state.o >= 10 ? 'o' : 't');
+      var up = UP[p];
+      if (!canTrade(p)) {
+        live.textContent = state[p] < 10
+          ? 'You need ten ' + PLACE[p].name + ' in the pile before you can trade.'
+          : 'The ' + PLACE[up].name + ' pile is full.';
+        return;
+      }
+      var from = lastBlocks(p, 10).map(function (b) { return { el: b, r: b.getBoundingClientRect() }; });
+      state[p] -= 10; state[up] += 1;
       paint();
+      gather(from, piles[up].lastElementChild, up);
+      say('Ten ' + PLACE[p].name + ' traded for one ' + PLACE[up].one + '.');
     }
-    function breakDown() {
-      if (state.t >= 1) { state.t -= 1; state.o += 10; flash('o'); say('One ten broken into ten ones.'); }
-      else if (state.h >= 1) { state.h -= 1; state.t += 10; flash('t'); say('One hundred broken into ten tens.'); }
-      else { live.textContent = 'There is no ten left to break.'; return; }
+    function breakDown(p) {
+      p = p || (state.t >= 1 ? 't' : 'h');
+      var down = DOWN[p];
+      if (!canBreak(p)) {
+        live.textContent = state[p] < 1
+          ? 'There is no ' + PLACE[p].one + ' to break.'
+          : 'The ' + PLACE[down].name + ' pile is too full. Trade some first.';
+        return;
+      }
+      var from = piles[p].lastElementChild.getBoundingClientRect();
+      state[p] -= 1; state[down] += 10;
       paint();
+      split(from, lastBlocks(down, 10), p);
+      say('One ' + PLACE[p].one + ' broken into ten ' + PLACE[down].name + '.');
     }
-    function flash(p) {
-      if (!piles[p]) return;
-      piles[p].classList.add('swap');
-      setTimeout(function () { piles[p].classList.remove('swap'); }, 360);
+    function canTrade(p) {
+      var up = UP[p];
+      return !!up && places.indexOf(up) !== -1 && state[p] >= 10 && state[up] < cap[up];
+    }
+    function canBreak(p) {
+      var down = DOWN[p];
+      return !!down && places.indexOf(down) !== -1 && state[p] >= 1 && state[down] + 10 <= cap[down];
+    }
+    function lastBlocks(p, n) {
+      return Array.prototype.slice.call(piles[p].children, -n);
+    }
+
+    /* The exchange, shown. A rod is ten cubes stacked and a flat is ten rods
+       side by side, so breaking one sends each new piece out from its own slice
+       of the old block, and trading sends ten pieces into the slices of the new
+       one. Same size in, same size out: nothing grows or shrinks, which is the
+       point. Reduced motion keeps a fade so the change is still noticed. */
+    function slice(r, whole, i) {
+      // whole is the place of the big block: a rod slices top to bottom, a flat left to right.
+      return whole === 't'
+        ? { x: r.left + r.width / 2, y: r.top + r.height * (i + 0.5) / 10 }
+        : { x: r.left + r.width * (i + 0.5) / 10, y: r.top + r.height / 2 };
+    }
+    function centre(r) { return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+    function split(from, blocks, whole) {
+      blocks.forEach(function (b, i) {
+        if (reduceMotion()) {
+          b.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, easing: 'ease-out', fill: 'backwards' });
+          return;
+        }
+        var s = slice(from, whole, i), c = centre(b.getBoundingClientRect());
+        b.animate([
+          { transform: 'translate(' + (s.x - c.x) + 'px,' + (s.y - c.y) + 'px)' },
+          { transform: 'none' }
+        ], { duration: 450, delay: i * 40, easing: EXCHANGE_EASE, fill: 'backwards' });
+      });
+    }
+    function gather(from, target, whole) {
+      if (!target) return;
+      var arrive = 0;
+      if (!reduceMotion()) {
+        var to = target.getBoundingClientRect(), base = box.getBoundingClientRect();
+        from.forEach(function (f, i) {
+          var g = f.el.cloneNode(false);
+          g.className = f.el.className.replace(' fresh', '') + ' ghost';
+          g.style.left = (f.r.left - base.left) + 'px';
+          g.style.top = (f.r.top - base.top) + 'px';
+          box.appendChild(g);
+          var s = slice(to, whole, i), c = centre(f.r);
+          g.animate([
+            { transform: 'none' },
+            { transform: 'translate(' + (s.x - c.x) + 'px,' + (s.y - c.y) + 'px)' }
+          ], { duration: 450, delay: i * 30, easing: EXCHANGE_EASE, fill: 'forwards' })
+            .onfinish = function () { g.remove(); };
+        });
+        arrive = 450 + 9 * 30;
+      }
+      target.animate([{ opacity: 0 }, { opacity: 1 }],
+        { duration: 150, delay: arrive, easing: 'ease-out', fill: 'backwards' });
     }
     function say(msg) { live.textContent = msg + ' ' + describe(); }
     function describe() {
@@ -367,23 +451,8 @@
           ? state[p] + ' ' + (state[p] === 1 ? PLACE[p].one : PLACE[p].name)
           : '? ' + PLACE[p].name;
       });
-      /* The button says what it is about to do. Ten rods becoming a flat is a
-         different move from ten cubes becoming a rod, and in a unit that works
-         to 1000 the child meets both in the same calculation. */
-      if (tradeBtn) {
-        var canTradeOnes = state.o >= 10;
-        var canTradeTens = state.t >= 10 && places.indexOf('h') !== -1;
-        tradeBtn.disabled = !(canTradeOnes || canTradeTens);
-        tradeBtn.innerHTML = icon('swap') + (canTradeOnes || !canTradeTens
-          ? ' Trade 10 ones for 1 ten'
-          : ' Trade 10 tens for 1 hundred');
-      }
-      if (breakBtn) {
-        breakBtn.disabled = !(state.t >= 1 || state.h >= 1);
-        breakBtn.innerHTML = icon('swap') + (state.t >= 1
-          ? ' Break 1 ten into 10 ones'
-          : ' Break 1 hundred into 10 tens');
-      }
+      Object.keys(tradeBtns).forEach(function (q) { tradeBtns[q].disabled = !canTrade(q); });
+      Object.keys(breakBtns).forEach(function (q) { breakBtns[q].disabled = !canBreak(q); });
       Array.prototype.forEach.call(shelf.querySelectorAll('[data-place]'), function (b) {
         b.disabled = state[b.dataset.place] >= cap[b.dataset.place];
       });

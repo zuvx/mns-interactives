@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MNS · Base Camp (Year 3 practice)</title>
+<link rel="stylesheet" href="cover.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="beam"></div>
+    <div class="head-body">
+      <div>
+        <h1>Base Camp</h1>
+        <p class="sub">Year 3 practice. Pick a room and earn stars.</p>
+      </div>
+      <span class="stars" id="stars" aria-live="polite" aria-label="stars"></span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button type="button" class="tool" data-act="board" aria-pressed="false">Board mode</button>
+    <button type="button" class="tool" data-act="new-pupil">New pupil</button>
+  </div>
+
+  <nav id="rail" aria-label="the rooms">
+    <button type="button" data-go="hub" aria-pressed="true">Base Camp</button>
+    <button type="button" data-go="room-read" aria-pressed="false">Story Trail</button>
+    <button type="button" data-go="room-words" aria-pressed="false">Word Sort</button>
+    <button type="button" data-go="room-spell" aria-pressed="false">Spell Beam</button>
+    <button type="button" data-go="room-sentence" aria-pressed="false">Sentence Builder</button>
+    <button type="button" data-go="room-place" aria-pressed="false">Number Build</button>
+    <button type="button" data-go="room-sums" aria-pressed="false">Sum Check</button>
+    <button type="button" data-go="room-trail" aria-pressed="false">Number Trail</button>
+  </nav>
+
+  <section class="screen on" id="hub">
+    <div class="hub">
+      <h2 class="group">English</h2>
+      <button type="button" class="room" id="card-read" data-go="room-read"
+              style="--zone:#2A7F51;--zone-deep:#1C5C39">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-read"></use></svg></span>
+        <h2>Story Trail</h2>
+        <p>A new story. Answer, put it in order, then write.</p>
+        <span class="tag">English · Reading</span>
+      </button>
+      <button type="button" class="room" id="card-words" data-go="room-words"
+              style="--zone:#1D3B6E;--zone-deep:#14294D">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-sort"></use></svg></span>
+        <h2>Word Sort</h2>
+        <p>Noun, verb or adjective? Then past tense and speech marks.</p>
+        <span class="tag">English · Grammar</span>
+      </button>
+      <button type="button" class="room" id="card-spell" data-go="room-spell"
+              style="--zone:#C62828;--zone-deep:#8E1F1F">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-spell"></use></svg></span>
+        <h2>Spell Beam</h2>
+        <p>Guess the spelling word. Six tries, one letter colour at a time.</p>
+        <span class="tag">English · Spelling</span>
+      </button>
+      <button type="button" class="room" id="card-sentence" data-go="room-sentence"
+              style="--zone:#9C4A10;--zone-deep:#6E330A">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-pen"></use></svg></span>
+        <h2>Sentence Builder</h2>
+        <p>Build sentences, fix them, then write your own postcard line.</p>
+        <span class="tag">English · Writing</span>
+      </button>
+      <h2 class="group">Maths</h2>
+      <button type="button" class="room" id="card-place" data-go="room-place"
+              style="--zone:#0F6E6E;--zone-deep:#0A4E4E">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-build"></use></svg></span>
+        <h2>Number Build</h2>
+        <p>Build numbers, find what a digit is worth, compare and order.</p>
+        <span class="tag">Maths · Place value</span>
+      </button>
+      <button type="button" class="room" id="card-sums" data-go="room-sums"
+              style="--zone:#7A3E9D;--zone-deep:#57206F">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-sum"></use></svg></span>
+        <h2>Sum Check</h2>
+        <p>Spot the sums that need regrouping, then find the right answer.</p>
+        <span class="tag">Maths · Adding and subtracting</span>
+      </button>
+      <button type="button" class="room" id="card-trail" data-go="room-trail"
+              style="--zone:#8A5A00;--zone-deep:#634000">
+        <span class="zmark"><svg class="icon icon-lg" aria-hidden="true"><use href="#i-trail"></use></svg></span>
+        <h2>Number Trail</h2>
+        <p>Find the missing step, the rule, and odd or even.</p>
+        <span class="tag">Maths · Sequences</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ---------------- spell beam ---------------- -->
+  <section class="screen panel" id="room-spell" style="--zone:#C62828;--zone-deep:#8E1F1F">
+    <div class="bar">
+      <button type="button" class="btn" data-act="spell-new">Another word</button>
+    </div>
+    <h2>Spell Beam</h2>
+    <p class="lead">A word from this term’s spelling lists. Green means the letter is in
+      the right place. Yellow means it is in the word, but somewhere else.</p>
+    <p class="clue" id="spell-clue" aria-live="polite"></p>
+    <div class="rows" id="spell-board" role="grid" aria-label="your guesses"></div>
+    <p class="say" id="spell-say" aria-live="polite"></p>
+    <div class="keys" id="spell-keys">
+      <div class="krow">
+        <button type="button" class="key" data-key="Q">q</button><button type="button" class="key" data-key="W">w</button><button type="button" class="key" data-key="E">e</button><button type="button" class="key" data-key="R">r</button><button type="button" class="key" data-key="T">t</button><button type="button" class="key" data-key="Y">y</button><button type="button" class="key" data-key="U">u</button><button type="button" class="key" data-key="I">i</button><button type="button" class="key" data-key="O">o</button><button type="button" class="key" data-key="P">p</button>
+      </div>
+      <div class="krow">
+        <button type="button" class="key" data-key="A">a</button><button type="button" class="key" data-key="S">s</button><button type="button" class="key" data-key="D">d</button><button type="button" class="key" data-key="F">f</button><button type="button" class="key" data-key="G">g</button><button type="button" class="key" data-key="H">h</button><button type="button" class="key" data-key="J">j</button><button type="button" class="key" data-key="K">k</button><button type="button" class="key" data-key="L">l</button>
+      </div>
+      <div class="krow">
+        <button type="button" class="key wide" data-act="go">Go</button><button type="button" class="key" data-key="Z">z</button><button type="button" class="key" data-key="X">x</button><button type="button" class="key" data-key="C">c</button><button type="button" class="key" data-key="V">v</button><button type="button" class="key" data-key="B">b</button><button type="button" class="key" data-key="N">n</button><button type="button" class="key" data-key="M">m</button><button type="button" class="key wide" data-act="rub">Rub out</button>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="screen panel" id="room-read" style="--zone:#2A7F51;--zone-deep:#1C5C39">
+    <div class="bar">
+      <button type="button" class="btn" data-restart="read">Start again</button>
+      <span class="count" id="read-count"></span>
+    </div>
+    <h2>Story Trail</h2>
+    <p class="lead">Read the story twice. The second time is where the answers are.</p>
+    <div id="read-task"></div>
+    <p class="say" id="read-say" aria-live="polite"></p>
+  </section>
+  <section class="screen panel" id="room-words" style="--zone:#1D3B6E;--zone-deep:#14294D">
+    <div class="bar">
+      <button type="button" class="btn" data-restart="words">Start again</button>
+      <span class="count" id="words-count"></span>
+    </div>
+    <h2>Word Sort</h2>
+    <p class="lead">A noun names something, a verb is a doing or being word, an adjective describes a noun.</p>
+    <div id="words-task"></div>
+    <p class="say" id="words-say" aria-live="polite"></p>
+  </section>
+  <section class="screen panel" id="room-sentence" style="--zone:#9C4A10;--zone-deep:#6E330A">
+    <div class="bar">
+      <button type="button" class="btn" data-restart="sentence">Start again</button>
+      <span class="count" id="sentence-count"></span>
+    </div>
+    <h2>Sentence Builder</h2>
+    <p class="lead">A sentence starts with a capital letter and ends with a full stop.</p>
+    <div id="sentence-task"></div>
+    <p class="say" id="sentence-say" aria-live="polite"></p>
+  </section>
+  <section class="screen panel" id="room-place" style="--zone:#0F6E6E;--zone-deep:#0A4E4E">
+    <div class="bar">
+      <button type="button" class="btn" data-restart="place">Start again</button>
+      <span class="count" id="place-count"></span>
+    </div>
+    <h2>Number Build</h2>
+    <p class="lead">Say the number out loud first. Hundreds, then tens, then ones.</p>
+    <div id="place-task"></div>
+    <p class="say" id="place-say" aria-live="polite"></p>
+  </section>
+  <section class="screen panel" id="room-sums" style="--zone:#7A3E9D;--zone-deep:#57206F">
+    <div class="bar">
+      <button type="button" class="btn" data-restart="sums">Start again</button>
+      <span class="count" id="sums-count"></span>
+    </div>
+    <h2>Sum Check</h2>
+    <p class="lead">Ones first. 10 ones make 1 ten. If there are not enough ones to take away, regroup a ten.</p>
+    <div id="sums-task"></div>
+    <p class="say" id="sums-say" aria-live="polite"></p>
+  </section>
+  <section class="screen panel" id="room-trail" style="--zone:#8A5A00;--zone-deep:#634000">
+    <div class="bar">
+      <button type="button" class="btn" data-restart="trail">Start again</button>
+      <span class="count" id="trail-count"></span>
+    </div>
+    <h2>Number Trail</h2>
+    <p class="lead">Look at which digit changes. That tells you if the steps are 10 or 100.</p>
+    <div id="trail-task"></div>
+    <p class="say" id="trail-say" aria-live="polite"></p>
+  </section>
+
+</div>
+
+<script src="cover.js"></script>
+</body>
+</html>

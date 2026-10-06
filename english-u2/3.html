@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Telegraph Office · Week 2: The Shorthand Key</title>
+<link rel="stylesheet" href="telegraph.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .score{font-family:var(--display);font-weight:700;color:var(--slate);margin-top:.5rem}
+  .picture{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0}
+  .picture div{flex:1 1 12rem;background:var(--paper);border:3px solid var(--hi);border-radius:14px;
+    padding:.75rem 1rem;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body data-lesson="u2w2b">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-puzzle"></use></svg>
+      <div><h1>The Shorthand Key</h1><p class="sub">Week 2 · Apostrophes and contractions</p></div>
+      <div class="pill">Unit 2 · Stage 3 · 3Rw.02 · 3Rg.03 · 3Wg.02</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="apostrophe"><div class="ktext"><b>apostrophe</b><span>The mark that shows letters are missing. Say it in parts: a / pos / tro / phe.</span></div></div>
+      <div class="kcard" data-word="contraction"><div class="ktext"><b>contraction</b><span>Two words joined and shortened: <i>do not</i> becomes <i>don’t</i>.</span></div></div>
+      <div class="kcard" data-word="shorten"><div class="ktext"><b>shorten</b><span>To make something shorter.</span></div></div>
+      <div class="kcard" data-word="missing"><div class="ktext"><b>missing</b><span>Not there any more. The apostrophe shows where letters went missing.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-puzzle"></use></svg> The key</span>
+    <h2>One mark, one job</h2>
+    <p class="lead" data-read="A contraction joins two words and throws some letters away. The apostrophe is the mark that shows exactly where they went.">
+      A <b>contraction</b> joins two words and throws some letters away. The <b>apostrophe</b> shows
+      exactly where they went.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>The rule.</b> The first word usually stays whole. The letters come out of the second
+      word, and the apostrophe stands in their place. <b>do not</b> loses the <b>o</b> and becomes
+      <b>don’t</b>.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the key</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> Join them up</span>
+    <h2>Write the contraction</h2>
+    <p class="lead" data-read="Two words come in. Type the short form, with the apostrophe in the right place.">
+      Two words come in. Type the short form, with the apostrophe in the right place.</p>
+    <div id="joinAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: which letters went?</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Letter patrol</span>
+    <h2>Which letters came out?</h2>
+    <p class="lead" data-read="Every apostrophe is standing in for letters that were taken away. Say which ones.">
+      Every apostrophe stands in for letters that were taken away. Which ones?</p>
+    <div id="letterAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: spot the mistake</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> Proof the wire</span>
+    <h2>Tap the word with the mistake</h2>
+    <p class="lead" data-read="One word in each message has its apostrophe in the wrong place, or has one when it should not. Tap it.">
+      One word in each message has the apostrophe in the <b>wrong place</b>. Tap it.</p>
+    <div class="bay">
+      <p class="sentence" id="patSent"></p>
+      <div class="chips" id="patChips" role="group" aria-label="Tap the answer"></div>
+      <p class="verdict" id="patV"></p>
+    </div>
+    <div class="btnrow">
+      <button class="btn navy" type="button" onclick="nextPatrol()">Next message</button>
+      <button class="btn ghost" type="button" onclick="go(4)">Next: clerk card</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Clerk’s office</span>
+    <h2>Earn your Key Operator badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last one goes in your English book.">
+      Answer these on screen. The last one goes in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      Student’s Book page 17. Find five sentences with apostrophes in the friendly letters on pages
+      12 and 13. Copy them out and circle the shortened word in each one.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Telegraph Office · Badge 3: Key Operator</h3>
+      <div style="font-weight:700">Stamp this when you can join two words into one and put the apostrophe exactly where the letters came out.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my clerk card</button></div>
+    </div>
+    <p class="note">All five badges done? Open <b>charter.html</b>. Teacher: check the book work and the
+      Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Telegraph Office · Stage 3 · Unit 2 Week 2 (3Rw.02, 3Rg.03, 3Wg.02). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="telegraph.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'puzzle', label:'Welcome'},
+    {icon:'swap',   label:'Join'},
+    {icon:'search', label:'Letters'},
+    {icon:'pen',    label:'Proof'},
+    {icon:'medal',  label:'Clerk card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Join two words into a contraction (SB p17, WB pp9-10) ============
+     Typed answers are normalised by the engine, so a curly or a straight
+     apostrophe both pass. */
+  var joinHost=document.getElementById('joinAsk');
+  [
+    {prompt:'do not', answers:["don't","don’t"],
+     nudge:'The o of not comes out. What goes in its place?',
+     hint:"do not becomes don’t. The apostrophe sits where the o was.", task:'U2W2b Join do not'},
+    {prompt:'I am', answers:["i'm","i’m"],
+     nudge:'The a of am comes out.',
+     hint:"I am becomes I’m, with a capital I.", task:'U2W2b Join I am'},
+    {prompt:'we are', answers:["we're","we’re"],
+     nudge:'The a of are comes out.',
+     hint:"we are becomes we’re.", task:'U2W2b Join we are'},
+    {prompt:'she will', answers:["she'll","she’ll"],
+     nudge:'Four letters come out of will. Only two are left.',
+     hint:"she will becomes she’ll. The w and the i both go.", task:'U2W2b Join she will'},
+    {prompt:'have not', answers:["haven't","haven’t"],
+     nudge:'The o of not comes out, the same as in do not.',
+     hint:"have not becomes haven’t.", task:'U2W2b Join have not'},
+    {prompt:'will not  (careful, this one is odd)', answers:["won't","won’t"],
+     nudge:'This one does not follow the rule. Say it out loud.',
+     hint:"will not becomes won’t. It changes shape completely, so it just has to be learnt.",
+     task:'U2W2b Join will not'}
+  ].forEach(function(q){
+    q.type='text';
+    q.praise='Yes. Apostrophe exactly where the letters came out.';
+    Station.ask(joinHost,q);
+  });
+
+  /* ============ Which letters came out? ============ */
+  var letterHost=document.getElementById('letterAsk');
+  Station.choose(letterHost,{
+    prompt:"In can’t, which letters came out?",
+    options:[
+      {text:'the c and the a', why:'No. The start of cannot stays. Look at the end of the word.'},
+      {text:'the n and the o', why:'Yes. cannot loses n and o, and the apostrophe takes their place.'},
+      {text:'nothing came out', why:'Something always comes out, or you would not need the apostrophe.'}
+    ],
+    answer:1, task:'U2W2b Letters 1'
+  });
+  Station.choose(letterHost,{
+    prompt:"In you’re, which letters came out?",
+    options:[
+      {text:'the a of are', why:'Yes. you are becomes you’re, and the apostrophe stands where the a was.'},
+      {text:'the y of you', why:'No. The first word stays whole. The letters come out of the second one.'},
+      {text:'the r and the e', why:'No, the r and the e are still there. Look again at what is missing.'}
+    ],
+    answer:0, task:'U2W2b Letters 2'
+  });
+  Station.ask(letterHost,{
+    type:'text',
+    prompt:"it’s is short for two words. Write them both.",
+    answers:['it is','itis'],
+    nudge:'Say the long way round out loud.',
+    hint:"it’s is short for it is.",
+    praise:'Yes. it is becomes it’s.',
+    task:'U2W2b Letters 3'
+  });
+
+  /* ============ Proof the wire: spot the wrong apostrophe ============ */
+  var PAT=[
+    {s:'I did\'nt get your letter', bad:"did’nt",
+     why:"The apostrophe goes where the o of not came out, so it should be didn’t, not did’nt."},
+    {s:'We are\'nt going on Saturday', bad:"are’nt",
+     why:"Same mistake. The o of not came out, so it should be aren’t."},
+    {s:'She say\'s she is coming', bad:"say’s",
+     why:'Nothing is missing from says, so it needs no apostrophe at all.'},
+    {s:'The dog wagged it\'s tail', bad:"it’s",
+     why:"it’s only means it is. For belonging you write its, with no apostrophe."}
+  ];
+  var patI=-1;
+
+  window.nextPatrol=function(){
+    patI=(patI+1)%PAT.length;
+    var p=PAT[patI];
+    document.getElementById('patSent').textContent=p.s;
+    document.getElementById('patSent').setAttribute('data-read', p.s);
+    var v=document.getElementById('patV'); v.className='verdict'; v.textContent='';
+
+    var host=document.getElementById('patChips');
+    host.innerHTML='';
+    var tries=0, done=false;
+    p.s.split(' ').forEach(function(word){
+      var b=document.createElement('button');
+      b.type='button'; b.className='chip'; b.textContent=word;
+      b.addEventListener('click',function(){
+        if(done||b.dataset.state) return;
+        tries++;
+        var hit=Station.norm(word)===Station.norm(p.bad);
+        b.dataset.state=hit?'right':'wrong';
+        if(hit){
+          done=true;
+          v.className='verdict good'; v.textContent=p.why;
+          Station.record({task:'U2W2b Proof '+(patI+1), result:'correct in '+tries});
+        } else {
+          v.className='verdict bad';
+          v.textContent = tries>=2 ? p.why : 'Not that one. Find the word with the apostrophe and ask: which letters are missing there?';
+          Station.record({task:'U2W2b Proof '+(patI+1), result:'tried '+word});
+        }
+      });
+      host.appendChild(b);
+    });
+  };
+  nextPatrol();
+
+  /* ============ Clerk card questions ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which one is written correctly?',
+    options:[
+      {text:"could’nt", why:"The apostrophe is in the wrong place. The o of not came out, so it is couldn’t."},
+      {text:"couldn’t", why:'Yes. could not becomes couldn’t, with the apostrophe where the o was.'},
+      {text:'couldnt',  why:'Letters are missing, so it needs an apostrophe to show where they went.'}
+    ],
+    answer:1, task:'U2W2b Badge Q1'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Write the contraction for "they will".',
+    answers:["they'll","they’ll"],
+    nudge:'The w and the i of will both come out.',
+    hint:"they will becomes they’ll.",
+    praise:'Yes, that is right.',
+    task:'U2W2b Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Write "I have not finished" using one contraction.',
+    answers:["i haven't finished","i haven’t finished","i haven't finished.","i haven’t finished.",
+             "i’ve not finished","i’ve not finished"],
+    nudge:'Which two words next to each other could be joined?',
+    hint:"I haven’t finished. have and not join up.",
+    praise:'Yes. Shorter, and it still says the same thing.',
+    task:'U2W2b Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

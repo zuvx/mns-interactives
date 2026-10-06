@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Telegraph Office · Week 1: The Sorting Desk</title>
+<link rel="stylesheet" href="telegraph.css">
+<style>
+  .bay{background:var(--sky);border-radius:16px;padding:1.125rem;border:3px solid var(--sky-2);margin:.5rem 0}
+  .bay h3{margin:.125rem 0 .5rem;color:var(--navy);font-size:1.125rem}
+  .score{font-family:var(--display);font-weight:700;color:var(--slate);margin-top:.5rem}
+  .picture{display:flex;gap:.75rem;flex-wrap:wrap;margin:.5rem 0}
+  .picture div{flex:1 1 12rem;background:var(--paper);border:3px solid var(--hi);border-radius:14px;
+    padding:.75rem 1rem;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body data-lesson="u2w1">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg>
+      <div><h1>The Sorting Desk</h1><p class="sub">Week 1 · Letters, emails and postcards</p></div>
+      <div class="pill">Unit 2 · Stage 3 · 3Ri.05 · 3Rs.02</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="formal"><div class="ktext"><b>formal</b><span>Polite and careful, for somebody you do not know. Say it in parts: for / mal.</span></div></div>
+      <div class="kcard" data-word="informal"><div class="ktext"><b>informal</b><span>Friendly and relaxed, for somebody you know well.</span></div></div>
+      <div class="kcard" data-word="greeting"><div class="ktext"><b>greeting</b><span>How a letter starts: <i>Dear Sir, Hi Lee</i>.</span></div></div>
+      <div class="kcard" data-word="purpose"><div class="ktext"><b>purpose</b><span>Why the letter was written. Say it in parts: pur / pose.</span></div></div>
+      <div class="kcard" data-word="audience"><div class="ktext"><b>audience</b><span>Who the letter is for. Say it in parts: au / di / ence.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> New clerk training</span>
+    <h2>Welcome to the Sorting Desk</h2>
+    <p class="lead" data-read="Every message that arrives at this office has to be sorted. Is it formal or friendly? Who is it for, and why was it sent? Learn to read the clues.">
+      Every message that arrives here has to be sorted. Is it <b>formal</b> or <b>informal</b>?
+      Who is it for, and why was it sent?</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>How this works.</b> You do the thinking, the screen only checks. If you get something
+      wrong you get a clue, and after two tries you get the answer explained. Nothing is ever taken
+      off your points.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the sorting desk</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-basket"></use></svg> Sort the post</span>
+    <h2>Formal or informal?</h2>
+    <p class="lead" data-read="Read the line from a letter. Tap formal if it is polite and careful, or informal if it is friendly and relaxed.">
+      Read the line, then tap <b>Formal</b> or <b>Informal</b>.</p>
+    <p class="key-legend"><span class="wc-noun">Formal = for a stranger</span><span class="wc-adj">Informal = for a friend</span></p>
+    <div class="bay">
+      <h3 id="sortWord">—</h3>
+      <div class="choices" role="group" aria-label="Choose formal or informal">
+        <button type="button" onclick="sortPick('formal')">Formal — polite and careful</button>
+        <button type="button" onclick="sortPick('informal')">Informal — friendly and relaxed</button>
+      </div>
+      <p class="verdict" id="sortV"></p>
+      <p class="score" id="sortScore"></p>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: what kind of message?</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Find the clue</span>
+    <h2>Tap the word that gives it away</h2>
+    <p class="lead" data-read="Read the line. Tap the one word that tells you whether it is formal or friendly.">
+      Read the line, then tap the <b>one word</b> that tells you how formal it is.</p>
+    <div class="bay">
+      <p class="sentence" id="patSent"></p>
+      <p style="font-weight:700" id="patQ"></p>
+      <div class="chips" id="patChips" role="group" aria-label="Tap the answer"></div>
+      <p class="verdict" id="patV"></p>
+    </div>
+    <div class="btnrow">
+      <button class="btn navy" type="button" onclick="nextPatrol()">Next line</button>
+      <button class="btn ghost" type="button" onclick="go(3)">Next: purpose and audience</button>
+    </div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> The delivery slip</span>
+    <h2>Why was it written, and who for?</h2>
+    <p class="lead" data-read="Every message has a purpose, which is why it was written, and an audience, which is who it is for.">
+      Every message has a <b>purpose</b>, why it was written, and an <b>audience</b>, who it is for.</p>
+    <div class="picture">
+      <div>Purposes: to invite · to complain · to thank · to ask for something · to tell news</div>
+    </div>
+    <div id="gapAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Look at the four letters on Student’s Book pages 12 and 13. For each one write: who wrote it,
+      who it is for, and why. Three short lines each.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: clerk card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Clerk’s office</span>
+    <h2>Earn your Sorter badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last one goes in your English book.">
+      Answer these on screen. The last one goes in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      Write the greeting and the ending you would use for each of these: a letter to your gran,
+      and a letter to a shop you have never been to.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Telegraph Office · Badge 1: Sorter</h3>
+      <div style="font-weight:700">Stamp this when you can tell a formal letter from a friendly one and say how you know.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my clerk card</button></div>
+    </div>
+    <p class="note">All five badges done? Open <b>charter.html</b>. Teacher: check the book work and the
+      Session summary before recording the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Telegraph Office · Stage 3 · Unit 2 Week 1 (3Ri.04, 3Ri.05, 3Rs.02). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="telegraph.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'scroll', label:'Welcome'},
+    {icon:'basket', label:'Sort'},
+    {icon:'search', label:'Clues'},
+    {icon:'pen',    label:'Purpose'},
+    {icon:'medal',  label:'Clerk card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Sort: formal or informal? (SB pp12-13 letter features) ============
+     Every line is written for this page. No Collins text is reproduced. */
+  var LINES=[
+    {w:'Dear Sir or Madam,',        t:'formal',
+     why:'You use Dear Sir or Madam when you do not know the person’s name. That is formal.'},
+    {w:'Hi Priya!',                 t:'informal',
+     why:'Hi and a first name on its own. That is how you write to a friend.'},
+    {w:'Yours faithfully,',         t:'formal',
+     why:'Yours faithfully closes a letter to somebody whose name you do not know. Formal.'},
+    {w:'See you soon, love Mum',    t:'informal',
+     why:'Love at the end is only for somebody close to you. Informal.'},
+    {w:'I am writing to request a catalogue.', t:'formal',
+     why:'I am writing to request is careful, polite language. No short forms. Formal.'},
+    {w:'I can’t wait to show you!', t:'informal',
+     why:'The short form can’t and the exclamation mark are both friendly. Informal.'},
+    {w:'I would be grateful if you could reply.', t:'formal',
+     why:'I would be grateful is polite and careful, the way you write to a business.'},
+    {w:'Bring your football. C U soon.', t:'informal',
+     why:'C U soon is almost a text message. You would never put that in a formal letter.'}
+  ];
+  var sortI=-1, sortTries=0, sortDone=0;
+
+  function nextSort(){
+    sortI++;
+    if(sortI>=LINES.length){
+      document.getElementById('sortWord').textContent='All sorted. Well done.';
+      document.getElementById('sortV').className='verdict';
+      document.getElementById('sortV').textContent='';
+      return;
+    }
+    sortTries=0;
+    document.getElementById('sortWord').textContent=LINES[sortI].w;
+    var v=document.getElementById('sortV'); v.className='verdict'; v.textContent='';
+    Station.speak(LINES[sortI].w);
+  }
+
+  window.sortPick=function(kind){
+    if(sortI>=LINES.length) return;
+    var item=LINES[sortI], v=document.getElementById('sortV');
+    sortTries++;
+    if(kind===item.t){
+      v.className='verdict good';
+      v.textContent=item.why;
+      sortDone++;
+      document.getElementById('sortScore').textContent='Sorted: '+sortDone+' of '+LINES.length;
+      Station.record({task:'U2W1 Sort "'+item.w+'"', result:'correct in '+sortTries});
+      window.setTimeout(nextSort, 1600);
+    } else {
+      v.className='verdict bad';
+      v.textContent = sortTries>=2 ? item.why
+        : (item.t==='formal' ? 'Have another look. Would you say this to somebody you had never met?'
+                             : 'Have another look. Does this sound like talking to a friend?');
+      Station.record({task:'U2W1 Sort "'+item.w+'"', result:'tried '+kind});
+    }
+  };
+  nextSort();
+
+  /* ============ Find the clue word (SB pp12-13) ============ */
+  var PAT=[
+    {s:'Hi Sam thanks for the birthday card', q:'Tap the word that shows this is friendly.',
+     ans:'Hi', why:'Hi is a friendly greeting. A formal letter would say Dear.'},
+    {s:'I am writing to complain about a broken game console', q:'Tap the word that says what the writer wants.',
+     ans:'complain', why:'Complain tells you the purpose. Something has gone wrong and they want it put right.'},
+    {s:'Yours faithfully Keith Nagaratnam', q:'Tap the word that shows this is formal.',
+     ans:'faithfully', why:'Yours faithfully is the formal ending used when you do not know the name.'},
+    {s:'We are having a party at my house on Saturday', q:'Tap the word that says what kind of message this is.',
+     ans:'party', why:'A party means this is an invitation, so it is a friendly letter.'},
+    {s:'I would be grateful if you would send me your catalogue', q:'Tap the word that shows the writer is being polite.',
+     ans:'grateful', why:'Grateful is careful, polite language. You find it in formal letters.'}
+  ];
+  var patI=-1;
+
+  window.nextPatrol=function(){
+    patI=(patI+1)%PAT.length;
+    var p=PAT[patI];
+    document.getElementById('patSent').textContent=p.s;
+    document.getElementById('patSent').setAttribute('data-read', p.s);
+    document.getElementById('patQ').textContent=p.q;
+    var v=document.getElementById('patV'); v.className='verdict'; v.textContent='';
+
+    var host=document.getElementById('patChips');
+    host.innerHTML='';
+    var answers=[].concat(p.ans);
+    var tries=0, done=false;
+    p.s.replace(/\./g,'').split(' ').forEach(function(word){
+      var b=document.createElement('button');
+      b.type='button'; b.className='chip'; b.textContent=word;
+      b.addEventListener('click',function(){
+        if(done||b.dataset.state) return;
+        tries++;
+        var hit=answers.some(function(a){ return Station.norm(a)===Station.norm(word); });
+        b.dataset.state=hit?'right':'wrong';
+        if(hit){
+          done=true;
+          v.className='verdict good'; v.textContent=p.why;
+          Station.record({task:'U2W1 Clue '+(patI+1), result:'correct in '+tries});
+        } else {
+          v.className='verdict bad';
+          v.textContent = tries>=2 ? p.why : 'Not that one. Which word would change if you wrote to a stranger instead of a friend?';
+          Station.record({task:'U2W1 Clue '+(patI+1), result:'tried '+word});
+        }
+      });
+      host.appendChild(b);
+    });
+  };
+  nextPatrol();
+
+  /* ============ Purpose and audience (SB p14) ============ */
+  var gapHost=document.getElementById('gapAsk');
+  [
+    {prompt:'A letter asks a shop to send a catalogue. What is its purpose? Write one word.',
+     answers:['request','ask','asking','order','enquire','enquiry','requesting'],
+     nudge:'What does the writer want the shop to DO?',
+     hint:'To request, or to ask. The writer wants something sent to them.',
+     task:'U2W1 Purpose 1'},
+    {prompt:'A letter says sorry that a parcel arrived broken and asks for a new one. What is its purpose? Write one word.',
+     answers:['complain','complaint','complaining','replace','refund'],
+     nudge:'Something has gone wrong. What is the writer doing about it?',
+     hint:'To complain. The writer is unhappy and wants it put right.',
+     task:'U2W1 Purpose 2'},
+    {prompt:'You are writing to a shop you have never been to. Write the greeting you would use.',
+     answers:['dear sir or madam','dear sir/madam','dear sir madam','dear sir','dear madam','dear sir or madam,'],
+     nudge:'You do not know their name. What do you write instead?',
+     hint:'Dear Sir or Madam. You use it when the name is unknown.',
+     task:'U2W1 Purpose 3'}
+  ].forEach(function(q){
+    q.type='text';
+    q.praise='Yes. That is exactly it.';
+    Station.ask(gapHost,q);
+  });
+
+  /* ============ Clerk card questions ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which ending belongs in a formal letter?',
+    options:[
+      {text:'Love from,',       why:'Love is only for somebody close to you. That is a friendly ending.'},
+      {text:'Yours faithfully,',why:'Yes. Yours faithfully closes a formal letter when you do not know the name.'},
+      {text:'See you soon,',    why:'See you soon is friendly. You would not write it to a shop.'}
+    ],
+    answer:1, task:'U2W1 Badge Q1'
+  });
+  Station.choose(badgeHost,{
+    prompt:'A formal letter to a business has two addresses on it. Whose address goes on the right?',
+    options:[
+      {text:'The business you are writing to', why:'Not quite. The business goes on the left. Think about who needs to write back.'},
+      {text:'Yours, the writer',               why:'Yes. Your address goes on the right so they know where to reply.'},
+      {text:'It does not matter',              why:'It does matter. There is a set place for each one, and that is part of what makes it formal.'}
+    ],
+    answer:1, task:'U2W1 Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'Write one ending you could use in a letter to a friend.',
+    answers:['love from','love','see you soon','your friend','from','lots of love','bye for now','see you','best wishes'],
+    nudge:'How do you finish a message to somebody you know well?',
+    hint:'Love from, See you soon, and Your friend all work.',
+    praise:'Yes, that is a friendly ending.',
+    task:'U2W1 Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

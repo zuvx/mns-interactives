@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Telegraph Office · Week 3: The Writing Desk</title>
+<link rel="stylesheet" href="telegraph.css">
+<style>
+  .plan{display:flex;flex-direction:column;gap:.5rem;margin:.5rem 0}
+  .plan div{background:var(--paper);border:3px solid var(--sky-2);border-radius:14px;
+    padding:.75rem 1rem;color:var(--ink)}
+  .plan b{color:var(--navy)}
+</style>
+</head>
+<body data-lesson="u2w3">
+<div class="wrap">
+  <header>
+    <div class="awning"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg>
+      <div><h1>The Writing Desk</h1><p class="sub">Week 3 · Paragraphs and an informal letter</p></div>
+      <div class="pill">Unit 2 · Stage 3 · 3Wc.02 · 3Wc.04 · 3Ws.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words — tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="paragraph"><div class="ktext"><b>paragraph</b><span>A group of sentences about one idea. A new idea starts a new paragraph.</span></div></div>
+      <div class="kcard" data-word="greeting"><div class="ktext"><b>greeting</b><span>How you start a letter: <i>Dear Gran,</i></span></div></div>
+      <div class="kcard" data-word="ending"><div class="ktext"><b>ending</b><span>How you finish a letter: <i>Love from Amal</i></span></div></div>
+      <div class="kcard" data-word="informal"><div class="ktext"><b>informal</b><span>Friendly. For somebody you know well. Contractions are fine.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> The writing desk</span>
+    <h2>One idea, one paragraph</h2>
+    <p class="lead" data-read="A long message is hard to read if it is all one block. Writers break it into paragraphs. Each paragraph holds one idea, and when the idea changes, a new paragraph starts.">
+      A long message is hard to read in one block. Writers break it into <b>paragraphs</b>.
+      Each paragraph holds <b>one idea</b>. When the idea changes, you start a new one.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>How a reader sees it.</b> The white space at the start of a paragraph is a signal:
+      <i>here comes something new</i>. It gives their eyes a rest too.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Sit at the desk</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Spotting the break</span>
+    <h2>Where does the new paragraph start?</h2>
+    <p class="lead" data-read="Read each pair of sentences. Decide whether they belong in the same paragraph or whether the second one starts a new idea.">
+      Read each pair. Same idea, so same paragraph? Or a <b>new idea</b>, so a new paragraph?</p>
+    <div id="breakAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: the shape of a letter</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> The shape</span>
+    <h2>Put the letter in order</h2>
+    <p class="lead" data-read="A friendly letter always has the same five parts. Tap one card, then tap another, and they swap.">
+      A friendly letter has the same parts every time. Tap one card, tap another, they <b>swap</b>.</p>
+    <div id="shapeAsk"></div>
+    <div class="plan">
+      <div><b>Greeting.</b> Dear Gran,</div>
+      <div><b>Paragraph 1 — why I am writing.</b> Thank you for the parcel.</div>
+      <div><b>Paragraph 2 — my news.</b> What has been happening here.</div>
+      <div><b>Paragraph 3 — a question for them.</b> How is the garden?</div>
+      <div><b>Ending.</b> Love from Amal</div>
+    </div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: plan yours</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clipboard"></use></svg> Planning</span>
+    <h2>Plan your own letter</h2>
+    <p class="lead" data-read="You are going to write to somebody you know well. Plan it on your planning sheet, then write it properly in your English book.">
+      You are writing to somebody you <b>know well</b>. Your plan goes on the
+      <b>planning sheet</b>. These two questions are the ones planners get wrong.</p>
+    <div id="planAsk"></div>
+    <div class="plan">
+      <div><b>On your planning sheet.</b> Greeting · why I am writing · my news ·
+        a question for them · ending.</div>
+    </div>
+    <div class="quest"><div class="q">In your English book</div>
+      Write the letter. Greeting, three paragraphs, ending. Use at least two contractions
+      (<i>I’m, we’ve, didn’t</i>) because it is a friendly letter.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: clerk card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Clerk’s office</span>
+    <h2>Earn your Chief Clerk badge</h2>
+    <p class="lead" data-read="Last three questions. Then check your letter against the list before you hand it in.">
+      Last three questions. Then <b>check your letter</b> against the list before you hand it in.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">Check before you hand it in</div>
+      Greeting with a comma? Three paragraphs, each one idea? A question for the reader?
+      An ending with your name? Capital letters and full stops?</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Telegraph Office · Badge 5: Chief Clerk</h3>
+      <div style="font-weight:700">Stamp this when your letter has a greeting, three paragraphs and an ending.</div>
+      <div><span class="stamp" id="stamp">SIGNED OFF</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn hi" type="button" id="stampBtn">Sign my clerk card</button></div>
+    </div>
+    <p class="note">That is all five badges. Open <b>charter.html</b> to collect the Telegraph Office charter.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device — it disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Telegraph Office · Stage 3 · Unit 2 Week 3 (3Wc.02, 3Wc.04, 3Ws.01). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="telegraph.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'pen',       label:'Welcome'},
+    {icon:'search',    label:'Breaks'},
+    {icon:'swap',      label:'Shape'},
+    {icon:'clipboard', label:'Plan'},
+    {icon:'medal',     label:'Clerk card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Same paragraph or new one? ============ */
+  var breakHost=document.getElementById('breakAsk');
+  Station.choose(breakHost,{
+    prompt:'"We went to the beach on Friday. The water was warm and we stayed until teatime."',
+    options:[
+      {text:'Same paragraph', why:'Yes. Both sentences are about the same trip to the beach.'},
+      {text:'New paragraph',  why:'The second sentence is still about the beach trip, so it belongs with the first.'}
+    ],
+    answer:0, task:'U2W3 Break 1'
+  });
+  Station.choose(breakHost,{
+    prompt:'"We went to the beach on Friday. My new school is much bigger than the old one."',
+    options:[
+      {text:'Same paragraph', why:'The beach and the school are two different ideas, so they should be split.'},
+      {text:'New paragraph',  why:'Yes. The idea changes from the beach to school, so start again.'}
+    ],
+    answer:1, task:'U2W3 Break 2'
+  });
+  Station.choose(breakHost,{
+    prompt:'"Thank you for the book you sent me. Now I want to tell you about my birthday."',
+    options:[
+      {text:'Same paragraph', why:'"Now I want to tell you about" announces a new idea. That is a paragraph break.'},
+      {text:'New paragraph',  why:'Yes. The writer says so: a new topic is starting.'}
+    ],
+    answer:1, task:'U2W3 Break 3'
+  });
+
+  /* ============ Order the letter ============ */
+  Station.order(document.getElementById('shapeAsk'),{
+    prompt:'Put the parts of this friendly letter in order.',
+    items:[
+      {text:'How is your garden this year?', pos:4},
+      {text:'Dear Gran,',                     pos:1},
+      {text:'Love from Amal',                 pos:5},
+      {text:'Thank you for the parcel.',      pos:2},
+      {text:'We have started a new topic at school.', pos:3}
+    ],
+    nudge:'Start with the greeting. Finish with your name.',
+    hint:'Dear Gran, then thank you, then your news, then a question, then Love from Amal.',
+    praise:'That is the shape of every friendly letter.',
+    task:'U2W3 Letter shape'
+  });
+
+  /* ============ Plan: decisions, not free writing ============
+     The writing itself goes on the printed planning sheet. The screen only
+     asks the choices a child gets wrong when they plan in their head. */
+  var planHost=document.getElementById('planAsk');
+  Station.choose(planHost,{
+    prompt:'You want to thank them AND tell them about sports day. How many paragraphs?',
+    options:[
+      {text:'One, to keep it short.', why:'Two different ideas in one paragraph makes it hard to follow.'},
+      {text:'Two, one for each idea.', why:'Yes. One idea, one paragraph.'},
+      {text:'Two, but both about sports day.', why:'Then the thank you has nowhere to go.'}
+    ],
+    answer:1, task:'U2W3 Plan Q1'
+  });
+  Station.choose(planHost,{
+    prompt:'Which sentence belongs in the FIRST paragraph of a thank-you letter?',
+    options:[
+      {text:'Thank you so much for the book you sent me.', why:'Yes. Say why you are writing, first.'},
+      {text:'How is your garden looking this year?',       why:'A question for them is a good ending, not an opening.'},
+      {text:'We came second in the relay on sports day.',   why:'That is your news. It comes after you have said why you are writing.'}
+    ],
+    answer:0, task:'U2W3 Plan Q2'
+  });
+  Station.ask(planHost,{
+    type:'text',
+    prompt:'Write a friendly greeting for a letter to your gran. Two words and a comma.',
+    answers:['dear gran','dear grandma','dear granny','dear nan','dear nana'],
+    nudge:'Friendly letters start with one particular word. Then who it is for.',
+    hint:'Dear Gran, with a comma. The word Dear, then their name.',
+    praise:'That is how a friendly letter opens.',
+    task:'U2W3 Plan greeting'
+  });
+
+  /* ============ Clerk card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'When do you start a new paragraph?',
+    options:[
+      {text:'Every five sentences.', why:'Counting sentences will not help. It is the idea that decides.'},
+      {text:'When the idea changes.', why:'Yes. One idea, one paragraph.'},
+      {text:'When the line runs out.', why:'That is just the edge of the page, not a new idea.'}
+    ],
+    answer:1, task:'U2W3 Badge Q1'
+  });
+  Station.choose(badgeHost,{
+    prompt:'You are writing to your gran. Which ending fits?',
+    options:[
+      {text:'Yours faithfully',      why:'That one is for a formal letter to somebody you do not know.'},
+      {text:'Love from Amal',        why:'Yes. Friendly letter, friendly ending.'},
+      {text:'I look forward to your reply.', why:'That sounds like a letter to a company, not to your gran.'}
+    ],
+    answer:1, task:'U2W3 Badge Q2'
+  });
+  Station.ask(badgeHost,{
+    type:'text',
+    prompt:'How many paragraphs are in the middle of the letter you planned? Write the number as a word.',
+    answers:['three','3'],
+    nudge:'Count them: why you are writing, your news, your question.',
+    hint:'three.',
+    praise:'Yes. Greeting, three paragraphs, ending.',
+    task:'U2W3 Badge Q3'
+  });
+
+})();
+</script>
+</body>
+</html>

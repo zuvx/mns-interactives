@@ -122,9 +122,9 @@
 <!-- ==================== 5. Three digits, a tens number ==================== -->
 <section class="screen" data-s="5" aria-labelledby="h5h">
   <h2 id="h5h">Bay 5: ten rods make a flat</h2>
-  <p class="lead" data-read="Now the rods pile is the one to watch. Ten rods are traded for one flat, exactly the way ten ones are traded for one rod.">
+  <p class="lead" data-read="Now the rods pile is the one to watch. Ten rods are traded for one flat, exactly the way ten ones are traded for one rod. Taking away works the other way: a flat can be broken into ten rods.">
     Now the rods pile is the one to watch. Ten rods are traded for one flat, exactly the way ten
-    ones are traded for one rod.
+    ones are traded for one rod. Taking away works the other way: a flat can be broken into ten rods.
   </p>
   <div class="card">
     <h3>385 + 40</h3>
@@ -141,6 +141,14 @@
       <div class="side" id="bay7Side"></div>
     </div>
     <div id="bay7Q"></div>
+  </div>
+  <div class="card">
+    <h3>438 &minus; 70</h3>
+    <div class="rowgap">
+      <div class="grow" id="bay10Mat"></div>
+      <div class="side" id="bay10Side"></div>
+    </div>
+    <div id="bay10Q"></div>
   </div>
 </section>
 
@@ -375,7 +383,7 @@
         task: cfg.name + ': after breaking',
         prompt: cfg.breakPrompt,
         answer: cfg.breakAnswer,
-        nudge: 'Press the break button on the mat, then count the ones again.',
+        nudge: 'Press the break button on the mat, then count that pile again.',
         hint: cfg.breakHint,
         praise: 'Yes, and the load is still worth ' + cfg.a + '.'
       });
@@ -637,6 +645,23 @@
     tradePrompt: 'Press trade. How many rods are left beside the flats?', tradeAnswer: 5,
     tradeHint: '6 + 9 = 15 rods. Ten became a flat, so 5 rods are left.',
     ids: { mat: 'bay7Mat', side: 'bay7Side', q: 'bay7Q' }
+  });
+  /* Progress Check Q4e. None of the lesson plans subtracts across a hundred,
+     so the teacher chose this one on purpose (October 2026). */
+  calcBay({
+    name: 'Bay 5c', a: 438, b: 70, op: '-', trades: false, breaks: true,
+    predict: 'You must take 7 rods away and there are only 3. What now?',
+    options: [
+      { label: 'Break a flat into ten rods', right: true,
+        why: 'Right. 438 becomes 3 flats, 13 rods and 8 ones. It is still 438.' },
+      { label: 'Break a rod into ten ones',
+        why: 'The ones are fine. It is the rods you are short of, so a flat must be broken.' },
+      { label: 'Take 3 rods away and stop',
+        why: 'That only takes away 30. You still owe 4 more rods.' }
+    ],
+    breakPrompt: 'Press break under the flats. How many rods are on the mat now?', breakAnswer: 13,
+    breakHint: '438 is now 3 flats, 13 rods and 8 ones. Still 438.',
+    ids: { mat: 'bay10Mat', side: 'bay10Side', q: 'bay10Q' }
   });
   calcBay({
     name: 'Bay 6a', a: 665, b: 200, op: '-', trades: false, breaks: false,
