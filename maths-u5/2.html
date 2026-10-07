@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dhow Harbour · Lesson 2: The Cargo Ledger</title>
+<link rel="stylesheet" href="harbour.css">
+</head>
+<body data-lesson="l2">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg>
+      <div><h1>The Cargo Ledger</h1><p class="sub">Lesson 2 · Adding and subtracting tens and hundreds</p></div>
+      <div class="pill">Unit 5 · Stage 3 · 3Ni.03</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="multiple of ten"><div class="ktext"><b>multiple of 10</b><span>A number in the 10 times table, like 30 or 260.</span></div></div>
+      <div class="kcard" data-word="inverse"><div class="ktext"><b>inverse</b><span>The opposite. Adding and subtracting undo each other.</span></div></div>
+      <div class="kcard" data-word="sum"><div class="ktext"><b>sum / total</b><span>The answer when you add.</span></div></div>
+      <div class="kcard" data-word="difference"><div class="ktext"><b>difference</b><span>The answer when you subtract.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-dhow"></use></svg> Welcome aboard</span>
+    <h2>Small facts, big cargo</h2>
+    <p class="lead" data-read="The harbour keeps a ledger of every load. The loads are big, but the maths uses facts you already know. If one box is worth ten, or a hundred, the fact just gets bigger.">
+      The harbour keeps a <b>ledger</b> of every load. The loads are big, but the maths uses facts you
+      already know. If one box is worth <b>ten</b>, or a <b>hundred</b>, the fact just gets bigger.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><b>Try first.</b> If you get stuck twice, a hint shows you how to work it out.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the ledger</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-crate"></use></svg> Ten times bigger</span>
+    <h2>One fact, three sizes</h2>
+    <p class="lead" data-read="First answer the small fact. Then each box is worth ten. Then each box is worth a hundred.">
+      Answer the small fact. Then each box is worth <b>ten</b>. Then each box is worth a <b>hundred</b>.</p>
+    <div class="pickrow" id="pickLadder" role="group" aria-label="Choose a fact"></div>
+    <div id="ladder"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-anchor"></use></svg> Fill the hold</span>
+    <h2>Loads that make 1000</h2>
+    <p class="lead" data-read="The hold takes exactly one thousand kilograms. Use pairs that make ten to find the missing load.">
+      The hold takes exactly <b>1000 kg</b>. Use a pair that makes ten to find each missing load.</p>
+    <div id="hold"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Big loads</span>
+    <h2>Make it smaller, then bigger again</h2>
+    <p class="lead" data-read="Take the zero off both numbers and work out the small sum. Then make your answer ten times bigger.">
+      Take the zero off both numbers and work out the small sum. Then make your answer
+      <b>ten times bigger</b>.</p>
+    <div class="pickrow" id="pickBig" role="group" aria-label="Choose a load"></div>
+    <div id="big"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Check the ledger</span>
+    <h2>Omar's ledger looks wrong</h2>
+    <p class="lead" id="slipLead"></p>
+    <p style="font-weight:700" data-read="What did Omar forget to do?">What did Omar forget to do?</p>
+    <div class="twoway" id="slipWhy"></div>
+    <p class="verdict" id="slipV" role="status"></p>
+    <div id="slipAsk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Harbour Office</span>
+    <h2>Earn your Lookout rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the book task.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Choose two hundreds numbers that make 1000. Write all four facts in their family.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Harbour Rank 2: Lookout</h3>
+      <div style="font-weight:700">Stamp this when you can show how a small fact helps with a big one.</div>
+      <div><span class="stamp" id="stamp">LOOKOUT</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">All four ranks done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Dhow Harbour · Stage 3 · Unit 5 Lesson 2 (3Ni.03). SB p23, WB pp40-41. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-harbour.js reads this block and re-derives every answer.
+     Ladders: L2 Teach (4 + 5) and Resource sheet 4 (7 + 3). Hold: L2 Revise.
+     Big loads: L2 Teach, SB p23 and AfL. Nothing here is on the Progress Check. -->
+<script type="application/json" id="data">
+{
+  "ladders": ["4 + 5", "7 + 3", "9 − 4"],
+  "hold": ["300 + ? = 1000", "? + 600 = 1000", "1000 − 300 = ?", "100 + ? = 700"],
+  "big": ["260 + 120", "260 + 130", "320 + 250", "250 − 120", "340 + 210", "650 − 120", "270 − 130", "180 + 140"],
+  "slip": {"calc": "430 + 250", "wrote": 68},
+  "rank": ["140 + 250", "470 − 130", "1000 − 400", "380 − 150", "160 + 170"]
+}
+</script>
+<script src="harbour.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+
+  Harbour.init([
+    {icon:'dhow',   label:'Welcome'},
+    {icon:'crate',  label:'Ten times'},
+    {icon:'anchor', label:'Make 1000'},
+    {icon:'scroll', label:'Big loads'},
+    {icon:'search', label:'Check'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) Harbour.renderMyWork(); }});
+
+  /* "260 + 120" -> {a:260, op:'+', b:120} */
+  function parts(t){
+    var m=/(\d+)\s*([+−-])\s*(\d+)/.exec(t);
+    return {a:+m[1], op:m[2]==='+'?'+':'−', b:+m[3]};
+  }
+  function say(t){ return t.replace(/−/g,'take away').replace(/\+/g,'plus').replace(/\?/g,'what'); }
+
+  /* ---- Ladders: n, then 10n, then 100n ---- */
+  var ladderHost=document.getElementById('ladder');
+  var ladders=Harbour.chips(document.getElementById('pickLadder'), D.ladders, function(i, isDone){
+    ladderHost.innerHTML='';
+    if(isDone){ ladderHost.innerHTML='<p class="verdict good">You have done this fact at all three sizes. Choose another.</p>'; return; }
+    var p=parts(D.ladders[i]);
+    var rungs=[[1,'Each box is worth one.'],[10,'Now each box is worth ten.'],[100,'Now each box is worth a hundred.']];
+    (function rung(k){
+      var m=rungs[k][0], t=(p.a*m)+' '+p.op+' '+(p.b*m);
+      var line=document.createElement('p'); line.className='lead'; line.style.fontWeight='700';
+      line.textContent=rungs[k][1]; ladderHost.appendChild(line);
+      Harbour.ask(ladderHost,{
+        prompt:t+' = ?', answer:Harbour.calc(t), task:'L2 Ladder '+t,
+        nudge: k===0 ? 'Not quite. Count on, or use a fact you know.'
+                     : 'Not quite. Look at your answer just above. Each box is worth more now.',
+        hint: k===0 ? 'Use your fingers or a number line in your head. Start at the first number.'
+                    : 'Use the small fact at the top. The boxes are the same, only each one is worth '+(m===10?'ten':'a hundred')+'.',
+        onSolved:function(){ if(k<2) rung(k+1); else ladders.markDone(i); }
+      });
+    })(0);
+  });
+
+  /* ---- Fill the hold: complements to 1000 and 700 ---- */
+  var holdHost=document.getElementById('hold');
+  D.hold.forEach(function(t,i){
+    Harbour.ask(holdHost,{
+      prompt:t+' (kg)', answer:Harbour.solve(t), task:'L2 Hold '+t,
+      nudge:'Not quite. Think about the hundreds digits only. Which pair makes ten?',
+      hint:'Cover the two zeros on every number. Use the pair fact that is left, then put the hundreds back.'
+    });
+  });
+
+  /* ---- Big loads: 26 + 12, then 260 + 120 ---- */
+  var bigHost=document.getElementById('big');
+  var bigs=Harbour.chips(document.getElementById('pickBig'), D.big, function(i, isDone){
+    bigHost.innerHTML='';
+    if(isDone){ bigHost.innerHTML='<p class="verdict good">This load is in the ledger. Choose another.</p>'; return; }
+    var p=parts(D.big[i]);
+    var small=(p.a/10)+' '+p.op+' '+(p.b/10), full=D.big[i];
+    var s=document.createElement('div'); s.className='sum'; s.textContent=full+' = ?';
+    s.setAttribute('aria-label', say(full)+' equals what?');
+    bigHost.appendChild(s);
+    Harbour.ask(bigHost,{
+      prompt:'Take the zeros off: '+small+' = ?', answer:Harbour.calc(small), task:'L2 Small '+small,
+      nudge:'Not quite. Do the tens first, then the ones.',
+      hint:'Split both numbers into tens and ones. Add or take away the tens, then the ones, then put them together.',
+      onSolved:function(){
+        Harbour.ask(bigHost,{
+          prompt:'Now make it ten times bigger: '+full+' = ?', answer:Harbour.calc(full), task:'L2 Big '+full,
+          nudge:'Not quite. Your small answer is right. What happens to a number when it is ten times bigger?',
+          hint:'Ten times bigger: every digit moves one place to the left, and a zero fills the ones.',
+          onSolved:function(){ bigs.markDone(i); }
+        });
+      }
+    });
+  });
+
+  /* ---- Omar's slip: forgot to scale back up (WB Q6 misconception) ---- */
+  var sl=D.slip, sp=parts(sl.calc);
+  var lead=document.getElementById('slipLead');
+  lead.textContent='Omar had to add '+sl.calc+'. He took the zeros off and worked out '+
+    (sp.a/10)+' + '+(sp.b/10)+' = '+sl.wrote+'. Then he wrote '+sl.calc+' = '+sl.wrote+' in the ledger.';
+  lead.setAttribute('data-read', lead.textContent);
+  Harbour.readAloud();
+  var why=document.getElementById('slipWhy'), tries=0, whyDone=false;
+  [['scale','To make his answer ten times bigger again',true],
+   ['ones','To add the ones first',false]].forEach(function(o){
+    var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+    b.addEventListener('click',function(){
+      if(whyDone) return;
+      tries++;
+      var v=document.getElementById('slipV');
+      if(o[2]){
+        whyDone=true; b.className='right';
+        v.className='verdict good'; v.textContent='Yes. He made the numbers ten times smaller, so the answer has to grow back.';
+        Harbour.record({task:'L2 What Omar forgot', result:'correct in '+tries});
+        Harbour.ask(document.getElementById('slipAsk'),{
+          prompt:'What should Omar write? '+sl.calc+' = ?', answer:Harbour.calc(sl.calc), task:'L2 Omar’s load',
+          nudge:'Not quite. Start from his small answer, which was right.',
+          hint:'Make his small answer ten times bigger: a zero goes on the end.'
+        });
+      } else {
+        b.className='wrong';
+        v.className='verdict bad'; v.textContent='Look again. His small sum was right. Compare the size of his answer with the size of the loads.';
+        Harbour.record({task:'L2 What Omar forgot', result:'tried '+o[0]});
+      }
+    });
+    why.appendChild(b);
+  });
+
+  /* ---- Harbour Office ---- */
+  var host=document.getElementById('rankAsk');
+  D.rank.forEach(function(t,i){
+    Harbour.ask(host,{
+      prompt:t+' = ?', answer:Harbour.solve(t), task:'L2 Rank Q'+(i+1),
+      nudge:'Not quite. Take the zeros off and use the small fact.',
+      hint:'Work out the sum without the zeros. Then make the answer ten times bigger.'
+    });
+  });
+})();
+</script>
+</body>
+</html>

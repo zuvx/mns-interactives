@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dhow Harbour · Lesson 3: The Weighbridge</title>
+<link rel="stylesheet" href="harbour.css">
+<style>
+  .pv{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin:.75rem 0;text-align:center}
+  .pv div{background:var(--sand);border-radius:12px;padding:.625rem .25rem;border-top:6px solid var(--sea-2)}
+  .pv b{display:block;font-family:var(--display);font-size:.875rem;color:var(--wood)}
+  .pv span{font-family:var(--display);font-weight:700;font-size:2rem;color:var(--sea)}
+  .way{background:var(--sand);border-radius:14px;padding:.75rem 1rem;margin:.75rem 0;border-left:6px solid var(--gold)}
+  .way h3{margin:0;color:var(--sea);font-size:1.0625rem}
+</style>
+</head>
+<body data-lesson="l3">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-balance"></use></svg>
+      <div><h1>The Weighbridge</h1><p class="sub">Lesson 3 · Adding and subtracting with 3-digit numbers</p></div>
+      <div class="pill">Unit 5 · Stage 3 · 3Ni.04</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="estimate"><div class="ktext"><b>estimate</b><span>A sensible guess, close to the answer.</span></div></div>
+      <div class="kcard" data-word="exchange"><div class="ktext"><b>exchange</b><span>Swap ten ones for one ten, or one ten for ten ones.</span></div></div>
+      <div class="kcard" data-word="sum"><div class="ktext"><b>sum / total</b><span>The answer when you add.</span></div></div>
+      <div class="kcard" data-word="difference"><div class="ktext"><b>difference</b><span>The answer when you subtract.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-dhow"></use></svg> Welcome aboard</span>
+    <h2>Every lorry crosses the weighbridge</h2>
+    <p class="lead" data-read="Cargo is weighed as it comes on and off the dhows. Before you work out a weight, you estimate it, and you decide if you will need an exchange.">
+      Cargo is weighed as it comes on and off the dhows. Before you work out a weight, you
+      <b>estimate</b> it, and you decide if you will need an <b>exchange</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><b>Remember:</b> ten ones make one ten. Ten tens make one hundred. Some sums need an
+      exchange and some do not. Look before you start.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Go to the weighbridge</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-balance"></use></svg> Weigh it</span>
+    <h2>Estimate, predict, then calculate</h2>
+    <div class="pickrow" id="pickW" role="group" aria-label="Choose a load"></div>
+    <div id="weigh"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-exchange"></use></svg> Not enough ones</span>
+    <h2>Break a ten</h2>
+    <p class="lead" data-read="There are not enough ones to take away. Break one ten into ten ones first.">
+      There are not enough ones to take away. Break <b>one ten</b> into <b>ten ones</b> first.</p>
+    <div class="pickrow" id="pickB" role="group" aria-label="Choose a calculation"></div>
+    <div id="brk"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-compass"></use></svg> Three ways</span>
+    <h2 id="waysTitle"></h2>
+    <p class="lead" data-read="There is more than one way. Try each way. Do they all land on the same weight?">
+      There is more than one way. Try each way. Do they all land on the same weight?</p>
+    <div id="ways"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>In your maths book:</b> write the way you like best, and one more way of your own.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Harbour Office</span>
+    <h2>Earn your Navigator rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the book task.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Pick one sum above that needed an exchange. Draw it with hundreds, tens and ones, and show the exchange.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Harbour Rank 3: Navigator</h3>
+      <div style="font-weight:700">Stamp this when you can say before you start whether a sum needs an exchange.</div>
+      <div><span class="stamp" id="stamp">NAVIGATOR</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">All four ranks done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Dhow Harbour · Stage 3 · Unit 5 Lesson 3 (3Ni.04). SB p24, WB pp42-43. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-harbour.js reads this block and re-derives every answer.
+     Loads: L3 Teach, SB p24, AfL. Some need an exchange and some do not, on
+     purpose (L3 Review). Progress Check Q4 calculations are kept out. -->
+<script type="application/json" id="data">
+{
+  "weigh": ["245 + 6", "453 − 8", "465 + 8", "241 + 8", "523 − 6", "385 + 40", "376 + 50", "634 − 70", "665 − 200", "283 + 500"],
+  "breaks": ["453 − 8", "523 − 6"],
+  "ways": {"calc": "460 + 90", "routes": [["460 + 100", "− 10"], ["460 + 40", "+ 50"]]},
+  "rank": ["357 + 6", "642 − 5", "274 + 60", "518 − 200", "831 − 9"]
+}
+</script>
+<script src="harbour.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+
+  Harbour.init([
+    {icon:'dhow',     label:'Welcome'},
+    {icon:'balance',  label:'Weigh it'},
+    {icon:'exchange', label:'Break a ten'},
+    {icon:'compass',  label:'Three ways'},
+    {icon:'medal',    label:'Rank'}
+  ], {onEnter:function(n){ if(n===4) Harbour.renderMyWork(); }});
+
+  function parts(t){
+    var m=/(\d+)\s*([+−-])\s*(\d+)/.exec(t);
+    return {a:+m[1], add:m[2]==='+', b:+m[3]};
+  }
+  function digit(n,place){ return Math.floor(n/place)%10; }
+  /* Which column of the smaller number is being added or taken away, and
+     does that column need an exchange? */
+  function kindOf(t){
+    var p=parts(t), place = p.b>=100 ? 100 : p.b>=10 ? 10 : 1;
+    var x=digit(p.a,place), y=digit(p.b,place);
+    var swap = p.add ? x+y>=10 : x<y;
+    if(place===100) swap=false;
+    return {p:p, place:place, swap:swap};
+  }
+  var METHOD = {
+    '1+':  'Count on to the next ten first, then count on the ones that are left.',
+    '1-':  'Look at the ones. If there are not enough, break one ten into ten ones, then take away.',
+    '10+': 'Add the tens digits. If they make ten or more, ten tens become one more hundred.',
+    '10-': 'Look at the tens. If there are not enough, break one hundred into ten tens, then take away.',
+    '100+':'Only the hundreds change. Add the hundreds digits; the tens and ones stay as they are.',
+    '100-':'Only the hundreds change. Take away the hundreds; the tens and ones stay as they are.'
+  };
+
+  /* ---- Weigh it: estimate, predict the exchange, calculate ---- */
+  var wHost=document.getElementById('weigh');
+  var weigh=Harbour.chips(document.getElementById('pickW'), D.weigh, function(i, isDone){
+    wHost.innerHTML='';
+    if(isDone){ wHost.innerHTML='<p class="verdict good">This load is weighed. Choose another.</p>'; return; }
+    var t=D.weigh[i], k=kindOf(t), ans=Harbour.calc(t), key=k.place+(k.p.add?'+':'-');
+    var s=document.createElement('div'); s.className='sum'; s.textContent=t+' = ?'; wHost.appendChild(s);
+
+    Harbour.ask(wHost,{
+      prompt:'Estimate first. About how many kilograms?',
+      accept:function(v){ return Math.abs(v-ans)<=20; },
+      task:'L3 Estimate '+t,
+      praise:'A sensible estimate.',
+      nudge:'Not quite. Round the bigger number to the nearest ten first.',
+      hint:'Round the bigger number to the nearest ten. Then add or take away the smaller number, roughly.',
+      onSolved:predict
+    });
+
+    function predict(){
+      var colName={1:'ones',10:'tens',100:'hundreds'}[k.place];
+      var q=document.createElement('p'); q.style.fontWeight='700';
+      q.textContent='Look at the '+colName+'. Will this one need an exchange?';
+      wHost.appendChild(q);
+      var row=document.createElement('div'); row.className='twoway'; wHost.appendChild(row);
+      var v=document.createElement('p'); v.className='verdict'; v.setAttribute('role','status'); wHost.appendChild(v);
+      var tries=0, ok=false, later=document.createElement('div');
+      [[true,'Yes, an exchange'],[false,'No exchange']].forEach(function(o){
+        var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+        b.addEventListener('click',function(){
+          if(ok) return;
+          tries++;
+          if(o[0]===k.swap){
+            ok=true; b.className='right'; v.className='verdict good';
+            v.textContent = k.swap ? 'Yes. The '+colName+' need an exchange this time.'
+                                   : 'Yes. Nothing to exchange. Only the '+colName+' change.';
+            Harbour.record({task:'L3 Exchange? '+t, result:'correct in '+tries});
+            wHost.appendChild(later);
+            Harbour.ask(later,{
+              prompt:'Now calculate: '+t+' = ?', answer:ans, task:'L3 '+t,
+              nudge:'Not quite. Is your answer close to your estimate?',
+              hint:METHOD[key],
+              onSolved:function(){ weigh.markDone(i); }
+            });
+          } else {
+            b.className='wrong'; v.className='verdict bad';
+            v.textContent='Look again at the '+colName+'. '+(k.p.add ? 'Do they add up to ten or more?' : 'Are there enough to take away?');
+            Harbour.record({task:'L3 Exchange? '+t, result:'tried '+o[1]});
+          }
+        });
+        row.appendChild(b);
+      });
+    }
+  });
+
+  /* ---- Break a ten: 453 - 8 as 4 hundreds, 4 tens, 13 ones ---- */
+  var bHost=document.getElementById('brk');
+  var brk=Harbour.chips(document.getElementById('pickB'), D.breaks, function(i, isDone){
+    bHost.innerHTML='';
+    if(isDone){ bHost.innerHTML='<p class="verdict good">Done. Choose another.</p>'; return; }
+    var t=D.breaks[i], p=parts(t);
+    var h=digit(p.a,100), te=digit(p.a,10), o=digit(p.a,1);
+    var s=document.createElement('div'); s.className='sum'; s.textContent=t+' = ?'; bHost.appendChild(s);
+    var pv=document.createElement('div'); pv.className='pv';
+    pv.innerHTML='<div><b>hundreds</b><span>'+h+'</span></div><div><b>tens</b><span>'+te+'</span></div><div><b>ones</b><span>'+o+'</span></div>';
+    pv.setAttribute('aria-label', p.a+' is '+h+' hundreds, '+te+' tens and '+o+' ones');
+    bHost.appendChild(pv);
+    var steps=[
+      {prompt:'Break one ten. How many tens are left?', answer:te-1,
+       hint:'You had '+te+' tens. One of them is broken up, so take one away.'},
+      {prompt:'How many ones are there now?', answer:o+10,
+       hint:'You had '+o+' ones. The broken ten gives you ten more ones.'},
+      {prompt:'Take away '+p.b+' from the ones. How many ones are left?', answer:o+10-p.b,
+       hint:'Count back '+p.b+' from the number of ones you have now.'},
+      {prompt:'So what is '+t+'?', answer:p.a-p.b,
+       hint:'Put the hundreds, the tens left and the ones left back together.'}
+    ];
+    (function next(n){
+      var st=steps[n];
+      Harbour.ask(bHost,{prompt:st.prompt, answer:st.answer, task:'L3 Break '+t+' step '+(n+1),
+        nudge:'Not quite. Look at the hundreds, tens and ones above.', hint:st.hint,
+        onSolved:function(){ if(n<steps.length-1) next(n+1); else brk.markDone(i); }});
+    })(0);
+  });
+
+  /* ---- Three ways for 460 + 90 (L3 Apply) ---- */
+  var W=D.ways, waysHost=document.getElementById('ways');
+  document.getElementById('waysTitle').textContent='Three ways to weigh '+W.calc;
+  W.routes.forEach(function(r,i){
+    var box=document.createElement('div'); box.className='way';
+    box.innerHTML='<h3>Way '+(i+1)+'</h3>';
+    waysHost.appendChild(box);
+    var first=r[0], second=first+' '+r[1];
+    Harbour.ask(box,{prompt:first+' = ?', answer:Harbour.calc(first), task:'L3 Way '+(i+1)+' step 1',
+      nudge:'Not quite. Which digit changes?', hint:'Add the tens digits, or the hundreds digits. The rest stay the same.',
+      onSolved:function(){
+        Harbour.ask(box,{prompt:'Then '+r[1]+'. What do you get?', answer:Harbour.calc(second), task:'L3 Way '+(i+1)+' step 2',
+          nudge:'Not quite. Start from your last answer.', hint:'Start from your last answer and do the next step in tens.'});
+      }});
+  });
+  var box3=document.createElement('div'); box3.className='way';
+  box3.innerHTML='<h3>Way 3</h3><p style="margin:.25rem 0 0">Split '+W.calc.split(' + ')[0]+
+    ' into hundreds and tens. Add the tens to the tens, then add the hundreds. Try it in your maths book.</p>';
+  waysHost.appendChild(box3);
+
+  /* ---- Harbour Office ---- */
+  var host=document.getElementById('rankAsk');
+  D.rank.forEach(function(t,i){
+    var k=kindOf(t);
+    Harbour.ask(host,{
+      prompt:t+' = ?', answer:Harbour.calc(t), task:'L3 Rank Q'+(i+1),
+      nudge:'Not quite. Estimate first: is your answer close?',
+      hint:METHOD[k.place+(k.p.add?'+':'-')]
+    });
+  });
+})();
+</script>
+</body>
+</html>

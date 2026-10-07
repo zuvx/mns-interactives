@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dhow Harbour · Lesson 4: The Sealed Crates</title>
+<link rel="stylesheet" href="harbour.css">
+</head>
+<body data-lesson="l4">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><h1>The Sealed Crates</h1><p class="sub">Lesson 4 · An object can stand for a number we do not know</p></div>
+      <div class="pill">Unit 5 · Stage 3 · 3Nc.04</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="unknown"><div class="ktext"><b>unknown</b><span>A number we do not know yet. An object can stand for it.</span></div></div>
+      <div class="kcard" data-word="inverse"><div class="ktext"><b>inverse</b><span>The opposite. Adding undoes subtracting, and subtracting undoes adding.</span></div></div>
+      <div class="kcard" data-word="sum"><div class="ktext"><b>sum / total</b><span>The answer when you add.</span></div></div>
+      <div class="kcard" data-word="difference"><div class="ktext"><b>difference</b><span>The answer when you subtract.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-dhow"></use></svg> Welcome aboard</span>
+    <h2>The labels have washed off</h2>
+    <p class="lead" data-read="A wave soaked the cargo and the labels came off. A barrel, a sack or a chest now stands for a number we do not know. Use what you do know to find it.">
+      A wave soaked the cargo and the labels came off. A barrel, a sack or a chest now stands for a
+      number we do not know. Use what you <b>do</b> know to find it.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div><b>Same object, same number.</b> Two barrels that look the same are worth the same.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Check the barrels</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-crate"></use></svg> Barrels</span>
+    <h2>Same barrels, same price</h2>
+    <div class="pickrow" id="pickBar" role="group" aria-label="Choose a price"></div>
+    <div id="bar"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Sealed cargo</span>
+    <h2>What is hiding in the crate?</h2>
+    <div class="pickrow" id="pickSeal" role="group" aria-label="Choose a puzzle"></div>
+    <div id="seal"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> The captain's riddles</span>
+    <h2>Captain Noor thinks of a number</h2>
+    <div id="riddles"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Harbour Office</span>
+    <h2>Earn your Captain rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then make a sealed crate puzzle of your own in your maths book.">
+      Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a sealed crate and write a true number fact with it in. Solve it yourself first, then
+      swap with a partner.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Harbour Rank 4: Captain</h3>
+      <div style="font-weight:700">Stamp this when you can explain which inverse you used, and why.</div>
+      <div><span class="stamp" id="stamp">CAPTAIN</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">All four ranks done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Dhow Harbour · Stage 3 · Unit 5 Lesson 4 (3Nc.04). SB p25, WB pp44-45. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-harbour.js reads this block and re-derives every answer.
+     Barrels: L4 Teach (cylinders, $10, then $8, $12, $20). Sealed: SB p25 and
+     L4 AfL. None of the Progress Check Q5 facts is used. -->
+<script type="application/json" id="data">
+{
+  "barrels": [10, 8, 12, 20],
+  "sealed": ["$20 − ? = $16", "100 − ? = 40", "? + 800 = 1000", "? − 15 = 50", "$100 − ? = $45", "70 = ? + 20"],
+  "riddles": [
+    {"text": "Captain Noor thinks of a number and adds 100. The answer is 365.", "eq": "? + 100 = 365"},
+    {"text": "Captain Noor thinks of a number and takes away 50. The answer is 230.", "eq": "? − 50 = 230"},
+    {"text": "35 more than Captain Noor's number is 100.", "eq": "? + 35 = 100"}
+  ],
+  "rank": ["? + 300 = 1000", "90 − ? = 30", "? − 40 = 120", "60 = ? + 25", "$? + $? = $14"]
+}
+</script>
+<script src="harbour.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+
+  Harbour.init([
+    {icon:'dhow',   label:'Welcome'},
+    {icon:'crate',  label:'Barrels'},
+    {icon:'search', label:'Sealed'},
+    {icon:'talk',   label:'Riddles'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===4) Harbour.renderMyWork(); }});
+
+  /* Drawn objects (no emoji). A barrel is a cylinder, which is what the
+     Collins lesson uses for its unknown prices. */
+  var OBJ={
+    barrel:'<svg viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="8" rx="12" ry="4" fill="#E9C27A" stroke="currentColor" stroke-width="2.5"/><path d="M8 8v24c0 2.2 5.4 4 12 4s12-1.8 12-4V8" fill="#D9A55A" stroke="currentColor" stroke-width="2.5"/><path d="M8 16c0 2.2 5.4 4 12 4s12-1.8 12-4M8 25c0 2.2 5.4 4 12 4s12-1.8 12-4" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+    sack:'<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M14 6h12l-3 5c7 3 10 9 10 15 0 6-5 9-13 9S7 32 7 26c0-6 3-12 10-15l-3-5Z" fill="#E6D3A8" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M15 11h10" stroke="currentColor" stroke-width="2.5"/></svg>',
+    chest:'<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 16h30v18H5zM5 16c0-5 4-9 9-9h12c5 0 9 4 9 9" fill="#C98A4B" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M5 22h30" stroke="currentColor" stroke-width="2"/><rect x="17" y="19" width="6" height="7" rx="1" fill="#F2B33D" stroke="currentColor" stroke-width="2"/></svg>'
+  };
+  var NAMES=['sack','chest','barrel'];
+  function obj(name){ return '<span class="obj" role="img" aria-label="'+name+'">'+OBJ[name]+'</span>'; }
+  function draw(eq,name){
+    return eq.split('?').map(function(s){ return s.replace(/</g,'&lt;'); }).join(obj(name));
+  }
+  function spoken(eq,name){
+    return eq.replace(/\?/g,'the '+name).replace(/−/g,'take away').replace(/\+/g,'plus').replace(/=/g,'equals').replace(/\$/g,'dollars ');
+  }
+
+  /* Which inverse finds the unknown, and how to explain it. */
+  function inverse(eq){
+    var sides=eq.split('='), side=sides[0].indexOf('?')!==-1 ? sides[0] : sides[1];
+    var s=side.replace(/\$/g,'').trim();
+    if(s.charAt(0)==='?' && /−|-/.test(s)) return {op:'add',
+      hint:'Something had an amount taken away. Put it back: add the two numbers you can see.'};
+    if(/−|-/.test(s)) return {op:'sub',
+      hint:'The hidden amount is the gap between the two numbers. Take the smaller number away from the bigger one.'};
+    return {op:'sub',
+      hint:'The total is the biggest number. Take away the number you can see from the total.'};
+  }
+
+  /* ---- Barrels: two cost $n, so one costs ..., three cost ..., five cost ... ---- */
+  var barHost=document.getElementById('bar');
+  var bars=Harbour.chips(document.getElementById('pickBar'),
+    D.barrels.map(function(t){ return 'Two for $'+t; }), function(i, isDone){
+    barHost.innerHTML='';
+    if(isDone){ barHost.innerHTML='<p class="verdict good">Solved. Choose another price.</p>'; return; }
+    var total=D.barrels[i], one=total/2;
+    var row=document.createElement('div'); row.className='row-objs';
+    row.innerHTML=obj('barrel')+obj('barrel')+'<span>= $'+total+'</span>';
+    row.setAttribute('aria-label','Two barrels cost '+total+' dollars altogether');
+    barHost.appendChild(row);
+    var qs=[
+      {prompt:'Both barrels cost the same. What does one barrel cost, in dollars?', answer:one,
+       hint:'Two barrels share the total equally. Split it into two equal parts: what number added to itself makes the total?'},
+      {prompt:'What do three barrels cost, in dollars?', answer:one*3,
+       hint:'Add the price of one barrel, then again, then again.'},
+      {prompt:'What do five barrels cost, in dollars?', answer:one*5,
+       hint:'Count up in the price of one barrel, five times.'}
+    ];
+    (function next(n){
+      Harbour.ask(barHost,{prompt:qs[n].prompt, answer:qs[n].answer, task:'L4 Barrels $'+total+' Q'+(n+1),
+        nudge:'Not quite. Every barrel costs the same.', hint:qs[n].hint,
+        onSolved:function(){ if(n<qs.length-1) next(n+1); else bars.markDone(i); }});
+    })(0);
+  });
+
+  /* ---- Sealed cargo: solve, then say which operation you used ---- */
+  var sealHost=document.getElementById('seal');
+  var seals=Harbour.chips(document.getElementById('pickSeal'),
+    D.sealed.map(function(t,i){ return 'Crate '+(i+1); }), function(i, isDone){
+    sealHost.innerHTML='';
+    if(isDone){ sealHost.innerHTML='<p class="verdict good">Unsealed. Choose another crate.</p>'; return; }
+    var eq=D.sealed[i], name=NAMES[i%3], inv=inverse(eq);
+    var s=document.createElement('div'); s.className='sum'; s.innerHTML=draw(eq,name);
+    s.setAttribute('aria-label',spoken(eq,name));
+    sealHost.appendChild(s);
+    Harbour.ask(sealHost,{
+      prompt:'What number is the '+name+'?', answer:Harbour.solve(eq), task:'L4 Sealed '+eq,
+      nudge:'Not quite. Put your number in place of the '+name+'. Is the fact true?',
+      hint:inv.hint,
+      onSolved:function(){
+        var q=document.createElement('p'); q.style.fontWeight='700'; q.textContent='Which did you do to find it?';
+        sealHost.appendChild(q);
+        var row=document.createElement('div'); row.className='twoway'; sealHost.appendChild(row);
+        var v=document.createElement('p'); v.className='verdict'; v.setAttribute('role','status'); sealHost.appendChild(v);
+        var tries=0, ok=false;
+        [['add','I added'],['sub','I subtracted']].forEach(function(o){
+          var b=document.createElement('button'); b.type='button'; b.textContent=o[1];
+          b.addEventListener('click',function(){
+            if(ok) return;
+            tries++;
+            if(o[0]===inv.op){
+              ok=true; b.className='right'; v.className='verdict good';
+              v.textContent = o[0]==='add' ? 'Yes. You added to undo a take away. That is the inverse.'
+                                           : 'Yes. You subtracted to find the missing part. That is the inverse.';
+              Harbour.record({task:'L4 Which inverse '+eq, result:'correct in '+tries});
+              seals.markDone(i);
+            } else {
+              b.className='wrong'; v.className='verdict bad';
+              v.textContent='Look again at how you found it. Did you put an amount back, or take one away?';
+              Harbour.record({task:'L4 Which inverse '+eq, result:'tried '+o[0]});
+            }
+          });
+          row.appendChild(b);
+        });
+      }
+    });
+  });
+
+  /* ---- Captain Noor's riddles ---- */
+  var rHost=document.getElementById('riddles');
+  D.riddles.forEach(function(r,i){
+    var p=document.createElement('p'); p.className='lead'; p.style.fontWeight='700';
+    p.textContent=(i+1)+'. '+r.text; p.setAttribute('data-read',r.text);
+    rHost.appendChild(p);
+    Harbour.ask(rHost,{prompt:'What is Captain Noor’s number?', answer:Harbour.solve(r.eq), task:'L4 Riddle '+(i+1),
+      nudge:'Not quite. Write it as a number fact with a crate for the number. Then solve it.',
+      hint:inverse(r.eq).hint});
+  });
+  Harbour.readAloud();
+
+  /* ---- Harbour Office ---- */
+  var host=document.getElementById('rankAsk');
+  D.rank.forEach(function(t,i){
+    var name=NAMES[i%3], two=t.split('?').length>2;
+    var wrap=document.createElement('div'); wrap.className='sum'; wrap.innerHTML=draw(t,name);
+    wrap.setAttribute('aria-label',spoken(t,name));
+    host.appendChild(wrap);
+    Harbour.ask(host,{
+      prompt: two ? 'Both '+name+'s are the same. What is one '+name+'?' : 'What number is the '+name+'?',
+      answer:Harbour.solve(t), task:'L4 Rank Q'+(i+1),
+      nudge:'Not quite. Put your number in place of the '+name+'. Is the fact true?',
+      hint: two ? 'The two are the same. What number added to itself makes the total?' : inverse(t).hint
+    });
+  });
+})();
+</script>
+</body>
+</html>
