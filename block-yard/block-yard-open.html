@@ -264,9 +264,10 @@
       } else {
         answerFb.className = 'ask-fb bad';
         var miss = op === '+' ? missAdd(a, b, live.total, v) : missSub(a, b, live.total, v);
+        // The second miss says how to get there, never what the answer is.
         answerFb.textContent = tries >= 2
-          ? 'The blocks for the answer are ' + parts(live.total).h + ' hundreds, ' + parts(live.total).t +
-            ' tens and ' + parts(live.total).o + ' ones, which is ' + live.total + '.'
+          ? 'Build ' + a + ' on the mat, then ' + (op === '+' ? 'bring on ' + b : 'take ' + b + ' away') +
+            '. Trade or break where you need to, then read the mat: flats, rods, loose cubes.'
           : miss;
         Y.record({ task: 'Open bench: ' + a + ' ' + opSign(op) + ' ' + b, result: 'tried ' + v });
       }

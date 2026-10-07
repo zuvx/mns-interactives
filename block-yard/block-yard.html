@@ -284,7 +284,7 @@
     prompt: 'Now tap the ones shelf 5 more times. How many ones are on the mat?',
     answer: 12,
     nudge: 'Count the gold cubes one at a time.',
-    hint: 'You had 7 ones and you added 5 more. 7 + 5 = 12.',
+    hint: 'Start at 7 and count on, one cube at a time, as you tap: 8, 9 and keep going.',
     praise: 'Yes, 12 ones.'
   });
   Y.choose(gateQ, {
@@ -302,7 +302,7 @@
     prompt: 'Press the trade button. What number is on the mat now?',
     answer: 52,
     nudge: 'Read the piles: how many tens, and how many ones are left over?',
-    hint: 'Trading made 5 tens and 2 ones. That is 52.',
+    hint: 'Count the rods in tens, then count on the loose cubes one at a time.',
     praise: 'Yes, 52.'
   });
   Y.choose(gateQ, {
@@ -393,8 +393,7 @@
         prompt: 'Press the trade button on the mat. How many loose ones are left?',
         answer: total % 10,
         nudge: 'Ten cubes went into the rod. Count what is still loose.',
-        hint: parts(cfg.a).o + ' + ' + pb.o + ' = ' + (parts(cfg.a).o + pb.o) + '. Ten of those were packed away, so ' +
-          (total % 10) + ' are left loose.',
+        hint: 'Count only the cubes that are still loose. The ten you traded are inside the new rod now.',
         praise: 'Yes.'
       });
     }
@@ -409,8 +408,7 @@
           'How many rods are left beside the flat?',
         answer: parts(total).t,
         nudge: 'Ten rods were packed into one flat. Count the rods that are still loose.',
-        hint: 'There were ' + (parts(total).t + 10) + ' rods. Ten of them became one flat, so ' +
-          parts(total).t + ' rods are left.',
+        hint: 'Count only the rods that are still loose. The ten you traded are inside the new flat now.',
         praise: 'Yes, and the flat is worth one hundred.',
         onSolved: function () { written.carry(0, '1'); }
       });
@@ -427,8 +425,7 @@
         if (v === total - 10) return 'Close. Did you count the ten you traded across?';
         return 'Not quite. Read the mat: count the rods, then the loose ones.';
       },
-      hint: 'The mat shows ' + parts(total).t + ' tens and ' + parts(total).o + ' ones' +
-        (parts(total).h ? ' and ' + parts(total).h + ' hundred' : '') + ', which is ' + total + '.',
+      hint: 'Read the mat from left to right: flats are hundreds, rods are tens and loose cubes are ones. Write one digit for each pile.',
       praise: 'Correct.',
       onSolved: function () {
         written.answer(total);
@@ -501,7 +498,7 @@
         prompt: 'Press the break button on the mat. How many ones are on the mat now?',
         answer: pa.o + 10,
         nudge: 'Ten ones fell out of the rod. Add them to the ones you already had.',
-        hint: cfg.a + ' is now ' + (pa.t - 1) + ' tens and ' + (pa.o + 10) + ' ones. It is still ' + cfg.a + '.',
+        hint: 'Count every loose cube on the mat: the ones you had and the ten new ones from the rod.',
         praise: 'Yes, and the load is still worth ' + cfg.a + '.',
         onSolved: function () {
           written.carry(1, String(pa.t - 1));
@@ -531,7 +528,7 @@
         }
         return 'Not quite. Read what is left on the mat: rods first, then loose ones.';
       },
-      hint: 'What is left is ' + parts(answer).t + ' tens and ' + parts(answer).o + ' ones, which is ' + answer + '.',
+      hint: 'Count what is left on the mat: rods are tens and loose cubes are ones. Write one digit for each pile.',
       praise: 'Correct.',
       onSolved: function () {
         written.answer(answer);
@@ -613,7 +610,7 @@
         (14 + n > 20 ? 'Take some blocks back off.' : 'Put a few more on.');
     },
     nudge: 'The inverse of add is subtract. Try 20 take away 14.',
-    hint: '20 take away 14 is 6, so the hidden load is 6. Check it: 14 + 6 = 20.'
+    hint: 'Build 20 on the mat, take 14 away and count what is left. Then check: does 14 + your number make 20?'
   });
 
   tarpBay('unk2', {
@@ -626,7 +623,7 @@
         (76 + n > 100 ? 'That is over the top. Take some off.' : 'The yard is not full yet.');
     },
     nudge: 'Count on from 76 to 100 on the hundred chart. How many steps?',
-    hint: '100 take away 76 is 24, so the hidden load is 24. Check it: 76 + 24 = 100.'
+    hint: 'Put your finger on 76 on the hundred chart. Jump in tens, then in ones, until you land on 100. Add up your jumps.'
   });
 
   tarpBay('unk3', {
@@ -639,7 +636,7 @@
         (40 - n > 23 ? 'The lorry took more than that.' : 'The lorry took less than that.');
     },
     nudge: 'What is taken away is the difference between 40 and 23.',
-    hint: '40 take away 23 is 17, so the lorry took 17. Check it: 40 take away 17 leaves 23.'
+    hint: 'Build 40, then take blocks off until 23 are left. Count how many you took off.'
   });
 
   var unk4 = document.getElementById('unk4');
@@ -648,7 +645,7 @@
     prompt: 'Write the unknown number. ? + 25 = 50',
     answer: 25,
     nudge: 'Use the inverse: 50 take away 25.',
-    hint: '50 take away 25 is 25, so the unknown is 25. Check it: 25 + 25 = 50.',
+    hint: 'Think of a double: which number added to itself makes 50?',
     praise: 'Correct.'
   });
   Y.ask(unk4, {
@@ -656,7 +653,7 @@
     prompt: 'Write the unknown number. ? − 29 = 21',
     answer: 50,
     nudge: 'This one starts unknown. If 29 were taken away and 21 were left, put them back together.',
-    hint: '21 + 29 = 50, so the unknown is 50. Check it: 50 take away 29 leaves 21.',
+    hint: 'Build 21 and 29 on the mat, put them together and count the whole lot.',
     praise: 'Correct. Adding the two known parts finds the start.'
   });
 

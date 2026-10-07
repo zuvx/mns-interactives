@@ -403,7 +403,7 @@
       prompt: 'What is ' + cfg.a + ' ' + opSign(cfg.op) + ' ' + cfg.b + '?',
       answer: answer,
       nudge: 'Read the mat: flats first, then rods, then loose ones.',
-      hint: 'The mat shows ' + say(answer) + ', which is ' + answer + '.',
+      hint: 'Read the mat from left to right: flats are hundreds, rods are tens and loose cubes are ones. Write one digit for each pile.',
       praise: 'Correct.',
       onSolved: function () {
         written.answer(answer);
@@ -429,7 +429,7 @@
     prompt: 'Now tap the tens shelf until there are 10 rods. Press trade. How many flats are there now?',
     answer: 3,
     nudge: 'Ten rods pack into one flat. Count the flats after trading.',
-    hint: 'You had 2 flats. Ten rods became one more, so there are 3.',
+    hint: 'Count the flats again, and look for the new one the ten rods turned into.',
     praise: 'Yes, ten rods make one flat.'
   });
   Y.choose(gateQ, {
@@ -476,17 +476,17 @@
   var bay3 = document.getElementById('bay3Q');
   Y.ask(bay3, {
     task: 'Bay 3: 7 + 3', prompt: 'What is 7 + 3?', answer: 10,
-    nudge: 'Count on from 7.', hint: '7 + 3 = 10.', praise: 'Good. Now make it bigger.'
+    nudge: 'Count on from 7.', hint: 'Hold up 7 fingers and count on 3 more.', praise: 'Good. Now make it bigger.'
   });
   Y.ask(bay3, {
     task: 'Bay 3: 70 + 30', prompt: 'So what is 70 + 30?', answer: 100,
     nudge: 'Ten times the blocks means ten times the answer.',
-    hint: '7 + 3 = 10, so 70 + 30 = 100.', praise: 'Yes.'
+    hint: 'Use 7 + 3. These are tens: 7 rods and 3 rods. How many rods is that, and what are they worth?', praise: 'Yes.'
   });
   Y.ask(bay3, {
     task: 'Bay 3: 700 + 300', prompt: 'And what is 700 + 300?', answer: 1000,
     nudge: 'Go up by ten again.',
-    hint: '70 + 30 = 100, so 700 + 300 = 1000. That is a full yard.',
+    hint: 'Use 70 + 30. These are hundreds: 7 flats and 3 flats. How many flats is that, and what are they worth?',
     praise: 'A full yard: one thousand.'
   });
 
@@ -547,7 +547,7 @@
         (360 + n > 1000 ? 'That is over the top. Take some off.' : 'The yard is not full yet.');
     },
     nudge: 'How many more tens would take 360 up to 1000?',
-    hint: '1000 take away 360 is 640. Check it: 360 + 640 = 1000.'
+    hint: 'Count on from 360. Jump in tens to the next hundred, then in hundreds up to 1000. Add up your jumps.'
   });
 
   tarpBay('unkA', {
@@ -560,7 +560,7 @@
         (n + 800 > 1000 ? 'Take some off.' : 'Put more on.');
     },
     nudge: 'The inverse of add is subtract. Try 1000 take away 800.',
-    hint: '1000 take away 800 is 200. Check it: 200 + 800 = 1000.'
+    hint: 'Count on from 800 to 1000 in hundreds. How many jumps of a hundred did you make?'
   });
 
   tarpBay('unkB', {
@@ -573,7 +573,7 @@
         (100 - n > 40 ? 'The lorry took more than that.' : 'The lorry took less than that.');
     },
     nudge: 'What is taken away is the difference between 100 and 40.',
-    hint: '100 take away 40 is 60, so the lorry took 60.'
+    hint: 'Count on from 40 to 100 in tens. Those jumps are what the lorry took.'
   });
 
   var unkC = document.getElementById('unkC');
@@ -581,13 +581,13 @@
     task: 'Bay 7: ? minus 15 = 50', prompt: 'Write the unknown number. ? − 15 = 50',
     answer: 65,
     nudge: 'If 15 were taken away and 50 were left, put them back together.',
-    hint: '50 + 15 = 65, so the unknown is 65.', praise: 'Correct.'
+    hint: 'Build 50 and 15 on the mat, put them together and count the whole lot.', praise: 'Correct.'
   });
   Y.ask(unkC, {
     task: 'Bay 7: three cylinders', prompt: 'Three cylinders cost $15 altogether, and they all cost the same. What does one cylinder cost, in dollars?',
     answer: 5,
     nudge: 'Share the $15 equally between the three.',
-    hint: '15 shared between 3 is 5, so one cylinder is $5.',
+    hint: 'Draw 3 boxes. Share the $15 out one dollar at a time until it is all gone, then count one box.',
     praise: 'Yes, $5 each.'
   });
 
@@ -602,7 +602,7 @@
         why: 'Count again: 5 + 6 = 11, which is more than ten.' }
     ],
     tradePrompt: 'Press trade. How many loose ones are left?', tradeAnswer: 1,
-    tradeHint: '5 + 6 = 11. Ten were packed into a rod, so 1 is left loose.',
+    tradeHint: 'Count only the cubes that are still loose. The ten you traded are inside the new rod now.',
     ids: { mat: 'bay4Mat', side: 'bay4Side', q: 'bay4Q' }
   });
   calcBay({
@@ -617,7 +617,7 @@
         why: 'The rods are tens. You can only take ones from the ones, so a rod must be broken first.' }
     ],
     breakPrompt: 'Press break. How many ones are on the mat now?', breakAnswer: 13,
-    breakHint: '453 is now 4 flats, 4 rods and 13 ones. Still 453.',
+    breakHint: 'Count every loose cube on the mat: the ones you had and the ten new ones from the rod.',
     ids: { mat: 'bay5Mat', side: 'bay5Side', q: 'bay5Q' }
   });
   calcBay({
@@ -630,7 +630,7 @@
         why: 'The ones are fine. It is the rods pile that has reached ten.' }
     ],
     tradePrompt: 'Press trade. How many rods are left beside the flats?', tradeAnswer: 2,
-    tradeHint: '8 + 4 = 12 rods. Ten became a flat, so 2 rods are left.',
+    tradeHint: 'Count only the rods that are still loose. The ten you traded are inside the new flat now.',
     ids: { mat: 'bay6Mat', side: 'bay6Side', q: 'bay6Q' }
   });
   calcBay({
@@ -643,7 +643,7 @@
         why: 'There are no ones to worry about, but the rods have gone past ten.' }
     ],
     tradePrompt: 'Press trade. How many rods are left beside the flats?', tradeAnswer: 5,
-    tradeHint: '6 + 9 = 15 rods. Ten became a flat, so 5 rods are left.',
+    tradeHint: 'Count only the rods that are still loose. The ten you traded are inside the new flat now.',
     ids: { mat: 'bay7Mat', side: 'bay7Side', q: 'bay7Q' }
   });
   /* Progress Check Q4e. None of the lesson plans subtracts across a hundred,
@@ -660,7 +660,7 @@
         why: 'That only takes away 30. You still owe 4 more rods.' }
     ],
     breakPrompt: 'Press break under the flats. How many rods are on the mat now?', breakAnswer: 13,
-    breakHint: '438 is now 3 flats, 13 rods and 8 ones. Still 438.',
+    breakHint: 'Count every rod on the mat: the rods you had and the ten new ones from the flat.',
     ids: { mat: 'bay10Mat', side: 'bay10Side', q: 'bay10Q' }
   });
   calcBay({

@@ -284,8 +284,10 @@
         Y.award(task, tries);
       } else {
         answerFb.className = 'ask-fb bad';
+        // The second miss says how to get there, never what the answer is.
         answerFb.textContent = tries >= 2
-          ? 'The blocks for the answer are ' + say(live.total) + ', which is ' + live.total + '.'
+          ? 'Build ' + a + ' on the mat, then ' + (op === '+' ? 'bring on ' + b : 'take ' + b + ' away') +
+            '. Trade or break where you need to, then read the mat: flats, rods, loose cubes.'
           : (op === '+' ? missAdd(a, b, live.total, v) : missSub(a, b, live.total, v));
         Y.record({ task: task, result: 'tried ' + v });
       }

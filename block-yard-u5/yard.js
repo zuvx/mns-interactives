@@ -13,7 +13,7 @@
                          {interactive:true} for one the child moves themselves
      col(host, cfg)      the written column method, filled as the child works
      strip(host, n, lbl) a read-only pile: a number shown, not built
-     ask(host, cfg)      a typed-answer question with nudge then worked hint
+     ask(host, cfg)      a typed-answer question with nudge then hint, never the answer
      choose(host, cfg)   a tap-an-option question
      chain(host, cfg)    three addends, and a choice of which pair to add first
      award / record / speak / icon
@@ -902,7 +902,7 @@
           prompt: 'What is ' + parts.join(' + ') + '?',
           answer: total,
           nudge: 'Add your pair first, then add the number that is left.',
-          hint: pairSum + ' + ' + rest + ' = ' + total + '.',
+          hint: 'Your pair makes ' + pairSum + '. Now count on ' + rest + ' more from there.',
           praise: 'Correct.'
         });
       }
@@ -923,6 +923,16 @@
      Questions
      ============================================================ */
   var askCount = 0;
+  var FALLBACK = 'Not quite. Have another look at the blocks.';
+
+  /** True when a message names the answer and the question did not already.
+      The safety net under every hint: a page can be edited carelessly, and
+      this keeps the answer off the screen anyway. */
+  function givesAway(text, cfg) {
+    if (cfg.answer === undefined || typeof cfg.accept === 'function' || !text) return false;
+    var n = new RegExp('(^|[^0-9])' + cfg.answer + '(?![0-9])');
+    return n.test(text) && !n.test(cfg.prompt || '');
+  }
 
   function ask(host, cfg) {
     var id = 'ask' + (++askCount);
@@ -978,11 +988,14 @@
         if (cfg.onSolved) cfg.onSolved(v);
       } else {
         fb.className = 'ask-fb bad';
-        // A nudge that sends them back to look at something, then the worked
-        // hint. A child working alone must never be left with only "no".
+        // A nudge that sends them back to look at something, then a hint on how
+        // to work it out. A child working alone must never be left with only
+        // "no", and must never be handed the answer either: however many tries
+        // it takes, the number has to come from them.
         var miss = typeof cfg.miss === 'function' ? cfg.miss(v) : null;
-        var nudge = miss || cfg.nudge || 'Not quite. Have another look at the blocks.';
-        fb.textContent = (tries >= 2 && cfg.hint) ? cfg.hint : nudge;
+        var nudge = miss || cfg.nudge || FALLBACK;
+        var said = (tries >= 2 && cfg.hint) ? cfg.hint : nudge;
+        fb.textContent = givesAway(said, cfg) ? FALLBACK : said;
         record({ task: cfg.task || cfg.prompt, result: 'tried ' + v });
       }
     }
