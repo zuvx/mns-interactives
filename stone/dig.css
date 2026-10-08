@@ -1,0 +1,210 @@
+/* ============================================================
+   The Dig Site — shared stylesheet
+   History · Year 3 · Stone Age to Iron Age · one page per week
+   Built from The Shake Station's sheet (same markup, same scanner anchors).
+   Rules: design-system/mns-classroom/pages/dig-site.md
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+
+/* Century Gothic is the school font: a Monotype face that cannot be bundled
+   (licence) and that iPads do not carry. Same resolution stack as the other
+   interactives. */
+:root{
+  --sand:#F7EEDD; --sand-2:#EADBC0; --paper:#FFFBF3;
+  /* Cave-painting ochre. --ochre carries white text (7.0:1); --ochre-lit is
+     decoration only. Charcoal is the calm part of the page. */
+  --ochre:#9A3B17; --ochre-deep:#6E2A10; --ochre-lit:#C8642B;
+  --stone:#6B5E50; --stone-deep:#4A4036;
+  --char:#2E2A25; --char-2:#4E463C;
+  --ink:#231D17;
+  --ok:#2F7A45; --ok-deep:#1D5230; --ok-btn:#2F7A45;
+  --warn:#B3261E;
+  --gold:#E8B36A;
+  --shadow:0 8px 0 rgba(74,64,54,.18);
+  --tap:56px; --tap-min:48px;
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{
+  margin:0;font-family:var(--school);font-size:1rem;line-height:1.5;
+  color:var(--ink);background:var(--sand);
+  background-image:
+    radial-gradient(circle at 10% 14%, rgba(154,59,23,.12), transparent 30%),
+    radial-gradient(circle at 90% 10%, rgba(61,107,53,.10), transparent 28%);
+  min-height:100vh;
+}
+h1,h2,h3{font-weight:700;margin-top:0}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 3.75rem}
+:focus-visible{outline:4px solid var(--char);outline-offset:3px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;fill:none;
+  stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-lg{width:1.6em;height:1.6em}
+
+/* ---- Header ---- */
+header{position:relative;margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.strata{height:1.5rem;background:
+  linear-gradient(180deg,#5E7F3A 0 25%,var(--stone) 25% 50%,var(--ochre-lit) 50% 75%,var(--char) 75% 100%)}
+.head-body{background:var(--char);color:var(--paper);padding:1rem 1.375rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-mark{color:var(--gold);flex:0 0 auto;font-size:2.125rem;line-height:1}
+.head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.25rem)}
+.head-body .sub{margin:.125rem 0 0;font-weight:700;font-size:.9375rem;opacity:.94}
+.pill{margin-left:auto;background:var(--gold);color:var(--ink);font-weight:700;
+  padding:.5rem .875rem;border-radius:999px;font-size:.875rem;box-shadow:0 3px 0 #B9853F}
+
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem;justify-content:flex-end}
+.tool{border:3px solid var(--char);background:var(--paper);color:var(--char);
+  font-family:inherit;font-weight:700;font-size:.9375rem;cursor:pointer;min-height:var(--tap-min);
+  padding:.5rem 1rem;border-radius:12px;display:inline-flex;align-items:center;gap:.5rem;
+  transition:background .2s ease,color .2s ease}
+.tool[aria-pressed="true"]{background:var(--char);color:var(--paper)}
+
+/* ---- Key words (EAL) ---- */
+.keys{margin:.875rem 0;background:var(--paper);border:3px dashed var(--ochre);
+  border-radius:16px;padding:.625rem .875rem}
+.keys summary{cursor:pointer;font-weight:700;color:var(--char);font-size:1.0625rem;
+  list-style:none;min-height:var(--tap-min);display:flex;align-items:center;gap:.5rem}
+.keys summary::-webkit-details-marker{display:none}
+.krow{display:flex;flex-wrap:wrap;gap:.625rem;margin-top:.75rem}
+.kcard{flex:1 1 220px;background:var(--sand);border-radius:12px;padding:.625rem .75rem;
+  border-left:6px solid var(--char-2);display:flex;align-items:flex-start;gap:.5rem}
+.kcard b{color:var(--ochre-deep);display:block;font-size:1rem}
+.kcard span{font-size:.875rem}
+.kcard .ktext{flex:1}
+.say{flex:0 0 auto;border:none;background:var(--char-2);color:var(--paper);cursor:pointer;
+  width:var(--tap-min);height:var(--tap-min);border-radius:10px;box-shadow:0 3px 0 var(--char);
+  display:inline-flex;align-items:center;justify-content:center}
+.say:active{transform:translateY(2px)}
+
+/* ---- Progress rail ---- */
+.rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
+.rail button{flex:1 1 0;min-width:140px;min-height:var(--tap-min);border:none;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:.875rem;padding:.625rem .5rem;border-radius:12px;
+  background:var(--sand-2);color:var(--stone-deep);box-shadow:0 3px 0 rgba(74,64,54,.15);
+  display:inline-flex;align-items:center;justify-content:center;gap:.375rem;
+  transition:background .2s ease,color .2s ease}
+.rail button[aria-current="step"]{background:var(--ochre);color:var(--paper);box-shadow:0 3px 0 var(--ochre-deep)}
+.rail button:active{transform:translateY(2px)}
+
+/* ---- Score meter ---- */
+.meter{display:flex;align-items:center;gap:.75rem;background:var(--paper);border:3px solid var(--sand-2);
+  border-radius:16px;padding:.625rem .875rem;margin-top:.75rem}
+.meter .needle{color:var(--ochre-deep);flex:0 0 auto}
+.meter .bar{flex:1;height:1rem;background:var(--sand-2);border-radius:999px;overflow:hidden}
+.meter .fill{height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--ok),#E0A11C,var(--ochre-lit));transition:width .35s ease}
+.meter .pts{font-weight:700;font-size:1.125rem;min-width:5.5rem;text-align:right;color:var(--stone-deep)}
+.meter.pop{animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+/* ---- Screens and cards ---- */
+.screen{display:none;animation:rise .25s ease}
+.screen.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:20px;padding:1.375rem;box-shadow:var(--shadow);margin-top:.75rem}
+.card h2{margin:0 0 .25rem;font-size:clamp(1.3rem,3.4vw,1.75rem);color:var(--char)}
+.card h2:focus{outline:none}
+.lead{font-size:1.0625rem;margin:.2em 0 1em}
+.tag{display:inline-flex;align-items:center;gap:.375rem;background:var(--gold);color:var(--ink);
+  font-weight:700;font-size:.8125rem;padding:.25rem .75rem;border-radius:999px;margin-bottom:.5rem}
+.think{background:var(--sand);border-radius:14px;padding:.75rem 1rem;border-left:6px solid var(--char-2);
+  margin:.75rem 0;display:flex;gap:.625rem;align-items:flex-start}
+.think b{color:var(--ochre-deep)}
+.think .icon{flex:0 0 auto;margin-top:.15em;color:var(--char)}
+
+/* ---- Buttons ---- */
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:1.125rem;color:var(--paper);
+  background:var(--ochre);padding:.8125rem 1.625rem;border-radius:14px;min-height:var(--tap-min);
+  box-shadow:0 4px 0 var(--ochre-deep);transition:transform .08s;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn:active{transform:translateY(3px)}
+.btn.deep{background:var(--char);box-shadow:0 4px 0 #151310}
+.btn.ghost{background:transparent;color:var(--char);box-shadow:none;border:3px solid var(--char)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
+
+/* ---- Quiz ---- */
+.ask{border:3px solid var(--sand-2);border-radius:16px;padding:.875rem 1rem;background:var(--paper)}
+.ask.solved{border-color:var(--ok);background:#F4FBF7}
+.qnum{font-weight:700;color:var(--stone);font-size:.9375rem;margin:0}
+.ask-q{font-size:1.1875rem;font-weight:700;margin:.25rem 0 .875rem}
+.choices{display:flex;flex-direction:column;gap:.75rem}
+.opt{text-align:left;border:3px solid var(--sand-2);background:var(--paper);color:var(--ink);
+  font-family:inherit;font-size:1.0625rem;cursor:pointer;min-height:var(--tap);padding:.75rem 1rem;
+  border-radius:14px;box-shadow:0 3px 0 rgba(74,64,54,.12);display:flex;align-items:center;gap:.75rem;
+  transition:background .2s ease,border-color .2s ease}
+.opt .mark{flex:0 0 auto;width:2rem;height:2rem;border-radius:8px;background:var(--sand-2);
+  color:var(--stone-deep);font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.opt:active{transform:translateY(2px)}
+.opt[data-state="right"]{border-color:var(--ok);background:#EDF8F1}
+.opt[data-state="right"] .mark{background:var(--ok);color:#fff}
+.opt[data-state="wrong"]{border-color:var(--warn);background:#FBEAE8}
+.opt[data-state="wrong"] .mark{background:var(--warn);color:#fff}
+.opt:disabled{cursor:default}
+.fb{margin-top:.875rem;border-radius:14px;padding:.875rem 1rem;font-weight:700;display:none}
+.fb.show{display:block;animation:rise .25s ease}
+.fb.good{background:#EDF8F1;border:3px solid var(--ok);color:var(--ok-deep)}
+.fb.bad{background:#FBEAE8;border:3px solid var(--warn);color:var(--warn)}
+
+/* ---- Badge ---- */
+.badge{margin-top:1rem;background:var(--char);color:var(--paper);border-radius:20px;padding:1.25rem;text-align:center}
+.badge h3{margin:0 0 .25rem;font-size:1.5rem;color:var(--paper)}
+.badge .big{font-size:3rem;line-height:1.1;font-weight:700;color:var(--gold)}
+.badge .rank{display:inline-block;margin-top:.5rem;border:5px double var(--paper);border-radius:12px;
+  padding:.5rem 1.125rem;font-size:1.1875rem;transform:rotate(-5deg)}
+.badge .note{margin:.75rem 0 0;font-size:.9375rem;font-weight:700;color:#F6E2C4}
+.summary{margin-top:1rem;background:var(--paper);border:3px solid var(--char-2);border-radius:16px;padding:1rem 1.125rem}
+.summary h3{margin:0 0 .5rem;color:var(--char);font-size:1.125rem}
+.summary ul{margin:.5rem 0 0;padding-left:1.25rem}
+.summary li{font-size:.9375rem;margin-bottom:.25rem}
+.summary .privacy{font-size:.8125rem;color:var(--stone);margin-top:.75rem;font-weight:700}
+.note{font-size:.8125rem;font-weight:700;color:var(--stone);margin-top:1.125rem}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}}
+
+/* Safe or not safe: one card, two big answers */
+.judge{background:var(--paper);border:3px solid var(--sand-2);border-radius:16px;padding:1rem}
+.judge.solved{border-color:var(--ok);background:#F4FBF7}
+.judge-q{font-size:1.125rem;font-weight:700;margin:.25rem 0 .875rem}
+.judge-row{display:flex;gap:.75rem;flex-wrap:wrap}
+.judge-row button{flex:1 1 180px;border:none;cursor:pointer;font-family:inherit;font-weight:700;
+  font-size:1.125rem;color:var(--paper);min-height:var(--tap);padding:.75rem 1rem;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+/* The Safe button carries white text, so it uses the darker green: --ok is
+   only 3.9:1 against paper, --ok-btn is 5.8:1. */
+.judge-row .safe{background:var(--ok-btn);box-shadow:0 4px 0 var(--ok-deep)}
+.judge-row .unsafe{background:var(--warn);box-shadow:0 4px 0 #7E1A14}
+.judge-row button:active{transform:translateY(3px)}
+.judge-row button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.tally{display:flex;gap:.375rem;flex-wrap:wrap;margin-top:.75rem}
+.tally span{width:1.5rem;height:1.5rem;border-radius:6px;background:var(--sand-2);display:inline-block}
+.tally span.done{background:var(--ok)}
+.tally span.miss{background:var(--warn)}
+
+/* ---- Pick the right ones: a grid of item cards ---- */
+.kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem;margin-top:.5rem}
+.kit-card{text-align:left;border:3px solid var(--sand-2);background:var(--paper);color:var(--ink);
+  font-family:inherit;font-size:1.0625rem;cursor:pointer;min-height:var(--tap);padding:.75rem 1rem;
+  border-radius:14px;box-shadow:0 3px 0 rgba(74,64,54,.12);display:flex;align-items:center;gap:.625rem;
+  transition:border-color .2s ease,background .2s ease}
+.kit-card:active{transform:translateY(2px)}
+.kit-card[data-state="right"]{border-color:var(--ok);background:#EDF7F0}
+.kit-card[data-state="wrong"]{border-color:var(--warn);background:#FBEAE8}
+.kit-card.bad{animation:wobble .4s ease}
+.kit-card:disabled{cursor:default}
+@keyframes wobble{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}
+  40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.found{font-weight:700;color:var(--stone-deep);margin:.75rem 0 0}
+/* Two-way sort (hunt or gather, and later weeks' pairs): neither answer is
+   "good" or "bad", so the buttons are ochre and moss, both white-text safe. */
+.judge-row .pick-a{background:var(--ochre);box-shadow:0 4px 0 var(--ochre-deep)}
+.judge-row .pick-b{background:var(--ok-btn);box-shadow:0 4px 0 var(--ok-deep)}
