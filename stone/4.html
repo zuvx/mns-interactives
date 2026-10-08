@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bronze Workshop: The Bronze Age</title>
+<meta name="description" content="Year 3 History, Stone Age to Iron Age, week 4: how bronze changed life. Built for iPads, no network, no data collected.">
+<link rel="stylesheet" href="dig.css">
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-axe"><path d="M14 4 4 20"/><path d="M14 4c3 0 6 2 6 6-2 0-5-1-7-3"/></g>
+  <g id="i-speak"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></g>
+  <g id="i-book"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M19 19v2H6"/></g>
+  <g id="i-leaf"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19 13 11"/></g>
+  <g id="i-bag"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-think"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="strata"></div>
+    <div class="head-body">
+      <svg class="icon head-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-axe"/></svg>
+      <div>
+        <h1>Bronze Workshop</h1>
+        <p class="sub">History · Year 3 · The Dig Site · Week 4</p>
+      </div>
+      <span class="pill">The Bronze Age</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <details class="keys">
+    <summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg> Key words</summary>
+    <div class="krow" id="keyWords"></div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Parts of the game">
+    <button type="button" data-go="0" aria-current="step">1. Bronze Age quiz</button>
+    <button type="button" data-go="1">2. Stone or bronze?</button>
+    <button type="button" data-go="2">3. Load the boat</button>
+    <button type="button" data-go="3">4. Your badge</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon icon-lg needle" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-axe"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="bronzeCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <!-- ---------- Screen 1: quiz ---------- -->
+  <section class="screen on" id="s0" data-s="0" aria-label="Bronze Age quiz">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 1</span>
+      <h2 tabindex="-1" id="h0">Bronze Age quiz</h2>
+      <p class="lead">You are learning to be a bronze smith. Answer seven questions about the Bronze Age.</p>
+      <div class="ask" id="ask">
+        <p class="qnum" id="qnum">Question 1 of 7</p>
+        <p class="ask-q" id="qtext"></p>
+        <div class="choices" id="options"></div>
+      </div>
+      <div class="fb" id="qfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="nextQ" type="button" disabled>Next question</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 2: hunt or gather ---------- -->
+  <section class="screen" id="s1" data-s="1" aria-label="Stone or bronze">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg> Round 2</span>
+      <h2 tabindex="-1" id="h1">Stone Age or Bronze Age?</h2>
+      <p class="lead">Is this from the <b>Stone Age</b>, or did it come with the <b>Bronze Age</b>?</p>
+      <div class="think">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg>
+        <p style="margin:0"><b>Think:</b> is it made of metal? Did it need bronze tools, or trade with other lands?</p>
+      </div>
+      <div class="judge" id="judge">
+        <p class="qnum" id="jnum">Card 1 of 9</p>
+        <p class="judge-q" id="jtext"></p>
+        <div class="judge-row">
+          <button class="pick-a" id="btnHunt" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-axe"/></svg> Stone Age
+          </button>
+          <button class="pick-b" id="btnGather" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg> Bronze Age
+          </button>
+        </div>
+        <div class="tally" id="tally" aria-hidden="true"></div>
+      </div>
+      <div class="fb" id="jfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="nextJ" type="button" disabled>Next card</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 3: pack your bag ---------- -->
+  <section class="screen" id="s2" data-s="2" aria-label="Load the boat">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bag"/></svg> Round 3</span>
+      <h2 tabindex="-1" id="h2">Load the boat</h2>
+      <p class="lead">A trading boat is leaving Dilmun, in Bronze Age Bahrain. Load the five things a bronze smith needs or makes.</p>
+      <div class="think">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg>
+        <p style="margin:0"><b>Think:</b> bronze is made from two metals. And what did bronze smiths make with it?</p>
+      </div>
+      <div class="kit" id="kit"></div>
+      <p class="found" id="found">Found: 0 of 5</p>
+      <div class="fb" id="kfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="toBadge" type="button" disabled>Get my badge</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 4: badge ---------- -->
+  <section class="screen" id="s3" data-s="3" aria-label="Your badge">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Round 4</span>
+      <h2 tabindex="-1" id="h3">Your badge</h2>
+      <p class="lead">Show this screen to your teacher before you close it.</p>
+      <div class="badge">
+        <h3>Bronze Workshop</h3>
+        <p class="big"><span id="finalPts">0</span> / 140</p>
+        <span class="rank" id="rank">Apprentice</span>
+        <p class="note" id="firstTry">First-time answers: 0</p>
+      </div>
+      <div class="summary">
+        <h3>Tricky ones to talk about</h3>
+        <ul id="tricky"><li class="none">Nothing yet. Play the three rounds first.</li></ul>
+        <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="note">History · Year 3 · Stone Age to Iron Age · Week 4 · The Bronze Age</p>
+    </div>
+  </section>
+</div>
+
+<script>
+'use strict';
+(function () {
+  /* ---------- content ---------- */
+  var KEYS = [
+    ['bronze', 'a hard metal made by mixing copper and tin'],
+    ['alloy', 'a metal made by mixing two or more metals'],
+    ['bronze smith', 'a person who makes things from bronze'],
+    ['trade', 'swapping or selling things with other people'],
+    ['Dilmun', 'the name of Bahrain in the Bronze Age'],
+    ['consequence', 'something that happens because of something else']
+  ];
+
+  /* The right answer is always first (c: 0); the page shuffles before showing.
+     A hint says how to work it out. It never names the answer. */
+  var QUIZ = [
+    { q: 'Which two metals are mixed to make bronze?',
+      a: ['Copper and tin', 'Gold and silver', 'Iron and steel'],
+      c: 0, hint: 'Remember the slide with the bronze smith melting metal. One of them is reddish and soft.',
+      why: 'Copper and tin. Copper is soft, but mixed with tin it makes hard bronze.' },
+    { q: 'Why is this time called the Bronze Age?',
+      a: ['People made tools from bronze', 'Everything was brown', 'People won bronze medals'],
+      c: 0, hint: 'Think about why the Stone Age is called the Stone Age.',
+      why: 'The Stone Age was named after stone tools. The Bronze Age is named after bronze tools.' },
+    { q: 'When did the Bronze Age start in Britain?',
+      a: ['Around 2400 BC', 'Last year', 'When the Romans came'],
+      c: 0, hint: 'It came straight after the end of the Stone Age. Look at the timeline.',
+      why: 'Around 2400 BC, at the end of the Stone Age in Britain.' },
+    { q: 'What was Dilmun?',
+      a: ['Bahrain in the Bronze Age, a busy trading place', 'A city in Scotland', 'A kind of bronze tool'],
+      c: 0, hint: 'It is a place you know very well. Boats with copper stopped there.',
+      why: 'Dilmun was Bahrain in the Bronze Age. Boats carrying copper stopped there to trade.' },
+    { q: 'Farmers used bronze tools. What was the consequence?',
+      a: ['They grew more food', 'They stopped farming', 'They grew less food'],
+      c: 0, hint: 'Bronze tools were stronger and sharper. Does that make farming easier or harder?',
+      why: 'Bronze tools worked better, so farmers could grow more food.' },
+    { q: 'What was a bronze smith?',
+      a: ['A person who made things from bronze', 'A kind of boat', 'A Stone Age hunter'],
+      c: 0, hint: 'Look at the key words. A smith is someone with a special job.',
+      why: 'A bronze smith made tools, pots and jewellery from bronze. It was an important job.' },
+    { q: 'What were Bronze Age homes called?',
+      a: ['Roundhouses', 'Castles', 'Tents'],
+      c: 0, hint: 'Think about the shape of the house in the fact file.',
+      why: 'Roundhouses, with wattle and daub walls and roofs of straw or turf.' }
+  ];
+
+  /* hunt: true means the Stone Age, false means it came with the Bronze Age.
+     (The engine keeps the week 1 name for its two-way field.) */
+  var FOODS = [
+    { t: 'A hand axe made of flint', hunt: true, why: 'Flint tools are from the Stone Age.' },
+    { t: 'A hammerstone', hunt: true, why: 'A hammerstone is a Stone Age tool for shaping flint.' },
+    { t: 'A tent made of animal skins', hunt: true, why: 'Nomads in the Stone Age lived in tents.' },
+    { t: 'Following the herds of deer', hunt: true, why: 'Hunter-gatherers in the Stone Age followed the herds.' },
+    { t: 'A sharp bronze axe', hunt: false, why: 'Bronze tools came with the Bronze Age.' },
+    { t: 'A plough with a bronze blade', hunt: false, why: 'Bronze blades on ploughs came in the Bronze Age.' },
+    { t: 'A bronze smith melting metal', hunt: false, why: 'Melting copper and tin to make bronze started in the Bronze Age.' },
+    { t: 'Bronze jewellery', hunt: false, why: 'Jewellery made of bronze is from the Bronze Age.' },
+    { t: 'Boats carrying copper to trade', hunt: false, why: 'Trading copper by boat grew in the Bronze Age, through places like Dilmun.' }
+  ];
+
+  /* ok: true for what a bronze smith needs or makes. */
+  var ITEMS = [
+    { t: 'Copper', ok: true },
+    { t: 'Tin', ok: true },
+    { t: 'Bronze axes', ok: true },
+    { t: 'Bronze jewellery', ok: true },
+    { t: 'Bronze pots', ok: true },
+    { t: 'Plastic bags', ok: false },
+    { t: 'A mobile phone', ok: false },
+    { t: 'Glass bottles', ok: false },
+    { t: 'Paper money', ok: false },
+    { t: 'Rubber tyres', ok: false }
+  ];
+  var NEED = ITEMS.filter(function (i) { return i.ok; }).length;
+
+  var TOTAL = QUIZ.length * 10 + FOODS.length * 5 + NEED * 5;   /* 70 + 45 + 25 = 140 */
+
+  /* ---------- state (in memory only, never stored) ---------- */
+  var pts = 0, firstTry = 0, qi = 0, answered = false, tries = 0;
+  var tricky = [];
+  var ji = 0, judged = false, jtries = 0;
+  var found = 0, kitWrong = 0;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var live = $('live');
+  function say(msg) { live.textContent = msg; }
+  function note(t) { if (tricky.indexOf(t) === -1) tricky.push(t); }
+
+  function addPts(n) {
+    pts += n;
+    $('bronzeCount').textContent = pts;
+    $('fill').style.width = Math.round(pts / TOTAL * 100) + '%';
+    var m = $('meter');
+    m.classList.remove('pop'); void m.offsetWidth; m.classList.add('pop');
+  }
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ---------- key words: local speech only, no network ---------- */
+  (function buildKeys() {
+    var row = $('keyWords');
+    KEYS.forEach(function (k) {
+      var card = document.createElement('div');
+      card.className = 'kcard';
+      var txt = document.createElement('div');
+      txt.className = 'ktext';
+      var b = document.createElement('b'); b.textContent = k[0];
+      var s = document.createElement('span'); s.textContent = k[1];
+      txt.appendChild(b); txt.appendChild(s);
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'say';
+      btn.setAttribute('aria-label', 'Say ' + k[0] + ' out loud');
+      btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-speak"/></svg>';
+      btn.addEventListener('click', function () {
+        if (!('speechSynthesis' in window)) return;
+        var u = new SpeechSynthesisUtterance(k[0] + '. ' + k[1]);
+        u.lang = 'en-GB'; u.rate = 0.85;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(u);
+      });
+      card.appendChild(txt); card.appendChild(btn);
+      row.appendChild(card);
+    });
+  })();
+
+  /* ---------- screens ---------- */
+  function show(n) {
+    ['s0', 's1', 's2', 's3'].forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    document.querySelectorAll('.rail button').forEach(function (b, i) {
+      if (i === n) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
+    });
+    var h = $('h' + n); if (h) h.focus();
+    if (n === 3) fillBadge();
+  }
+  document.querySelectorAll('.rail button').forEach(function (b) {
+    b.addEventListener('click', function () { show(+b.dataset.go); });
+  });
+
+  $('boardBtn').addEventListener('click', function () {
+    var on = document.documentElement.hasAttribute('data-board');
+    if (on) { document.documentElement.removeAttribute('data-board'); }
+    else { document.documentElement.setAttribute('data-board', ''); }
+    this.setAttribute('aria-pressed', String(!on));
+  });
+
+  /* ---------- round 1: quiz ---------- */
+  function drawQ() {
+    var item = QUIZ[qi];
+    answered = false; tries = 0;
+    $('qnum').textContent = 'Question ' + (qi + 1) + ' of ' + QUIZ.length;
+    $('qtext').textContent = item.q;
+    var fb = $('qfb'); fb.className = 'fb'; fb.textContent = '';
+    $('ask').classList.remove('solved');
+    $('nextQ').disabled = true;
+    $('nextQ').textContent = qi === QUIZ.length - 1 ? 'Go to round 2' : 'Next question';
+    var box = $('options'); box.textContent = '';
+    shuffle(item.a.map(function (_, i) { return i; })).forEach(function (src, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt choice';
+      b.innerHTML = '<span class="mark">' + 'ABC'.charAt(i) + '</span>';
+      var sp = document.createElement('span'); sp.textContent = item.a[src];
+      b.appendChild(sp);
+      b.addEventListener('click', function () { answer(src, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function answer(i, btn) {
+    if (answered) return;
+    var item = QUIZ[qi], fb = $('qfb');
+    if (i === item.c) {
+      answered = true;
+      btn.setAttribute('data-state', 'right');
+      $('ask').classList.add('solved');
+      addPts(tries === 0 ? 10 : 5);
+      if (tries === 0) firstTry++;
+      fb.className = 'fb good show';
+      fb.textContent = 'Correct. ' + item.why;
+      say(fb.textContent);
+      $('options').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+      $('nextQ').disabled = false;
+    } else {
+      tries++;
+      btn.setAttribute('data-state', 'wrong'); btn.disabled = true;
+      note(item.q);
+      fb.className = 'fb bad show';
+      fb.textContent = 'Not that one. ' + item.hint;
+      say(fb.textContent);
+    }
+  }
+
+  $('nextQ').addEventListener('click', function () {
+    if (qi < QUIZ.length - 1) { qi++; drawQ(); $('h0').focus(); }
+    else { show(1); }
+  });
+
+  /* ---------- round 2: hunt or gather ---------- */
+  function buildTally() {
+    var t = $('tally'); t.textContent = '';
+    FOODS.forEach(function () { t.appendChild(document.createElement('span')); });
+  }
+
+  function drawFood() {
+    judged = false; jtries = 0;
+    $('jnum').textContent = 'Card ' + (ji + 1) + ' of ' + FOODS.length;
+    $('jtext').textContent = FOODS[ji].t;
+    $('judge').classList.remove('solved');
+    var fb = $('jfb'); fb.className = 'fb'; fb.textContent = '';
+    $('btnHunt').disabled = false;
+    $('btnGather').disabled = false;
+    $('nextJ').disabled = true;
+    $('nextJ').textContent = ji === FOODS.length - 1 ? 'Go to round 3' : 'Next card';
+  }
+
+  /* A wrong pick gets the method again, and the child picks once more. */
+  function judge(saidHunt, btn) {
+    if (judged) return;
+    var food = FOODS[ji], fb = $('jfb'), marks = $('tally').children;
+    if (saidHunt === food.hunt) {
+      judged = true;
+      $('btnHunt').disabled = true;
+      $('btnGather').disabled = true;
+      $('nextJ').disabled = false;
+      addPts(jtries === 0 ? 5 : 2);
+      if (jtries === 0) firstTry++;
+      marks[ji].className = jtries === 0 ? 'done' : 'miss';
+      $('judge').classList.add('solved');
+      fb.className = 'fb good show';
+      fb.textContent = 'Yes. ' + food.why;
+    } else {
+      jtries++;
+      btn.disabled = true;
+      note(food.t + ': Stone Age or Bronze Age?');
+      fb.className = 'fb bad show';
+      fb.textContent = 'Think again. Is it made of stone, or does it need metal?';
+    }
+    say(fb.textContent);
+  }
+
+  $('btnHunt').addEventListener('click', function () { judge(true, this); });
+  $('btnGather').addEventListener('click', function () { judge(false, this); });
+  $('nextJ').addEventListener('click', function () {
+    if (ji < FOODS.length - 1) { ji++; drawFood(); $('h1').focus(); }
+    else { show(2); }
+  });
+
+  /* ---------- round 3: pack your bag ---------- */
+  function buildKit() {
+    found = 0; kitWrong = 0;
+    var box = $('kit'); box.textContent = '';
+    shuffle(ITEMS.slice()).forEach(function (item) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'kit-card';
+      b.textContent = item.t;
+      b.addEventListener('click', function () { pickItem(item, b); });
+      box.appendChild(b);
+    });
+    $('found').textContent = 'Found: 0 of ' + NEED;
+    $('toBadge').disabled = true;
+    var fb = $('kfb'); fb.className = 'fb'; fb.textContent = '';
+  }
+
+  function pickItem(item, btn) {
+    var fb = $('kfb');
+    btn.disabled = true;
+    if (item.ok) {
+      found++;
+      btn.setAttribute('data-state', 'right');
+      addPts(kitWrong === 0 ? 5 : 2);
+      if (kitWrong === 0) firstTry++;
+      kitWrong = 0;
+      $('found').textContent = 'Found: ' + found + ' of ' + NEED;
+      fb.className = 'fb good show';
+      fb.textContent = found === NEED ? 'The boat is loaded and ready to sail from Dilmun.'
+                                      : 'Yes, that goes on the boat.';
+      if (found === NEED) {
+        $('kit').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+        $('toBadge').disabled = false;
+        $('toBadge').focus();
+      }
+    } else {
+      kitWrong++;
+      btn.setAttribute('data-state', 'wrong');
+      btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+      note(item.t + ': Bronze Age or not?');
+      fb.className = 'fb bad show';
+      fb.textContent = 'Not in the Bronze Age. Was it made of bronze, or one of the metals that make bronze?';
+    }
+    say(fb.textContent);
+  }
+
+  $('toBadge').addEventListener('click', function () { show(3); });
+
+  /* ---------- round 4: badge ---------- */
+  function fillBadge() {
+    $('finalPts').textContent = pts;
+    $('firstTry').textContent = 'First-time answers: ' + firstTry + ' out of ' +
+      (QUIZ.length + FOODS.length + NEED);
+    var share = pts / TOTAL;
+    $('rank').textContent = share >= 0.9 ? 'Master bronze smith'
+      : share >= 0.7 ? 'Bronze smith'
+      : share >= 0.4 ? 'Workshop helper' : 'Apprentice';
+    var ul = $('tricky'); ul.textContent = '';
+    if (!tricky.length) {
+      var li = document.createElement('li');
+      li.className = 'none';
+      li.textContent = (found || qi || ji) ? 'Nothing tripped you up. Every answer was right first time.'
+                                           : 'Nothing yet. Play the three rounds first.';
+      ul.appendChild(li);
+    } else {
+      tricky.forEach(function (t) {
+        var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
+      });
+    }
+  }
+
+  $('again').addEventListener('click', function () {
+    pts = 0; firstTry = 0; qi = 0; ji = 0; tricky = [];
+    $('bronzeCount').textContent = '0'; $('fill').style.width = '0';
+    drawQ(); buildTally(); drawFood(); buildKit(); show(0);
+  });
+
+  /* ---------- start ---------- */
+  drawQ();
+  buildTally();
+  drawFood();
+  buildKit();
+})();
+</script>
+</body>
+</html>

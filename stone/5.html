@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Stone Movers: Stonehenge</title>
+<meta name="description" content="Year 3 History, Stone Age to Iron Age, week 5: Stonehenge and how it was built. Built for iPads, no network, no data collected.">
+<link rel="stylesheet" href="dig.css">
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-axe"><path d="M14 4 4 20"/><path d="M14 4c3 0 6 2 6 6-2 0-5-1-7-3"/></g>
+  <g id="i-speak"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></g>
+  <g id="i-book"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M19 19v2H6"/></g>
+  <g id="i-leaf"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19 13 11"/></g>
+  <g id="i-bag"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-think"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="strata"></div>
+    <div class="head-body">
+      <svg class="icon head-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-axe"/></svg>
+      <div>
+        <h1>Stone Movers</h1>
+        <p class="sub">History · Year 3 · The Dig Site · Week 5</p>
+      </div>
+      <span class="pill">Stonehenge</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <details class="keys">
+    <summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg> Key words</summary>
+    <div class="krow" id="keyWords"></div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Parts of the game">
+    <button type="button" data-go="0" aria-current="step">1. Stonehenge quiz</button>
+    <button type="button" data-go="1">2. True or false?</button>
+    <button type="button" data-go="2">3. Builder’s kit</button>
+    <button type="button" data-go="3">4. Your badge</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon icon-lg needle" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-axe"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="stoneCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <!-- ---------- Screen 1: quiz ---------- -->
+  <section class="screen on" id="s0" data-s="0" aria-label="Stonehenge quiz">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 1</span>
+      <h2 tabindex="-1" id="h0">Stonehenge quiz</h2>
+      <p class="lead">You are joining the builders of Stonehenge. Answer seven questions before you start work.</p>
+      <div class="ask" id="ask">
+        <p class="qnum" id="qnum">Question 1 of 7</p>
+        <p class="ask-q" id="qtext"></p>
+        <div class="choices" id="options"></div>
+      </div>
+      <div class="fb" id="qfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="nextQ" type="button" disabled>Next question</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 2: hunt or gather ---------- -->
+  <section class="screen" id="s1" data-s="1" aria-label="True or false">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg> Round 2</span>
+      <h2 tabindex="-1" id="h1">True or false?</h2>
+      <p class="lead">A visitor guide has some mistakes. Is each fact <b>true</b> or <b>false</b>?</p>
+      <div class="think">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg>
+        <p style="margin:0"><b>Think:</b> remember the fact sheet. Where is it, how old is it, and what was it made of?</p>
+      </div>
+      <div class="judge" id="judge">
+        <p class="qnum" id="jnum">Fact 1 of 9</p>
+        <p class="judge-q" id="jtext"></p>
+        <div class="judge-row">
+          <button class="pick-a" id="btnHunt" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-axe"/></svg> True
+          </button>
+          <button class="pick-b" id="btnGather" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg> False
+          </button>
+        </div>
+        <div class="tally" id="tally" aria-hidden="true"></div>
+      </div>
+      <div class="fb" id="jfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="nextJ" type="button" disabled>Next fact</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 3: pack your bag ---------- -->
+  <section class="screen" id="s2" data-s="2" aria-label="Builder’s kit">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bag"/></svg> Round 3</span>
+      <h2 tabindex="-1" id="h2">Builder’s kit</h2>
+      <p class="lead">You need to move a giant stone. Pick the five things the builders really used.</p>
+      <div class="think">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg>
+        <p style="margin:0"><b>Think:</b> there were no machines and no engines. Only wood, rope, stone, antler and people.</p>
+      </div>
+      <div class="kit" id="kit"></div>
+      <p class="found" id="found">Found: 0 of 5</p>
+      <div class="fb" id="kfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="toBadge" type="button" disabled>Get my badge</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 4: badge ---------- -->
+  <section class="screen" id="s3" data-s="3" aria-label="Your badge">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Round 4</span>
+      <h2 tabindex="-1" id="h3">Your badge</h2>
+      <p class="lead">Show this screen to your teacher before you close it.</p>
+      <div class="badge">
+        <h3>Stone Movers</h3>
+        <p class="big"><span id="finalPts">0</span> / 140</p>
+        <span class="rank" id="rank">Rope puller</span>
+        <p class="note" id="firstTry">First-time answers: 0</p>
+      </div>
+      <div class="summary">
+        <h3>Tricky ones to talk about</h3>
+        <ul id="tricky"><li class="none">Nothing yet. Play the three rounds first.</li></ul>
+        <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="note">History · Year 3 · Stone Age to Iron Age · Week 5 · Stonehenge</p>
+    </div>
+  </section>
+</div>
+
+<script>
+'use strict';
+(function () {
+  /* ---------- content ---------- */
+  var KEYS = [
+    ['monument', 'a big, important building or structure from the past'],
+    ['henge', 'a round bank of earth with a ditch'],
+    ['sarsen stone', 'one of the giant stones at Stonehenge, from Wiltshire'],
+    ['bluestone', 'one of the smaller stones at Stonehenge, from Wales'],
+    ['lintel', 'a stone laid across the top of two standing stones'],
+    ['World Heritage Site', 'a very special place that must be looked after']
+  ];
+
+  /* The right answer is always first (c: 0); the page shuffles before showing.
+     A hint says how to work it out. It never names the answer. */
+  var QUIZ = [
+    { q: 'Where is Stonehenge?',
+      a: ['In Wiltshire, in the south of England', 'On Orkney, in Scotland', 'In Bahrain'],
+      c: 0, hint: 'Skara Brae is far north. Stonehenge is at the other end of Britain.',
+      why: 'Stonehenge is on Salisbury Plain in Wiltshire, in the south of England.' },
+    { q: 'About how old is Stonehenge?',
+      a: ['About 5,000 years old', 'About 50 years old', 'About 500 years old'],
+      c: 0, hint: 'It was started in the New Stone Age, a very, very long time ago.',
+      why: 'People started building it about 5,000 years ago, in the New Stone Age.' },
+    { q: 'What was built first, around 3000 BC?',
+      a: ['The henge: a round ditch and bank', 'The giant lintels', 'A visitor centre'],
+      c: 0, hint: 'Look at the five pictures again: the very first one had no stones at all.',
+      why: 'First came the henge, a round ditch with a bank of earth. The stones came later.' },
+    { q: 'Where did the smaller bluestones come from?',
+      a: ['From Wales, a long way away', 'From the beach next door', 'From a shop'],
+      c: 0, hint: 'The fact sheet says they came "all the way" from somewhere. Where?',
+      why: 'The bluestones came all the way from Wales. The big sarsen stones came from Wiltshire.' },
+    { q: 'What is a lintel?',
+      a: ['A stone laid across the top of two standing stones', 'A ditch around the circle', 'A kind of rope'],
+      c: 0, hint: 'Look at the key words. Think of the top of a doorway.',
+      why: 'A lintel lies across the top of two standing stones, like the top of a door frame.' },
+    { q: 'How did the builders make the lintels stay in place?',
+      a: ['They carved bumps and holes so the stones fitted together', 'They used glue', 'They used metal nails'],
+      c: 0, hint: 'Remember the slide that said "like building bricks".',
+      why: 'Bumps and holes carved into the stones fitted together, like building bricks.' },
+    { q: 'Why was Stonehenge built?',
+      a: ['Nobody knows for sure', 'To be a shopping centre', 'To park boats'],
+      c: 0, hint: 'There is no writing from that time. Can anyone be certain?',
+      why: 'Nobody knows for sure. Some think it was a calendar for farmers, others a meeting place.' }
+  ];
+
+  /* hunt: true means the fact is true, false means it is false.
+     (The engine keeps the week 1 name for its two-way field.) */
+  var FOODS = [
+    { t: 'Stonehenge is a circle of huge stones.', hunt: true, why: 'True. It is a circle of huge stones.' },
+    { t: 'It was built in three stages.', hunt: true, why: 'True. The henge first, then the stones, then the stones were moved into place.' },
+    { t: 'The builders used wooden rollers and ropes.', hunt: true, why: 'True. Stones were rolled on logs and pulled with ropes.' },
+    { t: 'About one million people visit every year.', hunt: true, why: 'True. It is one of the most visited places in Britain.' },
+    { t: 'It is a World Heritage Site.', hunt: true, why: 'True. That means it is protected for the future.' },
+    { t: 'Stonehenge was built with cranes and lorries.', hunt: false, why: 'False. There were no machines 5,000 years ago.' },
+    { t: 'All the stones came from the same field.', hunt: false, why: 'False. The sarsens came from Wiltshire and the bluestones from Wales.' },
+    { t: 'It was built in one week.', hunt: false, why: 'False. It took hundreds of years, in three stages.' },
+    { t: 'Stonehenge is made of wood.', hunt: false, why: 'False. The first henges had wooden posts, but Stonehenge is made of stone.' }
+  ];
+
+  /* ok: true for something the builders really used. */
+  var ITEMS = [
+    { t: 'Wooden rollers (logs)', ok: true },
+    { t: 'Strong ropes made of leather', ok: true },
+    { t: 'Wooden levers', ok: true },
+    { t: 'Picks made from antlers', ok: true },
+    { t: 'Lots of people working together', ok: true },
+    { t: 'A crane', ok: false },
+    { t: 'A lorry', ok: false },
+    { t: 'An electric drill', ok: false },
+    { t: 'Metal chains', ok: false },
+    { t: 'A tractor', ok: false }
+  ];
+  var NEED = ITEMS.filter(function (i) { return i.ok; }).length;
+
+  var TOTAL = QUIZ.length * 10 + FOODS.length * 5 + NEED * 5;   /* 70 + 45 + 25 = 140 */
+
+  /* ---------- state (in memory only, never stored) ---------- */
+  var pts = 0, firstTry = 0, qi = 0, answered = false, tries = 0;
+  var tricky = [];
+  var ji = 0, judged = false, jtries = 0;
+  var found = 0, kitWrong = 0;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var live = $('live');
+  function say(msg) { live.textContent = msg; }
+  function note(t) { if (tricky.indexOf(t) === -1) tricky.push(t); }
+
+  function addPts(n) {
+    pts += n;
+    $('stoneCount').textContent = pts;
+    $('fill').style.width = Math.round(pts / TOTAL * 100) + '%';
+    var m = $('meter');
+    m.classList.remove('pop'); void m.offsetWidth; m.classList.add('pop');
+  }
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ---------- key words: local speech only, no network ---------- */
+  (function buildKeys() {
+    var row = $('keyWords');
+    KEYS.forEach(function (k) {
+      var card = document.createElement('div');
+      card.className = 'kcard';
+      var txt = document.createElement('div');
+      txt.className = 'ktext';
+      var b = document.createElement('b'); b.textContent = k[0];
+      var s = document.createElement('span'); s.textContent = k[1];
+      txt.appendChild(b); txt.appendChild(s);
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'say';
+      btn.setAttribute('aria-label', 'Say ' + k[0] + ' out loud');
+      btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-speak"/></svg>';
+      btn.addEventListener('click', function () {
+        if (!('speechSynthesis' in window)) return;
+        var u = new SpeechSynthesisUtterance(k[0] + '. ' + k[1]);
+        u.lang = 'en-GB'; u.rate = 0.85;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(u);
+      });
+      card.appendChild(txt); card.appendChild(btn);
+      row.appendChild(card);
+    });
+  })();
+
+  /* ---------- screens ---------- */
+  function show(n) {
+    ['s0', 's1', 's2', 's3'].forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    document.querySelectorAll('.rail button').forEach(function (b, i) {
+      if (i === n) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
+    });
+    var h = $('h' + n); if (h) h.focus();
+    if (n === 3) fillBadge();
+  }
+  document.querySelectorAll('.rail button').forEach(function (b) {
+    b.addEventListener('click', function () { show(+b.dataset.go); });
+  });
+
+  $('boardBtn').addEventListener('click', function () {
+    var on = document.documentElement.hasAttribute('data-board');
+    if (on) { document.documentElement.removeAttribute('data-board'); }
+    else { document.documentElement.setAttribute('data-board', ''); }
+    this.setAttribute('aria-pressed', String(!on));
+  });
+
+  /* ---------- round 1: quiz ---------- */
+  function drawQ() {
+    var item = QUIZ[qi];
+    answered = false; tries = 0;
+    $('qnum').textContent = 'Question ' + (qi + 1) + ' of ' + QUIZ.length;
+    $('qtext').textContent = item.q;
+    var fb = $('qfb'); fb.className = 'fb'; fb.textContent = '';
+    $('ask').classList.remove('solved');
+    $('nextQ').disabled = true;
+    $('nextQ').textContent = qi === QUIZ.length - 1 ? 'Go to round 2' : 'Next question';
+    var box = $('options'); box.textContent = '';
+    shuffle(item.a.map(function (_, i) { return i; })).forEach(function (src, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt choice';
+      b.innerHTML = '<span class="mark">' + 'ABC'.charAt(i) + '</span>';
+      var sp = document.createElement('span'); sp.textContent = item.a[src];
+      b.appendChild(sp);
+      b.addEventListener('click', function () { answer(src, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function answer(i, btn) {
+    if (answered) return;
+    var item = QUIZ[qi], fb = $('qfb');
+    if (i === item.c) {
+      answered = true;
+      btn.setAttribute('data-state', 'right');
+      $('ask').classList.add('solved');
+      addPts(tries === 0 ? 10 : 5);
+      if (tries === 0) firstTry++;
+      fb.className = 'fb good show';
+      fb.textContent = 'Correct. ' + item.why;
+      say(fb.textContent);
+      $('options').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+      $('nextQ').disabled = false;
+    } else {
+      tries++;
+      btn.setAttribute('data-state', 'wrong'); btn.disabled = true;
+      note(item.q);
+      fb.className = 'fb bad show';
+      fb.textContent = 'Not that one. ' + item.hint;
+      say(fb.textContent);
+    }
+  }
+
+  $('nextQ').addEventListener('click', function () {
+    if (qi < QUIZ.length - 1) { qi++; drawQ(); $('h0').focus(); }
+    else { show(1); }
+  });
+
+  /* ---------- round 2: hunt or gather ---------- */
+  function buildTally() {
+    var t = $('tally'); t.textContent = '';
+    FOODS.forEach(function () { t.appendChild(document.createElement('span')); });
+  }
+
+  function drawFood() {
+    judged = false; jtries = 0;
+    $('jnum').textContent = 'Fact ' + (ji + 1) + ' of ' + FOODS.length;
+    $('jtext').textContent = FOODS[ji].t;
+    $('judge').classList.remove('solved');
+    var fb = $('jfb'); fb.className = 'fb'; fb.textContent = '';
+    $('btnHunt').disabled = false;
+    $('btnGather').disabled = false;
+    $('nextJ').disabled = true;
+    $('nextJ').textContent = ji === FOODS.length - 1 ? 'Go to round 3' : 'Next fact';
+  }
+
+  /* A wrong pick gets the method again, and the child picks once more. */
+  function judge(saidHunt, btn) {
+    if (judged) return;
+    var food = FOODS[ji], fb = $('jfb'), marks = $('tally').children;
+    if (saidHunt === food.hunt) {
+      judged = true;
+      $('btnHunt').disabled = true;
+      $('btnGather').disabled = true;
+      $('nextJ').disabled = false;
+      addPts(jtries === 0 ? 5 : 2);
+      if (jtries === 0) firstTry++;
+      marks[ji].className = jtries === 0 ? 'done' : 'miss';
+      $('judge').classList.add('solved');
+      fb.className = 'fb good show';
+      fb.textContent = 'Yes. ' + food.why;
+    } else {
+      jtries++;
+      btn.disabled = true;
+      note(food.t + ' (true or false?)');
+      fb.className = 'fb bad show';
+      fb.textContent = 'Think again. Check it against the fact sheet: what did it say?';
+    }
+    say(fb.textContent);
+  }
+
+  $('btnHunt').addEventListener('click', function () { judge(true, this); });
+  $('btnGather').addEventListener('click', function () { judge(false, this); });
+  $('nextJ').addEventListener('click', function () {
+    if (ji < FOODS.length - 1) { ji++; drawFood(); $('h1').focus(); }
+    else { show(2); }
+  });
+
+  /* ---------- round 3: pack your bag ---------- */
+  function buildKit() {
+    found = 0; kitWrong = 0;
+    var box = $('kit'); box.textContent = '';
+    shuffle(ITEMS.slice()).forEach(function (item) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'kit-card';
+      b.textContent = item.t;
+      b.addEventListener('click', function () { pickItem(item, b); });
+      box.appendChild(b);
+    });
+    $('found').textContent = 'Found: 0 of ' + NEED;
+    $('toBadge').disabled = true;
+    var fb = $('kfb'); fb.className = 'fb'; fb.textContent = '';
+  }
+
+  function pickItem(item, btn) {
+    var fb = $('kfb');
+    btn.disabled = true;
+    if (item.ok) {
+      found++;
+      btn.setAttribute('data-state', 'right');
+      addPts(kitWrong === 0 ? 5 : 2);
+      if (kitWrong === 0) firstTry++;
+      kitWrong = 0;
+      $('found').textContent = 'Found: ' + found + ' of ' + NEED;
+      fb.className = 'fb good show';
+      fb.textContent = found === NEED ? 'Your team is ready. Pull together and the stone will move!'
+                                      : 'Yes, the builders used that.';
+      if (found === NEED) {
+        $('kit').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+        $('toBadge').disabled = false;
+        $('toBadge').focus();
+      }
+    } else {
+      kitWrong++;
+      btn.setAttribute('data-state', 'wrong');
+      btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+      note(item.t + ': did the builders have it?');
+      fb.className = 'fb bad show';
+      fb.textContent = 'Not 5,000 years ago. Does it need an engine, electricity or metal?';
+    }
+    say(fb.textContent);
+  }
+
+  $('toBadge').addEventListener('click', function () { show(3); });
+
+  /* ---------- round 4: badge ---------- */
+  function fillBadge() {
+    $('finalPts').textContent = pts;
+    $('firstTry').textContent = 'First-time answers: ' + firstTry + ' out of ' +
+      (QUIZ.length + FOODS.length + NEED);
+    var share = pts / TOTAL;
+    $('rank').textContent = share >= 0.9 ? 'Master builder'
+      : share >= 0.7 ? 'Stone lifter'
+      : share >= 0.4 ? 'Roller layer' : 'Rope puller';
+    var ul = $('tricky'); ul.textContent = '';
+    if (!tricky.length) {
+      var li = document.createElement('li');
+      li.className = 'none';
+      li.textContent = (found || qi || ji) ? 'Nothing tripped you up. Every answer was right first time.'
+                                           : 'Nothing yet. Play the three rounds first.';
+      ul.appendChild(li);
+    } else {
+      tricky.forEach(function (t) {
+        var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
+      });
+    }
+  }
+
+  $('again').addEventListener('click', function () {
+    pts = 0; firstTry = 0; qi = 0; ji = 0; tricky = [];
+    $('stoneCount').textContent = '0'; $('fill').style.width = '0';
+    drawQ(); buildTally(); drawFood(); buildKit(); show(0);
+  });
+
+  /* ---------- start ---------- */
+  drawQ();
+  buildTally();
+  drawFood();
+  buildKit();
+})();
+</script>
+</body>
+</html>
