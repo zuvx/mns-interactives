@@ -9,20 +9,20 @@
   .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin:1rem 0}
   .tier{background:var(--paper);border:4px solid var(--sand-2);border-radius:18px;padding:1.125rem;
     text-align:center;transition:border-color .25s ease,background .25s ease}
-  .tier h3{margin:.25rem 0;color:var(--teal);font-size:1.1875rem}
+  .tier h3{margin:.25rem 0;color:var(--sea);font-size:1.1875rem}
   .tier .lo{font-size:.8125rem;font-weight:700;color:var(--wood);margin-bottom:.5rem}
   .tier .can{font-size:.9375rem;min-height:3.5rem}
   .tier .mark{width:4rem;height:4rem;margin:0 auto .5rem;border-radius:50%;
     background:var(--sand-2);color:var(--wood);display:flex;align-items:center;justify-content:center}
   .tier .mark .icon{width:2.25rem;height:2.25rem}
-  .tier button{margin-top:.75rem;border:3px solid var(--teal);background:var(--paper);color:var(--teal);
+  .tier button{margin-top:.75rem;border:3px solid var(--sea);background:var(--paper);color:var(--sea);
     font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;
     min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;width:100%}
   .tier[data-earned="true"]{border-color:var(--ok);background:#F1FAF4}
   .tier[data-earned="true"] .mark{background:var(--ok);color:#fff}
   .tier[data-earned="true"] button{background:var(--ok);border-color:var(--ok-deep);color:#fff}
 
-  .full{margin-top:1.25rem;background:var(--teal);color:var(--paper);border-radius:18px;
+  .full{margin-top:1.25rem;background:var(--sea);color:var(--paper);border-radius:18px;
     padding:1.5rem;text-align:center;opacity:.45;transition:opacity .4s ease}
   .full.on{opacity:1}
   .full h2{margin:0 0 .5rem;color:var(--paper);font-size:1.625rem}
@@ -99,7 +99,7 @@
       '<h3>'+t.name+'</h3>'+
       '<p class="can">'+t.can+'</p>'+
       '<button type="button" aria-pressed="false">Not yet earned</button>'+
-      '<p style="margin:.5rem 0 0"><a href="'+t.file+'" style="color:var(--teal);font-weight:700">Open lesson '+t.n+'</a></p>';
+      '<p style="margin:.5rem 0 0"><a href="'+t.file+'" style="color:var(--sea);font-weight:700">Open lesson '+t.n+'</a></p>';
     var btn=d.querySelector('button');
     btn.setAttribute('aria-label','Mark rank '+t.n+', '+t.name+', as earned');
     btn.addEventListener('click',function(){
