@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery · Lesson 3: Same Slice, Different Cake</title>
+<link rel="stylesheet" href="bakery.css">
+<style>
+  .pair-row{display:flex;align-items:flex-end;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin:.5rem 0}
+  .pair-row .cake{width:100%;max-width:none}
+  .pair-row .cap{text-align:center;font-weight:700;color:var(--wood);margin-top:.25rem}
+</style>
+</head>
+<body data-lesson="l3">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg>
+      <div><h1>Same Slice, Different Cake</h1><p class="sub">Lesson 3 · A quarter of any shape, any way round</p></div>
+      <div class="pill">Unit 16 · Stage 3 · 3Nf.02</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="quarter"><div class="ktext"><b>quarter</b><span>One of 4 equal parts. Also called a fourth.</span></div></div>
+      <div class="kcard" data-word="equal"><div class="ktext"><b>equal</b><span>The same size. Not always the same shape.</span></div></div>
+      <div class="kcard" data-word="whole"><div class="ktext"><b>whole</b><span>All of the cake, whatever its shape.</span></div></div>
+      <div class="kcard" data-word="compare"><div class="ktext"><b>compare</b><span>Look at two things to see which is bigger.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> The cake shop</span>
+    <h2>A quarter can look very different</h2>
+    <p class="lead" data-voice="daniel" data-read="In the cake shop every cake is a different shape. Some are round, some are square, some are turned on their side. A quarter is still one of four equal parts, whatever the cake looks like.">
+      In the cake shop every cake is a different shape. Some are round, some are square, some are
+      turned on their side. A quarter is still <b>one of four equal parts</b>, whatever the cake looks like.</p>
+    <div class="ask-pic">BAKERY_WELCOME</div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Find the quarters</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Quarter hunt</span>
+    <h2>Which cakes show one quarter?</h2>
+    <div id="hunt"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg> Four ways</span>
+    <h2>One quarter, four different ways</h2>
+    <p class="lead" data-read="Every cake on the tray is the same size. Choose four that each show one quarter, cut in four different ways. Tap a cake to put it on a plate. Tap a plate to take it back.">
+      Every cake on the tray is the same size. Fill the four plates with cakes that each show
+      <b>one quarter</b>, cut in four different ways.</p>
+    <div id="ways"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Who is right?</span>
+    <h2>Kaede and Samson</h2>
+    <div id="talk"></div>
+    <h3 style="color:var(--sea)">Turn the cake</h3>
+    <div id="turn"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pair"></use></svg> Pairs</span>
+    <h2>Match the cakes</h2>
+    <p class="lead" data-read="Find two cakes that show the same fraction. Tap one, then tap its partner. Find all the pairs.">Tap a cake, then the cake that shows the <b>same fraction</b>. Find all the pairs.</p>
+    <div id="match"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Baker's badge</span>
+    <h2>Earn your Baker rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw four squares the same size. Shade one quarter of each square in a different way. Under
+      each one, write how you know it is a quarter.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Bakery Rank 3: Baker</h3>
+      <div style="font-weight:700">Stamp this when you can explain why parts can be different shapes and still be quarters.</div>
+      <div><span class="stamp" id="stamp">BAKER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">All the ranks done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery · Stage 3 · Unit 16 Lesson 3 (3Nf.02). SB p68, WB pp130-131. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-bakery.js reads this block and re-derives every answer.
+     Hunt: SB p68 quarters and non-examples. Ways: WB p130 Q3 (a rectangle, four
+     ways). Talk: WB Q4 (Kaede) and Q5 (Samson). Turn: WB Q2, one fifth turned.
+     Match: WB Q4 shapes, re-paired so no pair is a Progress Check Q5 pair. -->
+<script type="application/json" id="data">
+{
+  "welcome": ["squareX/1", "circle4/1", "diamond4/1", "z4/1/r90"],
+  "hunt": ["rect4/1/r90", "diamond4/1", "squareX/1", "stripU4/1", "circle4/1", "tri4/1", "circleU4/1", "z4/1/r90", "crossU4/1", "halfX/1"],
+  "ways": ["rect4/1", "stripU4/1", "band4/1", "rect3/1", "grid2-2/1", "rectX/1", "rect4/2", "halfX/1"],
+  "kaede": {"big": "square4/1", "small": "strip2/1"},
+  "samson": ["squareX/1", "circle4/1", "diamond4/1"],
+  "turn": ["strip5/1/r60", "strip5/1/r-30"],
+  "match": ["rectX/3", "tri4/2", "circle10/4", "star4/1", "rect4/2/r90", "square4/1", "circle4/3", "rect10/4"],
+  "rank": {
+    "thirds": ["tri3/1", "rect3/1", "stripU3/1", "circle3/1", "circle4/1", "band3/1"],
+    "read": "hex6/1/r30",
+    "lina": {"big": "circle2/1", "small": "circle2/1"}
+  }
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+
+  document.querySelector('.ask-pic').innerHTML = D.welcome.map(function(s){ return B.cake(s,{small:true}); }).join('');
+
+  B.init([
+    {icon:'oven',   label:'Welcome'},
+    {icon:'search', label:'Quarter hunt'},
+    {icon:'four',   label:'Four ways'},
+    {icon:'talk',   label:'Who is right?'},
+    {icon:'pair',   label:'Pairs'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) B.renderMyWork(); }});
+
+  function fits(spec, parts){
+    var s=BakeryShapes.parse(spec);
+    return s.equal && s.parts.length===parts && s.shaded===1;
+  }
+  function indexesWhere(list, test){
+    return list.map(function(s,i){ return test(s) ? i : -1; }).filter(function(i){ return i>=0; });
+  }
+  function claim(host, who, text, pictureHTML){
+    var says=document.createElement('div'); says.className='says';
+    says.innerHTML='<p data-voice="daniel"><span class="who">'+who+' says:</span> '+text+'</p>';
+    says.querySelector('p').setAttribute('data-read', who+' says: '+text);
+    host.appendChild(says);
+    if(pictureHTML){ var pic=document.createElement('div'); pic.className='pair-row'; pic.innerHTML=pictureHTML; host.appendChild(pic); }
+    B.readAloud();
+  }
+  function bigSmall(k){
+    return '<div><div style="width:13rem">'+B.cake(k.big)+'</div><div class="cap">Cake A</div></div>' +
+           '<div><div style="width:6rem">'+B.cake(k.small)+'</div><div class="cap">Cake B</div></div>';
+  }
+
+  /* ---- Quarter hunt ---- */
+  B.picks(document.getElementById('hunt'),{prompt:'Tap every cake that shows one quarter iced.',
+    items:D.hunt.map(function(s){ return B.cake(s,{small:true}); }),
+    correct:indexesWhere(D.hunt, function(s){ return fits(s,4); }),
+    task:'L3 Quarter hunt',
+    hint:'One quarter is 1 of 4 equal parts. Check every part of each cake is the same size, then check only one part is iced.'});
+
+  /* ---- Four ways ---- */
+  B.quarters(document.getElementById('ways'),{prompt:'Show one quarter in four different ways.',
+    options:D.ways, task:'L3 Four ways'});
+
+  /* ---- Kaede and Samson ---- */
+  var talkHost=document.getElementById('talk');
+  claim(talkHost,'Kaede','One quarter is bigger than one half. Look at my cakes!', bigSmall(D.kaede));
+  B.choose(talkHost,{prompt:'Is Kaede right?', options:[
+      'Yes. The quarter of cake A looks bigger, so a quarter is bigger.',
+      'Yes, because 4 is bigger than 2.',
+      'No. The two cakes are different sizes, so we cannot compare their parts like this.'],
+    answer:2, task:'L3 Kaede',
+    nudge:'Look at the two whole cakes. Are they the same size?',
+    hint:'To compare a quarter and a half, the two wholes must be the same size. A half of the same cake is always bigger than a quarter of it.'});
+  claim(talkHost,'Samson','These cakes look so different. They cannot all show one quarter.',
+    D.samson.map(function(s){ return '<div style="width:7rem">'+B.cake(s)+'</div>'; }).join(''));
+  B.choose(talkHost,{prompt:'Is Samson right?', options:[
+      'No. Each cake is cut into 4 equal parts and one part is iced, so each one shows one quarter.',
+      'Yes. A quarter must always be a square.',
+      'Yes. Only the round cake shows a quarter.'],
+    answer:0, task:'L3 Samson',
+    nudge:'Count the parts in each cake. Are they equal?',
+    hint:'The shape of the cake does not matter. Look for 4 equal parts with 1 iced.'});
+
+  /* ---- Turn the cake ---- */
+  var turnHost=document.getElementById('turn');
+  D.turn.forEach(function(spec,k){
+    var s=BakeryShapes.parse(spec);
+    B.askFrac(turnHost,{prompt:'What fraction of the cake is iced?', show:B.cake(spec),
+      answer:s.shaded+'/'+s.parts.length, task:'L3 Turned '+(k+1),
+      nudge:'Not quite. Count all the equal parts first, even though the cake is turned.',
+      hint:'Turning a cake does not change it. Bottom number: all the equal parts. Top number: the iced ones.',
+      praise:'Correct. Turning the cake does not change the fraction.'});
+  });
+
+  /* ---- Pairs ---- */
+  B.match(document.getElementById('match'),{prompt:'Match the cakes that show the same fraction.',
+    cards:D.match.map(function(spec){
+      var s=BakeryShapes.parse(spec);
+      return {spec:spec, key:String(s.shaded/s.parts.length)};
+    }), task:'L3 Pairs'});
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk'), R=D.rank;
+  B.picks(host,{prompt:'Tap every cake that shows one third iced.',
+    items:R.thirds.map(function(s){ return B.cake(s,{small:true}); }),
+    correct:indexesWhere(R.thirds, function(s){ return fits(s,3); }), task:'L3 Rank thirds',
+    hint:'One third is 1 of 3 equal parts. Check the parts are equal and only one is iced.'});
+  var rs=BakeryShapes.parse(R.read);
+  B.askFrac(host,{prompt:'What fraction of the cake is iced?', show:B.cake(R.read),
+    answer:rs.shaded+'/'+rs.parts.length, task:'L3 Rank turned',
+    nudge:'Not quite. Count all the equal parts first.',
+    hint:'Bottom number: all the equal parts. Top number: the iced ones.'});
+  claim(host,'Lina','Both my cakes are cut in half, so both halves are the same size.', bigSmall(R.lina));
+  B.choose(host,{prompt:'Is Lina right?', options:[
+      'Yes. A half is always the same size.',
+      'No. Cake A is bigger than cake B, so half of cake A is bigger.'],
+    answer:1, task:'L3 Rank Lina',
+    nudge:'Look at the two whole cakes again.',
+    hint:'A half is one of two equal parts of its own whole. A bigger whole has bigger halves.'});
+})();
+</script>
+</body>
+</html>

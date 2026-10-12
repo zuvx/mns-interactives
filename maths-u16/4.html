@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery · Lesson 4: The Biscuit Boxes</title>
+<link rel="stylesheet" href="bakery.css">
+</head>
+<body data-lesson="l4">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-biscuit"></use></svg>
+      <div><h1>The Biscuit Boxes</h1><p class="sub">Lesson 4 · Fractions of a set and of a number</p></div>
+      <div class="pill">Unit 16 · Stage 3 · 3Nf.03</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="set"><div class="ktext"><b>set</b><span>A group of things. A box of biscuits is a set.</span></div></div>
+      <div class="kcard" data-word="part"><div class="ktext"><b>part</b><span>Some of the whole set.</span></div></div>
+      <div class="kcard" data-word="total"><div class="ktext"><b>total</b><span>All of them together.</span></div></div>
+      <div class="kcard" data-word="half"><div class="ktext"><b>half</b><span>One of 2 equal groups.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> Packing up</span>
+    <h2>A fraction of a box of biscuits</h2>
+    <p class="lead" data-voice="daniel" data-read="The biscuits are baked and packed in boxes. A box of biscuits is a whole too. If 3 of the 4 biscuits in a box are iced, then three quarters of the box is iced.">
+      The biscuits are baked and packed in boxes. A box of biscuits is a <b>whole</b> too. If 3 of the
+      4 biscuits in a box are iced, then <span class="fr" role="img" aria-label="3 out of 4"><span>3</span><span>4</span></span> of the box is iced.</p>
+    <div class="ask-pic" id="welcomeSet"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the boxes</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-biscuit"></use></svg> Half a box</span>
+    <h2>Half for you, half for me</h2>
+    <div class="pickrow" id="pickHalf" role="group" aria-label="Choose a box"></div>
+    <div id="half"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg> Iced biscuits</span>
+    <h2>What fraction is iced?</h2>
+    <p class="lead" data-read="Count all the biscuits in the box. That is the bottom number. Count the iced biscuits. That is the top number.">All the biscuits: bottom number. Iced biscuits: top number.</p>
+    <div class="pickrow" id="pickBox" role="group" aria-label="Choose a box"></div>
+    <div id="box"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Ade's fruit</span>
+    <h2>How much fruit did Ade eat?</h2>
+    <div class="pickrow" id="pickFruit" role="group" aria-label="Choose a fruit"></div>
+    <div id="fruit"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> The whole box</span>
+    <h2>How many were in the whole box?</h2>
+    <p class="lead" data-read="You know one part. Every part is the same. Use the part you know to find the whole.">You know <b>one part</b>. Every part is the same. Find the whole.</p>
+    <div class="pickrow" id="pickWhole" role="group" aria-label="Choose a puzzle"></div>
+    <div id="whole"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Baker's badge</span>
+    <h2>Earn your Head Baker rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Use the numbers 2, 3, 4, 5, 6 and 10 to write six fractions. Write each one as a sentence:
+      2 parts out of a total of 3 parts. Draw a set of counters for one of them.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Bakery Rank 4: Head Baker</h3>
+      <div style="font-weight:700">Stamp this when you can explain a fraction of a set as parts out of a total.</div>
+      <div><span class="stamp" id="stamp">HEAD BAKER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Next: the <b>Great Bake-off</b> is a practice run of the Progress Check. All the
+      ranks done? Open <b>charter.html</b>.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery · Stage 3 · Unit 16 Lesson 4 (3Nf.03). SB p69, WB pp132-133. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-bakery.js reads this block and re-derives every answer.
+     Half: WB p132 Q1. Iced: new sets, none of 6 (Progress Check Q7 uses sets of 6).
+     Fruit: WB Q2, Ade's table, with the banana's 3/5 changed to 4/5 (3/5 is PC Q9b).
+     Whole: SB p69 cherries and biscuits, WB Q7 marbles, SB partner task (6 in a 4-part bar). -->
+<script type="application/json" id="data">
+{
+  "welcome": [4, 3],
+  "half": [20, 12, 18, 22],
+  "sets": [[4, 3], [5, 2], [8, 4], [10, 7]],
+  "notIced": [5, 2],
+  "fruit": [
+    {"fruit": "melon", "parts": 4, "ate": 3, "ask": "fraction"},
+    {"fruit": "pineapple", "parts": 5, "ate": 2, "ask": "fraction"},
+    {"fruit": "orange", "parts": 6, "ate": 5, "ask": "fraction"},
+    {"fruit": "pear", "parts": 3, "ate": 2, "ask": "words"},
+    {"fruit": "banana", "parts": 5, "ate": 4, "ask": "words"},
+    {"fruit": "watermelon", "parts": 10, "ate": 4, "ask": "words"}
+  ],
+  "whole": [
+    {"part": 7, "parts": 2, "thing": "cherries"},
+    {"part": 5, "parts": 4, "thing": "biscuits"},
+    {"part": 5, "parts": 5, "thing": "marbles"},
+    {"part": 6, "parts": 4, "thing": "cakes"}
+  ],
+  "rank": {"half": 16, "set": [10, 3], "words": [5, 8], "sentence": [3, 8], "whole": {"part": 9, "parts": 2, "thing": "buns"}}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+  document.getElementById('welcomeSet').innerHTML = B.set(D.welcome[0], D.welcome[1], 'biscuits');
+
+  B.init([
+    {icon:'oven',    label:'Welcome'},
+    {icon:'biscuit', label:'Half'},
+    {icon:'cake',    label:'Iced'},
+    {icon:'talk',    label:'Fruit'},
+    {icon:'search',  label:'Whole'},
+    {icon:'medal',   label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) B.renderMyWork(); }});
+
+  function halfOf(host, n, task, onSolved){
+    return B.ask(host,{prompt:'Share the box into 2 equal groups. How many biscuits are in half?',
+      show:B.set(n,0,'biscuits'), answer:n/2, task:task,
+      nudge:'Not quite. The two groups must be the same size.',
+      hint:'Make two groups, one biscuit at a time. Or double your answer: do you get the whole box?',
+      onSolved:onSolved});
+  }
+  function setFrac(host, t, task, onSolved){
+    return B.askFrac(host,{prompt:'What fraction of the biscuits is iced?', show:B.set(t[0],t[1],'biscuits'),
+      answer:t[1]+'/'+t[0], task:task,
+      nudge:'Not quite. Count every biscuit in the box first. That is the bottom number.',
+      hint:'Bottom number: all the biscuits in the box. Top number: the iced ones.',
+      onSolved:onSolved});
+  }
+  function findWhole(host, w, task, onSolved){
+    var labels=[w.part]; for(var k=1;k<w.parts;k++) labels.push('');
+    var f=B.frac(1,w.parts);
+    return B.ask(host,{prompt:'One part is '+w.part+' '+w.thing+'. How many '+w.thing+' are in the whole box?',
+      say:'You know one part. How many are in the whole box?',
+      show:B.bar(w.parts,'?',labels)+'<p style="width:100%;text-align:center;font-weight:700">'+w.part+' '+w.thing+' is '+f+' of the box.</p>',
+      answer:w.part*w.parts, task:task,
+      nudge:'Not quite. Every part has the same number in it.',
+      hint:'Write the number in every part of the bar. Then add all the parts together.',
+      onSolved:onSolved});
+  }
+
+  /* ---- Half ---- */
+  var halfHost=document.getElementById('half');
+  var halves=B.chips(document.getElementById('pickHalf'),
+    D.half.map(function(n){ return 'Box of '+n; }), function(i, isDone){
+    halfHost.innerHTML='';
+    if(isDone){ halfHost.innerHTML='<p class="verdict good">Shared. Choose another box.</p>'; return; }
+    halfOf(halfHost, D.half[i], 'L4 Half of '+D.half[i], function(){ halves.markDone(i); });
+  });
+
+  /* ---- Iced biscuits ---- */
+  var boxHost=document.getElementById('box');
+  var boxes=B.chips(document.getElementById('pickBox'),
+    D.sets.map(function(t,i){ return 'Box '+(i+1); }), function(i, isDone){
+    boxHost.innerHTML='';
+    if(isDone){ boxHost.innerHTML='<p class="verdict good">Done. Choose another box.</p>'; return; }
+    var t=D.sets[i];
+    setFrac(boxHost, t, 'L4 Iced '+t[1]+' of '+t[0], function(){
+      if(t[0]!==D.notIced[0] || t[1]!==D.notIced[1]){ boxes.markDone(i); return; }
+      B.askFrac(boxHost,{prompt:'What fraction of the biscuits is not iced?',
+        answer:(t[0]-t[1])+'/'+t[0], task:'L4 Not iced '+t[1]+' of '+t[0],
+        nudge:'Not quite. This time the top number is the plain biscuits.',
+        hint:'The box still has the same number of biscuits. Count the ones with no icing.',
+        onSolved:function(){ boxes.markDone(i); }});
+    });
+  });
+
+  /* ---- Ade's fruit: to a fraction, and back to words ---- */
+  var fruitHost=document.getElementById('fruit');
+  var fruits=B.chips(document.getElementById('pickFruit'),
+    D.fruit.map(function(f){ return f.fruit.charAt(0).toUpperCase()+f.fruit.slice(1); }), function(i, isDone){
+    fruitHost.innerHTML='';
+    if(isDone){ fruitHost.innerHTML='<p class="verdict good">Done. Choose another fruit.</p>'; return; }
+    var f=D.fruit[i];
+    var line=f.ask==='fraction'
+      ? 'I cut the '+f.fruit+' into '+f.parts+' equal parts. I ate '+f.ate+' of them.'
+      : 'I ate '+f.ate+' parts of the '+f.fruit+'. It was cut into '+f.parts+' equal parts.';
+    var says=document.createElement('div'); says.className='says';
+    says.innerHTML='<p data-voice="daniel"><span class="who">Ade says:</span> '+line+'</p>';
+    says.querySelector('p').setAttribute('data-read','Ade says: '+line);
+    fruitHost.appendChild(says);
+    B.readAloud();
+    if(f.ask==='fraction'){
+      B.askFrac(fruitHost,{prompt:'What fraction of the '+f.fruit+' did Ade eat?',
+        say:'What fraction of the fruit did Ade eat?', answer:f.ate+'/'+f.parts, exact:true,
+        task:'L4 Ade '+f.fruit,
+        nudge:'Not quite. How many equal parts was the fruit cut into? That is the bottom number.',
+        hint:'Bottom number: all the equal parts of the fruit. Top number: the parts Ade ate.',
+        onSolved:function(){ fruits.markDone(i); }});
+    } else {
+      B.askFrac(fruitHost,{prompt:'Ade ate this much. Finish the sentence.',
+        show:'<span class="bigfrac">'+B.frac(f.ate,f.parts)+'</span>', answer:f.ate+'/'+f.parts, words:true,
+        task:'L4 Ade words '+f.fruit,
+        nudge:'Not quite. The top number is how many parts Ade ate.',
+        hint:'The first box is the top number. The second box is the bottom number: all the parts.',
+        onSolved:function(){ fruits.markDone(i); }});
+    }
+  });
+
+  /* ---- Find the whole ---- */
+  var wholeHost=document.getElementById('whole');
+  var wholes=B.chips(document.getElementById('pickWhole'),
+    D.whole.map(function(w){ return w.thing.charAt(0).toUpperCase()+w.thing.slice(1); }), function(i, isDone){
+    wholeHost.innerHTML='';
+    if(isDone){ wholeHost.innerHTML='<p class="verdict good">Found. Choose another.</p>'; return; }
+    var w=D.whole[i];
+    findWhole(wholeHost, w, 'L4 Whole '+w.thing, function(){ wholes.markDone(i); });
+  });
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk'), R=D.rank;
+  halfOf(host, R.half, 'L4 Rank half');
+  setFrac(host, R.set, 'L4 Rank set');
+  B.askFrac(host,{prompt:'Write this as a fraction: '+R.words[0]+' parts out of a total of '+R.words[1]+' parts.',
+    say:'Write the sentence as a fraction.', answer:R.words[0]+'/'+R.words[1], task:'L4 Rank words to fraction',
+    nudge:'Not quite. The total number of parts is the bottom number.',
+    hint:'Top number: the parts we have. Bottom number: the total number of parts.'});
+  B.askFrac(host,{prompt:'Finish the sentence for this fraction.',
+    show:'<span class="bigfrac">'+B.frac(R.sentence[0],R.sentence[1])+'</span>',
+    answer:R.sentence[0]+'/'+R.sentence[1], words:true, task:'L4 Rank fraction to words',
+    nudge:'Not quite. The first box is the top number.',
+    hint:'The first box is the top number. The second box is the total: the bottom number.'});
+  findWhole(host, R.whole, 'L4 Rank whole');
+})();
+</script>
+</body>
+</html>

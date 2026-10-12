@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery · The Great Bake-off</title>
+<link rel="stylesheet" href="bakery.css">
+<style>
+  .qhead{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:1.25rem 0 .25rem;color:var(--sea)}
+  .qhead h3{margin:0;font-size:1.1875rem}
+  .results{list-style:none;padding:0;margin:.75rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:.5rem}
+  .results li{background:var(--sand);border-radius:12px;padding:.5rem .75rem;font-weight:700;border-left:6px solid var(--sand-2)}
+  .results li.full{border-left-color:var(--ok)}
+  .results li.gap{border-left-color:var(--coral)}
+</style>
+</head>
+<body data-lesson="bakeoff">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg>
+      <div><h1>The Great Bake-off</h1><p class="sub">Progress Check practice · every kind of question, new numbers</p></div>
+      <div class="pill">Unit 16 · Stage 3 · 23 marks</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <nav class="rail" id="rail" aria-label="Bake-off rounds"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> The Bake-off</span>
+    <h2>Ready for the Progress Check?</h2>
+    <p class="lead" data-voice="daniel" data-read="Welcome to the Great Bake-off. Every kind of question from your Progress Check is here, in the same order, with new numbers. You get a mark when you are right first time. Can you get all twenty three?">
+      Every kind of question from your Progress Check is here, in the same order, with new numbers.
+      You get a <b>mark</b> when you are right first time. Can you get all 23?</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Take your time. Nobody is timing you. If you get one wrong, you can still finish it, but the mark only counts first time.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start round 1</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-loaf"></use></svg> Round 1</span>
+    <h2>Bars</h2>
+    <div class="qhead"><h3>Label each part</h3><span class="pctag">Like PC question 1</span></div>
+    <div id="q1"></div>
+    <div class="qhead"><h3>How many in each part?</h3><span class="pctag">Like PC question 2</span></div>
+    <div id="q2"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(2)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg> Round 2</span>
+    <h2>What fraction is iced?</h2>
+    <div class="qhead"><span class="pctag">Like PC question 3</span></div>
+    <div id="q3"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(3)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-whisk"></use></svg> Round 3</span>
+    <h2>Ice the cakes</h2>
+    <div class="qhead"><span class="pctag">Like PC question 4</span></div>
+    <div id="q4"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pair"></use></svg> Round 4</span>
+    <h2>Match the pairs</h2>
+    <div class="qhead"><span class="pctag">Like PC question 5</span></div>
+    <p class="lead" data-read="Find two cakes that show the same fraction. On the Progress Check you only get the mark if every pair is right.">On the Progress Check you only get this mark if <b>every</b> pair is right.</p>
+    <div id="q5"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg> Round 5</span>
+    <h2>One quarter, four ways</h2>
+    <div class="qhead"><span class="pctag">Like PC question 6</span></div>
+    <p class="lead" data-read="Choose four cakes that each show one quarter, cut in four different ways. On the Progress Check you will draw the lines yourself, so look closely at how each one is cut.">
+      On the Progress Check you draw the lines yourself, so look closely at <b>how</b> each cake is cut.</p>
+    <div id="q6"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(6)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="6"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-biscuit"></use></svg> Round 6</span>
+    <h2>Counters</h2>
+    <div class="qhead"><span class="pctag">Like PC question 7</span></div>
+    <div id="q7"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(7)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="7"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Round 7</span>
+    <h2>Words and fractions</h2>
+    <div class="qhead"><h3>Write as a fraction</h3><span class="pctag">Like PC question 8</span></div>
+    <div id="q8"></div>
+    <div class="qhead"><h3>Finish the sentence</h3><span class="pctag">Like PC question 9</span></div>
+    <div id="q9"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(8)">See my score</button></div>
+  </div></section>
+
+  <section class="screen" data-s="8"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Judging</span>
+    <h2>My Bake-off score</h2>
+    <div class="licence">
+      <h3>Marks, first time</h3>
+      <div class="score" id="score">0 / 23</div>
+      <div id="scoreNote" style="font-weight:700"></div>
+      <div><span class="stamp" id="stamp">MASTER BAKER</span></div>
+    </div>
+    <ul class="results" id="results"></ul>
+    <p class="note">To try again from the start, reload the page. Teacher: the Session summary shows
+      each Progress Check question, first try and after a hint.</p>
+    <div class="mywork" id="mywork"></div>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery · Stage 3 · Unit 16 Progress Check practice (3Nf.01, 3Nf.02, 3Nf.03). Works offline. No timers.</p>
+</div>
+
+<!-- Bake-off data. Every item matches a Progress Check question in kind and in
+     marks (23 in all), and none of them is a Progress Check item: check-bakery.js
+     holds the paper's list and fails if one turns up here. -->
+<script type="application/json" id="data">
+{
+  "q1": [6, 8],
+  "q2": [[15, 5], [24, 6]],
+  "q3": ["squareX/3", "hex6/2", "circle8/5", "pent5/4"],
+  "q4": [["circle4", "3/4"], ["hex6", "5/6"], ["circle10", "4/10"], ["tri4", "1/4"], ["square4", "2/4"], ["grid2-4", "5/8"]],
+  "q5": ["circle5/2", "grid2-4/3", "band4/1", "hex6/5", "strip5/2", "circle8/3", "circle4/1", "grid2-3/5"],
+  "q6": ["rect4/1/r90", "rect3/1/r90", "band4/1/r90", "grid2-2/1/r90", "stripU4/1/r90", "rectX/1/r90", "rect4/2/r90", "halfX/1/r90"],
+  "q7": [[8, 3], [10, 5]],
+  "q8": [[4, 10], [5, 6]],
+  "q9": ["2/5", "5/8", "9/10"],
+  "marks": {"Q1": 2, "Q2": 2, "Q3": 4, "Q4": 6, "Q5": 1, "Q6": 1, "Q7": 2, "Q8": 2, "Q9": 3}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+
+  B.init([
+    {icon:'oven',    label:'Start'},
+    {icon:'loaf',    label:'Bars'},
+    {icon:'cake',    label:'Read'},
+    {icon:'whisk',   label:'Ice'},
+    {icon:'pair',    label:'Pairs'},
+    {icon:'four',    label:'Quarters'},
+    {icon:'biscuit', label:'Counters'},
+    {icon:'scroll',  label:'Words'},
+    {icon:'medal',   label:'Score'}
+  ], {onEnter:function(n){ if(n===8){ paintScore(); B.renderMyWork(); } }});
+
+  /* One mark per item right first time, the way the paper is marked. */
+  var got={}, done={};
+  Object.keys(D.marks).forEach(function(q){ got[q]=0; done[q]=0; });
+  function scored(q){
+    return function(v, tries){ done[q]++; if(tries===1) got[q]++; };
+  }
+  function blanks(n){ var a=[]; for(var i=0;i<n;i++) a.push(''); return a; }
+
+  /* Q1: label each part of a 1 whole bar */
+  var q1=document.getElementById('q1');
+  D.q1.forEach(function(n,k){
+    var pic;
+    B.askFrac(q1,{prompt:'Write the fraction that goes in each part.', show:B.bar(n,'1 whole',blanks(n)),
+      answer:'1/'+n, exact:true, task:'PC Q1 · bar of '+n,
+      nudge:'Not quite. Count all the parts in the bar.',
+      hint:'Each part is one part of the whole. The bottom number is how many equal parts the bar has.',
+      onSolved:function(v,t){
+        scored('Q1')(v,t);
+        var labels=[]; for(var i=0;i<n;i++) labels.push(B.frac(1,n));
+        q1.querySelectorAll('.ask-pic')[k].innerHTML=B.bar(n,'1 whole',labels);
+      }});
+  });
+
+  /* Q2: a whole of N in n parts */
+  var q2=document.getElementById('q2');
+  D.q2.forEach(function(t){
+    B.ask(q2,{prompt:'How many are in each part?', show:B.bar(t[1],t[0],blanks(t[1])),
+      answer:t[0]/t[1], task:'PC Q2 · '+t[0]+' in '+t[1],
+      nudge:'Not quite. Every part has the same number.',
+      hint:'Try a number in every part. Do all the parts add up to the whole?',
+      onSolved:scored('Q2')});
+  });
+
+  /* Q3: what fraction is iced */
+  var q3=document.getElementById('q3');
+  D.q3.forEach(function(spec){
+    var s=BakeryShapes.parse(spec);
+    B.askFrac(q3,{prompt:'What fraction of the cake is iced?', show:B.cake(spec),
+      answer:s.shaded+'/'+s.parts.length, task:'PC Q3 · '+spec,
+      nudge:'Not quite. Count all the equal parts first. That is the bottom number.',
+      hint:'Bottom number: how many equal parts in the whole cake. Top number: how many of them are iced.',
+      onSolved:scored('Q3')});
+  });
+
+  /* Q4: ice to show */
+  var q4=document.getElementById('q4');
+  D.q4.forEach(function(x){
+    B.shade(q4,{prompt:'Ice the cake to show this fraction.', shape:x[0], target:x[1],
+      task:'PC Q4 · '+x[0]+' '+x[1], onSolved:scored('Q4')});
+  });
+
+  /* Q5: match, all pairs for the mark */
+  B.match(document.getElementById('q5'),{prompt:'Match the cakes that show the same fraction.',
+    cards:D.q5.map(function(spec){
+      var s=BakeryShapes.parse(spec);
+      return {spec:spec, key:String(s.shaded/s.parts.length)};
+    }), task:'PC Q5 · pairs', onSolved:scored('Q5')});
+
+  /* Q6: one quarter four ways, all four for the mark */
+  B.quarters(document.getElementById('q6'),{prompt:'Show one quarter in four different ways.',
+    options:D.q6, task:'PC Q6 · four quarters', onSolved:scored('Q6')});
+
+  /* Q7: fraction of a set of counters */
+  var q7=document.getElementById('q7');
+  D.q7.forEach(function(t){
+    B.askFrac(q7,{prompt:'What fraction of the counters is white?', show:B.set(t[0],t[1],'counters'),
+      answer:t[1]+'/'+t[0], task:'PC Q7 · '+t[1]+' of '+t[0],
+      nudge:'Not quite. Count every counter first. That is the bottom number.',
+      hint:'Bottom number: all the counters. Top number: the white ones.',
+      onSolved:scored('Q7')});
+  });
+
+  /* Q8: words to a fraction */
+  var q8=document.getElementById('q8');
+  D.q8.forEach(function(t){
+    B.askFrac(q8,{prompt:'Write as a fraction: '+t[0]+' parts out of a total of '+t[1]+' parts.',
+      say:'Write the sentence as a fraction.', answer:t[0]+'/'+t[1], task:'PC Q8 · '+t[0]+' of '+t[1],
+      nudge:'Not quite. The total number of parts is the bottom number.',
+      hint:'Top number: the parts we have. Bottom number: the total number of parts.',
+      onSolved:scored('Q8')});
+  });
+
+  /* Q9: a fraction to words */
+  var q9=document.getElementById('q9');
+  D.q9.forEach(function(f){
+    var p=B.parseFrac(f);
+    B.askFrac(q9,{prompt:'Finish the sentence for this fraction.',
+      show:'<span class="bigfrac">'+B.frac(p[0],p[1])+'</span>', answer:f, words:true,
+      task:'PC Q9 · '+f,
+      nudge:'Not quite. The first box is the top number.',
+      hint:'The first box is the top number. The second box is the total: the bottom number.',
+      onSolved:scored('Q9')});
+  });
+
+  /* ---- Score ---- */
+  function paintScore(){
+    var total=0, max=0, gaps=[];
+    var list=Object.keys(D.marks).map(function(q){
+      total+=got[q]; max+=D.marks[q];
+      var full=got[q]===D.marks[q];
+      if(!full) gaps.push(q);
+      return '<li class="'+(full?'full':'gap')+'">'+q+': '+got[q]+' of '+D.marks[q]+
+        (done[q]<D.marks[q] ? ' <span style="font-weight:400">('+(D.marks[q]-done[q])+' not done)</span>' : '')+'</li>';
+    }).join('');
+    document.getElementById('score').textContent=total+' / '+max;
+    document.getElementById('results').innerHTML=list;
+    document.getElementById('scoreNote').textContent = total===max
+      ? 'Every mark, first time. You are a Master Baker.'
+      : 'Practise these again: '+gaps.join(', ')+'.';
+    document.getElementById('stamp').classList.toggle('on', total===max);
+  }
+})();
+</script>
+</body>
+</html>

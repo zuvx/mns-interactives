@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery · Lesson 1: The Bread Counter</title>
+<link rel="stylesheet" href="bakery.css">
+</head>
+<body data-lesson="l1">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-loaf"></use></svg>
+      <div><h1>The Bread Counter</h1><p class="sub">Lesson 1 · Equal parts make one whole</p></div>
+      <div class="pill">Unit 16 · Stage 3 · 3Nf.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="whole"><div class="ktext"><b>whole</b><span>All of it. The whole loaf.</span></div></div>
+      <div class="kcard" data-word="equal parts"><div class="ktext"><b>equal parts</b><span>Parts that are all the same size.</span></div></div>
+      <div class="kcard" data-word="fraction"><div class="ktext"><b>fraction</b><span>Some of the equal parts of a whole.</span></div></div>
+      <div class="kcard" data-word="numerator"><div class="ktext"><b>numerator</b><span>The top number. How many parts we have.</span></div></div>
+      <div class="kcard" data-word="denominator"><div class="ktext"><b>denominator</b><span>The bottom number. How many equal parts in the whole.</span></div></div>
+      <div class="kcard" data-word="unit fraction"><div class="ktext"><b>unit fraction</b><span>One part. The top number is 1.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> Welcome to the bakery</span>
+    <h2>The loaves are out of the oven</h2>
+    <p class="lead" data-voice="daniel" data-read="Welcome to the bakery. The baker cuts every loaf into equal slices. All the slices together make one whole loaf. Today you will name the slices with fractions.">
+      Welcome to the bakery. The baker cuts every loaf into <b>equal</b> slices. All the slices
+      together make <b>one whole</b> loaf. Today you will name the slices with fractions.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Write a fraction like this. Draw the line first. The <b>bottom number</b> says how many equal
+        parts are in the whole. The <b>top number</b> says how many parts we have.
+        <div style="text-align:center;margin-top:.5rem" class="bigfrac"><span class="fr" role="img" aria-label="1 out of 4"><span>1</span><span>4</span></span></div></div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Slice the loaves</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-loaf"></use></svg> Loaves</span>
+    <h2>Name each slice</h2>
+    <p class="lead" data-read="Each loaf is one whole. It is cut into equal slices. What fraction is one slice?">Each loaf is one whole, cut into equal slices.</p>
+    <div class="pickrow" id="pickLoaf" role="group" aria-label="Choose a loaf"></div>
+    <div id="loaf"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plate"></use></svg> Trays</span>
+    <h2>Share the tray</h2>
+    <p class="lead" data-read="The number on top is how many biscuits are on the whole tray. Share them equally between the parts.">The number on top is the whole tray. Share it equally between the parts.</p>
+    <div class="pickrow" id="pickTray" role="group" aria-label="Choose a tray"></div>
+    <div id="tray"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-biscuit"></use></svg> Jars</span>
+    <h2>Half a jar each</h2>
+    <p class="lead" data-read="Two friends share a jar of biscuits equally. Each friend gets half.">Two friends share each jar equally. Each friend gets <b>half</b>.</p>
+    <div class="pickrow" id="pickJar" role="group" aria-label="Choose a jar"></div>
+    <div id="jar"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg> Iced cakes</span>
+    <h2>How much is iced?</h2>
+    <p class="lead" data-read="Count all the equal parts. That is the bottom number. Count the iced parts. That is the top number.">Count <b>all</b> the equal parts: that is the bottom number. Count the <b>iced</b> parts: that is the top number.</p>
+    <div class="pickrow" id="pickIced" role="group" aria-label="Choose a cake"></div>
+    <div id="iced"></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Odd one out</span>
+    <h2>Which fraction does not belong?</h2>
+    <div id="odd"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(6)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="6"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Baker's badge</span>
+    <h2>Earn your Taster rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a long bar. Split it into 5 equal parts and write the fraction in each part. Then explain
+      to a partner why all five fractions are the same.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Bakery Rank 1: Taster</h3>
+      <div style="font-weight:700">Stamp this when you can say what the top number and the bottom number of a fraction mean.</div>
+      <div><span class="stamp" id="stamp">TASTER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">All the ranks done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery · Stage 3 · Unit 16 Lesson 1 (3Nf.01). SB p66, WB pp126-127. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-bakery.js reads this block and re-derives every answer.
+     Loaves: WB p126 Q3 (the 5-part bar is left out, it is Progress Check Q1b).
+     Trays: WB Q4 and the SB p66 partner task (25 in fifths). Jars: WB Q1 and Q2.
+     Iced: WB Q5 shapes. Odd one out: WB Q6, then one with new fractions. -->
+<script type="application/json" id="data">
+{
+  "loaves": [2, 4, 10],
+  "trays": [[16, 2], [20, 5], [12, 4], [30, 10], [25, 5]],
+  "jars": [10, 14, 20, 12, 16, 22, 6, 18],
+  "iced": ["squareX/1", "hex6/3", "rect3/1", "strip5/2", "circle8/3", "rect5/1"],
+  "odd": [
+    {"set": ["1/4", "1/5", "7/10", "1/10", "1/2"], "odd": 2, "why": 0},
+    {"set": ["2/3", "3/4", "1/6", "5/8"], "odd": 2, "why": 1}
+  ],
+  "rank": {"loaf": 6, "tray": [18, 3], "jar": 24, "iced": "circle6/5", "unit": ["3/5", "1/8", "2/3"]}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+
+  B.init([
+    {icon:'oven',    label:'Welcome'},
+    {icon:'loaf',    label:'Loaves'},
+    {icon:'plate',   label:'Trays'},
+    {icon:'biscuit', label:'Jars'},
+    {icon:'cake',    label:'Iced'},
+    {icon:'search',  label:'Odd one'},
+    {icon:'medal',   label:'Rank'}
+  ], {onEnter:function(n){ if(n===6) B.renderMyWork(); }});
+
+  function fracOf(s){ var f=B.parseFrac(s); return B.frac(f[0],f[1]); }
+  function units(n){ var a=[]; for(var i=0;i<n;i++) a.push(B.frac(1,n)); return a; }
+  function blanks(n){ var a=[]; for(var i=0;i<n;i++) a.push(''); return a; }
+
+  /* ---- Loaves: label one slice, then how many make the whole ---- */
+  var loafHost=document.getElementById('loaf');
+  var loaves=B.chips(document.getElementById('pickLoaf'),
+    D.loaves.map(function(n){ return n+' slices'; }), function(i, isDone){
+    loafHost.innerHTML='';
+    if(isDone){ loafHost.innerHTML='<p class="verdict good">Sliced. Choose another loaf.</p>'; return; }
+    var n=D.loaves[i];
+    var pic=document.createElement('div'); pic.className='ask-pic'; pic.innerHTML=B.bar(n,'1 whole',blanks(n));
+    loafHost.appendChild(pic);
+    B.askFrac(loafHost,{prompt:'What fraction of the loaf is one slice?', answer:'1/'+n, exact:true,
+      task:'L1 Loaf of '+n+' slices',
+      nudge:'Not quite. Count all the slices in the loaf. That is the bottom number.',
+      hint:'One slice is the top number. The bottom number is how many equal slices make the whole loaf.',
+      onSolved:function(){
+        pic.innerHTML=B.bar(n,'1 whole',units(n));
+        B.ask(loafHost,{prompt:'How many of these slices make one whole loaf?', answer:n,
+          task:'L1 Slices in a whole ('+n+')',
+          nudge:'Not quite. Count the slices in the bar.',
+          hint:'All the slices together make the whole. Count every slice in the bar.',
+          onSolved:function(){ loaves.markDone(i); }});
+      }});
+  });
+
+  /* ---- Trays: a value bar, share equally ---- */
+  var trayHost=document.getElementById('tray');
+  var WORDS={2:'halves',3:'thirds',4:'quarters',5:'fifths',10:'tenths'};
+  var COUNT=['','one','two','three','four','five'];
+  var trays=B.chips(document.getElementById('pickTray'),
+    D.trays.map(function(t){ return t[0]+' biscuits'; }), function(i, isDone){
+    trayHost.innerHTML='';
+    if(isDone){ trayHost.innerHTML='<p class="verdict good">Shared. Choose another tray.</p>'; return; }
+    var whole=D.trays[i][0], n=D.trays[i][1], each=whole/n;
+    var pic=document.createElement('div'); pic.className='ask-pic'; pic.innerHTML=B.bar(n,whole,blanks(n));
+    trayHost.appendChild(pic);
+    B.ask(trayHost,{prompt:'How many biscuits are in each part?', answer:each, task:'L1 Tray '+whole+' in '+n,
+      nudge:'Not quite. Every part must have the same number.',
+      hint:'Share the biscuits out one part at a time. Try a number in every part: do the parts add up to the whole tray?',
+      onSolved:function(){
+        var labels=[]; for(var k=0;k<n;k++) labels.push(each);
+        pic.innerHTML=B.bar(n,whole,labels);
+        if(n!==5 || whole!==25){ trays.markDone(i); return; }
+        // SB p66 partner task: 2, 3 and 4 fifths of 25.
+        (function next(k){
+          B.ask(trayHost,{prompt:'How many biscuits are in '+COUNT[k]+' '+WORDS[n]+' of the tray?', answer:each*k,
+            task:'L1 '+k+'/5 of 25',
+            nudge:'Not quite. Each fifth has the same number of biscuits.',
+            hint:'Add the biscuits in one fifth again and again, once for each part.',
+            onSolved:function(){ if(k<4) next(k+1); else trays.markDone(i); }});
+        })(2);
+      }});
+  });
+
+  /* ---- Jars: half of a number ---- */
+  var jarHost=document.getElementById('jar');
+  var jars=B.chips(document.getElementById('pickJar'),
+    D.jars.map(function(n){ return 'Jar of '+n; }), function(i, isDone){
+    jarHost.innerHTML='';
+    if(isDone){ jarHost.innerHTML='<p class="verdict good">Shared. Choose another jar.</p>'; return; }
+    var n=D.jars[i];
+    B.ask(jarHost,{prompt:'Two friends share the biscuits equally. How many does each friend get?',
+      show:B.set(n,0,'biscuits'), answer:n/2, task:'L1 Half of '+n,
+      nudge:'Not quite. Both friends get the same number.',
+      hint:'Give one biscuit to each friend, then another to each, until the jar is empty. Or double your answer: do you get the whole jar?',
+      onSolved:function(){ jars.markDone(i); }});
+  });
+
+  /* ---- Iced: read the fraction ---- */
+  var icedHost=document.getElementById('iced');
+  var iced=B.chips(document.getElementById('pickIced'),
+    D.iced.map(function(s,i){ return 'Cake '+(i+1); }), function(i, isDone){
+    icedHost.innerHTML='';
+    if(isDone){ icedHost.innerHTML='<p class="verdict good">Done. Choose another cake.</p>'; return; }
+    var spec=D.iced[i], s=BakeryShapes.parse(spec);
+    B.askFrac(icedHost,{prompt:'What fraction of the cake is iced?', show:B.cake(spec),
+      answer:s.shaded+'/'+s.parts.length, task:'L1 Iced '+spec,
+      nudge:'Not quite. Count all the equal parts first. That is the bottom number.',
+      hint:'Bottom number: how many equal parts in the whole cake. Top number: how many of them are iced.',
+      onSolved:function(){ iced.markDone(i); }});
+  });
+
+  /* ---- Odd one out: unit and non-unit fractions ---- */
+  var oddHost=document.getElementById('odd');
+  var WHY=[
+    ['It is the only one that is not a unit fraction. Its top number is not 1.',
+     'It has the biggest bottom number.',
+     'It is the only fraction with a 0 in it.'],
+    ['It has the smallest bottom number.',
+     'It is the only unit fraction. Its top number is 1.',
+     'It is the only one with an even number.']
+  ];
+  D.odd.forEach(function(o,k){
+    var box=document.createElement('div'); oddHost.appendChild(box);
+    B.choose(box,{prompt:'Which fraction is the odd one out?', cards:true,
+      options:o.set.map(fracOf), labels:o.set.map(function(f){ return f.replace('/',' out of '); }),
+      answer:o.odd, task:'L1 Odd one out '+(k+1),
+      nudge:'That one has a partner that is like it. Look again.',
+      hint:'Look at the top numbers only. Which one is different from all the others?',
+      onSolved:function(){
+        B.choose(box,{prompt:'Why is it the odd one out?', options:WHY[k], answer:o.why,
+          task:'L1 Why odd one out '+(k+1),
+          nudge:'Look at the top numbers again.',
+          hint:'A unit fraction is one part, so its top number is 1.'});
+      }});
+  });
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk'), R=D.rank;
+  B.askFrac(host,{prompt:'What fraction of the loaf is one slice?', show:B.bar(R.loaf,'1 whole',blanks(R.loaf)),
+    answer:'1/'+R.loaf, exact:true, task:'L1 Rank loaf',
+    nudge:'Not quite. Count all the slices first.',
+    hint:'The bottom number is how many equal slices make the whole loaf.'});
+  B.ask(host,{prompt:'How many biscuits are in each part?', show:B.bar(R.tray[1],R.tray[0],blanks(R.tray[1])),
+    answer:R.tray[0]/R.tray[1], task:'L1 Rank tray',
+    nudge:'Not quite. Every part has the same number.',
+    hint:'Try a number in each part. Do all the parts add up to the whole tray?'});
+  B.ask(host,{prompt:'Two friends share the biscuits equally. How many does each friend get?',
+    show:B.set(R.jar,0,'biscuits'), answer:R.jar/2, task:'L1 Rank half',
+    nudge:'Not quite. Both friends get the same number.',
+    hint:'Double your answer. Do you get the whole jar?'});
+  var rs=BakeryShapes.parse(R.iced);
+  B.askFrac(host,{prompt:'What fraction of the cake is iced?', show:B.cake(R.iced),
+    answer:rs.shaded+'/'+rs.parts.length, task:'L1 Rank iced',
+    nudge:'Not quite. Count all the equal parts first.',
+    hint:'Bottom number: all the equal parts. Top number: the iced parts.'});
+  B.choose(host,{prompt:'Which one is a unit fraction?', cards:true, options:R.unit.map(fracOf),
+    labels:R.unit.map(function(f){ return f.replace('/',' out of '); }),
+    answer:R.unit.map(function(f){ return B.parseFrac(f)[0]; }).indexOf(1), task:'L1 Rank unit fraction',
+    nudge:'Not that one. Look at the top number.',
+    hint:'A unit fraction is just one part. Its top number is 1.'});
+})();
+</script>
+</body>
+</html>

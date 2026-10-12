@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery · Lesson 2: Icing the Cakes</title>
+<link rel="stylesheet" href="bakery.css">
+</head>
+<body data-lesson="l2">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg>
+      <div><h1>Icing the Cakes</h1><p class="sub">Lesson 2 · Equal parts of a shape</p></div>
+      <div class="pill">Unit 16 · Stage 3 · 3Nf.01 · 3Nf.02</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open, then tap the speaker to hear the word</summary>
+    <div class="krow">
+      <div class="kcard" data-word="equal parts"><div class="ktext"><b>equal parts</b><span>Parts that are all the same size.</span></div></div>
+      <div class="kcard" data-word="half"><div class="ktext"><b>half</b><span>One of 2 equal parts.</span></div></div>
+      <div class="kcard" data-word="quarter"><div class="ktext"><b>quarter</b><span>One of 4 equal parts. Also called a fourth.</span></div></div>
+      <div class="kcard" data-word="numerator"><div class="ktext"><b>numerator</b><span>The top number. How many parts we have.</span></div></div>
+      <div class="kcard" data-word="denominator"><div class="ktext"><b>denominator</b><span>The bottom number. How many equal parts in the whole.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> The icing table</span>
+    <h2>Every cake is cut into equal parts</h2>
+    <p class="lead" data-voice="daniel" data-read="The cakes are cut and ready. Now we ice them. The fraction tells you how many parts to ice. Look at the bottom number first. Does the cake have that many equal parts?">
+      The cakes are cut and ready. Now we ice them. The fraction tells you how many parts to ice.
+      Look at the <b>bottom number</b> first: does the cake have that many equal parts?</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Tap a part to ice it. Tap it again to take the icing off.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start icing</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-whisk"></use></svg> Ice the cakes</span>
+    <h2>Ice this much of the cake</h2>
+    <div class="pickrow" id="pickIce" role="group" aria-label="Choose a cake"></div>
+    <div id="ice"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Half iced</span>
+    <h2>Which cakes are half iced?</h2>
+    <p class="lead" data-read="Half means one of two equal parts. A cake is half iced when the iced part and the plain part are the same size.">Half iced: the iced part and the plain part are the <b>same size</b>.</p>
+    <div id="halves"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plate"></use></svg> Plates</span>
+    <h2>Read the plates</h2>
+    <div class="pickrow" id="pickPlate" role="group" aria-label="Choose a plate"></div>
+    <div id="plate"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Who is right?</span>
+    <h2>Are these really quarters?</h2>
+    <div id="talk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Baker's badge</span>
+    <h2>Earn your Mixer rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw three rectangles on squared paper. Split each one into equal parts in a different way.
+      Shade some parts and write the fraction under each one.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Bakery Rank 2: Mixer</h3>
+      <div style="font-weight:700">Stamp this when you can explain why parts must be equal before we can name a fraction.</div>
+      <div><span class="stamp" id="stamp">MIXER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">All the ranks done? Open <b>charter.html</b>. Teacher: check the book work and
+      the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery · Stage 3 · Unit 16 Lesson 2 (3Nf.01, 3Nf.02). SB p67, WB pp128-129. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-bakery.js reads this block and re-derives every answer.
+     Ice: WB p128 Q1. Halves: WB Q2 (2/4 and 5/10). Plates: WB Q3 circles, with 3/5
+     and 7/10 swapped for 4/5 and 3/10 (those two are Progress Check Q3), plus the SB
+     p67 partner task, 2 of 6 iced and what is not iced. Talk: WB Q7 (Mara) and the
+     SB p67 quarters cut as triangles. -->
+<script type="application/json" id="data">
+{
+  "ice": [["circle3", "2/3"], ["square4", "1/4"], ["rect4", "2/4"], ["circle10", "5/10"], ["square4", "3/4"], ["rect10", "7/10"]],
+  "plates": ["circle5/2", "circle5/4", "circle8/6", "circle10/3", "hex6/2"],
+  "notIced": "hex6/2",
+  "talk": [
+    {"who": "Mara", "spec": "stripU4/1", "says": "I cut my cake into quarters. Look, there are 4 parts.", "right": false},
+    {"who": "Bilal", "spec": "rectX/1", "says": "I cut my cake into quarters too. My parts are different shapes.", "right": true}
+  ],
+  "rank": {"ice": [["hex6", "4/6"], ["circle8", "3/8"]], "read": "grid2-4/5", "talk": {"who": "Sami", "spec": "circleU4/1", "says": "My cake is in quarters.", "right": false}}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+
+  B.init([
+    {icon:'oven',   label:'Welcome'},
+    {icon:'whisk',  label:'Ice'},
+    {icon:'search', label:'Half'},
+    {icon:'plate',  label:'Plates'},
+    {icon:'talk',   label:'Who is right?'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) B.renderMyWork(); }});
+
+  function readCake(host, spec, task, onSolved){
+    var s=BakeryShapes.parse(spec);
+    return B.askFrac(host,{prompt:'What fraction of the cake is iced?', show:B.cake(spec),
+      answer:s.shaded+'/'+s.parts.length, task:task,
+      nudge:'Not quite. Count all the equal parts first. That is the bottom number.',
+      hint:'Bottom number: how many equal parts in the whole cake. Top number: how many of them are iced.',
+      onSolved:onSolved});
+  }
+
+  /* A character's claim, then: do you agree? */
+  function talk(host, t, task){
+    var box=document.createElement('div'); host.appendChild(box);
+    var says=document.createElement('div'); says.className='says';
+    says.innerHTML='<div>'+B.cake(t.spec,{small:true})+'</div><p><span class="who">'+t.who+' says:</span> '+t.says+'</p>';
+    says.querySelector('p').setAttribute('data-read', t.who+' says: '+t.says);
+    says.querySelector('p').setAttribute('data-voice','daniel');
+    box.appendChild(says);
+    B.readAloud();
+    var opts = t.right
+      ? ['No. The parts are different shapes, so they are not quarters.',
+         'Yes. The 4 parts are different shapes, but they are all the same size.',
+         'No. Quarters must always be strips.']
+      : ['Yes. There are 4 parts, so they are quarters.',
+         'No. The 4 parts are not the same size, so they are not quarters.',
+         'No. Quarters must always be squares.'];
+    // The right reply is not always in the same place, or the position becomes the answer.
+    var turn=t.who.length%3;
+    opts=opts.slice(turn).concat(opts.slice(0,turn));
+    B.choose(box,{prompt:'Is '+t.who+' right?', options:opts, answer:(4-turn)%3, task:task,
+      nudge:'Think again. What makes a quarter a quarter?',
+      hint:'Quarters are 4 equal parts. Equal means the same size. It does not mean the same shape.'});
+  }
+
+  /* ---- Ice the cakes ---- */
+  var iceHost=document.getElementById('ice');
+  var ices=B.chips(document.getElementById('pickIce'),
+    D.ice.map(function(x,i){ return 'Cake '+(i+1); }), function(i, isDone){
+    iceHost.innerHTML='';
+    if(isDone){ iceHost.innerHTML='<p class="verdict good">Iced. Choose another cake.</p>'; return; }
+    B.shade(iceHost,{prompt:'Ice the cake to show this fraction.', shape:D.ice[i][0], target:D.ice[i][1],
+      task:'L2 Ice '+D.ice[i][0]+' '+D.ice[i][1], onSolved:function(){ ices.markDone(i); }});
+  });
+
+  /* ---- Which are half? The six cakes from Ice, as iced. ---- */
+  var cakes=D.ice.map(function(x){ return x[0]+'/'+B.parseFrac(x[1])[0]; });
+  B.picks(document.getElementById('halves'),{prompt:'Tap every cake that is half iced.',
+    items:cakes.map(function(s){ return B.cake(s,{small:true}); }),
+    correct:D.ice.map(function(x,i){ var f=B.parseFrac(x[1]); return f[0]*2===f[1] ? i : -1; }).filter(function(i){ return i>=0; }),
+    task:'L2 Which are half',
+    hint:'For each cake, count the iced parts and the plain parts. Half iced means the two numbers are the same.'});
+
+  /* ---- Plates: read, then what is not iced ---- */
+  var plateHost=document.getElementById('plate');
+  var plates=B.chips(document.getElementById('pickPlate'),
+    D.plates.map(function(x,i){ return 'Plate '+(i+1); }), function(i, isDone){
+    plateHost.innerHTML='';
+    if(isDone){ plateHost.innerHTML='<p class="verdict good">Done. Choose another plate.</p>'; return; }
+    var spec=D.plates[i];
+    readCake(plateHost, spec, 'L2 Plate '+spec, function(){
+      if(spec!==D.notIced){ plates.markDone(i); return; }
+      var s=BakeryShapes.parse(spec);
+      B.askFrac(plateHost,{prompt:'What fraction of the cake is not iced?',
+        answer:(s.parts.length-s.shaded)+'/'+s.parts.length, task:'L2 Not iced '+spec,
+        nudge:'Not quite. This time count the plain parts for the top number.',
+        hint:'The whole cake still has the same number of equal parts. The top number is the parts with no icing.',
+        onSolved:function(){ plates.markDone(i); }});
+    });
+  });
+
+  /* ---- Who is right? ---- */
+  var talkHost=document.getElementById('talk');
+  D.talk.forEach(function(t){ talk(talkHost, t, 'L2 '+t.who); });
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk'), R=D.rank;
+  R.ice.forEach(function(x,k){
+    B.shade(host,{prompt:'Ice the cake to show this fraction.', shape:x[0], target:x[1], task:'L2 Rank ice '+(k+1)});
+  });
+  readCake(host, R.read, 'L2 Rank read');
+  talk(host, R.talk, 'L2 Rank '+R.talk.who);
+})();
+</script>
+</body>
+</html>
