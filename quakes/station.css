@@ -196,6 +196,15 @@ header{position:relative;margin-top:.5rem;border-radius:22px;overflow:hidden;box
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}}
 
+/* ---- Lesson 6 only: tornadoes ---- */
+:root{--sky:#4C5B8C; --storm:#3A3F5C}
+.storm-strata{background:linear-gradient(180deg,var(--storm) 0 33%,var(--sky) 33% 66%,var(--deep) 66% 100%)}
+.slot.filled.ef{background:#EDEFF8;border-left-color:var(--sky)}
+/* EF0 to EF5 needs more room than a Mercalli 1 to 12 does */
+.slot .n:not(:empty){width:auto;min-width:2rem;padding:0 .375rem}
+.slot.filled.ef .n{background:var(--sky);color:#fff}
+.mph{font-weight:700;color:var(--sky)}
+
 /* ---- Lesson 5 only: tsunami ---- */
 :root{--sea:#0E6F86; --sea-deep:#0A4E5F; --ok-btn:#257048}
 .wave-strata{background:linear-gradient(180deg,var(--sea) 0 33%,var(--deep-2) 33% 66%,var(--deep) 66% 100%)}

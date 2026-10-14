@@ -44,7 +44,7 @@
   <section class="screen on" data-s="0"><div class="card">
     <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> New clerk training</span>
     <h2>Welcome to the Sorting Desk</h2>
-    <p class="lead" data-read="Every message that arrives at this office has to be sorted. Is it formal or friendly? Who is it for, and why was it sent? Learn to read the clues.">
+    <p class="lead" data-voice="daniel" data-read="Every message that arrives at this office has to be sorted. Is it formal or friendly? Who is it for, and why was it sent? Learn to read the clues.">
       Every message that arrives here has to be sorted. Is it <b>formal</b> or <b>informal</b>?
       Who is it for, and why was it sent?</p>
     <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
@@ -169,6 +169,8 @@
     {w:'Bring your football. C U soon.', t:'informal',
      why:'C U soon is almost a text message. You would never put that in a formal letter.'}
   ];
+  // Every card's recording is listed up front so the scan can check it exists.
+  LINES.forEach(function(x){ Station.clip(x.w, 'daniel'); });
   var sortI=-1, sortTries=0, sortDone=0;
 
   function nextSort(){
@@ -182,7 +184,7 @@
     sortTries=0;
     document.getElementById('sortWord').textContent=LINES[sortI].w;
     var v=document.getElementById('sortV'); v.className='verdict'; v.textContent='';
-    Station.speak(LINES[sortI].w);
+    Station.speak(LINES[sortI].w, 'daniel');
   }
 
   window.sortPick=function(kind){

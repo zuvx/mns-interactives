@@ -69,122 +69,71 @@
       '" aria-hidden="true" focusable="false"><use href="#i-' + name + '"></use></svg>';
   }
 
-  /* ---------- Read aloud (device speech engine, no network) ---------- */
-  /* ---------- Which voice reads to the class ----------
-     Setting utterance.lang is only a hint. With no voice chosen the engine
-     falls back to the device default, and on a tablet or laptop set to
-     another language that default is a voice of THAT language sounding out
-     English words with the wrong phonetics. Measured on the teacher's own
-     Mac: the default voice came back as Monica (es-ES). For a class of EAL
-     readers that is worse than no audio at all, so the voice is picked here
-     and never left to the device.
+  /* ---------- Recorded voices ----------
+     Project rule: all audio is ElevenLabs, Alice for instructions and
+     vocabulary, Daniel for characters and texts, recorded at speed 0.9 for
+     EAL readers. The device speech engine is never used: it picks whatever
+     voice the tablet has, which on the teacher's Mac was a Spanish one.
 
-     The novelty list matters as well: macOS ships joke English voices (Bad
-     News, Boing, Bubbles) and stylised character ones, any of which a plain
-     "first English voice" would happily choose to read out instructions. */
-  var VOICE_PREFERRED = [
-    'daniel', 'serena', 'kate', 'martha', 'arthur', 'sonia', 'libby', 'ryan',
-    'google uk english', 'samantha', 'alex', 'google us english'
-  ];
-  var VOICE_NOVELTY = [
-    'bad news', 'good news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos',
-    'jester', 'organ', 'superstar', 'trinoids', 'whisper', 'wobble', 'zarvox',
-    'albert', 'fred', 'junior', 'ralph', 'kathy', 'princess', 'deranged',
-    'hysterical', 'grandma', 'grandpa', 'rocko', 'shelley', 'sandy', 'flo',
-    'eddy', 'reed'
-  ];
-  var chosenVoice = null;
-
-  function pickVoice() {
-    var all = [];
-    try { all = window.speechSynthesis.getVoices() || []; } catch (e) { return null; }
-    var english = all.filter(function (v) { return /^en([-_]|$)/i.test(v.lang || ''); });
-    if (!english.length) return null;
-    var plain = function (v) {
-      var n = (v.name || '').toLowerCase();
-      return !VOICE_NOVELTY.some(function (bad) { return n.indexOf(bad) !== -1; });
-    };
-    var british = english.filter(function (v) { return /^en[-_]gb/i.test(v.lang || ''); });
-    // Best first: a plain British voice, then any plain English one, then
-    // whatever English is left rather than dropping to another language.
-    var pools = [british.filter(plain), english.filter(plain), british, english];
-    for (var i = 0; i < pools.length; i++) {
-      if (!pools[i].length) continue;
-      for (var j = 0; j < VOICE_PREFERRED.length; j++) {
-        var want = VOICE_PREFERRED[j];
-        var hit = pools[i].filter(function (v) {
-          return (v.name || '').toLowerCase().indexOf(want) !== -1;
-        })[0];
-        if (hit) return hit;
-      }
-      return pools[i][0];
+     Same pattern as The Bakery. Each line's file name is a hash of the voice
+     and the words, so changing a sentence asks for a new recording rather
+     than playing the old one. Every line a speaker can play is listed in
+     window.__spoken; scan_interactives.js checks each file exists and
+     make_bakery_audio.py records the missing ones. Nothing is fetched from
+     anywhere but this folder. */
+  function hash(s) {
+    var h = 0x811c9dc5;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
     }
-    return null;
+    return ('0000000' + h.toString(16)).slice(-8);
   }
+  function tidy(text) { return String(text).replace(/\s+/g, ' ').trim(); }
 
-  /* getVoices() is empty until the engine has loaded them, so it is asked
-     again on voiceschanged and again lazily on the first tap. */
-  if ('speechSynthesis' in window) {
-    chosenVoice = pickVoice();
-    if (window.speechSynthesis.addEventListener) {
-      window.speechSynthesis.addEventListener('voiceschanged', function () {
-        chosenVoice = pickVoice();
-      });
+  var spoken = window.__spoken = [];
+  function clip(text, voice) {
+    voice = voice === 'daniel' ? 'daniel' : 'alice';
+    text = tidy(text);
+    var file = 'audio/' + voice.charAt(0) + '-' + hash(voice + '|' + text) + '.mp3';
+    if (!spoken.some(function (s) { return s.file === file; })) {
+      spoken.push({ text: text, voice: voice, file: file });
     }
+    return file;
   }
 
-  function utter(text) {
-    var u = new SpeechSynthesisUtterance(text);
-    u.voice = chosenVoice;
-    u.lang = chosenVoice.lang;
-    u.rate = 0.85;
-    window.speechSynthesis.speak(u);
+  var playing = null;
+  function play(file) {
+    if (playing) { playing.pause(); playing = null; }
+    var a = new Audio(file);
+    playing = a;
+    a.addEventListener('error', function () {
+      var live = document.getElementById('live');
+      if (live) live.textContent = 'The recording for this line is missing. Ask your teacher.';
+    });
+    var p = a.play();
+    if (p && p.catch) p.catch(function () {});
   }
 
-  function speak(text) {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    if (!chosenVoice) chosenVoice = pickVoice();
-    if (chosenVoice) return utter(text);
+  /* ponytail: question prompts have no speaker yet. Recording them costs about
+     2,800 characters and the free tier (10,000 a month) ran short in October
+     2026. Set this to true, run the SCAN_SPOKEN scan and make_bakery_audio.py
+     --record, then publish. Leads, key words and cards are recorded already. */
+  var PROMPT_AUDIO = false;
 
-    /* No English voice in hand yet. It is never spoken anyway: English read
-       out by a Spanish or Arabic voice is not English to a child learning to
-       read it, and silence is the better of the two. On iOS the voice list is
-       routinely empty until the engine wakes up, which is usually on the very
-       first tap, so it is worth asking once more before giving up. */
-    var settled = false;
-    var retry = function () {
-      if (settled) return;
-      settled = true;
-      chosenVoice = pickVoice();
-      if (chosenVoice) utter(text);
-      else noEnglishVoice();
-    };
-    if (window.speechSynthesis.addEventListener) {
-      window.speechSynthesis.addEventListener('voiceschanged', retry, { once: true });
-    }
-    setTimeout(retry, 400);
-  }
-
-  /* Say so rather than failing silently: a speaker that does nothing looks
-     broken, and the teacher is the one who can install a voice. */
-  function noEnglishVoice() {
-    var live = document.getElementById('live');
-    if (live) {
-      live.textContent = 'This device has no English voice installed, so reading aloud is off.';
-    }
-  }
+  /** Play a line straight away, as when a new card turns up. */
+  function speak(text, voice) { play(clip(text, voice)); }
 
   /** Attach a "read this to me" button. Children working alone may still be
       building reading fluency; an instruction they cannot read is a dead end. */
-  function readAloudButton(text) {
-    if (!('speechSynthesis' in window)) return null;
+  function readAloudButton(text, voice) {
+    var file = clip(text, voice);
     var b = document.createElement('button');
     b.type = 'button';
-    b.className = 'say';
+    b.className = 'say' + (voice === 'daniel' ? ' daniel' : '');
     b.innerHTML = icon('say');
     b.setAttribute('aria-label', 'Read this to me');
-    b.addEventListener('click', function () { speak(text); });
+    b.addEventListener('click', function () { play(file); });
     return b;
   }
 
@@ -322,8 +271,7 @@
     btn.textContent = 'Check';
     row.appendChild(btn);
 
-    var ra = readAloudButton(cfg.prompt);
-    if (ra) row.appendChild(ra);
+    if (PROMPT_AUDIO) row.appendChild(readAloudButton(cfg.prompt));
 
     box.appendChild(row);
 
@@ -390,8 +338,7 @@
     var q = document.createElement('p');
     q.className = 'ask-q';
     q.textContent = cfg.prompt;
-    var ra = readAloudButton(cfg.prompt);
-    if (ra) q.appendChild(ra);
+    if (PROMPT_AUDIO) q.appendChild(readAloudButton(cfg.prompt));
     box.appendChild(q);
 
     var wrap = document.createElement('div');
@@ -448,8 +395,7 @@
     var q = document.createElement('p');
     q.className = 'ask-q';
     q.textContent = cfg.prompt;
-    var ra = readAloudButton(cfg.prompt);
-    if (ra) q.appendChild(ra);
+    if (PROMPT_AUDIO) q.appendChild(readAloudButton(cfg.prompt));
     box.appendChild(q);
 
     var list = document.createElement('div');
@@ -634,7 +580,7 @@
     }
   }
 
-  /* ---------- Key words: say it aloud (local SpeechSynthesis) ---------- */
+  /* ---------- Key words: say it aloud (recorded, Alice) ---------- */
   function buildKeyWords() {
     document.querySelectorAll('.kcard').forEach(function (card) {
       var word = card.getAttribute('data-word');
@@ -650,8 +596,9 @@
   function buildReadAloud() {
     document.querySelectorAll('[data-read]').forEach(function (el) {
       if (el.querySelector('.say')) return;
-      var b = readAloudButton(el.getAttribute('data-read') || el.textContent);
-      if (b) el.appendChild(b);
+      var b = readAloudButton(el.getAttribute('data-read') || el.textContent,
+                              el.getAttribute('data-voice'));
+      el.appendChild(b);
     });
   }
 
@@ -714,7 +661,7 @@
 
   window.Station = {
     init: init, icon: icon, record: record,
-    ask: ask, choose: choose, order: order, speak: speak, norm: norm,
+    ask: ask, choose: choose, order: order, speak: speak, clip: clip, norm: norm,
     myWork: myWork, renderMyWork: renderMyWork, award: award
   };
 })();

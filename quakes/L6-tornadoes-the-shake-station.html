@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Storm Chaser: Tornadoes</title>
+<meta name="description" content="Year 3 Geography, Extreme Earth: how a tornado forms, how scientists compare tornadoes on the EF scale, and where tornadoes happen. Built for iPads, no network, no data collected.">
+<link rel="stylesheet" href="station.css">
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-wave"><path d="M2 12h3l2-7 3 14 3-11 2 4h7"/></g>
+  <g id="i-speak"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></g>
+  <g id="i-book"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M19 19v2H6"/></g>
+  <g id="i-stack"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 13 9 5 9-5"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-think"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+  <g id="i-funnel"><path d="M3 5h18"/><path d="M5 10h14"/><path d="M8 15h8"/><path d="M11 20h3"/></g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="strata storm-strata"></div>
+    <div class="head-body">
+      <svg class="icon head-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-funnel"/></svg>
+      <div>
+        <h1>Storm Chaser</h1>
+        <p class="sub">Geography · Year 3 · Extreme Earth · Lesson 6</p>
+      </div>
+      <span class="pill">Tornadoes</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <details class="keys">
+    <summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg> Key words</summary>
+    <div class="krow" id="keyWords"></div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Parts of the lesson">
+    <button type="button" data-go="0" aria-current="step">1. Storm crew quiz</button>
+    <button type="button" data-go="1">2. Build the tornado</button>
+    <button type="button" data-go="2">3. The EF scale</button>
+    <button type="button" data-go="3">4. Your badge</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon icon-lg needle" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-funnel"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="stormCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <!-- ---------- Screen 1: quiz ---------- -->
+  <section class="screen on" id="s0" data-s="0" aria-label="Storm crew quiz">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 1</span>
+      <h2 tabindex="-1" id="h0">Storm crew quiz</h2>
+      <p class="lead">You have joined a storm chasing team. Answer eight questions before the crew drives out.</p>
+      <div class="ask" id="ask">
+        <p class="qnum" id="qnum">Question 1 of 8</p>
+        <p class="ask-q" id="qtext"></p>
+        <div class="choices" id="options"></div>
+      </div>
+      <div class="fb" id="qfb"></div>
+      <div class="btnrow">
+        <button class="btn deep" id="nextQ" type="button" disabled>Next question</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 2: how a tornado forms ---------- -->
+  <section class="screen" id="s1" data-s="1" aria-label="Build the tornado">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-stack"/></svg> Round 2</span>
+      <h2 tabindex="-1" id="h1">Build the tornado</h2>
+      <p class="lead">A tornado is built out of six steps, one after the other.
+        Tap what happens <b>first</b>, then what happens next, until the funnel reaches the ground.</p>
+      <div class="think">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg>
+        <p style="margin:0"><b>Think:</b> it starts with warm air going up and it ends with a funnel coming down. The spinning has to start before anything can stretch towards the ground.</p>
+      </div>
+      <div class="sortgrid">
+        <div class="panel">
+          <h3>What happens</h3>
+          <div class="steps" id="steps"></div>
+          <div class="fb" id="sfb"></div>
+        </div>
+        <div class="panel">
+          <h3>The chain</h3>
+          <div class="chain" id="chain"></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="btn deep" id="toScale" type="button" disabled>Go to round 3</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 3: the EF scale ---------- -->
+  <section class="screen" id="s2" data-s="2" aria-label="The EF scale">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-funnel"/></svg> Round 3</span>
+      <h2 tabindex="-1" id="h2">The EF scale</h2>
+      <p class="lead">Scientists compare tornadoes on the EF scale, from EF0 (the weakest) to EF5 (total destruction).
+        Each turn, tap the report that did the <b>least</b> damage of the ones still on the table.</p>
+      <div class="think">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg>
+        <p style="margin:0"><b>Think:</b> read what is broken. Branches and signs are a long way from houses being lifted off the ground.</p>
+      </div>
+      <div class="sortgrid">
+        <div class="panel">
+          <h3>Damage reports</h3>
+          <div class="pool" id="pool"></div>
+          <div class="fb" id="efb"></div>
+        </div>
+        <div class="panel">
+          <h3>The scale</h3>
+          <div class="ladder" id="ladder"></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button class="btn deep" id="toBadge" type="button" disabled>Get my badge</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Screen 4: badge ---------- -->
+  <section class="screen" id="s3" data-s="3" aria-label="Your badge">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Round 4</span>
+      <h2 tabindex="-1" id="h3">Your badge</h2>
+      <p class="lead">Show this screen to your teacher before you close it.</p>
+      <div class="badge">
+        <h3>Storm Chaser</h3>
+        <p class="big"><span id="finalPts">0</span> / 140</p>
+        <span class="rank" id="rank">Trainee</span>
+        <p class="note" id="firstTry">First-time answers: 0</p>
+      </div>
+      <div class="summary">
+        <h3>Tricky ones to talk about</h3>
+        <ul id="tricky"><li class="none">Nothing yet. Play the three rounds first.</li></ul>
+        <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="note">Geography · Year 3 · Extreme Earth · Lesson 6 · Tornadoes</p>
+    </div>
+  </section>
+</div>
+
+<script>
+'use strict';
+(function () {
+  /* ---------- content ---------- */
+  var KEYS = [
+    ['tornado', 'a swirling funnel of air that comes down from a storm cloud'],
+    ['cumulonimbus', 'the huge storm cloud a tornado can drop out of'],
+    ['vortex', 'air that spins round and round in a tube'],
+    ['funnel cloud', 'the spinning cloud shape that becomes a tornado when it reaches the ground'],
+    ['storm chaser', 'a scientist or film maker who drives towards storms to collect data'],
+    ['EF scale', 'puts a tornado from EF0 to EF5 by the damage it leaves behind']
+  ];
+
+  var QUIZ = [
+    { q: 'What is a tornado?',
+      a: ['A swirling funnel of air that comes down from a storm cloud', 'A giant wave in the sea', 'A crack in the ground'],
+      c: 0, why: 'A swirling funnel of air. The wave is a tsunami and the crack belongs to an earthquake.' },
+    { q: 'Which cloud does a tornado drop out of?',
+      a: ['A cumulonimbus, the huge storm cloud', 'A thin, wispy cloud', 'Fog near the ground'],
+      c: 0, why: 'Cumulonimbus. It is the cloud that brings thunder and lightning as well.' },
+    { q: 'What gets a tornado started?',
+      a: ['Warm air rising from the ground into the storm cloud', 'The sea freezing', 'Two tectonic plates slipping'],
+      c: 0, why: 'Warm air rising. The plates belong to earthquakes, and tornadoes are made by the weather instead.' },
+    { q: 'Air that spins round and round in a tube is called a...',
+      a: ['vortex', 'crater', 'harbour'],
+      c: 0, why: 'A vortex. You can make one in a bottle of water by swirling it round.' },
+    { q: 'Why can you see a tornado?',
+      a: ['Water droplets and dust get caught up in the spinning air', 'The air turns black', 'It glows in the dark'],
+      c: 0, why: 'Air on its own is invisible. You see the water droplets and the dust the tornado picks up.' },
+    { q: 'What does a storm chaser do?',
+      a: ['Drives towards storms to film them and collect data', 'Cleans up after the storm has gone', 'Stops storms forming'],
+      c: 0, why: 'Storm chasers are film makers and scientists. The data they collect helps everyone else understand tornadoes.' },
+    { q: 'What do scientists use the EF scale for?',
+      a: ['To compare tornadoes by the damage they do', 'To measure how long a storm lasts', 'To count the clouds in the sky'],
+      c: 0, why: 'The EF scale sorts tornadoes by their damage and their wind speed, from EF0 up to EF5.' },
+    { q: 'About how many tornadoes are reported in the UK each year?',
+      a: ['About 30', 'None at all', 'More than 500'],
+      c: 0, why: 'About 30 a year. For its size the UK gets more tornadoes than any other country, and the 500 belongs to Tornado Alley in the USA.' }
+  ];
+
+  /* The six steps, in the order a tornado really forms. */
+  var STEPS = [
+    'Warm air rises from the ground into a huge storm cloud.',
+    'High up near the top of the cloud, the winds start to turn.',
+    'The turning air becomes a spinning tube called a vortex.',
+    'More air rushes in along the ground from every direction.',
+    'The vortex stretches downwards and gets narrower.',
+    'A funnel cloud reaches the ground, and that is a tornado.'
+  ];
+
+  /* EF0 to EF5. Wind speeds are the ones in the lesson pack. */
+  var SCALE = [
+    { ef: 'EF0', mph: '40 to 72 mph', text: 'Branches snap and sign boards are bent. Weak trees lean over.' },
+    { ef: 'EF1', mph: '73 to 112 mph', text: 'Roof coverings peel off and parked cars are shoved along the road.' },
+    { ef: 'EF2', mph: '113 to 157 mph', text: 'Roofs are torn off houses and big trees snap. Small objects fly past.' },
+    { ef: 'EF3', mph: '158 to 206 mph', text: 'Walls come off strong houses. Heavy cars are lifted and thrown.' },
+    { ef: 'EF4', mph: '207 to 260 mph', text: 'Strong houses are flattened and cars fly through the air.' },
+    { ef: 'EF5', mph: '261 to 318 mph', text: 'Houses are lifted off the ground and carried away. Even concrete buildings are wrecked.' }
+  ];
+
+  var TOTAL = QUIZ.length * 10 + STEPS.length * 5 + SCALE.length * 5;   /* 80 + 30 + 30 = 140 */
+
+  /* ---------- state (in memory only, never stored) ---------- */
+  var pts = 0, firstTry = 0, qi = 0, answered = false;
+  var stepPool = [], stepsPlaced = 0, stepWrong = 0;
+  var efPool = [], efPlaced = 0, efWrong = 0;
+  var tricky = [];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var live = $('live');
+  function say(msg) { live.textContent = msg; }
+
+  function addPts(n) {
+    pts += n;
+    $('stormCount').textContent = pts;
+    $('fill').style.width = Math.round(pts / TOTAL * 100) + '%';
+    var m = $('meter');
+    m.classList.remove('pop'); void m.offsetWidth; m.classList.add('pop');
+  }
+
+  function shuffle(list) {
+    for (var i = list.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = list[i]; list[i] = list[j]; list[j] = t;
+    }
+    return list;
+  }
+
+  /* ---------- key words: local speech only, no network ---------- */
+  (function buildKeys() {
+    var row = $('keyWords');
+    KEYS.forEach(function (k) {
+      var card = document.createElement('div');
+      card.className = 'kcard';
+      var txt = document.createElement('div');
+      txt.className = 'ktext';
+      var b = document.createElement('b'); b.textContent = k[0];
+      var s = document.createElement('span'); s.textContent = k[1];
+      txt.appendChild(b); txt.appendChild(s);
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'say';
+      btn.setAttribute('aria-label', 'Say ' + k[0] + ' out loud');
+      btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-speak"/></svg>';
+      btn.addEventListener('click', function () {
+        if (!('speechSynthesis' in window)) return;
+        var u = new SpeechSynthesisUtterance(k[0] + '. ' + k[1]);
+        u.lang = 'en-GB'; u.rate = 0.85;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(u);
+      });
+      card.appendChild(txt); card.appendChild(btn);
+      row.appendChild(card);
+    });
+  })();
+
+  /* ---------- screens ---------- */
+  function show(n) {
+    ['s0', 's1', 's2', 's3'].forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    document.querySelectorAll('.rail button').forEach(function (b, i) {
+      if (i === n) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
+    });
+    var h = $('h' + n); if (h) h.focus();
+    if (n === 3) fillBadge();
+  }
+  document.querySelectorAll('.rail button').forEach(function (b) {
+    b.addEventListener('click', function () { show(+b.dataset.go); });
+  });
+
+  $('boardBtn').addEventListener('click', function () {
+    var on = document.documentElement.hasAttribute('data-board');
+    if (on) { document.documentElement.removeAttribute('data-board'); }
+    else { document.documentElement.setAttribute('data-board', ''); }
+    this.setAttribute('aria-pressed', String(!on));
+  });
+
+  /* ---------- round 1: quiz ---------- */
+  function drawQ() {
+    var item = QUIZ[qi];
+    answered = false;
+    $('qnum').textContent = 'Question ' + (qi + 1) + ' of ' + QUIZ.length;
+    $('qtext').textContent = item.q;
+    var fb = $('qfb'); fb.className = 'fb'; fb.textContent = '';
+    $('ask').classList.remove('solved');
+    $('nextQ').disabled = true;
+    $('nextQ').textContent = qi === QUIZ.length - 1 ? 'Go to round 2' : 'Next question';
+
+    /* The right answer is written first in QUIZ, so shuffle before showing. */
+    var order = shuffle(item.a.map(function (_, i) { return i; }));
+    var box = $('options'); box.textContent = '';
+    order.forEach(function (src, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt choice';
+      b.innerHTML = '<span class="mark">' + 'ABC'.charAt(i) + '</span>';
+      var sp = document.createElement('span'); sp.textContent = item.a[src];
+      b.appendChild(sp);
+      b.addEventListener('click', function () { answer(src, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function answer(i, btn) {
+    if (answered) return;
+    var item = QUIZ[qi], fb = $('qfb');
+    if (i === item.c) {
+      answered = true;
+      btn.setAttribute('data-state', 'right');
+      $('ask').classList.add('solved');
+      addPts(10); firstTry++;
+      fb.className = 'fb good show';
+      fb.textContent = 'Correct. ' + item.why;
+      say('Correct. ' + item.why);
+      $('options').querySelectorAll('button').forEach(function (b) { b.disabled = true; });
+      $('nextQ').disabled = false;
+    } else {
+      btn.setAttribute('data-state', 'wrong'); btn.disabled = true;
+      if (tricky.indexOf(item.q) === -1) tricky.push(item.q);
+      fb.className = 'fb bad show';
+      fb.textContent = 'Not that one. Read the question again and try another answer.';
+      say('Not that one. Try again.');
+    }
+  }
+
+  $('nextQ').addEventListener('click', function () {
+    if (qi < QUIZ.length - 1) { qi++; drawQ(); $('h0').focus(); }
+    else { show(1); }
+  });
+
+  /* ---------- round 2: how a tornado forms ---------- */
+  function buildSteps() {
+    stepsPlaced = 0; stepWrong = 0;
+    stepPool = shuffle(STEPS.map(function (t, i) { return { step: i + 1, text: t }; }));
+    var chain = $('chain'); chain.textContent = '';
+    STEPS.forEach(function (_, i) {
+      var row = document.createElement('div');
+      row.className = 'link-row' + (i === 0 ? ' next' : '');
+      row.id = 'link' + (i + 1);
+      row.innerHTML = '<span class="n">' + (i + 1) + '</span>';
+      var t = document.createElement('span'); t.className = 'txt';
+      t.textContent = i === 0 ? 'first' : (i === STEPS.length - 1 ? 'last' : '');
+      row.appendChild(t);
+      chain.appendChild(row);
+    });
+    drawSteps();
+    $('toScale').disabled = true;
+    var fb = $('sfb'); fb.className = 'fb'; fb.textContent = '';
+  }
+
+  function drawSteps() {
+    var box = $('steps'); box.textContent = '';
+    stepPool.forEach(function (card) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'step-card';
+      b.textContent = card.text;
+      b.addEventListener('click', function () { pickStep(card, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function pickStep(card, btn) {
+    var want = stepsPlaced + 1, fb = $('sfb');
+    if (card.step !== want) {
+      stepWrong++;
+      btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+      var msg = stepWrong >= 2
+        ? 'Still not that one. Something else has to happen before it.'
+        : 'That one comes later. What has to happen before it can?';
+      fb.className = 'fb bad show'; fb.textContent = msg;
+      say(msg);
+      if (tricky.indexOf('The order a tornado forms in') === -1) tricky.push('The order a tornado forms in');
+      if (stepWrong >= 2) {
+        $('steps').querySelectorAll('.step-card').forEach(function (el, i) {
+          el.classList.toggle('hint', stepPool[i].step === want);
+        });
+      }
+      return;
+    }
+    stepPool = stepPool.filter(function (c) { return c !== card; });
+    stepsPlaced++;
+    addPts(stepWrong === 0 ? 5 : 2);
+    if (stepWrong === 0) firstTry++;
+    stepWrong = 0;
+
+    var row = $('link' + card.step);
+    row.classList.add('filled', 'land'); row.classList.remove('next');
+    row.querySelector('.txt').textContent = card.text;
+    var nxt = $('link' + (stepsPlaced + 1)); if (nxt) nxt.classList.add('next');
+
+    fb.className = 'fb good show';
+    fb.textContent = 'Yes. That is number ' + card.step + ' in the chain.';
+    say('Correct. Number ' + card.step + '.');
+    drawSteps();
+
+    if (stepsPlaced === STEPS.length) {
+      fb.textContent = 'The whole chain is built, from the warm air to the funnel on the ground.';
+      $('toScale').disabled = false;
+      $('toScale').focus();
+    }
+  }
+
+  $('toScale').addEventListener('click', function () { show(2); });
+
+  /* ---------- round 3: the EF scale ---------- */
+  function buildScale() {
+    efPlaced = 0; efWrong = 0;
+    efPool = shuffle(SCALE.map(function (band, i) {
+      return { level: i + 1, ef: band.ef, mph: band.mph, text: band.text };
+    }));
+    var ladder = $('ladder'); ladder.textContent = '';
+    SCALE.forEach(function (band, i) {
+      var row = document.createElement('div');
+      row.className = 'slot' + (i === 0 ? ' next' : '');
+      row.id = 'band' + (i + 1);
+      row.innerHTML = '<span class="n">' + band.ef + '</span>';   /* EF0 to EF5, not 0 to 5 */
+      var t = document.createElement('span'); t.className = 'txt';
+      t.textContent = i === 0 ? 'weakest' : (i === SCALE.length - 1 ? 'strongest' : '');
+      row.appendChild(t);
+      ladder.appendChild(row);
+    });
+    drawPool();
+    $('toBadge').disabled = true;
+    var fb = $('efb'); fb.className = 'fb'; fb.textContent = '';
+  }
+
+  function drawPool() {
+    var box = $('pool'); box.textContent = '';
+    efPool.forEach(function (card) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'shake-card';
+      b.textContent = card.text;
+      b.addEventListener('click', function () { pickBand(card, b); });
+      box.appendChild(b);
+    });
+  }
+
+  function pickBand(card, btn) {
+    var want = efPlaced + 1, fb = $('efb');
+    if (card.level !== want) {
+      efWrong++;
+      btn.classList.remove('bad'); void btn.offsetWidth; btn.classList.add('bad');
+      var msg = efWrong >= 2
+        ? 'Still not the weakest. Look for the report where the least is broken.'
+        : 'Another report on the table did less damage than that one. Which one?';
+      fb.className = 'fb bad show'; fb.textContent = msg;
+      say(msg);
+      if (tricky.indexOf('Ordering the EF scale') === -1) tricky.push('Ordering the EF scale');
+      if (efWrong >= 2) {
+        $('pool').querySelectorAll('.shake-card').forEach(function (el, i) {
+          el.classList.toggle('hint', efPool[i].level === want);
+        });
+      }
+      return;
+    }
+    efPool = efPool.filter(function (c) { return c !== card; });
+    efPlaced++;
+    addPts(efWrong === 0 ? 5 : 2);
+    if (efWrong === 0) firstTry++;
+    efWrong = 0;
+
+    var row = $('band' + card.level);
+    row.classList.add('filled', 'ef', 'land'); row.classList.remove('next');
+    var t = row.querySelector('.txt');
+    t.textContent = '';
+    var mph = document.createElement('span'); mph.className = 'mph'; mph.textContent = card.mph + '. ';
+    t.appendChild(mph);
+    t.appendChild(document.createTextNode(card.text));
+    var nxt = $('band' + (efPlaced + 1)); if (nxt) nxt.classList.add('next');
+
+    fb.className = 'fb good show';
+    fb.textContent = 'Yes. That is ' + card.ef + ', with winds of ' + card.mph + '.';
+    say('Correct. ' + card.ef + '.');
+    drawPool();
+
+    if (efPlaced === SCALE.length) {
+      fb.textContent = 'The whole scale is built, EF0 to EF5. Well done.';
+      $('toBadge').disabled = false;
+      $('toBadge').focus();
+    }
+  }
+
+  $('toBadge').addEventListener('click', function () { show(3); });
+
+  /* ---------- round 4: badge ---------- */
+  function fillBadge() {
+    $('finalPts').textContent = pts;
+    $('firstTry').textContent = 'First-time answers: ' + firstTry + ' out of ' +
+      (QUIZ.length + STEPS.length + SCALE.length);
+    var share = pts / TOTAL;
+    $('rank').textContent = share >= 0.9 ? 'Chief storm chaser'
+      : share >= 0.7 ? 'Storm scientist'
+      : share >= 0.4 ? 'Crew assistant' : 'Trainee';
+    var ul = $('tricky'); ul.textContent = '';
+    if (!tricky.length) {
+      var li = document.createElement('li');
+      li.className = 'none';
+      li.textContent = (qi || stepsPlaced || efPlaced) ? 'Nothing tripped you up. Every answer was right first time.'
+                                                       : 'Nothing yet. Play the three rounds first.';
+      ul.appendChild(li);
+    } else {
+      tricky.forEach(function (t) {
+        var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
+      });
+    }
+  }
+
+  $('again').addEventListener('click', function () {
+    pts = 0; firstTry = 0; qi = 0; tricky = [];
+    $('stormCount').textContent = '0'; $('fill').style.width = '0';
+    drawQ(); buildSteps(); buildScale(); show(0);
+  });
+
+  /* ---------- start ---------- */
+  drawQ();
+  buildSteps();
+  buildScale();
+})();
+</script>
+</body>
+</html>

@@ -44,7 +44,7 @@
   <section class="screen on" data-s="0"><div class="card">
     <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-radio"></use></svg> Message room</span>
     <h2>Shorter messages cost less</h2>
-    <p class="lead" data-read="In a telegraph office every word costs money, so clerks learn to say the same thing with fewer words. Pronouns do exactly that job.">
+    <p class="lead" data-voice="daniel" data-read="In a telegraph office every word costs money, so clerks learn to say the same thing with fewer words. Pronouns do exactly that job.">
       In a telegraph office every word costs money, so clerks say the same thing with fewer words.
       A <b>pronoun</b> does exactly that job: it stands in for a noun so you do not repeat it.</p>
     <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
@@ -160,6 +160,8 @@
     {w:'me',   t:'s', why:'Me is just one person, so it is singular.'},
     {w:'us',   t:'p', why:'Us means me and others, so it is plural.'}
   ];
+  // Every card's recording is listed up front so the scan can check it exists.
+  WORDS.forEach(function(x){ Station.clip(x.w, 'alice'); });
   var sortI=-1, sortTries=0, sortDone=0;
 
   function nextSort(){
@@ -173,7 +175,7 @@
     sortTries=0;
     document.getElementById('sortWord').textContent=WORDS[sortI].w;
     var v=document.getElementById('sortV'); v.className='verdict'; v.textContent='';
-    Station.speak(WORDS[sortI].w);
+    Station.speak(WORDS[sortI].w, 'alice');
   }
 
   window.sortPick=function(kind){
