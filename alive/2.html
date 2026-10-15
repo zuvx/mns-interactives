@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Food Chain Safari: Animals</title>
+<meta name="description" content="Year 3 Science, Unit 4 Staying alive: animal groups, life cycles and food chains. Built for iPads, no network, no data collected.">
+<link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-book"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M19 19v2H6"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-think"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+  <g id="i-paw"><circle cx="7" cy="9" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="17" cy="9" r="2"/><path d="M8 17c0-3 2-5 4-5s4 2 4 5-2 3-4 3-4 0-4-3z"/></g>
+  <!-- Drawn here: emoji have no frogspawn, tadpole, froglet or algae. -->
+  <g id="a-frogspawn" stroke="#5B7C8A" stroke-width="2">
+    <circle cx="20" cy="22" r="9" fill="#E3F1F5"/><circle cx="38" cy="18" r="9" fill="#E3F1F5"/>
+    <circle cx="50" cy="34" r="9" fill="#E3F1F5"/><circle cx="30" cy="38" r="9" fill="#E3F1F5"/>
+    <circle cx="14" cy="42" r="9" fill="#E3F1F5"/><circle cx="40" cy="52" r="9" fill="#E3F1F5"/>
+    <g fill="#1E2A22" stroke="none">
+      <circle cx="20" cy="22" r="3"/><circle cx="38" cy="18" r="3"/><circle cx="50" cy="34" r="3"/>
+      <circle cx="30" cy="38" r="3"/><circle cx="14" cy="42" r="3"/><circle cx="40" cy="52" r="3"/>
+    </g>
+  </g>
+  <g id="a-tadpole">
+    <path d="M30 32c6-7 10 7 16 0s9 7 14 0" fill="none" stroke="#3A3F2E" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="20" cy="32" rx="14" ry="11" fill="#3A3F2E"/>
+    <circle cx="14" cy="28" r="3" fill="#FFFDF7"/><circle cx="14" cy="28" r="1.4" fill="#1E2A22"/>
+  </g>
+  <g id="a-froglet">
+    <path d="M42 38c8 0 12 6 18 4" fill="none" stroke="#3F7D3A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M14 44l-8 8M38 44l8 8M18 26l-8-6M34 26l8-6" stroke="#3F7D3A" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="26" cy="36" rx="17" ry="12" fill="#6DBE5A" stroke="#3F7D3A" stroke-width="2.5"/>
+    <circle cx="18" cy="26" r="5" fill="#6DBE5A" stroke="#3F7D3A" stroke-width="2.5"/>
+    <circle cx="34" cy="26" r="5" fill="#6DBE5A" stroke="#3F7D3A" stroke-width="2.5"/>
+    <circle cx="18" cy="26" r="2" fill="#1E2A22"/><circle cx="34" cy="26" r="2" fill="#1E2A22"/>
+  </g>
+  <g id="a-algae" fill="none" stroke-linecap="round">
+    <path d="M16 60c-6-10 6-16 0-26s6-16 0-26" stroke="#2E8B57" stroke-width="6"/>
+    <path d="M32 60c6-10-6-16 0-26s-6-16 0-24" stroke="#3DA35D" stroke-width="6"/>
+    <path d="M48 60c-6-8 6-14 0-22s6-12 2-20" stroke="#2E8B57" stroke-width="6"/>
+  </g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="grass"></div>
+    <div class="head-body">
+      <span class="head-mark" aria-hidden="true">🦊</span>
+      <div>
+        <h1>Food Chain Safari</h1>
+        <p class="sub">Science · Year 3 · The Wild Lab · Animals</p>
+      </div>
+      <span class="pill">Staying alive</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <details class="keys">
+    <summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg> Key words</summary>
+    <div class="krow" id="keyWords"></div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Parts of the game">
+    <button type="button" aria-current="step">1. Sort the animals</button>
+    <button type="button">2. Who am I?</button>
+    <button type="button">3. Life cycles</button>
+    <button type="button">4. Build a food chain</button>
+    <button type="button">5. Chain detective</button>
+    <button type="button">6. Your badge</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon icon-lg needle" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-paw"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="safariCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <!-- ---------- Round 1: sort into groups ---------- -->
+  <section class="screen on" id="s0" data-s="0" aria-label="Sort the animals">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 1</span>
+      <h2 tabindex="-1">Sort the animals</h2>
+      <p class="lead" data-say="alice">Scientists sort animals into groups. Read the clues on each basket, then drag every animal into its group.</p>
+      <div id="sortBoard"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go1" data-go="1" disabled>Go to round 2</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 2: riddles ---------- -->
+  <section class="screen" id="s1" data-s="1" aria-label="Who am I?">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 2</span>
+      <h2 tabindex="-1">Who am I?</h2>
+      <p class="lead" data-say="alice">Four animals are hiding. Listen to their clues and choose their group.</p>
+      <div id="riddles"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go2" data-go="2" disabled>Go to round 3</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 3: life cycles ---------- -->
+  <section class="screen" id="s2" data-s="2" aria-label="Life cycles">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 3</span>
+      <h2 tabindex="-1">Life cycles</h2>
+      <p class="lead" data-say="alice">Put each life cycle in order, from the youngest to the adult.</p>
+      <div id="frogCycle"></div>
+      <div id="henCycle"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go3" data-go="3" disabled>Go to round 4</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 4: build food chains ---------- -->
+  <section class="screen" id="s3" data-s="3" aria-label="Build a food chain">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 4</span>
+      <h2 tabindex="-1">Build a food chain</h2>
+      <p class="lead" data-say="alice">A food chain starts with a producer, a plant that makes its own food. The arrow points to the one doing the eating.</p>
+      <div id="chainA"></div>
+      <div id="chainB"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go4" data-go="4" disabled>Go to round 5</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 5: arrows and what if ---------- -->
+  <section class="screen" id="s4" data-s="4" aria-label="Chain detective">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 5</span>
+      <h2 tabindex="-1">Chain detective</h2>
+      <p class="lead" data-say="daniel">Oh no! Some arrows in this sea food chain point the wrong way. Can you fix them?</p>
+      <div id="arrowFix"></div>
+      <div id="whatIf"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go5" data-go="5" disabled>Get my badge</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Badge ---------- -->
+  <section class="screen" id="s5" data-s="5" aria-label="Your badge">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Round 6</span>
+      <h2 tabindex="-1">Your badge</h2>
+      <p class="lead">Show this screen to your teacher before you close it.</p>
+      <div class="badge">
+        <h3>Food Chain Safari</h3>
+        <p class="big"><span id="finalPts">0</span> / 140</p>
+        <span class="rank" id="rank">Safari helper</span>
+        <p class="note" id="firstTry">First-time answers: 0</p>
+      </div>
+      <div class="summary">
+        <h3>Tricky ones to talk about</h3>
+        <ul id="tricky"></ul>
+        <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Start again</button>
+      </div>
+      <p class="note">Science · Year 3 · Unit 4 Staying alive · Animal groups, life cycles and food chains</p>
+    </div>
+  </section>
+</div>
+
+<script src="lab.js"></script>
+<script>
+'use strict';
+(function () {
+  /* Content follows the class's Unit 4 lessons (Cambridge Primary Science,
+     4.2 Animal groups and different life cycles, and the food chain lessons).
+     Vertebrate and invertebrate are not taught there, so they are not here. */
+  var KEYS = [
+    ['classification', 'sorting living things into groups by what is the same about them'],
+    ['life cycle', 'the changes as an animal is born, grows and has young'],
+    ['producer', 'a plant that makes its own food using sunlight'],
+    ['consumer', 'a living thing that eats other living things'],
+    ['herbivore', 'an animal that eats only plants'],
+    ['carnivore', 'an animal that hunts other animals for meat'],
+    ['omnivore', 'an animal that eats plants and meat']
+  ];
+
+  /* 10 animals x 4 + 4 riddles x 5 + 7 stages x 4 + 7 chain cards x 4
+     + 2 arrows x 6 + 2 questions x 6 = 140 */
+  Lab.init({
+    countId: 'safariCount', total: 140, keys: KEYS,
+    ranks: ['Safari leader', 'Wildlife expert', 'Safari ranger', 'Safari helper']
+  });
+
+  /* ---------- round 1 ---------- */
+  Lab.drag(document.getElementById('sortBoard'), {
+    prompt: 'Drag each animal into its group. Or tap an animal, then tap a basket.',
+    layout: 'baskets', pts: 4, voice: 'alice',
+    slots: [
+      { id: 'mammal', label: 'Mammals', clue: 'fur or hair, babies drink milk' },
+      { id: 'bird', label: 'Birds', clue: 'feathers, wings, beak' },
+      { id: 'reptile', label: 'Reptiles', clue: 'dry, scaly skin' },
+      { id: 'fish', label: 'Fish', clue: 'gills, fins, wet scales' },
+      { id: 'amphibian', label: 'Amphibians', clue: 'moist, slimy skin' },
+      { id: 'insect', label: 'Insects', clue: 'six legs, three body parts' }
+    ],
+    items: [
+      { label: 'Elephant', art: '🐘', target: 'mammal',
+        hint: 'Look at the clues on the baskets. How does an elephant baby get its food?' },
+      { label: 'Dolphin', art: '🐬', target: 'mammal',
+        hint: 'Lots of sea animals are not fish. Does a dolphin have gills? How does it feed its babies?' },
+      { label: 'Owl', art: '🦉', target: 'bird',
+        hint: 'Look at what covers an owl’s body, and at its mouth. Which basket has those clues?' },
+      { label: 'Penguin', art: '🐧', target: 'bird',
+        hint: 'A penguin can’t fly, but look at its body. What covers it? Does it have a beak?' },
+      { label: 'Snake', art: '🐍', target: 'reptile',
+        hint: 'Look at a snake’s skin. Is it dry and scaly, or moist and slimy?' },
+      { label: 'Turtle', art: '🐢', target: 'reptile',
+        hint: 'A turtle swims, but it breathes air with lungs. Is its skin dry or slimy?' },
+      { label: 'Shark', art: '🦈', target: 'fish',
+        hint: 'A shark breathes under water all its life. What does it breathe with? What helps it swim?' },
+      { label: 'Clownfish', art: '🐠', target: 'fish',
+        hint: 'It lives in water all its life. Look for gills and fins in the clues.' },
+      { label: 'Frog', art: '🐸', target: 'amphibian',
+        hint: 'Touch a frog in your mind. Is its skin dry, or moist and slimy?' },
+      { label: 'Bee', art: '🐝', target: 'insect',
+        hint: 'Count a bee’s legs. Which basket has that number in its clue?' }
+    ],
+    noteAs: function (item) { return 'Which group is the ' + item.label.toLowerCase() + ' in?'; },
+    doneMsg: 'Every animal is sorted. That’s called classification, and real scientists do it too.',
+    done: function () { Lab.unlock('go1'); }
+  });
+
+  /* ---------- round 2 ---------- */
+  var RIDDLE_HINT = 'Read the clues again, then look back at the baskets in round 1. Which basket had those clues?';
+  Lab.quiz(document.getElementById('riddles'), [
+    { q: 'I have feathers, wings and a beak. I lay eggs with hard shells. What group am I in?',
+      a: ['Birds', 'Mammals', 'Reptiles'], c: 0, hint: RIDDLE_HINT,
+      why: 'Only birds have feathers. Birds lay eggs with hard shells.' },
+    { q: 'I have fur. My mum gave birth to me and fed me milk. What group am I in?',
+      a: ['Mammals', 'Birds', 'Fish'], c: 0, hint: RIDDLE_HINT,
+      why: 'Mammals have fur or hair and feed their babies milk. You’re a mammal too!' },
+    { q: 'My skin is moist and slimy. I began life swimming in water, and now I live on land too. What group am I in?',
+      a: ['Amphibians', 'Reptiles', 'Fish'], c: 0, hint: RIDDLE_HINT,
+      why: 'Amphibians have moist skin. They start life in water and later live on land.' },
+    { q: 'I have six jointed legs, a tough outer shell, and three body parts. What group am I in?',
+      a: ['Insects', 'Reptiles', 'Mammals'], c: 0, hint: RIDDLE_HINT,
+      why: 'Insects have six legs and three body parts: the head, the thorax and the abdomen.' }
+  ], { pts: 5, voice: 'daniel', label: 'Animal', done: function () { Lab.unlock('go2'); } });
+
+  /* ---------- round 3 ---------- */
+  var cyclesLeft = 2;
+  function cycleDone() { if (--cyclesLeft === 0) Lab.unlock('go3'); }
+  Lab.drag(document.getElementById('frogCycle'), {
+    prompt: 'The life cycle of a frog',
+    layout: 'row', pts: 4, voice: 'daniel', link: 'then',
+    after: '↻ The adult frog lays frogspawn, and the cycle starts again.',
+    slots: [{ id: 0, label: 'Stage 1' }, { id: 1, label: 'Stage 2' }, { id: 2, label: 'Stage 3' }, { id: 3, label: 'Stage 4' }],
+    items: [
+      { label: 'Frogspawn', art: 'svg:frogspawn', target: 0,
+        hint: 'Every life cycle starts with the youngest stage. Which one comes before all the others?' },
+      { label: 'Tadpole', art: 'svg:tadpole', target: 1,
+        hint: 'A tadpole hatches out of an egg and swims with gills. What comes just before it?' },
+      { label: 'Froglet', art: 'svg:froglet', target: 2,
+        hint: 'A froglet has four legs and still has a little tail. Does it come before or after the tadpole?' },
+      { label: 'Adult frog', art: '🐸', target: 3,
+        hint: 'Which one is fully grown, breathes air on land, and can lay new frogspawn?' }
+    ],
+    noteAs: function (item) { return 'Frog life cycle: where does the ' + item.label.toLowerCase() + ' go?'; },
+    doneMsg: 'Frogspawn, tadpole, froglet, adult frog. The tadpole grows legs and turns into a froglet!',
+    done: cycleDone
+  });
+  Lab.drag(document.getElementById('henCycle'), {
+    prompt: 'The life cycle of a chicken',
+    layout: 'row', pts: 4, voice: 'daniel', link: 'then',
+    after: '↻ The hen lays an egg, and the cycle starts again.',
+    slots: [{ id: 0, label: 'Stage 1' }, { id: 1, label: 'Stage 2' }, { id: 2, label: 'Stage 3' }],
+    items: [
+      { label: 'Egg', art: '🥚', target: 0,
+        hint: 'Every life cycle starts with the youngest stage. Which one comes before all the others?' },
+      { label: 'Chick', art: '🐥', target: 1,
+        hint: 'A chick is a baby bird. Is it the very first stage, or does it hatch out of something?' },
+      { label: 'Adult hen', art: '🐔', target: 2,
+        hint: 'Which one is fully grown and can lay eggs of its own?' }
+    ],
+    noteAs: function (item) { return 'Chicken life cycle: where does the ' + item.label.toLowerCase() + ' go?'; },
+    doneMsg: 'Egg, chick, adult hen. The hen keeps the egg warm for 21 days before the chick hatches.',
+    done: cycleDone
+  });
+
+  /* ---------- round 4 ---------- */
+  var chainsLeft = 2;
+  function chainDone() { if (--chainsLeft === 0) Lab.unlock('go4'); }
+  var EATEN = 'is eaten by';
+  Lab.drag(document.getElementById('chainA'), {
+    prompt: 'Food chain 1: in a field',
+    layout: 'row', pts: 4, voice: 'alice', link: EATEN,
+    slots: [{ id: 0, label: 'Producer' }, { id: 1, label: 'Consumer' }, { id: 2, label: 'Consumer' }],
+    items: [
+      { label: 'Grass', art: '🌿', target: 0,
+        hint: 'A food chain starts with a producer: a plant that makes its own food using sunlight.' },
+      { label: 'Rabbit', art: '🐇', target: 1,
+        hint: 'Ask: what does a rabbit eat? The arrow points from the food to the eater.' },
+      { label: 'Fox', art: '🦊', target: 2,
+        hint: 'Ask: what does a fox eat? Is anything in this chain eating the fox?' }
+    ],
+    noteAs: function (item) { return 'Food chain: where does the ' + item.label.toLowerCase() + ' go?'; },
+    doneMsg: 'Grass is eaten by the rabbit, and the rabbit is eaten by the fox.',
+    done: chainDone
+  });
+  Lab.drag(document.getElementById('chainB'), {
+    prompt: 'Food chain 2: in a wood',
+    layout: 'row', pts: 4, voice: 'alice', link: EATEN,
+    slots: [{ id: 0, label: 'Producer' }, { id: 1, label: 'Consumer' }, { id: 2, label: 'Consumer' }, { id: 3, label: 'Consumer' }],
+    items: [
+      { label: 'Oak leaves', art: '🍃', target: 0,
+        hint: 'Which one is a plant that makes its own food? That is where every chain starts.' },
+      { label: 'Caterpillar', art: '🐛', target: 1,
+        hint: 'A caterpillar is a herbivore. It only eats plants. Where does that put it?' },
+      { label: 'Blue tit', art: '🐦', target: 2,
+        hint: 'A blue tit is a small bird that eats insects and caterpillars. What does it eat, and what eats it?' },
+      { label: 'Sparrowhawk', art: '🦅', target: 3,
+        hint: 'A sparrowhawk hunts small birds. Is anything in this chain eating the sparrowhawk?' }
+    ],
+    noteAs: function (item) { return 'Food chain: where does the ' + item.label.toLowerCase() + ' go?'; },
+    doneMsg: 'Oak leaves, caterpillar, blue tit, sparrowhawk. The energy moves along the arrows.',
+    done: chainDone
+  });
+
+  /* ---------- round 5 ---------- */
+  var partsLeft = 2;
+  function partDone() { if (--partsLeft === 0) Lab.unlock('go5'); }
+  Lab.arrows(document.getElementById('arrowFix'), {
+    prompt: 'Tap an arrow to turn it round. Every arrow should point to the one doing the eating.',
+    pts: 6,
+    chain: [
+      { label: 'Algae', art: 'svg:algae' },
+      { label: 'Krill', art: '🦐' },
+      { label: 'Small fish', art: '🐟' },
+      { label: 'Shark', art: '🦈' }
+    ],
+    wrong: [0, 2],
+    noteText: 'Which way does a food chain arrow point?',
+    hint: 'Check that one again. Ask: who is eating whom? The arrow points to the eater.',
+    doneMsg: 'Fixed! Algae is eaten by krill, krill by small fish, and small fish by the shark.',
+    done: partDone
+  });
+  Lab.quiz(document.getElementById('whatIf'), [
+    { q: 'A dry summer means very little grass grows. What will happen to the rabbits?',
+      a: ['There will be fewer rabbits, because they have less food', 'There will be more rabbits', 'Nothing will change'], c: 0,
+      hint: 'Look back at food chain 1. What do rabbits eat? What happens to an animal without enough food?',
+      why: 'Rabbits eat grass. With less grass, there will be fewer rabbits, so the foxes have less food too.' },
+    { q: 'What does the arrow in a food chain show?',
+      a: ['The direction the energy goes', 'Who is the biggest animal', 'Which way the animals walk'], c: 0,
+      hint: 'Almost every food chain starts with the Sun. What travels from the Sun, to the plant, and then on to the animals?',
+      why: 'The arrow shows where the energy goes, from the one that is eaten to the one doing the eating.' }
+  ], { pts: 6, voice: 'daniel', done: partDone });
+})();
+</script>
+</body>
+</html>

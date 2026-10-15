@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Body Lab: Our Body</title>
+<meta name="description" content="Year 3 Science, Unit 4 Staying alive: organs, the heart, the lungs, the brain and the senses. Built for iPads, no network, no data collected.">
+<link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-book"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5z"/><path d="M19 19v2H6"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-think"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+  <g id="i-heart"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></g>
+  <!-- Drawn here: emoji have no stomach, intestines or body outline. -->
+  <g id="a-outline" fill="#FCE9D8" stroke="#C08A63" stroke-width="3" stroke-linejoin="round">
+    <path d="M50 124 26 250" stroke-width="22" stroke-linecap="round" fill="none"/>
+    <path d="M150 124 174 250" stroke-width="22" stroke-linecap="round" fill="none"/>
+    <path d="M50 124 26 250" stroke="#FCE9D8" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <path d="M150 124 174 250" stroke="#FCE9D8" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <rect x="62" y="270" width="34" height="122" rx="16"/>
+    <rect x="104" y="270" width="34" height="122" rx="16"/>
+    <rect x="86" y="86" width="28" height="26" rx="6"/>
+    <path d="M48 126c0-12 10-18 24-18h56c14 0 24 6 24 18l4 150c-18 14-94 14-112 0z"/>
+    <circle cx="100" cy="52" r="40"/>
+  </g>
+  <g id="a-stomach">
+    <path d="M24 6c6 0 8 6 8 12 0 6 5 9 12 9 11 0 16 10 12 21-5 12-22 15-34 9C10 51 6 40 10 30c3-7 9-9 9-16 0-4 0-8 5-8z"
+          fill="#F6A9A3" stroke="#9F3A38" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M20 40c6 4 16 5 24 1" fill="none" stroke="#9F3A38" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <g id="a-intestines">
+    <rect x="7" y="9" width="50" height="46" rx="16" fill="#F7C9A6" stroke="#A0522D" stroke-width="3"/>
+    <path d="M18 21h28c6 0 6 11 0 11H18c-6 0-6 11 0 11h28" fill="none" stroke="#A0522D" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="grass"></div>
+    <div class="head-body">
+      <span class="head-mark" aria-hidden="true">🫀</span>
+      <div>
+        <h1>The Body Lab</h1>
+        <p class="sub">Science · Year 3 · The Wild Lab · Our body</p>
+      </div>
+      <span class="pill">Staying alive</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <details class="keys">
+    <summary><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg> Key words</summary>
+    <div class="krow" id="keyWords"></div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Parts of the game">
+    <button type="button" aria-current="step">1. Build a body</button>
+    <button type="button">2. Sense pairs</button>
+    <button type="button">3. Heartbeat lab</button>
+    <button type="button">4. True or false?</button>
+    <button type="button">5. Your badge</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon icon-lg needle" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="bodyCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <!-- ---------- Round 1: organs into the body ---------- -->
+  <section class="screen on" id="s0" data-s="0" aria-label="Build a body">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 1</span>
+      <h2 tabindex="-1">Build a body</h2>
+      <p class="lead" data-say="alice">Organs are body parts inside you, and each one has a job. Drag each organ to where it lives.</p>
+      <div id="bodyBoard"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go1" data-go="1" disabled>Go to round 2</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 2: sense organ memory pairs ---------- -->
+  <section class="screen" id="s1" data-s="1" aria-label="Sense pairs">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 2</span>
+      <h2 tabindex="-1">Sense pairs</h2>
+      <p class="lead" data-say="alice">Your sense organs send messages to your brain. Turn over two cards to find a sense organ and what it notices.</p>
+      <div id="memoryBoard"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go2" data-go="2" disabled>Go to round 3</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 3: heart rate ---------- -->
+  <section class="screen" id="s2" data-s="2" aria-label="Heartbeat lab">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg> Round 3</span>
+      <h2 tabindex="-1">Heartbeat lab</h2>
+      <p class="lead" data-say="daniel">This is Zara. She checked her heart rate at rest, after exercise, and after a rest. Try it with her first.</p>
+      <div class="pulse-lab">
+        <div class="stage" id="stage">
+          <span class="who" id="who" aria-hidden="true">🧍</span>
+          <div class="organs" aria-hidden="true"><span class="beat">🫀</span><span class="breathe">🫁</span></div>
+          <p class="status" id="pulseStatus">Zara is resting. Her heart beats slowly.</p>
+          <div class="btnrow">
+            <button class="btn" type="button" id="restBtn">Sit still</button>
+            <button class="btn warm" type="button" id="jumpBtn">Do star jumps</button>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 520 305" role="img" aria-labelledby="chartTitle">
+          <title id="chartTitle">Bar chart of Zara’s heart rate. The bar after one minute of exercise is the tallest. The bar at rest is the shortest. The bar two minutes after the exercise is in between.</title>
+          <text x="280" y="22" font-size="20" font-weight="700" text-anchor="middle">Zara’s heart rate</text>
+          <g stroke="#DCEFE0" stroke-width="1.5">
+            <line x1="70" y1="250" x2="500" y2="250"/><line x1="70" y1="225.6" x2="500" y2="225.6"/>
+            <line x1="70" y1="201.1" x2="500" y2="201.1"/><line x1="70" y1="176.7" x2="500" y2="176.7"/>
+            <line x1="70" y1="152.2" x2="500" y2="152.2"/><line x1="70" y1="127.8" x2="500" y2="127.8"/>
+            <line x1="70" y1="103.3" x2="500" y2="103.3"/><line x1="70" y1="78.9" x2="500" y2="78.9"/>
+            <line x1="70" y1="54.4" x2="500" y2="54.4"/><line x1="70" y1="30" x2="500" y2="30"/>
+          </g>
+          <g font-size="15" text-anchor="end">
+            <text x="62" y="254">0</text><text x="62" y="205">20</text><text x="62" y="156">40</text>
+            <text x="62" y="107">60</text><text x="62" y="58">80</text>
+          </g>
+          <text x="16" y="140" font-size="15" text-anchor="middle" transform="rotate(-90 18 140)">beats per minute</text>
+          <g fill="#D9483B">
+            <rect x="100" y="96" width="90" height="154" rx="6"/>
+            <rect x="240" y="42.2" width="90" height="207.8" rx="6"/>
+            <rect x="380" y="69.1" width="90" height="180.9" rx="6"/>
+          </g>
+          <line x1="70" y1="250" x2="500" y2="250" stroke="#17261C" stroke-width="2"/>
+          <line x1="70" y1="30" x2="70" y2="250" stroke="#17261C" stroke-width="2"/>
+          <g font-size="15" text-anchor="middle" font-weight="700">
+            <text x="145" y="272">at rest</text>
+            <text x="285" y="272">after 1 minute</text><text x="285" y="290">of exercise</text>
+            <text x="425" y="272">2 minutes after</text><text x="425" y="290">the exercise</text>
+          </g>
+        </svg>
+      </div>
+      <div id="heartQuiz"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go3" data-go="3" disabled>Go to round 4</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Round 4: true or false ---------- -->
+  <section class="screen" id="s3" data-s="3" aria-label="True or false">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-think"/></svg> Round 4</span>
+      <h2 tabindex="-1">True or false?</h2>
+      <p class="lead" data-say="alice">Read each sentence about your body. Is it true or false?</p>
+      <div id="tfQuiz"></div>
+      <div class="btnrow"><button class="btn deep" type="button" id="go4" data-go="4" disabled>Get my badge</button></div>
+    </div>
+  </section>
+
+  <!-- ---------- Badge ---------- -->
+  <section class="screen" id="s4" data-s="4" aria-label="Your badge">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Round 5</span>
+      <h2 tabindex="-1">Your badge</h2>
+      <p class="lead">Show this screen to your teacher before you close it.</p>
+      <div class="badge">
+        <h3>The Body Lab</h3>
+        <p class="big"><span id="finalPts">0</span> / 140</p>
+        <span class="rank" id="rank">Lab helper</span>
+        <p class="note" id="firstTry">First-time answers: 0</p>
+      </div>
+      <div class="summary">
+        <h3>Tricky ones to talk about</h3>
+        <ul id="tricky"></ul>
+        <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      </div>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Start again</button>
+      </div>
+      <p class="note">Science · Year 3 · Unit 4 Staying alive · Human organs</p>
+    </div>
+  </section>
+</div>
+
+<script src="lab.js"></script>
+<script>
+'use strict';
+(function () {
+  /* Content follows the class's Unit 4 lessons (Cambridge Primary Science,
+     4.1 Human organs): the heart, the lungs, the brain and the sense organs.
+     Bones and muscles are not taught in these lessons, so they are not here. */
+  var KEYS = [
+    ['organ', 'a body part inside you that has an important job'],
+    ['heart', 'a strong muscle that pumps blood around your body'],
+    ['lungs', 'two spongy organs in your chest that you use for breathing'],
+    ['oxygen', 'an invisible gas in fresh air that your body needs'],
+    ['brain', 'your body’s headquarters, it gets and sends messages'],
+    ['heart rate', 'how fast your heart is beating']
+  ];
+
+  /* 5 organs x 6 + 5 pairs x 6 + 4 questions x 10 + 8 sentences x 5 = 140 */
+  Lab.init({
+    countId: 'bodyCount', total: 140, keys: KEYS,
+    ranks: ['Chief scientist', 'Body expert', 'Lab assistant', 'Lab helper']
+  });
+
+  /* ---------- round 1 ---------- */
+  Lab.drag(document.getElementById('bodyBoard'), {
+    prompt: 'Drag each organ to where it lives. Or tap an organ, then tap the place.',
+    layout: 'body', pts: 6, voice: 'alice',
+    slots: [
+      { id: 'head', label: 'Head' },
+      { id: 'chest', label: 'Chest' },
+      { id: 'tummy', label: 'Tummy' }
+    ],
+    items: [
+      { label: 'Brain', art: '🧠', target: 'head',
+        hint: 'The brain is kept safe inside a hard bone called the skull. Where is your skull?' },
+      { label: 'Heart', art: '🫀', target: 'chest',
+        hint: 'Put your hand where you can feel your heartbeat. Where is your hand?' },
+      { label: 'Lungs', art: '🫁', target: 'chest',
+        hint: 'Breathe in deeply. Which part of you gets bigger? That is where the air goes.' },
+      { label: 'Stomach', art: 'svg:stomach', target: 'tummy',
+        hint: 'Think about where your food goes after you swallow it. Where do you feel full?' },
+      { label: 'Intestines', art: 'svg:intestines', target: 'tummy',
+        hint: 'Food goes from the stomach into the intestines, so they are close to the stomach.' }
+    ],
+    noteAs: function (item) { return 'Where does the ' + item.label.toLowerCase() + ' live?'; },
+    doneMsg: 'Your body is built! The brain is in the head, the heart and lungs are in the chest, and the stomach and intestines are in the tummy.',
+    done: function () { Lab.unlock('go1'); }
+  });
+
+  /* ---------- round 2 ---------- */
+  Lab.memory(document.getElementById('memoryBoard'), {
+    prompt: 'Find the 5 pairs.',
+    pts: 6, voice: 'daniel',
+    pairs: [
+      { a: { art: '👀', label: 'Eyes' }, b: { label: 'light, colours and shapes' } },
+      { a: { art: '👂', label: 'Ears' }, b: { label: 'sounds' } },
+      { a: { art: '👃', label: 'Nose' }, b: { label: 'smells' } },
+      { a: { art: '👅', label: 'Tongue' }, b: { label: 'tastes' } },
+      { a: { art: '✋', label: 'Skin' }, b: { label: 'hot, cold, rough and smooth' } }
+    ],
+    hint: 'Not a pair. Try to remember where those two cards were. Which sense organ would notice that?',
+    doneMsg: 'All 5 pairs! Your eyes, ears, nose, tongue and skin send messages to your brain along nerves.',
+    done: function () { Lab.unlock('go2'); }
+  });
+
+  /* ---------- round 3 ---------- */
+  var who = document.getElementById('who');
+  var stage = document.getElementById('stage');
+  function setPace(fast) {
+    stage.style.setProperty('--beat', fast ? '0.45s' : '1s');
+    who.textContent = fast ? '🤸' : '🧍';
+    who.classList.toggle('jump', fast);
+    document.getElementById('pulseStatus').textContent = fast
+      ? 'Zara is doing star jumps. Her heart beats fast and she breathes faster.'
+      : 'Zara is resting. Her heart beats slowly.';
+  }
+  document.getElementById('restBtn').addEventListener('click', function () { setPace(false); });
+  document.getElementById('jumpBtn').addEventListener('click', function () { setPace(true); });
+
+  Lab.quiz(document.getElementById('heartQuiz'), [
+    { q: 'Look at the bar chart. When was Zara’s heart beating fastest?',
+      a: ['After 1 minute of exercise', 'At rest', '2 minutes after the exercise'], c: 0,
+      hint: 'Find the tallest bar. The taller the bar, the more beats in a minute.',
+      why: 'The tallest bar is after 1 minute of exercise. Exercise makes your heart beat faster.' },
+    { q: 'What happened to Zara’s heart rate when she rested for 2 minutes?',
+      a: ['It went down again', 'It went up even more', 'It stopped'], c: 0,
+      hint: 'Compare the last bar with the middle bar. Is the last one taller or shorter?',
+      why: 'The last bar is shorter than the middle one. Her heart slowed down while she rested.' },
+    { q: 'Why does your heart beat faster when you exercise?',
+      a: ['Your muscles need more oxygen and energy quickly', 'To stop your blood getting stuck in your feet', 'Your heart gets tired of beating slowly'], c: 0,
+      hint: 'Think about your muscles when you run and jump. They are working hard. What do they need?',
+      why: 'Working muscles need more oxygen and energy, so your heart pumps blood to them faster.' },
+    { q: 'What happens to your breathing when you run?',
+      a: ['You breathe faster, so you take in more air', 'You stop breathing', 'You breathe more slowly'], c: 0,
+      hint: 'Press “Do star jumps” and watch Zara’s lungs. Or remember your own star jumps.',
+      why: 'You breathe faster. Your lungs take in more air, and the oxygen goes into your blood.' }
+  ], { pts: 10, voice: 'alice', done: function () { Lab.unlock('go3'); } });
+
+  /* ---------- round 4 ---------- */
+  var T = 0, F = 1;
+  Lab.quiz(document.getElementById('tfQuiz'), [
+    { q: 'The heart pumps blood around your body.', a: ['True', 'False'], c: T,
+      hint: 'The heart is made of strong muscle that squeezes. What does it squeeze along the blood vessels?',
+      why: 'The heart is a pump. Each squeeze pushes blood around your body.' },
+    { q: 'Your lungs are in your tummy.', a: ['True', 'False'], c: F,
+      hint: 'Breathe in deeply and watch your body. Which part gets bigger?',
+      why: 'Your lungs are in your chest, behind your ribs.' },
+    { q: 'Your brain stops working when you are asleep.', a: ['True', 'False'], c: F,
+      hint: 'When you sleep, you keep on breathing. Which organ keeps that going?',
+      why: 'Your brain never stops. It keeps you breathing, even when you’re fast asleep.' },
+    { q: 'Each squeeze of your heart is called a heartbeat.', a: ['True', 'False'], c: T,
+      hint: 'Put your hand on your chest. What do you feel each time your heart squeezes?',
+      why: 'Every squeeze is one heartbeat. You can count them by feeling your pulse.' },
+    { q: 'Oxygen is a gas in the air that our bodies need.', a: ['True', 'False'], c: T,
+      hint: 'Think about what moves from the air into your blood when you breathe in.',
+      why: 'Oxygen is in fresh air. When you breathe in, it moves into your blood.' },
+    { q: 'Your brain is inside your skull.', a: ['True', 'False'], c: T,
+      hint: 'The skull is the hard bone in your head. What does it keep safe?',
+      why: 'Your skull is a hard bone that keeps your brain safe.' },
+    { q: 'When you run, you breathe more slowly.', a: ['True', 'False'], c: F,
+      hint: 'Think back to the star jumps. How did your breathing change?',
+      why: 'When you run, you breathe faster, so you get more oxygen.' },
+    { q: 'Your nose sends messages about smells to your brain.', a: ['True', 'False'], c: T,
+      hint: 'Sense organs all send their messages to one place. Which organ is the body’s headquarters?',
+      why: 'Your sense organs send messages to your brain along nerves.' }
+  ], { pts: 5, voice: 'daniel', label: 'Sentence', fixed: true, done: function () { Lab.unlock('go4'); } });
+})();
+</script>
+</body>
+</html>
