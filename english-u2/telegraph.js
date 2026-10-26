@@ -281,6 +281,14 @@
     fb.setAttribute('role', 'status');
     box.appendChild(fb);
 
+    /* A hint teaches the method and never names the answer, however many
+       tries it takes (teacher, October 2026). A hint that would is not shown. */
+    function givesAway(h) {
+      var said = ' ' + norm(h) + ' ';
+      return (isText ? cfg.answers : [String(cfg.answer)])
+        .some(function (a) { return said.indexOf(' ' + norm(a) + ' ') >= 0; });
+    }
+
     function accept(v) {
       if (typeof cfg.accept === 'function') return cfg.accept(v);
       if (isText) return cfg.answers.some(function (a) { return norm(a) === norm(v); });
@@ -311,7 +319,7 @@
         fb.className = 'ask-fb bad';
         // First a nudge that makes them look again; only then the worked hint.
         var nudge = cfg.nudge || 'Not quite. Have another look.';
-        fb.textContent = (tries >= 2 && cfg.hint) ? cfg.hint : nudge;
+        fb.textContent = (tries >= 2 && cfg.hint && !givesAway(cfg.hint)) ? cfg.hint : nudge;
         record({ task: cfg.task || cfg.prompt, result: 'tried ' + v });
       }
     }
