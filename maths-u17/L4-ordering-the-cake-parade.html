@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery Upstairs · Lesson 4: The Cake Parade</title>
+<link rel="stylesheet" href="bakery.css">
+</head>
+<body data-lesson="u17-l4">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-loaf"></use></svg>
+      <div><h1>The Cake Parade</h1><p class="sub">Lesson 4 · Ordering fractions, smallest first and largest first</p></div>
+      <div class="pill">Unit 17 · Stage 3 · 3Nf.08</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="order"><div class="ktext"><b>order</b><span>Put things in a line, from smallest to largest or largest to smallest.</span></div></div>
+      <div class="kcard" data-word="smallest"><div class="ktext"><b>smallest</b><span>Less than all the others.</span></div></div>
+      <div class="kcard" data-word="largest"><div class="ktext"><b>largest</b><span>More than all the others.</span></div></div>
+      <div class="kcard" data-word="number line"><div class="ktext"><b>number line</b><span>A line from 0 to 1, cut into equal steps.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> Upstairs</span>
+    <h2>Line up the cakes</h2>
+    <p class="lead" data-voice="daniel" data-read="The bakers are lining up slices for the parade. Read the iced pieces from the bottom up and they get bigger: one eighth, one quarter, one half. The unit fraction with the largest denominator is the smallest.">
+      The bakers are lining up slices for the parade. Read the iced pieces from the bottom up and they
+      get bigger. <b>The unit fraction with the largest denominator is the smallest.</b></p>
+    <div id="welcomeWall"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the parade</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plate"></use></svg> One piece each</span>
+    <h2>Order the unit fractions</h2>
+    <p class="lead" data-read="Drag each card into the line, or tap a card and then a gap. Read which end is smallest before you start.">
+      Drag each card into the line, or tap a card and then a gap. Check which end is <b>smallest</b> first.</p>
+    <div id="unitWall"></div>
+    <div id="unit"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg> Same pieces</span>
+    <h2>Same denominator</h2>
+    <p class="lead" data-read="These fractions all have the same denominator, so the pieces are all the same size. Look at how many pieces each one has.">
+      The denominators are the same, so every piece is the same size. Look at <b>how many</b> pieces.</p>
+    <div id="same"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Number line</span>
+    <h2>Find their place on the line</h2>
+    <p class="lead" data-read="The line goes from 0 to 1 in eighths. Drag each card to its mark. Some cards are not in eighths: find the same amount in eighths first.">
+      The line goes from 0 to 1 in <b>eighths</b>. Drag each card to its mark. If a card is not in eighths,
+      find the same amount in eighths first.</p>
+    <div id="lineWall"></div>
+    <div id="line"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Check the bakers</span>
+    <h2>Who got it right?</h2>
+    <div id="talk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Upstairs badge</span>
+    <h2>Earn your Upstairs rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a number line from 0 to 1 and split it into tenths. Mark 1/5, 1/2 and 7/10 on it.
+      Then write the three fractions in order, largest first.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Upstairs Rank 4: Parade Leader</h3>
+      <div style="font-weight:700">Stamp this when you can order fractions both ways and say how you knew.</div>
+      <div><span class="stamp" id="stamp">LEADER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery Upstairs · Stage 3 · Unit 17 Lesson 4 (3Nf.08). SB p73, WB pp140-141. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-upstairs.js reads this block and re-derives every answer.
+     Collins L4 orders unit fractions (largest denominator is smallest), fractions
+     with the same denominator (by the numerator), both ways, and places
+     fractions on a 0 to 1 line. The talk items are Anjani (order reversed) and
+     Brenan and Ruby (a rule that only works sometimes), with new numbers.
+     "line": the line's denominator and the cards to place on it. -->
+<script type="application/json" id="data">
+{
+  "welcome": {"rows": [2, 4, 8], "mark": {"2": 1, "4": 1, "8": 1}},
+  "unit": [{"cards": ["1/3", "1/8", "1/2", "1/6"], "first": "smallest"},
+           {"cards": ["1/5", "1/10", "1/4", "1/3"], "first": "largest"}],
+  "same": [{"cards": ["5/8", "1/8", "7/8", "3/8"], "first": "smallest"},
+           {"cards": ["3/10", "9/10", "4/10", "8/10", "1/10"], "first": "largest"}],
+  "line": {"d": 8, "cards": ["1/8", "3/8", "1/2", "3/4"]},
+  "talk": {"wrong": {"who": "Sara", "first": "largest", "said": ["1/10", "1/5", "1/4", "1/2"]},
+           "rule": {"who": "Adam", "says": "The fraction with the bigger denominator is always the smaller fraction.", "answer": "Sometimes"}},
+  "rank": [{"cards": ["1/6", "1/4", "1/9", "1/3"], "first": "smallest"},
+           {"cards": ["6/8", "2/8", "5/8", "1/8"], "first": "largest"}]
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+  var F = B.parseFrac;
+  function fr(s){ var f=F(s); return B.frac(f[0], f[1]); }
+  function v(s){ var f=F(s); return f[0]/f[1]; }
+  function said(f){ var x=F(f); return x[0]+' out of '+x[1]; }
+
+  document.getElementById('welcomeWall').innerHTML = B.wall(D.welcome.rows, D.welcome.mark);
+
+  B.init([
+    {icon:'oven',   label:'Welcome'},
+    {icon:'plate',  label:'One piece'},
+    {icon:'four',   label:'Same pieces'},
+    {icon:'search', label:'Number line'},
+    {icon:'talk',   label:'Check'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) B.renderMyWork(); }});
+
+  /* An ordering line: one gap per card, the ends labelled smallest and largest. */
+  function order(host, set, task, how){
+    var sorted=set.cards.slice().sort(function(a,b){ return v(a)-v(b); });
+    if(set.first==='largest') sorted.reverse();
+    var last=set.first==='largest' ? 'smallest' : 'largest';
+    B.place(host,{prompt:'Put these in order, '+set.first+' first.', layout:'order',
+      places:sorted.map(function(c,i){
+        return {label: i===0 ? set.first : i===sorted.length-1 ? last : '', accept:c,
+                aria:'Place '+(i+1)+' of '+sorted.length+(i===0 ? ', the '+set.first : '')}; }),
+      cards:set.cards.map(function(c){ return {html:fr(c), value:c, aria:said(c)}; }),
+      task:task, nudge:'Not there. Which end is the '+set.first+'?', hint:how,
+      done:'The parade is in order.'});
+  }
+
+  /* ---- Unit fractions ---- */
+  document.getElementById('unitWall').innerHTML = B.wall([2,3,4,5,6,8,10]);
+  var unitHost=document.getElementById('unit');
+  D.unit.forEach(function(set){
+    order(unitHost, set, 'L4 Unit fractions '+set.first+' first',
+      'Each card is one piece. The more pieces the whole is cut into, the smaller each piece. Find each one on the wall.');
+  });
+
+  /* ---- Same denominator ---- */
+  var sameHost=document.getElementById('same');
+  D.same.forEach(function(set){
+    order(sameHost, set, 'L4 Same denominator '+set.first+' first',
+      'The pieces are all the same size, so count them: the top number says how many pieces.');
+  });
+
+  /* ---- Number line ---- */
+  var L=D.line, ticks=[];
+  for(var t=1;t<L.d;t++) ticks.push({accept:t, aria:'The mark for '+t+' out of '+L.d});
+  document.getElementById('lineWall').innerHTML = B.wall([2,4,8]);
+  B.place(document.getElementById('line'),{prompt:'Drag each fraction to its mark on the line.', line:true, keepOrder:true,
+    places:ticks,
+    cards:L.cards.map(function(c){ return {html:fr(c), value:Math.round(v(c)*L.d), aria:said(c)}; }),
+    task:'L4 Number line in '+L.d+'ths',
+    nudge:'Not that mark. Count the steps from 0.',
+    hint:'Each step on the line is one eighth. For a half or a quarter, use the wall to find how many eighths it is, then count that many steps from 0.',
+    done:'Every fraction is on its mark.'});
+
+  /* ---- Check the bakers ---- */
+  var talkHost=document.getElementById('talk'), W=D.talk.wrong, R=D.talk.rule;
+  var says=document.createElement('div'); says.className='says';
+  says.innerHTML='<p data-voice="daniel"><span class="who">'+W.who+' says:</span> Here they are, '+W.first+' first: '+W.said.join(', ')+'.</p>';
+  talkHost.appendChild(says);
+  B.choose(talkHost,{prompt:'What did '+W.who+' do?', options:[
+      'The order is right.',
+      W.who+' put them the wrong way round.',
+      W.who+' mixed up two of them in the middle.'],
+    answer:1, task:'L4 '+W.who+'’s order',
+    nudge:'Find the '+W.first+' one on the wall. Is it first in '+W.who+'’s line?',
+    hint:'Check the first card and the last card. Which one should start the line?'});
+  var says2=document.createElement('div'); says2.className='says';
+  says2.innerHTML='<p data-voice="daniel"><span class="who">'+R.who+' says:</span> '+R.says+'</p>';
+  talkHost.appendChild(says2);
+  var opts=['Always','Sometimes','Never'];
+  B.choose(talkHost,{prompt:'Is '+R.who+' right always, sometimes or never?', options:opts,
+    answer:opts.indexOf(R.answer), task:'L4 '+R.who+'’s rule',
+    nudge:'Test it. Try 1/2 and 1/4. Then try 1/2 and 3/4.',
+    hint:'One piece each: does the rule work? More than one piece: does it still work every time?'});
+  B.readAloud();
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk');
+  D.rank.forEach(function(set, i){
+    order(host, set, 'L4 Rank order '+(i+1),
+      'One piece each: more pieces in the whole means smaller pieces. Same denominator: count the pieces.');
+  });
+})();
+</script>
+</body>
+</html>

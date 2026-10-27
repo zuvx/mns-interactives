@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery Upstairs · The Upstairs Bake-off</title>
+<link rel="stylesheet" href="bakery.css">
+<style>
+  .qhead{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:1.25rem 0 .25rem;color:var(--sea)}
+  .qhead h3{margin:0;font-size:1.1875rem}
+  .results{list-style:none;padding:0;margin:.75rem 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:.5rem}
+  .results li{background:var(--sand);border-radius:12px;padding:.5rem .75rem;font-weight:700;border-left:6px solid var(--sand-2)}
+  .results li.full{border-left-color:var(--ok)}
+  .results li.gap{border-left-color:var(--coral)}
+  .cakerow{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  .cakerow .cake{width:8rem;height:8rem}
+  #q3 .slot-label{font:700 1.75rem var(--display);color:var(--ink)}
+</style>
+</head>
+<body data-lesson="u17-bakeoff">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg>
+      <div><h1>The Upstairs Bake-off</h1><p class="sub">Progress Check practice · every kind of question, new numbers</p></div>
+      <div class="pill">Unit 17 · Stage 3 · 17 marks</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+  <nav class="rail" id="rail" aria-label="Bake-off rounds"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> The Bake-off</span>
+    <h2>Ready for the Progress Check?</h2>
+    <p class="lead" data-voice="daniel" data-read="Welcome to the Upstairs Bake-off. Every kind of question from your Progress Check is here, in the same order, with new numbers. You get a mark when you are right first time. Can you get all seventeen?">
+      Every kind of question from your Progress Check is here, in the same order, with new numbers.
+      You get a <b>mark</b> when you're right first time. Can you get all 17?</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Take your time. Nobody is timing you. If you get one wrong you can still finish it, but the mark only counts first time.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start round 1</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg> Round 1</span>
+    <h2>Ice it, then write it another way</h2>
+    <div class="qhead"><h3>One quarter</h3><span class="pctag">Like PC question 1</span></div>
+    <div id="q1"></div>
+    <div class="qhead"><h3>One half</h3><span class="pctag">Like PC question 2</span></div>
+    <div id="q2"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(2)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plate"></use></svg> Round 2</span>
+    <h2>Sets of three</h2>
+    <div class="qhead"><span class="pctag">Like PC question 3</span></div>
+    <p class="lead" data-read="Put two cards on each plate, so each plate has three fractions that are all equivalent.">Put two cards on each plate, so each plate has <b>three</b> equivalent fractions.</p>
+    <div id="q3"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(3)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-whisk"></use></svg> Round 3</span>
+    <h2>Finish the row</h2>
+    <div class="qhead"><span class="pctag">Like PC question 4</span></div>
+    <p class="lead" data-read="The cakes in each row are in order, smallest first. Ice the last cake so the row stays in order.">The cakes in each row go smallest first. Ice the last cake so the row stays in order.</p>
+    <div id="q4"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pair"></use></svg> Round 4</span>
+    <h2>Compare</h2>
+    <div class="qhead"><h3>Which has more iced?</h3><span class="pctag">Like PC question 5</span></div>
+    <div id="q5"></div>
+    <div class="qhead"><h3>&lt;, &gt; or =</h3><span class="pctag">Like PC question 6</span></div>
+    <div id="q6"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Next round</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-loaf"></use></svg> Round 5</span>
+    <h2>Lines and orders</h2>
+    <div class="qhead"><h3>On the number line</h3><span class="pctag">Like PC question 7</span></div>
+    <div id="q7"></div>
+    <div class="qhead"><h3>Smallest first</h3><span class="pctag">Like PC question 8</span></div>
+    <div id="q8"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(6)">See my score</button></div>
+  </div></section>
+
+  <section class="screen" data-s="6"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Judging</span>
+    <h2>My Bake-off score</h2>
+    <div class="licence">
+      <h3>Marks, first time</h3>
+      <div class="score" id="score">0 / 17</div>
+      <div id="scoreNote" style="font-weight:700"></div>
+      <div><span class="stamp" id="stamp">MASTER BAKER</span></div>
+    </div>
+    <ul class="results" id="results"></ul>
+    <p class="note">To try again from the start, reload the page. Teacher: the Session summary shows
+      each Progress Check question, first try and after a hint.</p>
+    <div class="mywork" id="mywork"></div>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery Upstairs · Stage 3 · Unit 17 Progress Check practice (3Nf.06, 3Nf.08). Works offline. No timers.</p>
+</div>
+
+<!-- Bake-off data. Every item matches a Progress Check question in kind and in
+     marks (17 in all), and none of them is a Progress Check item: check-upstairs.js
+     holds the paper's list and fails if one turns up here.
+     q1/q2: [cake, amount to ice]; the child then writes it in the cake's parts.
+     q4: [cut, the three iced counts shown]; the last cake needs more than the third. -->
+<script type="application/json" id="data">
+{
+  "q1": [["grid4-4", "1/4"], ["grid2-10", "1/4"]],
+  "q2": [["circle6", "1/2"], ["grid3-4", "1/2"]],
+  "q3": {"1/2": ["3/6", "4/8"], "1/3": ["2/6", "3/9"], "1/4": ["4/16", "5/20"], "1/10": ["3/30", "4/40"]},
+  "q4": [["circle6", [1, 2, 4]], ["circle5", [1, 2, 3]]],
+  "q5": [["circle10/3", "circle5/1"], ["circle4/2", "circle8/3"], ["circle3/1", "circle6/4"]],
+  "q6": [["2/8", "5/8"], ["5/6", "2/6"], ["3/10", "8/10"], ["1/5", "1/6"]],
+  "q7": {"d": 10, "cards": ["1/10", "2/5", "6/10", "1/5", "7/10"]},
+  "q8": ["1/3", "1/8", "1/6", "1/12", "1/2", "1/5"],
+  "marks": {"Q1": 2, "Q2": 2, "Q3": 2, "Q4": 2, "Q5": 3, "Q6": 4, "Q7": 1, "Q8": 1}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+  var F = B.parseFrac;
+  var NAME = {2:'halves', 3:'thirds', 4:'quarters', 5:'fifths', 6:'sixths', 8:'eighths', 10:'tenths', 12:'twelfths', 16:'sixteenths', 20:'twentieths'};
+  function fr(s){ var f=F(s); return B.frac(f[0], f[1]); }
+  function v(s){ var f=F(s); return f[0]/f[1]; }
+  function said(f){ var x=F(f); return x[0]+' out of '+x[1]; }
+  function sign(a, b){ var x=F(a), y=F(b), l=x[0]*y[1], r=y[0]*x[1]; return l<r ? '<' : l>r ? '>' : '='; }
+  var SIGNS = [{html:'&lt;', value:'<', aria:'less than'}, {html:'&gt;', value:'>', aria:'greater than'}, {html:'=', value:'=', aria:'equals'}];
+
+  B.init([
+    {icon:'oven',  label:'Start'},
+    {icon:'cake',  label:'Ice and write'},
+    {icon:'plate', label:'Sets of three'},
+    {icon:'whisk', label:'Finish the row'},
+    {icon:'pair',  label:'Compare'},
+    {icon:'loaf',  label:'Line and order'},
+    {icon:'medal', label:'Score'}
+  ], {onEnter:function(n){ if(n===6){ paintScore(); B.renderMyWork(); } }});
+
+  /* One mark per item right first time, the way the paper is marked. */
+  var got={}, done={};
+  Object.keys(D.marks).forEach(function(q){ got[q]=0; done[q]=0; });
+  function scored(q, worth){
+    return function(x, tries){
+      if(worth){ done[q]+=D.marks[q]; got[q]+=worth(tries); }
+      else { done[q]++; if(tries===1) got[q]++; }
+    };
+  }
+
+  /* ---- Q1, Q2: ice the amount, then write it in the cake's own parts. One
+     mark for the pair, as on the paper, so both must be right first time. ---- */
+  function iceAndWrite(hostId, q, items){
+    var host=document.getElementById(hostId);
+    items.forEach(function(x){
+      var t=F(x[1]), n=BakeryShapes.parse(x[0]+'/0').parts.length, first={};
+      function both(k){ return function(v, tries){
+        first[k]=tries===1;
+        if(Object.keys(first).length===2){ done[q]++; if(first.ice && first.write) got[q]++; }
+      }; }
+      B.shade(host,{prompt:'Ice '+x[1]+' of the cake.', shape:x[0], target:x[1],
+        task:'PC '+q+' · ice '+x[1]+' of '+n, onSolved:both('ice')});
+      B.askFrac(host,{prompt:'The cake has '+n+' parts. Write the fraction you iced in '+NAME[n]+'.',
+        answer:(t[0]*n/t[1])+'/'+n, exact:true, task:'PC '+q+' · '+x[1]+' in '+NAME[n],
+        nudge:'The bottom number is how many parts the whole cake has.',
+        hint:'Count all the parts for the bottom number. Count your iced parts for the top number.',
+        onSolved:both('write')});
+    });
+  }
+  iceAndWrite('q1', 'Q1', D.q1);
+  iceAndWrite('q2', 'Q2', D.q2);
+
+  /* ---- Q3: sets of three. 2 marks all right, 1 mark with up to two slips. ---- */
+  var plates=Object.keys(D.q3), cards=[];
+  plates.forEach(function(p){ D.q3[p].forEach(function(c){ cards.push({html:fr(c), value:p, aria:said(c)}); }); });
+  B.place(document.getElementById('q3'),{prompt:'Put each card on the plate it is equivalent to.', baskets:true,
+    places:plates.map(function(p){ return {label:B.frac(F(p)[0],F(p)[1]), accept:p, aria:'The plate for '+said(p)}; }),
+    cards:cards, task:'PC Q3 · sets of three',
+    nudge:'Not that plate. What do you multiply the top and bottom by?',
+    hint:'For each card, divide the bottom number by the top number. That tells you which unit fraction it matches.',
+    onSolved:scored('Q3', function(tries){ return tries===1 ? 2 : tries<=3 ? 1 : 0; })});
+
+  /* ---- Q4: finish the row ---- */
+  var q4=document.getElementById('q4');
+  D.q4.forEach(function(r){
+    var cut=r[0], shown=r[1], n=BakeryShapes.parse(cut+'/0').parts.length, top=shown[shown.length-1];
+    B.shade(q4,{prompt:'Ice the last cake so the row stays in order.', shape:cut, target:(top+1)+'/'+n,
+      show:'<div class="cakerow">'+shown.map(function(k){ return B.cake(cut+'/'+k); }).join('')+'</div>',
+      check:function(c){ return c>top; }, task:'PC Q4 · '+cut+' after '+top,
+      under:'That is not more than the cake before it. Smallest first means each cake has more icing than the one before.',
+      hint:'Count the iced parts on the third cake. The last cake needs more iced parts than that.',
+      onSolved:scored('Q4')});
+  });
+
+  /* ---- Q5: which has more iced ---- */
+  var q5=document.getElementById('q5');
+  D.q5.forEach(function(p){
+    var val=p.map(function(spec){ var s=BakeryShapes.parse(spec); return s.shaded/s.parts.length; });
+    B.choose(q5,{prompt:'Tap the cake with more of it iced.', cards:true,
+      options:p.map(function(spec){ return B.cake(spec); }),
+      answer:val[0]>val[1]?0:1, task:'PC Q5 · '+p.join(' or '),
+      nudge:'The cakes are cut differently. Look at the amount iced, not the number of parts.',
+      hint:'Can you write one cake in the other cake’s parts? Then compare the top numbers.',
+      onSolved:scored('Q5')});
+  });
+
+  /* ---- Q6: signs, one mark each ---- */
+  var q6=document.getElementById('q6');
+  D.q6.forEach(function(p){
+    B.place(q6,{prompt:'Put <, > or = in the gap.', reuse:true, keepOrder:true,
+      places:[{before:fr(p[0]), after:fr(p[1]), accept:sign(p[0],p[1]), aria:said(p[0])+', gap, '+said(p[1])}],
+      cards:SIGNS, task:'PC Q6 · '+p.join(' and '),
+      nudge:'Not that sign. Which fraction is the bigger amount?',
+      hint:'Same bottom numbers: compare the top numbers. One piece each: more pieces in the whole means smaller pieces.',
+      onSolved:scored('Q6')});
+  });
+
+  /* ---- Q7: number line in tenths, one mark for all of them ---- */
+  var L=D.q7, ticks=[];
+  for(var t=1;t<L.d;t++) ticks.push({accept:t, aria:'The mark for '+t+' out of '+L.d});
+  B.place(document.getElementById('q7'),{prompt:'Drag each fraction to its mark on the line.', line:true, keepOrder:true,
+    places:ticks,
+    cards:L.cards.map(function(c){ return {html:fr(c), value:Math.round(v(c)*L.d), aria:said(c)}; }),
+    task:'PC Q7 · number line',
+    nudge:'Not that mark. Count the steps from 0.',
+    hint:'Each step is one tenth. For fifths or a half, work out how many tenths it is first.',
+    done:'Every fraction is on its mark.', onSolved:scored('Q7')});
+
+  /* ---- Q8: six unit fractions, smallest first ---- */
+  var sorted=D.q8.slice().sort(function(a,b){ return v(a)-v(b); });
+  B.place(document.getElementById('q8'),{prompt:'Put these in order, smallest first.', layout:'order',
+    places:sorted.map(function(c,i){ return {label:i===0?'smallest':i===sorted.length-1?'largest':'', accept:c,
+      aria:'Place '+(i+1)+' of '+sorted.length}; }),
+    cards:D.q8.map(function(c){ return {html:fr(c), value:c, aria:said(c)}; }),
+    task:'PC Q8 · order', nudge:'Not there. Which end is the smallest?',
+    hint:'Each card is one piece. The more pieces the whole is cut into, the smaller each piece.',
+    done:'All in order.', onSolved:scored('Q8')});
+
+  /* ---- Score ---- */
+  function paintScore(){
+    var total=0, max=0, gaps=[];
+    var list=Object.keys(D.marks).map(function(q){
+      total+=got[q]; max+=D.marks[q];
+      var full=got[q]===D.marks[q];
+      if(!full) gaps.push(q);
+      return '<li class="'+(full?'full':'gap')+'">'+q+': '+got[q]+' of '+D.marks[q]+
+        (done[q]<D.marks[q] ? ' <span style="font-weight:400">(not finished)</span>' : '')+'</li>';
+    }).join('');
+    document.getElementById('score').textContent=total+' / '+max;
+    document.getElementById('results').innerHTML=list;
+    document.getElementById('scoreNote').textContent = total===max
+      ? 'Every mark, first time. You are a Master Baker.'
+      : 'Practise these again: '+gaps.join(', ')+'.';
+    document.getElementById('stamp').classList.toggle('on', total===max);
+  }
+})();
+</script>
+</body>
+</html>

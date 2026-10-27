@@ -533,7 +533,9 @@
     var tries = 0, solved = false;
     var stage = document.createElement('div');
     stage.className = 'shade-stage';
-    stage.innerHTML = '<div class="shade-goal">' + frac(target[0], target[1]) + '</div>' + cake(cfg.shape, { tap: true });
+    // cfg.check(c) judges the count instead, for "ice it so the row is in order":
+    // then cfg.target is only one right answer, kept for the scanner.
+    stage.innerHTML = (cfg.check ? '' : '<div class="shade-goal">' + frac(target[0], target[1]) + '</div>') + cake(cfg.shape, { tap: true });
     s.box.insertBefore(stage, s.row);
 
     var parts = stage.querySelectorAll('.part');
@@ -571,7 +573,7 @@
       var c = count();
       if (!c) { s.fb.className = 'ask-fb'; s.fb.textContent = 'Tap the parts you want to ice, then press Check.'; return; }
       tries++;
-      if (c === need) {
+      if (cfg.check ? cfg.check(c) : c === need) {
         solved = true;
         rightSay(s.fb, cfg, tries);
         s.box.classList.add('solved');
@@ -1032,7 +1034,7 @@
      the tray after use, for the < > = symbols. Drag a card to a place, or tap
      a card and then tap the place. */
   function place(host, cfg) {
-    var s = shell(host, cfg, 'place' + (cfg.baskets ? ' baskets' : '') + (cfg.layout ? ' ' + cfg.layout : ''));
+    var s = shell(host, cfg, 'place' + (cfg.baskets ? ' baskets' : '') + (cfg.line ? ' line' : '') + (cfg.layout ? ' ' + cfg.layout : ''));
     var solved = false, held = null, wrong = 0;
     var tray = document.createElement('div');
     tray.className = 'tray-cards';
@@ -1075,7 +1077,14 @@
       return c;
     });
     // Baskets take every card; anything else is done when each place is filled.
-    var left = cfg.baskets ? cards.length : places.length;
+    var left = cfg.baskets || cfg.line ? cards.length : places.length;
+    /* cfg.line: the places are the ticks of a 0 to 1 number line, one card
+       each, and most ticks stay empty. The ends are labelled, the ticks not. */
+    if (cfg.line) {
+      board.style.setProperty('--cols', places.length + 2);
+      board.insertAdjacentHTML('afterbegin', '<div class="line-end">0</div>');
+      board.insertAdjacentHTML('beforeend', '<div class="line-end">1</div>');
+    }
     if (!cfg.keepOrder) {
       cards.slice().sort(function () { return Math.random() - 0.5; }).forEach(function (c) { tray.appendChild(c.b); });
     }
@@ -1107,7 +1116,7 @@
           tray.remove();
           rightSay(s.fb, cfg, wrong + 1, cfg.done || 'All in the right places.');
           record({ task: cfg.task || cfg.prompt, result: 'correct in ' + (wrong + 1) });
-          if (cfg.onSolved) cfg.onSolved();
+          if (cfg.onSolved) cfg.onSolved(null, wrong + 1);
         }
       } else {
         wrong++;
