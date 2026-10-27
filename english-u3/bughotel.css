@@ -267,7 +267,7 @@ header{position:relative;margin-top:.5rem;border-radius:20px;overflow:hidden;box
   touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 3px 0 rgba(91,58,30,.2)}
 .card[aria-pressed="true"]{border-color:var(--leaf);background:#EAF4EA;box-shadow:0 0 0 4px rgba(47,107,53,.25)}
 .card.lifted{opacity:.35}
-.ghost{position:fixed;left:0;top:0;z-index:50;pointer-events:none;margin:0;box-shadow:0 10px 20px rgba(35,26,18,.25)}
+.drag-ghost{position:fixed;left:0;top:0;z-index:50;pointer-events:none;margin:0;box-shadow:0 10px 20px rgba(35,26,18,.25)}
 
 /* Places */
 .board{display:grid;gap:.75rem;margin:.75rem 0}

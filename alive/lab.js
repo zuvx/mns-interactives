@@ -393,7 +393,7 @@
           if (Math.abs(e.clientX - start.x) + Math.abs(e.clientY - start.y) < 10) return;
           var r = card.getBoundingClientRect();
           ghost = card.cloneNode(true);
-          ghost.classList.add('ghost');
+          ghost.classList.add('drag-ghost');
           ghost.style.width = r.width + 'px';
           ghost.style.height = r.height + 'px';
           ghost.removeAttribute('aria-pressed');

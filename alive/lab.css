@@ -183,7 +183,7 @@ header{position:relative;margin-top:.5rem;border-radius:22px;overflow:hidden;box
   box-shadow:0 8px 0 rgba(180,83,9,.25)}
 .chip.lifted{opacity:.35}
 .chip.bad{animation:wobble .4s ease}
-.ghost{position:fixed;left:0;top:0;z-index:50;pointer-events:none;margin:0;
+.drag-ghost{position:fixed;left:0;top:0;z-index:50;pointer-events:none;margin:0;
   border-color:var(--amber);box-shadow:0 14px 24px rgba(20,83,45,.25);transform-origin:center}
 @keyframes wobble{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}
   40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
