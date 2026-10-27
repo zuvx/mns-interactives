@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery Upstairs · Lesson 2: The Wall Builders</title>
+<link rel="stylesheet" href="bakery.css">
+<style>
+  .seq{font-size:1.75rem;text-align:center;margin:.25rem 0}
+</style>
+</head>
+<body data-lesson="u17-l2">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg>
+      <div><h1>The Wall Builders</h1><p class="sub">Lesson 2 · Equivalent fractions: halves, quarters, fifths and tenths</p></div>
+      <div class="pill">Unit 17 · Stage 3 · 3Nf.06</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="equivalent"><div class="ktext"><b>equivalent</b><span>Worth the same amount. 1/5 and 2/10 are equivalent.</span></div></div>
+      <div class="kcard" data-word="fifth"><div class="ktext"><b>fifth</b><span>One of 5 equal parts.</span></div></div>
+      <div class="kcard" data-word="tenth"><div class="ktext"><b>tenth</b><span>One of 10 equal parts. Two tenths fit in one fifth.</span></div></div>
+      <div class="kcard" data-word="pattern"><div class="ktext"><b>pattern</b><span>Numbers that change the same way each time.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> Upstairs</span>
+    <h2>Building the wall</h2>
+    <p class="lead" data-voice="daniel" data-read="Today the bakers build a new wall, with fifths and tenths. Two tenths fit exactly under one fifth. Fractions that are worth the same amount are called equivalent fractions.">
+      Today the bakers build a wall with fifths and tenths. Two tenths fit exactly under one fifth.
+      Fractions worth the same amount are <b>equivalent fractions</b>.</p>
+    <div id="welcomeWall"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start building</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg> Build it</span>
+    <h2>Make the same amount</h2>
+    <p class="lead" data-read="Drag pieces onto your bar, or tap a piece to add it. Make your bar exactly as long as the iced part. Use pieces that are all the same size.">
+      Drag pieces onto your bar, or tap a piece to add it. Make your bar <b>exactly as long</b> as the
+      iced part, with pieces all the same size.</p>
+    <div id="build"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plate"></use></svg> Sort</span>
+    <h2>Same or not the same?</h2>
+    <p class="lead" data-read="Drag each card to the right plate, or tap a card and then tap the plate. Use the wall to help you.">Drag each card to the right plate, or tap a card and then the plate.</p>
+    <div id="sortWall"></div>
+    <div id="sort"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Patterns</span>
+    <h2>What comes next?</h2>
+    <p class="lead" data-read="Each pattern is a list of equivalent fractions. Look at how the top number changes, and how the bottom number changes.">Each list is equivalent fractions. Watch how the top number changes, and how the bottom number changes.</p>
+    <div id="next"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> True or false?</span>
+    <h2>Samson's fraction cards</h2>
+    <div id="talk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Upstairs badge</span>
+    <h2>Earn your Upstairs rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a bar and split it into tenths. Colour two fifths of it. Write two fractions for the
+      coloured part, and explain why they are equivalent.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Upstairs Rank 2: Wall Builder</h3>
+      <div style="font-weight:700">Stamp this when you can build and explain an equivalent fraction.</div>
+      <div><span class="stamp" id="stamp">BUILDER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery Upstairs · Stage 3 · Unit 17 Lesson 2 (3Nf.06). SB p71, WB pp136-137. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-upstairs.js reads this block and re-derives every answer.
+     Collins L2 teaches 1/2 = 2/4 = 4/8 = 5/10, 1/5 = 2/10, 2/5 = 4/10, 3/5 = 6/10
+     and patterns (2/8, 3/12; 2/10, 3/15; 3/30, 4/40). The week 9 homework for
+     Wednesday asks 1/5, 2/5, 3/5 and 1/2 in tenths and continues 1/4, 2/8 and
+     1/5, 2/10, so the builds and patterns here use other starting points.
+     Build pieces include a size that cannot work, so the bar has to be judged. -->
+<script type="application/json" id="data">
+{
+  "welcome": {"rows": [5, 10], "mark": {"5": 1, "10": 2}},
+  "build": [["1/2", [3, 4, 8]], ["4/5", [4, 10]], ["3/4", [3, 8]]],
+  "sort": {"to": "1/5", "cards": ["2/10", "1/10", "2/5", "3/15", "5/10", "4/20"]},
+  "sortHalf": {"to": "1/2", "cards": ["5/10", "4/8", "2/5", "3/6", "1/4", "6/12"]},
+  "next": [["1/2", 3], ["1/10", 2], ["3/5", 1]],
+  "talk": [["6/8", "3/4", true], ["1/4", "1/2", false], ["4/10", "2/5", true]],
+  "rank": {"build": ["1/2", [10, 3]], "ask": ["1/4", 12], "next": ["2/5", 2]}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+  var NAME = {2:'halves', 3:'thirds', 4:'quarters', 5:'fifths', 6:'sixths', 8:'eighths', 10:'tenths', 12:'twelfths'};
+  var F = B.parseFrac;
+  function same(a, b){ var x=F(a), y=F(b); return x[0]*y[1] === y[0]*x[1]; }
+  function fr(s){ var f=F(s); return B.frac(f[0], f[1]); }
+
+  document.getElementById('welcomeWall').innerHTML = B.wall(D.welcome.rows, D.welcome.mark);
+
+  B.init([
+    {icon:'oven',   label:'Welcome'},
+    {icon:'four',   label:'Build it'},
+    {icon:'plate',  label:'Sort'},
+    {icon:'search', label:'Patterns'},
+    {icon:'talk',   label:'True or false?'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) B.renderMyWork(); }});
+
+  /* ---- Build it ---- */
+  var buildHost=document.getElementById('build');
+  D.build.forEach(function(b){
+    B.build(buildHost,{prompt:'Build '+b[0]+' with smaller pieces.', target:b[0], pieces:b[1],
+      task:'L2 Build '+b[0],
+      hint:'Try one size of piece. If the bar ends past the iced part, or stops short of it, take them all off and try a different size.'});
+  });
+
+  /* ---- Sort onto two plates ---- */
+  document.getElementById('sortWall').innerHTML = B.wall([2,4,5,10]);
+  var sortHost=document.getElementById('sort');
+  [D.sort, D.sortHalf].forEach(function(S, k){
+    B.place(sortHost,{prompt:'Which cards are the same amount as '+S.to+'?', baskets:true,
+      places:[{label:'The same as '+S.to, accept:'yes'}, {label:'Not the same as '+S.to, accept:'no'}],
+      cards:S.cards.map(function(c){ var f=F(c);
+        return {html:fr(c), value:same(c,S.to)?'yes':'no', aria:f[0]+' out of '+f[1]}; }),
+      task:'L2 Sort '+S.to,
+      nudge:'Not that plate. Look at the card again.',
+      hint:'Find '+S.to+' on the wall. For each card, does it reach exactly as far? If the card is not on the wall, look at the pattern: what do you multiply the top and bottom of '+S.to+' by?'});
+  });
+
+  /* ---- What comes next: start fraction, then two more in the list ---- */
+  var nextHost=document.getElementById('next');
+  D.next.forEach(function(n){
+    var f=F(n[0]), k=n[1], list=[];
+    for(var i=1;i<=k+1;i++) list.push(B.frac(f[0]*i, f[1]*i));
+    var ans=(f[0]*(k+2))+'/'+(f[1]*(k+2));
+    B.askFrac(nextHost,{prompt:'Write the next fraction in the list.',
+      show:'<div class="seq">'+list.join(', ')+', ?</div>', answer:ans, exact:true,
+      task:'L2 Next after '+n[0],
+      nudge:'Look at the top numbers on their own. Then the bottom numbers on their own.',
+      hint:'The top numbers go up by '+f[0]+' each time and the bottom numbers by '+f[1]+'. Do the same again.'});
+  });
+
+  /* ---- True or false ---- */
+  var talkHost=document.getElementById('talk');
+  D.talk.forEach(function(t,k){
+    var says=document.createElement('div'); says.className='says';
+    says.innerHTML='<p data-voice="daniel"><span class="who">Samson says:</span> '+t[0]+' is equivalent to '+t[1]+'.</p>';
+    talkHost.appendChild(says);
+    var a=F(t[0]), b=F(t[1]);
+    B.choose(talkHost,{prompt:'Is Samson right?', options:[
+        'True. They are the same amount.',
+        'False. They are not the same amount.'],
+      answer:t[2]?0:1, task:'L2 True or false '+t[0]+' and '+t[1],
+      nudge:'Find both fractions on a wall. Do they reach as far as each other?',
+      hint:'Look at the bottom numbers, '+a[1]+' and '+b[1]+'. Can you multiply the top and bottom of one fraction by the same number to get the other?'});
+  });
+  B.readAloud();
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk'), R=D.rank;
+  B.build(host,{prompt:'Build '+R.build[0]+' with smaller pieces.', target:R.build[0], pieces:R.build[1],
+    task:'L2 Rank build', hint:'Try one size of piece. If it does not fit exactly, take them off and try the other size.'});
+  var q=F(R.ask[0]), d=R.ask[1];
+  B.askFrac(host,{prompt:R.ask[0]+' is the same amount as how many '+NAME[d]+'? Write the fraction.',
+    answer:(q[0]*d/q[1])+'/'+d, exact:true, task:'L2 Rank '+R.ask[0]+' in '+NAME[d],
+    nudge:'The bottom number is '+d+'. What did you multiply '+q[1]+' by to get '+d+'?',
+    hint:'The bottom number was multiplied by '+(d/q[1])+'. Multiply the top number by the same.'});
+  var nf=F(R.next[0]), nk=R.next[1], nl=[];
+  for(var i=1;i<=nk+1;i++) nl.push(B.frac(nf[0]*i, nf[1]*i));
+  B.askFrac(host,{prompt:'Write the next fraction in the list.', show:'<div class="seq">'+nl.join(', ')+', ?</div>',
+    answer:(nf[0]*(nk+2))+'/'+(nf[1]*(nk+2)), exact:true, task:'L2 Rank next',
+    nudge:'Look at the top numbers on their own, then the bottom numbers.',
+    hint:'The top numbers go up by '+nf[0]+' each time and the bottom numbers by '+nf[1]+'.'});
+})();
+</script>
+</body>
+</html>

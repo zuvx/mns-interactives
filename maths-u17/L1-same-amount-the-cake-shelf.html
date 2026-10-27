@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery Upstairs · Lesson 1: Same Amount, Different Cake</title>
+<link rel="stylesheet" href="bakery.css">
+<style>
+  .pair-row{display:flex;align-items:flex-end;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin:.5rem 0}
+  .pair-row .cake{width:100%;max-width:none}
+  .pair-row .cap{text-align:center;font-weight:700;color:var(--wood);margin-top:.25rem}
+</style>
+</head>
+<body data-lesson="u17-l1">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg>
+      <div><h1>Same Amount, Different Cake</h1><p class="sub">Lesson 1 · Two fractions can be worth the same</p></div>
+      <div class="pill">Unit 17 · Stage 3 · 3Nf.06</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="equivalent"><div class="ktext"><b>equivalent</b><span>Worth the same amount. 1/2 and 2/4 are equivalent.</span></div></div>
+      <div class="kcard" data-word="whole"><div class="ktext"><b>whole</b><span>All of the cake. Every row of the wall is one whole.</span></div></div>
+      <div class="kcard" data-word="numerator"><div class="ktext"><b>numerator</b><span>The top number: how many parts you have.</span></div></div>
+      <div class="kcard" data-word="denominator"><div class="ktext"><b>denominator</b><span>The bottom number: how many equal parts in the whole.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-oven"></use></svg> Upstairs</span>
+    <h2>The cake shelf</h2>
+    <p class="lead" data-voice="daniel" data-read="Upstairs at the bakery, the cakes are all the same size, but they are cut in different ways. Some are cut in halves, some in quarters, some in eighths. Look at the wall. Half of a cake is the same amount as two quarters, and the same as four eighths.">
+      Upstairs at the bakery, the cakes are all the same size, but they are cut in different ways.
+      Look at the wall. Half a cake is the <b>same amount</b> as two quarters, and as four eighths.</p>
+    <div id="welcomeWall"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Ice some cakes</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cake"></use></svg> Ice the cakes</span>
+    <h2>The same amount, cut a new way</h2>
+    <p class="lead" data-read="Tap the parts of each cake to ice them. Then press Check.">Tap the parts to ice them. Then press Check.</p>
+    <div id="ice"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> The wall</span>
+    <h2>Read the wall</h2>
+    <p class="lead" data-read="Use the wall. Find the fraction, then look straight down or straight up to the row you need.">Find the fraction on the wall. Then look straight down, or straight up, to the row you need.</p>
+    <div id="wallAsk"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pair"></use></svg> Pairs</span>
+    <h2>Match the same amount</h2>
+    <p class="lead" data-read="Every cake is the same size. Tap a cake, then the cake that has the same amount iced.">Every cake is the same size. Tap a cake, then the cake with the <b>same amount</b> iced.</p>
+    <div id="match"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Half hunt</span>
+    <h2>Which cakes are half iced?</h2>
+    <div id="hunt"></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Who is right?</span>
+    <h2>Kaede and the eighths</h2>
+    <div id="talk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(6)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="6"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Upstairs badge</span>
+    <h2>Earn your Upstairs rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a fraction wall with one whole, halves, quarters and eighths. Make every row the same
+      length. Colour one half in each row and write the fraction under it.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Upstairs Rank 1: Shelf Stacker</h3>
+      <div style="font-weight:700">Stamp this when you can show two fractions that are the same amount.</div>
+      <div><span class="stamp" id="stamp">STACKER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bakery Upstairs · Stage 3 · Unit 17 Lesson 1 (3Nf.06). SB p70, WB pp134-135. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-upstairs.js reads this block and re-derives every answer.
+     Collins L1 teaches on a wall of halves, quarters and eighths (1/2 = 2/4 = 4/8,
+     1/4 = 2/8); the Workbook adds 6/12 and 3/12. The homework for Tuesday of
+     week 9 asks 1/2 = ?/4 = ?/8, 1/4 = ?/8 and 3/4 = ?/8, so the wall questions
+     here run the other way round with other numbers. -->
+<script type="application/json" id="data">
+{
+  "welcome": {"rows": [2, 4, 8], "mark": {"2": 1, "4": 2, "8": 4}},
+  "ice": [["circle4", "1/2"], ["rect8", "1/2"], ["strip8", "1/4"], ["circle8", "3/4"]],
+  "wall": [["2/4", 8], ["2/8", 4], ["6/8", 4], ["4/8", 2]],
+  "match": ["circle2/1", "rect8/4", "rect4/1", "circle8/2", "strip4/3", "rect8/6", "strip5/1", "circle10/2"],
+  "hunt": ["circle4/2", "rect8/4", "strip8/3", "circle8/4", "rect4/1", "strip10/5", "stripU4/2", "circle6/3"],
+  "kaede": {"big": "rect8/4", "small": "rect2/1"},
+  "rank": {"ice": ["strip8", "1/4"], "read": "rect8/6", "readIn": 4}
+}
+</script>
+<script src="shapes.js"></script>
+<script src="bakery.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var B = Bakery;
+  var NAME = {2:'halves', 4:'quarters', 5:'fifths', 8:'eighths', 10:'tenths'};
+
+  document.getElementById('welcomeWall').innerHTML = B.wall(D.welcome.rows, D.welcome.mark);
+
+  B.init([
+    {icon:'oven',   label:'Welcome'},
+    {icon:'cake',   label:'Ice the cakes'},
+    {icon:'search', label:'The wall'},
+    {icon:'pair',   label:'Pairs'},
+    {icon:'search', label:'Half hunt'},
+    {icon:'talk',   label:'Who is right?'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===6) B.renderMyWork(); }});
+
+  function value(spec){ var s=BakeryShapes.parse(spec); return s.shaded/s.parts.length; }
+  function claim(host, who, text, pictureHTML){
+    var says=document.createElement('div'); says.className='says';
+    says.innerHTML='<p data-voice="daniel"><span class="who">'+who+' says:</span> '+text+'</p>';
+    says.querySelector('p').setAttribute('data-read', who+' says: '+text);
+    host.appendChild(says);
+    if(pictureHTML){ var pic=document.createElement('div'); pic.className='pair-row'; pic.innerHTML=pictureHTML; host.appendChild(pic); }
+    B.readAloud();
+  }
+
+  /* ---- Ice the cakes: the amount on the label, the cake cut another way ---- */
+  var iceHost=document.getElementById('ice');
+  D.ice.forEach(function(x,k){
+    var parts=BakeryShapes.parse(x[0]).parts.length;
+    B.shade(iceHost,{prompt:'Ice '+x[1]+' of this cake. It is cut into '+parts+' equal parts.',
+      shape:x[0], target:x[1], task:'L1 Ice '+x[1]+' of '+parts,
+      over:'Too much icing. Find '+x[1]+' on the wall and see how far it reaches.',
+      under:'Not enough icing yet. Find '+x[1]+' on the wall and see how far it reaches.',
+      hint:'Look at the wall. Find '+x[1]+', then go down to the row cut into '+parts+'. Count how many of those pieces sit under it.'});
+  });
+
+  /* ---- Read the wall ---- */
+  var wallHost=document.getElementById('wallAsk');
+  var wallPic=document.createElement('div');
+  wallPic.innerHTML=B.wall([2,4,8]);
+  wallHost.appendChild(wallPic);
+  D.wall.forEach(function(w,k){
+    var f=B.parseFrac(w[0]), d=w[1];
+    B.askFrac(wallHost,{prompt:w[0]+' is the same amount as how many '+NAME[d]+'? Write the fraction.',
+      answer:(f[0]*d/f[1])+'/'+d, exact:true, task:'L1 Wall '+w[0]+' in '+NAME[d],
+      nudge:'The bottom number is '+d+', because you are counting '+NAME[d]+'.',
+      hint:'Put your finger on the right edge of '+w[0]+' on the wall. Go straight to the '+NAME[d]+' row and count the pieces up to your finger.'});
+  });
+
+  /* ---- Pairs: same amount, different cuts ---- */
+  B.match(document.getElementById('match'),{prompt:'Match the cakes with the same amount iced.',
+    cards:D.match.map(function(spec){ return {spec:spec, key:String(value(spec))}; }), task:'L1 Pairs',
+    hint:'For each cake, think how much of the whole is iced. Is it a half? A quarter? More than a half? Find the cake with the same amount.'});
+
+  /* ---- Half hunt ---- */
+  B.picks(document.getElementById('hunt'),{prompt:'Tap every cake that has one half iced.',
+    items:D.hunt.map(function(s){ return B.cake(s,{small:true}); }),
+    correct:D.hunt.map(function(s,i){ var p=BakeryShapes.parse(s); return p.equal && value(s)===0.5 ? i : -1; }).filter(function(i){ return i>=0; }),
+    task:'L1 Half hunt',
+    hint:'For each cake, check the parts are equal. Then count: are the iced parts exactly half of all the parts?'});
+
+  /* ---- Kaede ---- */
+  var talkHost=document.getElementById('talk');
+  var K=D.kaede;
+  claim(talkHost,'Kaede','Cake A has 4/8 iced and cake B has 1/2 iced. Cake A has more icing, because 4 is more than 1.',
+    '<div><div style="width:12rem">'+B.cake(K.big)+'</div><div class="cap">Cake A</div></div>'+
+    '<div><div style="width:12rem">'+B.cake(K.small)+'</div><div class="cap">Cake B</div></div>');
+  B.choose(talkHost,{prompt:'Is Kaede right?', options:[
+      'Yes. 4 is a bigger number than 1.',
+      'No. The cakes are the same size and the same amount is iced. 4/8 and 1/2 are equivalent.',
+      'No. Cake B has more icing.'],
+    answer:1, task:'L1 Kaede',
+    nudge:'Look at the two cakes, not the numbers. How much of each cake is iced?',
+    hint:'Eighths are smaller pieces than halves, so you need more of them. Compare how far the icing reaches on each cake.'});
+  B.choose(talkHost,{prompt:'Which fraction is the same amount as 3/4?', cards:true,
+    options:[B.frac(3,8), B.frac(6,8), B.frac(4,3)], labels:['3 eighths','6 eighths','4 thirds'],
+    answer:1, task:'L1 Same as 3/4',
+    nudge:'Find 3/4 on the wall at the top of the lesson.',
+    hint:'Each quarter on the wall is as long as two eighths. Count the eighths under 3/4.'});
+
+  /* ---- Rank ---- */
+  var host=document.getElementById('rankAsk'), R=D.rank;
+  var rp=BakeryShapes.parse(R.ice[0]).parts.length;
+  B.shade(host,{prompt:'Ice '+R.ice[1]+' of this cake. It is cut into '+rp+' equal parts.', shape:R.ice[0], target:R.ice[1],
+    task:'L1 Rank ice', hint:'Find '+R.ice[1]+' on the wall, then go down to the row cut into '+rp+'. Count the pieces under it.'});
+  var rs=BakeryShapes.parse(R.read), rd=R.readIn;
+  B.askFrac(host,{prompt:'How much of this cake is iced? Write it in '+NAME[rd]+'.', show:B.cake(R.read),
+    answer:(rs.shaded*rd/rs.parts.length)+'/'+rd, exact:true, task:'L1 Rank in '+NAME[rd],
+    nudge:'The bottom number is '+rd+', because the answer is in '+NAME[rd]+'.',
+    hint:'Two eighths make one quarter. Count the iced eighths in twos.'});
+})();
+</script>
+</body>
+</html>
