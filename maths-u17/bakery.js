@@ -894,7 +894,7 @@
       }
       last = { x: e.clientX, y: e.clientY };
       ghost.style.transform = 'translate(' + (e.clientX - ghost.offsetWidth / 2) + 'px,' +
-        (e.clientY - ghost.offsetHeight / 2) + 'px)';
+        (e.clientY - ghost.offsetHeight / 2) + 'px) scale(1.06)';
       hover(e.clientX, e.clientY);
     });
     function end(cancelled) {
@@ -903,13 +903,21 @@
       if (loop) { cancelAnimationFrame(loop); loop = 0; }
       last = null;
       if (!ghost) return;
-      ghost.remove(); ghost = null;
-      card.classList.remove('lifted');
-      if (over) {
-        over.classList.remove('hover');
-        if (!cancelled) onDrop(over);
-        over = null;
+      var g = ghost, to = over;
+      ghost = null; over = null;
+      if (to) to.classList.remove('hover');
+      if (to && !cancelled) {
+        g.remove();
+        card.classList.remove('lifted');
+        onDrop(to);
+        return;
       }
+      /* Dropped on nothing: the card glides home, so a child sees where it
+         went instead of it vanishing. Reduced motion makes this instant. */
+      var r = card.getBoundingClientRect();
+      g.style.transition = 'transform .22s cubic-bezier(.23,1,.32,1)';
+      g.style.transform = 'translate(' + r.left + 'px,' + r.top + 'px)';
+      setTimeout(function () { g.remove(); card.classList.remove('lifted'); }, 220);
     }
     card.addEventListener('pointerup', function () { end(false); });
     card.addEventListener('pointercancel', function () { end(true); });
@@ -951,14 +959,15 @@
       if (solved) return;
       if (used() + 1 / d > 1 + 1e-9) { s.fb.className = 'ask-fb'; s.fb.textContent = 'The bar is full. Tap a piece on it to take it off.'; return; }
       placed.push(d);
-      paint();
+      paint(true);
     }
-    function paint() {
+    function paint(added) {
       track.innerHTML = '';
       placed.forEach(function (d, k) {
         var b = document.createElement('button');
         b.type = 'button';
-        b.className = 'piece placed land';
+        /* Only the piece just dropped lands; the rest stay still. */
+        b.className = 'piece placed' + (added && k === placed.length - 1 ? ' land' : '');
         b.style.width = (100 / d) + '%';
         b.innerHTML = frac(1, d);
         b.setAttribute('aria-label', 'One ' + (d === 2 ? 'half' : d === 4 ? 'quarter' : 'piece of 1/' + d) + ' on your bar. Tap to take it off.');

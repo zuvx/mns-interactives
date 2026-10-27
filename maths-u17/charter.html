@@ -18,15 +18,15 @@
   .tier button{margin-top:.75rem;border:3px solid var(--sea);background:var(--paper);color:var(--sea);
     font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;
     min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;width:100%}
-  .tier a{color:var(--sea);font-weight:700}
+  .tier a{color:var(--sea);font-weight:700;display:inline-flex;align-items:center;min-height:var(--tap-min)}
   .tier[data-earned="true"]{border-color:var(--ok);background:#F1FAF4}
   .tier[data-earned="true"] .mark{background:var(--ok);color:#fff}
   .tier[data-earned="true"] button{background:var(--ok);border-color:var(--ok-deep);color:#fff}
 
-  .full{margin-top:1.25rem;background:var(--sea);color:var(--paper);border-radius:18px;
-    padding:1.5rem;text-align:center;opacity:.45;transition:opacity .4s ease}
-  .full.on{opacity:1}
-  .full h2{margin:0 0 .5rem;color:var(--paper);font-size:1.625rem}
+  .full{margin-top:1.25rem;background:var(--sand-2);color:var(--wood);border-radius:18px;
+    padding:1.5rem;text-align:center;transition:background-color .4s ease,color .4s ease}
+  .full.on{background:var(--sea);color:var(--paper)}
+  .full h2{margin:0 0 .5rem;color:inherit;font-size:1.625rem}
   .full .stamp{opacity:0}
   .full.on .stamp{opacity:1;animation:thud .4s ease}
 </style>
