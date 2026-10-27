@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bug Hotel · The Whole Hotel</title>
+<link rel="stylesheet" href="bughotel.css">
+<style>
+  /* The hotel: a pitched roof over three floors. Room 1 and 2 are the ground
+     floor, so the class builds upwards across the unit. */
+  .hotel{max-width:46rem;margin:1rem auto 0}
+  .gable{height:4.5rem;background:var(--timber);clip-path:polygon(50% 0,100% 100%,0 100%);
+    margin:0 -.5rem}
+  .frame{background:var(--timber);padding:.75rem;border-radius:0 0 18px 18px;
+    display:grid;grid-template-columns:1fr 1fr;gap:.75rem;
+    grid-template-areas:"r5 r5" "r3 r4" "r1 r2"}
+  .room{background:var(--paper);border:4px solid var(--straw-2);border-radius:14px;
+    overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s ease-out}
+  .mat{height:2.75rem;background-color:var(--straw-2)}
+  .m1{background-image:radial-gradient(circle, var(--bark) 0 5px, var(--sun-deep) 6px 8px, transparent 9px);background-size:22px 22px}
+  .m2{background-image:radial-gradient(circle, #C79A5B 0 4px, var(--bark) 5px 7px, #C79A5B 8px 10px, var(--bark) 11px 12px, transparent 13px);background-size:28px 28px}
+  .m3{background-image:repeating-linear-gradient(45deg, var(--bark) 0 3px, transparent 3px 12px),repeating-linear-gradient(-45deg, var(--bark) 0 3px, transparent 3px 12px)}
+  .m4{background-image:repeating-linear-gradient(100deg, #E2BE5A 0 3px, transparent 3px 7px)}
+  .m5{background-image:radial-gradient(ellipse 7px 4px, var(--leaf) 0 98%, transparent),radial-gradient(circle, var(--sun) 0 3px, transparent 4px);background-size:20px 16px,34px 30px}
+  .room .in{padding:.875rem 1rem 1rem;text-align:center;display:flex;flex-direction:column;flex:1}
+  .room .bugmark{width:3.5rem;height:3.5rem;margin:-2.5rem auto .375rem;border-radius:50%;
+    background:var(--paper);border:3px solid var(--straw-2);color:var(--slate);
+    display:flex;align-items:center;justify-content:center}
+  .room .bugmark .icon{width:2rem;height:2rem}
+  .room h3{margin:.125rem 0;color:var(--timber);font-size:1.125rem}
+  .room .obj{font-size:.8125rem;font-weight:700;color:var(--slate)}
+  .room .can{font-size:.9375rem;margin:.375rem 0 .5rem;flex:1}
+  .room button{border:3px solid var(--timber);background:var(--paper);color:var(--timber);
+    font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;
+    min-height:var(--tap);padding:.5rem 1rem;border-radius:12px;width:100%}
+  .room a{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap-min);
+    color:var(--timber);font-weight:700;margin-top:.25rem}
+  .room[data-earned="true"]{border-color:var(--ok)}
+  .room[data-earned="true"] .bugmark{border-color:var(--ok);color:var(--ok-deep)}
+  .room[data-earned="true"] button{background:var(--ok);border-color:var(--ok-deep);color:#fff}
+  .r1{grid-area:r1}.r2{grid-area:r2}.r3{grid-area:r3}.r4{grid-area:r4}.r5{grid-area:r5}
+  @media (max-width:560px){
+    .frame{grid-template-columns:1fr;grid-template-areas:"r5" "r4" "r3" "r2" "r1"}
+  }
+
+  .full{margin-top:1.25rem;background:var(--leaf-deep);color:var(--paper);border-radius:18px;
+    padding:1.5rem;text-align:center;opacity:.45;transition:opacity .4s ease-out}
+  .full.on{opacity:1}
+  .full h2{margin:0 0 .5rem;color:var(--paper);font-size:1.625rem}
+  .full .stamp{opacity:0}
+  .full.on .stamp{opacity:1;animation:thud .4s ease-out}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="roof"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-hotel"></use></svg>
+      <div><h1>The Bug Hotel</h1><p class="sub">Unit 3 · Bugs! · Five rooms, five badges</p></div>
+      <div class="pill">Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <div class="card">
+    <h2>Build the hotel, one room at a time</h2>
+    <p class="lead">Each room is one part of the unit. A room opens when the class can <b>explain</b>
+      the idea, not when someone finishes first. Tap a room when the class has earned it.</p>
+
+    <div class="hotel">
+      <div class="gable" aria-hidden="true"></div>
+      <div class="frame" id="rooms"></div>
+    </div>
+
+    <div class="full" id="full">
+      <h2>The Bug Hotel is open</h2>
+      <div style="font-weight:700">All five rooms are full of bugs.</div>
+      <div><span class="stamp">HOTEL OPEN</span></div>
+    </div>
+
+    <p class="note">Teacher: project this at the start of each week so the class sees the whole unit.
+      Rooms are tapped in class and are <b>not saved</b>. Reopening the page clears them, by design.
+      Record the real badges on the printed Room Card.</p>
+  </div>
+
+  <p class="note">The Bug Hotel · Collins International Primary English Stage 3 · Unit 3 Bugs! Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="bughotel.js"></script>
+<script>
+(function(){
+  'use strict';
+  Station.init([{icon:'hotel', label:'Hotel'}]);
+
+  var ROOMS=[
+    {n:1, room:'The Bamboo Canes', badge:'Rhyme Bee', bug:'bee', obj:'Week 10 · 3Rw.01 · 3Rg.01 · 3Rg.02',
+     can:'Can find rhymes, spot one sound with two spellings, and use an exclamation mark.',
+     file:'L1-rhymes-and-exclamations-the-bamboo-canes.html'},
+    {n:2, room:'The Log Pile', badge:'Word Beetle', bug:'beetle', obj:'Weeks 10 and 11 · 3Ww.05 · 3Rg.07 · 3Rg.08',
+     can:'Can build compound words and sort nouns, verbs, adjectives and pronouns.',
+     file:'L2-compounds-and-word-classes-the-log-pile.html'},
+    {n:3, room:'The Pine Cones', badge:'Fact Ladybird', bug:'ladybird', obj:'Week 11 · 3Ri.04 · 3Ri.05 · 3Ri.13',
+     can:'Can tell fiction from non-fiction, and a fact from an opinion.',
+     file:'L3-non-fiction-the-pine-cones.html'},
+    {n:4, room:'The Straw Bales', badge:'Sentence Spider', bug:'spider', obj:'Weeks 11 and 12 · 3Rv.02 · 3Rg.05 · 3Wg.01',
+     can:'Can choose a synonym and name the four kinds of sentence.',
+     file:'L4-synonyms-and-sentences-the-straw-bales.html'},
+    {n:5, room:'The Roof Garden', badge:'Report Ant', bug:'ant', obj:'Week 12 · 3Ww.03 · 3Ww.06 · 3Ws.02',
+     can:'Can add -ion, -ness and -less, and put a report in order.',
+     file:'L5-suffixes-and-reports-the-roof-garden.html'}
+  ];
+
+  var host=document.getElementById('rooms');
+  var earned=ROOMS.map(function(){ return false; });
+
+  ROOMS.forEach(function(t,i){
+    var d=document.createElement('div');
+    d.className='room r'+t.n;
+    d.setAttribute('data-earned','false');
+    d.innerHTML=
+      '<div class="mat m'+t.n+'" aria-hidden="true"></div>'+
+      '<div class="in">'+
+        '<div class="bugmark">'+Station.icon(t.bug)+'</div>'+
+        '<div class="obj">Room '+t.n+' · '+t.obj+'</div>'+
+        '<h3>'+t.room+'</h3>'+
+        '<div class="obj">Badge: '+t.badge+'</div>'+
+        '<p class="can">'+t.can+'</p>'+
+        '<button type="button" aria-pressed="false">Not open yet</button>'+
+        '<a href="'+t.file+'">Go to room '+t.n+'</a>'+
+      '</div>';
+    var btn=d.querySelector('button');
+    btn.setAttribute('aria-label','Mark room '+t.n+', '+t.room+', as open');
+    btn.addEventListener('click',function(){
+      earned[i]=!earned[i];
+      d.setAttribute('data-earned', String(earned[i]));
+      btn.setAttribute('aria-pressed', String(earned[i]));
+      btn.textContent = earned[i] ? 'Room open' : 'Not open yet';
+      var all=earned.every(Boolean);
+      document.getElementById('full').classList.toggle('on', all);
+      var live=document.getElementById('live');
+      if(live) live.textContent = all
+        ? 'All five rooms are open. The Bug Hotel is open.'
+        : 'Room '+t.n+' '+(earned[i]?'open':'closed again')+'.';
+    });
+    host.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

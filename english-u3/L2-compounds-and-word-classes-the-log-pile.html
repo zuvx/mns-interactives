@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bug Hotel · Room 2: The Log Pile</title>
+<link rel="stylesheet" href="bughotel.css">
+</head>
+<body data-lesson="u3r2">
+<div class="wrap">
+  <header>
+    <div class="roof"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-beetle"></use></svg>
+      <div><h1>The Log Pile</h1><p class="sub">Room 2 · Compound words, word classes and pronouns</p></div>
+      <div class="pill">Unit 3 · Stage 3 · 3Ww.05 · 3Rg.07 · 3Rg.08</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="compound word"><div class="ktext"><b>compound word</b><span>Two words joined to make one: <i>sun + flower = sunflower</i>.</span></div></div>
+      <div class="kcard" data-word="noun"><div class="ktext"><b class="wc-noun">noun</b><span>A naming word: <i>ant, leaf, garden</i>.</span></div></div>
+      <div class="kcard" data-word="verb"><div class="ktext"><b class="wc-verb">verb</b><span>A doing or being word: <i>crawl, eat, can, are</i>.</span></div></div>
+      <div class="kcard" data-word="adjective"><div class="ktext"><b class="wc-adj">adjective</b><span>A describing word: <i>tiny, shiny, green</i>.</span></div></div>
+      <div class="kcard" data-word="pronoun"><div class="ktext"><b class="wc-pron">pronoun</b><span>A word that takes the place of a noun: <i>he, she, it, we, they</i>.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-hotel"></use></svg> Room 2</span>
+    <h2>The log pile</h2>
+    <p class="lead" data-voice="daniel" data-read="Room two is a pile of old logs. Beetles and woodlice hide in the cracks. To fill this room, you'll build words and sort them into groups, just like logs in a pile.">
+      Room 2 is a pile of old logs. Beetles and woodlice hide in the cracks. To fill it you'll
+      <b>build words</b> and <b>sort them</b>, just like stacking logs.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Look closely.</b> <i>grasshopper</i> is two words stuck together: grass + hopper.
+      Can you think of another bug name made of two words?</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Build some words</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-puzzle"></use></svg> Compound words</span>
+    <h2>Join two words to make one</h2>
+    <p class="lead" data-read="A compound word is two words joined together. Write them as one word, with no space.">
+      A <b>compound word</b> is two words joined together. Write them as one word, with no space.</p>
+    <div class="example"><div><span class="big">grass + hopper = grasshopper</span></div></div>
+    <div id="joinAsk"></div>
+    <div id="splitAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Workbook page 13. Find the compound words in the word snake and split each one into its two words.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: sort the words</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-beetle"></use></svg> Word classes</span>
+    <h2>Nouns, verbs and adjectives</h2>
+    <p class="lead" data-read="Every word has a job. A noun names something. A verb tells you what is done, or what something is. An adjective describes a noun.">
+      Every word has a job. A <b class="wc-noun">noun</b> names something. A <b class="wc-verb">verb</b>
+      tells you what is done, or what something is. An <b class="wc-adj">adjective</b> describes a noun.</p>
+    <div class="example">
+      <div><span class="big">The <span class="wc-adj">tiny</span> <span class="wc-noun">ant</span> <span class="wc-verb">carries</span> a <span class="wc-noun">crumb</span>.</span></div>
+      <div>Watch out for <span class="wc-verb">can</span> and <span class="wc-verb">are</span>. They are verbs too:
+        Bees <span class="wc-verb">can</span> fly. Spiders <span class="wc-verb">are</span> clever.</div>
+    </div>
+    <p class="key-legend"><span class="wc-noun">noun: naming</span><span class="wc-verb">verb: doing or being</span><span class="wc-adj">adjective: describing</span></p>
+    <div id="classAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: pronouns</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> Pronouns</span>
+    <h2>Swap the noun for a pronoun</h2>
+    <p class="lead" data-read="A pronoun takes the place of a noun, so you don't have to say the same name again and again.">
+      A <b class="wc-pron">pronoun</b> takes the place of a noun, so you don't say the same name again and again.</p>
+    <div class="example"><div><span class="big">Mia found a beetle. <span class="wc-pron">She</span> put <span class="wc-pron">it</span> on a leaf.</span><br>She is Mia. it is the beetle.</div></div>
+    <div id="pronAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Workbook page 14. Sort the words from the box into nouns, verbs, adjectives and pronouns.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: room card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Room card</span>
+    <h2>Open Room 2 and earn the Word Beetle badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last task goes in your English book.">
+      Answer these on screen. The last task goes in your <b>English book</b>.</p>
+    <div id="badgeAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Write one sentence about a beetle. Underline the noun in blue, the verb in green and the adjective in yellow.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-beetle"></use></svg> Room 2 · Word Beetle</h3>
+      <div style="font-weight:700">Stamp this when you can build compound words and say what job a word does.</div>
+      <div><span class="stamp" id="stamp">ROOM OPEN</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn sun" type="button" id="stampBtn">Open my room</button></div>
+    </div>
+    <p class="note">All five rooms open? Look at the whole hotel in <b>charter.html</b>. Teacher: check the
+      book work and the Session summary before you give the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bug Hotel · Stage 3 · Unit 3 Bugs! · Room 2 (3Ww.05, 3Rg.07, 3Rg.08). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="bughotel.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'hotel',  label:'Welcome'},
+    {icon:'puzzle', label:'Compounds'},
+    {icon:'beetle', label:'Word jobs'},
+    {icon:'swap',   label:'Pronouns'},
+    {icon:'medal',  label:'Room card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Compound words (SB p23, WB p13) ============ */
+  var joinHost=document.getElementById('joinAsk');
+  Station.join(joinHost,{
+    prompt:'Join the logs. Drag the second half onto the log it belongs to, or tap a half and then a log.',
+    targets:[
+      {label:'sun', accept:'flower', max:1}, {label:'butter', accept:'fly', max:1},
+      {label:'grass', accept:'hopper', max:1}, {label:'honey', accept:'bee', max:1},
+      {label:'wood', accept:'louse', max:1}, {label:'ant', accept:'hill', max:1}
+    ],
+    items:[
+      {text:'flower', value:'flower'}, {text:'fly', value:'fly'}, {text:'hopper', value:'hopper'},
+      {text:'bee', value:'bee'}, {text:'louse', value:'louse'}, {text:'hill', value:'hill'}
+    ],
+    result:function(t, it){ return t.label + it.text; },
+    nudge:'Say the two halves together. Is it a real word you know?',
+    hint:'Think of a real thing: a flower, a minibeast or a place where insects live. Say the log word, then try each half after it until it sounds like a real word.',
+    praise:'Yes, two words make one.', done:'Six compound words built.',
+    task:'U3R2 Join the logs'
+  });
+  [['lady','bird'],['dragon','fly']].forEach(function(p){
+    Station.ask(joinHost,{
+      prompt:'Write it as one compound word: '+p[0]+' + '+p[1],
+      answers:[p[0]+p[1]],
+      nudge:'Write the two words together, with no space and no dash.',
+      hint:'Write the first word, then the second word straight after it. Check you have not added or lost a letter.',
+      praise:'Yes. Two words, one new word.',
+      task:'U3R2 Join '+p[0]+'+'+p[1]
+    });
+  });
+
+  var splitHost=document.getElementById('splitAsk');
+  Station.choose(splitHost,{
+    prompt:'Which one is a compound word?',
+    options:[
+      {text:'beetle',      why:"beetle is one word. You can't split it into two real words."},
+      {text:'grasshopper', why:'Yes. grass + hopper. Two words joined to make one.'},
+      {text:'spider',      why:"spider can't be split into two real words. It's just one word."}
+    ],
+    answer:1, task:'U3R2 Spot a compound'
+  });
+  /* ============ Nouns, verbs, adjectives (WB p14) ============ */
+  var classHost=document.getElementById('classAsk');
+  Station.highlight(classHost,{
+    prompt:'Highlighter. Choose a pen, then tap the words: nouns blue, verbs green, adjectives yellow. Leave the little words like the and a.',
+    pens:[{id:'noun', label:'noun pen (blue)'},{id:'verb', label:'verb pen (green)'},{id:'adj', label:'adjective pen (yellow)'}],
+    sentences:[
+      'The [tiny:adj] [ant:noun] [carries:verb] a [heavy:adj] [crumb:noun].',
+      '[Busy:adj] [bees:noun] [can:verb] [make:verb] [sweet:adj] [honey:noun].',
+      '[Spiders:noun] [are:verb] [clever:adj] and [quick:adj].'
+    ],
+    nudge:'Not with that pen. Ask what job the word is doing in this sentence.',
+    blank:'That word is a little joining or pointing word. It does not need a colour here.',
+    hint:'Ask three questions. Does it name a thing? Does it tell what is done, what something is, or what it is able to do? Does it describe a thing? Then pick the matching pen.',
+    praise:'Yes.', done:'Every noun, verb and adjective is coloured. Did you spot that can and are are verbs?',
+    task:'U3R2 Highlight'
+  });
+  Station.choose(classHost,{
+    prompt:'"Spiders are clever." What kind of word is are?',
+    options:[
+      {text:'noun',      why:"A noun names a person, place or thing. are doesn't name anything."},
+      {text:'verb',      why:"Yes. are is a verb. It's a being word: it tells you what spiders are."},
+      {text:'adjective', why:'The describing word here is clever. are joins spiders to clever.'}
+    ],
+    answer:1, task:'U3R2 are is a verb'
+  });
+  Station.ask(classHost,{
+    prompt:'Write the adjective in this sentence: "The hungry caterpillar ate a leaf."',
+    answers:['hungry'],
+    nudge:'An adjective describes a noun. Find the nouns first.',
+    hint:'Ask yourself: what kind of caterpillar? The word that answers is the adjective.',
+    praise:'Yes. That word describes the caterpillar.',
+    task:'U3R2 Write the adjective'
+  });
+  Station.ask(classHost,{
+    prompt:'Write the verb in this sentence: "The bee buzzed."',
+    answers:['buzzed'],
+    nudge:'A verb is a doing word. What did the bee do?',
+    hint:'There are only three words. One is a little word, one names the insect. The last one is the action.',
+    praise:'Yes. That is what the bee did.',
+    task:'U3R2 Write the verb'
+  });
+
+  /* ============ Pronouns ============ */
+  var pronHost=document.getElementById('pronAsk');
+  Station.highlight(pronHost,{
+    prompt:'Tap the noun that is said twice, in the second sentence.',
+    pens:[{id:'mark', label:'swap pen'}],
+    sentences:['Omar saw a moth. [Omar:mark] watched it fly to the lamp.'],
+    nudge:'Find the name that is said again in the second sentence.',
+    blank:'Find the name that is said again in the second sentence.',
+    hint:'Read the first sentence, then the second. One name comes back. Tap it where it comes back, not where we first meet it.',
+    done:'Found it. Now choose a pronoun to swap it for.',
+    task:'U3R2 Tap the repeat Omar'
+  });
+  Station.choose(pronHost,{
+    prompt:'Which pronoun can take the place of Omar in the second sentence?',
+    options:[
+      {text:'He', why:'Yes. He watched it fly to the lamp.'},
+      {text:'It', why:'It would mean the moth watched itself. The person watching is Omar.'},
+      {text:'We', why:'We means me and other people. Omar is one person.'}
+    ],
+    answer:0, task:'U3R2 Pronoun for Omar'
+  });
+  Station.highlight(pronHost,{
+    prompt:'Tap the noun that is said twice, in the second sentence.',
+    pens:[{id:'mark', label:'swap pen'}],
+    sentences:['The bees made honey. The [bees:mark] worked hard all day.'],
+    nudge:'Find the noun that is said again in the second sentence.',
+    blank:'Find the noun that is said again in the second sentence.',
+    hint:'Read the first sentence, then the second. One naming word comes back. Tap it where it comes back.',
+    done:'Found it. Now choose a pronoun to swap it for.',
+    task:'U3R2 Tap the repeat bees'
+  });
+  Station.choose(pronHost,{
+    prompt:'"The bees worked hard all day." Which pronoun can take the place of the bees?',
+    options:[
+      {text:'It',   why:'It is for one thing. There are lots of bees.'},
+      {text:'She',  why:'She is for one girl or woman.'},
+      {text:'They', why:'Yes. They worked hard all day.'}
+    ],
+    answer:2, task:'U3R2 Pronoun for bees'
+  });
+  Station.choose(pronHost,{
+    prompt:'"My friend and I built a bug hotel. ______ used sticks and pine cones." Which pronoun fits?',
+    options:[
+      {text:'They', why:'They is for other people. You are one of the builders.'},
+      {text:'We',   why:'Yes. My friend and I means me and someone else.'},
+      {text:'He',   why:'He is for one boy or man. There are two builders.'}
+    ],
+    answer:1, task:'U3R2 Pronoun for my friend and I'
+  });
+  Station.ask(pronHost,{
+    prompt:'Find the pronoun and write it: "The ant was tired, so it had a rest."',
+    answers:['it'],
+    nudge:'A pronoun takes the place of a noun.',
+    hint:'Look at the second half of the sentence. Which small word stands in for the ant?',
+    praise:'Yes. That word stands for the ant.',
+    task:'U3R2 Write the pronoun'
+  });
+
+  /* ============ Room card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which word is a compound word?',
+    options:[
+      {text:'insect', why:"insect can't be split into two real words."},
+      {text:'legs',   why:'legs is one short word.'},
+      {text:'bedbug', why:'Yes. bed + bug.'}
+    ],
+    answer:2, task:'U3R2 Card compound'
+  });
+  Station.choose(badgeHost,{
+    prompt:'"Snails are slow." Which word is the noun?',
+    options:[
+      {text:'Snails', why:'Yes. Snails names the animals.'},
+      {text:'are',    why:'are is a verb, a being word.'},
+      {text:'slow',   why:"slow describes the animals. It's an adjective."}
+    ],
+    answer:0, task:'U3R2 Card noun'
+  });
+  Station.ask(badgeHost,{
+    prompt:'Write a pronoun for "the caterpillars": "The caterpillars are hungry. ___ eat leaves."',
+    answers:['they'],
+    nudge:'There are lots of caterpillars, not one.',
+    hint:'Which pronoun do you use for more than one thing or person?',
+    praise:'Yes. That pronoun is for more than one.',
+    task:'U3R2 Card pronoun'
+  });
+
+})();
+</script>
+</body>
+</html>

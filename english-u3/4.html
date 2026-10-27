@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bug Hotel · Room 4: The Straw Bales</title>
+<link rel="stylesheet" href="bughotel.css">
+</head>
+<body data-lesson="u3r4">
+<div class="wrap">
+  <header>
+    <div class="roof"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-spider"></use></svg>
+      <div><h1>The Straw Bales</h1><p class="sub">Room 4 · Synonyms and four kinds of sentence</p></div>
+      <div class="pill">Unit 3 · Stage 3 · 3Rv.02 · 3Wv.02 · 3Rg.05 · 3Wg.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="synonym"><div class="ktext"><b>synonym</b><span>A word that means nearly the same as another: <i>big, huge</i>.</span></div></div>
+      <div class="kcard" data-word="statement"><div class="ktext"><b>statement</b><span>Tells you something. Ends with <b>.</b></span></div></div>
+      <div class="kcard" data-word="question"><div class="ktext"><b>question</b><span>Asks something. Ends with <b>?</b></span></div></div>
+      <div class="kcard" data-word="exclamation"><div class="ktext"><b>exclamation</b><span>Shows strong feeling. Ends with <b>!</b></span></div></div>
+      <div class="kcard" data-word="instruction"><div class="ktext"><b>instruction</b><span>Tells you to do something. Often starts with a bossy verb: <i>put, count</i>.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-hotel"></use></svg> Room 4</span>
+    <h2>The straw bales</h2>
+    <p class="lead" data-voice="daniel" data-read="Room four is stuffed with straw. Spiders spin their webs between the stalks. To fill this room, you'll swap words for better ones and spin four kinds of sentence.">
+      Room 4 is stuffed with straw, and spiders spin their webs between the stalks. To fill it
+      you'll swap words for <b>better words</b> and spin <b>four kinds of sentence</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Which sounds better?</b> "A big spider" or "an enormous spider"? Both mean the same
+      thing. Words that mean nearly the same are called <b>synonyms</b>.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Swap some words</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> Synonyms</span>
+    <h2>Match the synonyms</h2>
+    <p class="lead" data-read="Synonyms are words that mean nearly the same. Find the pairs, then put words in order from small to big.">
+      Synonyms mean nearly the <b>same</b>. Find the pairs, then climb the word ladders.</p>
+    <div id="synAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: think of your own</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pen"></use></svg> Your own synonyms</span>
+    <h2>Write a synonym</h2>
+    <p class="lead" data-read="Write a word that means nearly the same. There is more than one right answer.">
+      Write a word that means nearly the same. There's <b>more than one</b> right answer.</p>
+    <div id="ownAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Workbook page 15. Sort the words that mean small and the words that mean big.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: four kinds of sentence</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-spider"></use></svg> Sentence types</span>
+    <h2>What kind of sentence is it?</h2>
+    <p class="lead" data-read="A statement tells you something. A question asks something. An exclamation shows strong feeling. An instruction tells you to do something.">
+      A <b>statement</b> tells. A <b>question</b> asks. An <b>exclamation</b> shows strong
+      feeling. An <b>instruction</b> tells you to do something.</p>
+    <div id="typeAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: end marks</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> End marks</span>
+    <h2>Full stop, question mark or exclamation mark?</h2>
+    <p class="lead" data-read="These sentences have lost their end marks. Choose the right one.">
+      These sentences have lost their end marks. Choose the right one.</p>
+    <div id="markAsk"></div>
+    <div id="fixAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Workbook page 16. Write the paragraph again with capital letters, full stops,
+      question marks and exclamation marks.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(5)">Next: room card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Room card</span>
+    <h2>Open Room 4 and earn the Sentence Spider badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last task goes in your English book.">
+      Answer these on screen. The last task goes in your <b>English book</b>.</p>
+    <div id="badgeAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Write four sentences about spiders: one statement, one question, one exclamation and one instruction.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-spider"></use></svg> Room 4 · Sentence Spider</h3>
+      <div style="font-weight:700">Stamp this when you can choose a synonym and name the four kinds of sentence.</div>
+      <div><span class="stamp" id="stamp">ROOM OPEN</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn sun" type="button" id="stampBtn">Open my room</button></div>
+    </div>
+    <p class="note">All five rooms open? Look at the whole hotel in <b>charter.html</b>. Teacher: check the
+      book work and the Session summary before you give the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bug Hotel · Stage 3 · Unit 3 Bugs! · Room 4 (3Rv.02, 3Wv.02, 3Rg.05, 3Wg.01). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="bughotel.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'hotel',  label:'Welcome'},
+    {icon:'swap',   label:'Synonyms'},
+    {icon:'pen',    label:'Your own'},
+    {icon:'spider', label:'Sentence types'},
+    {icon:'search', label:'End marks'},
+    {icon:'medal',  label:'Room card'}
+  ], {onEnter:function(n){ if(n===5) Station.renderMyWork(); }});
+
+  /* ============ Pick the synonym (sentences are our own, not the PC's) ============ */
+  var syn=document.getElementById('synAsk');
+  Station.memory(syn,{
+    prompt:'Synonym memory. Flip two cards. If the words mean nearly the same, they stay up.',
+    kind:'synonym', back:'spider',
+    pairs:[['big','huge'],['begin','start'],['small','tiny'],['like','enjoy'],['sad','unhappy'],['fast','quick']],
+    nudge:'Those two do not mean the same. Remember where they are and try again.',
+    hint:'Put each word into the same short sentence, such as "It was ___." If both make the sentence mean nearly the same, they are a pair.',
+    praise:'Synonyms!', done:'All six pairs of synonyms found.',
+    task:'U3R4 Synonym memory'
+  });
+  Station.order(syn,{
+    prompt:'Moon Movers challenge: put these size words in order, from the smallest to the biggest.',
+    items:[
+      {text:'huge',  pos:4},
+      {text:'small', pos:2},
+      {text:'tiny',  pos:1},
+      {text:'big',   pos:3}
+    ],
+    nudge:'Picture each word as a bug. Which bug could hide behind all the others?',
+    hint:'Find the two words that mean little and decide which is even littler. Then do the same with the two words that mean large.',
+    praise:'Yes. A word ladder from smallest to biggest.',
+    task:'U3R4 Size ladder'
+  });
+  Station.order(syn,{
+    prompt:'Moon Movers challenge: put these sound words in order, from the quietest to the loudest.',
+    items:[
+      {text:'shout',   pos:3},
+      {text:'whisper', pos:1},
+      {text:'roar',    pos:4},
+      {text:'talk',    pos:2}
+    ],
+    nudge:'Say each word in the voice it describes. Which one is the softest?',
+    hint:'One is what you do in a library and one is what a lion does. The other two go in between.',
+    praise:'Yes. From quietest to loudest.',
+    task:'U3R4 Sound ladder'
+  });
+
+  /* ============ Write your own synonym ============ */
+  var own=document.getElementById('ownAsk');
+  [
+    {word:'big', answers:['huge','enormous','gigantic','giant','large','massive','great','vast','immense','colossal','mighty','jumbo','mammoth','tremendous'],
+     hint:'Think of how you would describe an elephant or a mountain.'},
+    {word:'happy', answers:['glad','cheerful','joyful','pleased','merry','delighted','jolly','content','thrilled','overjoyed','chirpy'],
+     hint:'How do you feel on your birthday? Find a word for that feeling, but not this one.'},
+    {word:'shout', answers:['yell','scream','call','cry','holler','roar','bellow','shriek','bawl','screech'],
+     hint:'What do you do when you want a friend on the other side of the playground to hear you?'}
+  ].forEach(function(q){
+    Station.ask(own,{
+      prompt:'Write a word that means the same as '+q.word+'.',
+      answers:q.answers,
+      nudge:'A synonym means nearly the same, but it is a different word from '+q.word+'.',
+      hint:q.hint,
+      praise:'Yes. That is a synonym for '+q.word+'.',
+      task:'U3R4 Own synonym '+q.word
+    });
+  });
+
+  /* ============ Four kinds of sentence ============ */
+  var TYPES=['Statement','Question','Exclamation','Instruction'];
+  var TYPE_WRONG=[
+    'A statement just tells you something. Does this sentence only tell, or does it do more?',
+    'A question asks something and ends with a question mark. Check the end of this one.',
+    'An exclamation shows strong feeling and ends with an exclamation mark. Check the end of this one.',
+    'An instruction tells you to do something. Does this sentence tell you to do anything?'
+  ];
+  function kind(host, sentence, right, why, task){
+    Station.choose(host,{
+      prompt:'What kind of sentence is this? "'+sentence+'"',
+      options:TYPES.map(function(t,i){ return {text:t, why: i===right ? why : TYPE_WRONG[i]}; }),
+      answer:right, task:task
+    });
+  }
+  var typeHost=document.getElementById('typeAsk');
+  Station.sortInto(typeHost,{
+    prompt:'Drag each sentence into its basket, or tap a sentence and then a basket.',
+    targets:[
+      {label:'Statement', accept:'statement'}, {label:'Question', accept:'question'},
+      {label:'Instruction', accept:'instruction'}, {label:'Exclamation', accept:'exclamation'}
+    ],
+    items:[
+      {text:'Woodlice live under logs.', value:'statement'},
+      {text:'A spider spins a web.', value:'statement'},
+      {text:'How many legs does a spider have?', value:'question'},
+      {text:'Where do ladybirds sleep?', value:'question'},
+      {text:'Put the snail back on the leaf.', value:'instruction'},
+      {text:'Count the spots on the ladybird.', value:'instruction'},
+      {text:'What a huge web that is!', value:'exclamation'},
+      {text:'Ouch, that nettle stings!', value:'exclamation'}
+    ],
+    nudge:'Look at the end mark first, then the first word.',
+    hint:'Asking needs a question mark. Strong feeling needs an exclamation mark. If it ends with a full stop, check the first word: is it a bossy verb telling you to do something, or is it just telling you a fact?',
+    praise:'Yes.', done:'All eight sentences sorted.',
+    task:'U3R4 Sentence sort'
+  });
+
+  /* ============ End marks ============ */
+  var MARKS=['. full stop','? question mark','! exclamation mark'];
+  var MARK_WRONG=[
+    'A full stop ends a calm sentence that tells you something. Is this one asking, or showing a strong feeling?',
+    'A question mark is only for a sentence that asks something. Does this one ask?',
+    'An exclamation mark shows strong feeling, like surprise or a shout. Is this one calm?'
+  ];
+  function endMark(sentence, right, why, task){
+    Station.choose(document.getElementById('markAsk'),{
+      prompt:'Which mark goes at the end? "'+sentence+'"',
+      options:MARKS.map(function(m,i){ return {text:m, why: i===right ? why : MARK_WRONG[i]}; }),
+      answer:right, task:task
+    });
+  }
+  endMark('do bees sleep at night', 1, 'Yes. It asks something, so it needs a question mark.', 'U3R4 Mark bees sleep');
+  endMark('a snail carries its shell on its back', 0, 'Yes. It calmly tells you a fact, so it ends with a full stop.', 'U3R4 Mark snail shell');
+  endMark('wow, that dragonfly is so fast', 2, 'Yes. Wow shows surprise, so it needs an exclamation mark.', 'U3R4 Mark dragonfly');
+
+  /* Capital letter and end mark both count here, so these mark exactly. */
+  function exact(want){
+    return function(v){ return String(v).replace(/\s+/g,' ').trim().replace(/’/g,"'") === want; };
+  }
+  var fix=document.getElementById('fixAsk');
+  Station.ask(fix,{
+    prompt:'Write it with a capital letter and the right end mark: where is the woodlouse going',
+    answers:['Where is the woodlouse going?'], accept:exact('Where is the woodlouse going?'),
+    nudge:'Check two things: the very first letter, and the mark at the very end.',
+    hint:'A sentence starts with a capital letter. This one asks something, so think about which mark ends an asking sentence.',
+    praise:'Yes. Capital letter at the start, the right mark at the end.',
+    task:'U3R4 Fix woodlouse'
+  });
+  Station.ask(fix,{
+    prompt:'Write it with a capital letter and the right end mark: what a lot of ants there are',
+    answers:['What a lot of ants there are!'], accept:exact('What a lot of ants there are!'),
+    nudge:'Check two things: the very first letter, and the mark at the very end.',
+    hint:'A sentence starts with a capital letter. This one shows surprise, so think about which mark shows a strong feeling.',
+    praise:'Yes. Capital letter at the start, the right mark at the end.',
+    task:'U3R4 Fix ants'
+  });
+
+  /* ============ Room card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which word is NOT a synonym for big?',
+    options:[
+      {text:'huge',  why:'huge does mean big. Look for the odd one out.'},
+      {text:'giant', why:'giant means very big. Look for the odd one out.'},
+      {text:'tiny',  why:"Yes. tiny means small, so it's the opposite of big."}
+    ],
+    answer:2, task:'U3R4 Card not a synonym'
+  });
+  kind(badgeHost, 'Please shut the door of the bug hotel.', 3, 'Yes. It tells someone to do something.', 'U3R4 Card instruction');
+  Station.ask(badgeHost,{
+    prompt:'Write your own question about bugs. Start with a capital letter and end with a question mark.',
+    answers:['Do ants sleep?'],
+    accept:function(v){
+      v=String(v).trim();
+      return /^[A-Z]/.test(v) && /\?$/.test(v) && v.split(/\s+/).length>=3;
+    },
+    nudge:'Check the first letter is a capital and the last mark is a question mark. Use at least three words.',
+    hint:'Start with a question word like What, Where, Why or How. Then finish with the asking mark.',
+    praise:'Yes. That is a question.',
+    task:'U3R4 Card own question'
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bug Hotel · Room 3: The Pine Cones</title>
+<link rel="stylesheet" href="bughotel.css">
+</head>
+<body data-lesson="u3r3">
+<div class="wrap">
+  <header>
+    <div class="roof"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-ladybird"></use></svg>
+      <div><h1>The Pine Cones</h1><p class="sub">Room 3 · Non-fiction, facts and opinions</p></div>
+      <div class="pill">Unit 3 · Stage 3 · 3Ri.04 · 3Ri.05 · 3Ri.13</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="fiction"><div class="ktext"><b>fiction</b><span>A made-up story.</span></div></div>
+      <div class="kcard" data-word="non-fiction"><div class="ktext"><b>non-fiction</b><span>Writing that gives true information.</span></div></div>
+      <div class="kcard" data-word="fact"><div class="ktext"><b>fact</b><span>Something true that you can check.</span></div></div>
+      <div class="kcard" data-word="opinion"><div class="ktext"><b>opinion</b><span>What someone thinks or feels. Other people may not agree.</span></div></div>
+      <div class="kcard" data-word="heading"><div class="ktext"><b>heading</b><span>A mini title for one part of a text.</span></div></div>
+      <div class="kcard" data-word="caption"><div class="ktext"><b>caption</b><span>Words next to a picture that tell you what it shows.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-hotel"></use></svg> Room 3</span>
+    <h2>The pine cones</h2>
+    <p class="lead" data-voice="daniel" data-read="Room three is packed with pine cones. Ladybirds squeeze into the gaps to stay warm in winter. That is a fact. To fill this room, you'll learn to tell facts from stories and opinions.">
+      Room 3 is packed with pine cones. Ladybirds squeeze into the gaps to stay warm in
+      winter. That's a <b>fact</b>! To fill this room you'll tell <b>facts</b> from
+      <b>stories</b> and <b>opinions</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Think.</b> A story about a talking ladybird, and a book that tells you how
+      ladybirds really live. How are they different?</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Story or true?</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Story or true?</span>
+    <h2>Fiction or non-fiction?</h2>
+    <p class="lead" data-read="Fiction is a made-up story. Non-fiction gives true information. Read each sentence and decide.">
+      <b>Fiction</b> is a made-up story. <b>Non-fiction</b> gives true information. Read each sentence and decide.</p>
+    <div id="fnfAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: the parts of a text</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Features</span>
+    <h2>What does non-fiction look like?</h2>
+    <p class="lead" data-read="Non-fiction has special parts that help you find information quickly: a title, an introduction, headings, pictures with captions, and a conclusion.">
+      Non-fiction has parts that help you find information fast: a <b>title</b>, an
+      <b>introduction</b>, <b>headings</b>, pictures with <b>captions</b> and a <b>conclusion</b>.</p>
+    <div id="featAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Student's Book page 24. Before you read the text about germs, look at the headings and
+      the pictures. Write what you think you will find out.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: fact or opinion</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-ladybird"></use></svg> Fact or opinion</span>
+    <h2>Can you check it?</h2>
+    <p class="lead" data-read="A fact is true and you can check it. An opinion is what someone thinks or feels. Ask yourself: could I check this in a book?">
+      A <b>fact</b> is true and you can check it. An <b>opinion</b> is what someone thinks or
+      feels. Ask yourself: <i>could I check this in a book?</i></p>
+    <div id="factAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: read about germs</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Read and check</span>
+    <h2>True or false?</h2>
+    <p class="lead" data-read="Read the text. Then decide if each sentence is true or false. Look back at the text to check.">
+      Read the text. Then decide if each sentence is <b>true</b> or <b>false</b>. Look back at the text to check.</p>
+    <div class="passage" data-voice="daniel" data-read="Germs on our hands. Germs are living things, but they are very, very small. You need a microscope to see them. Germs are almost everywhere. They live on door handles, on toys and on our hands. Some germs are helpful. Others can make us sick. Washing your hands with soap and warm water gets rid of lots of germs. Scrub for about twenty seconds. That's as long as singing Happy Birthday twice. When you cough or sneeze, use a tissue or your elbow. Then the germs can't fly across the room.">
+      <h3>Germs on Our Hands</h3>
+      <p>Germs are living things, but they are very, very small. You need a microscope to see them.</p>
+      <p>Germs are almost everywhere. They live on door handles, on toys and on our hands.
+        Some germs are helpful. Others can make us sick.</p>
+      <p>Washing your hands with soap and warm water gets rid of lots of germs. Scrub for about
+        twenty seconds. That's as long as singing <i>Happy Birthday</i> twice.</p>
+      <p>When you cough or sneeze, use a tissue or your elbow. Then the germs can't fly across the room.</p>
+    </div>
+    <div id="tfAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(5)">Next: room card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Room card</span>
+    <h2>Open Room 3 and earn the Fact Ladybird badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last task goes in your English book.">
+      Answer these on screen. The last task goes in your <b>English book</b>.</p>
+    <div id="badgeAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Write two facts about ladybirds and one opinion. Start the opinion with <i>I think</i>.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-ladybird"></use></svg> Room 3 · Fact Ladybird</h3>
+      <div style="font-weight:700">Stamp this when you can tell fiction from non-fiction, and a fact from an opinion.</div>
+      <div><span class="stamp" id="stamp">ROOM OPEN</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn sun" type="button" id="stampBtn">Open my room</button></div>
+    </div>
+    <p class="note">All five rooms open? Look at the whole hotel in <b>charter.html</b>. Teacher: check the
+      book work and the Session summary before you give the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bug Hotel · Stage 3 · Unit 3 Bugs! · Room 3 (3Ri.04, 3Ri.05, 3Ri.13). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="bughotel.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'hotel',    label:'Welcome'},
+    {icon:'book',     label:'Story or true?'},
+    {icon:'search',   label:'Features'},
+    {icon:'ladybird', label:'Fact or opinion'},
+    {icon:'pen',      label:'True or false'},
+    {icon:'medal',    label:'Room card'}
+  ], {onEnter:function(n){ if(n===5) Station.renderMyWork(); }});
+
+  /* Two-way sorts: each option keeps its own why. */
+  function pair(host, labels, sentence, right, rightWhy, wrongWhy, task){
+    Station.choose(host,{
+      prompt:'"'+sentence+'"',
+      options:labels.map(function(l,i){ return {text:l, why: i===right ? rightWhy : wrongWhy}; }),
+      answer:right, task:task
+    });
+  }
+
+  /* ============ Fiction or non-fiction ============ */
+  var fnf=document.getElementById('fnfAsk'), FNF=['Fiction','Non-fiction'];
+  pair(fnf, FNF, 'Once upon a time, a beetle wanted to be king of the garden.', 0,
+    "Yes. Once upon a time tells you it's a story, and beetles can't be kings.",
+    'Non-fiction only tells true things. Can a real beetle want to be a king?', 'U3R3 Beetle king');
+  pair(fnf, FNF, 'Snails have one long foot. They make slime to help them move.', 1,
+    'Yes. These are true facts about real snails.',
+    'A made-up story has characters and things that happen. This tells you about real snails.', 'U3R3 Snail foot');
+  pair(fnf, FNF, 'The ladybird cried, "Oh no! I have lost my spots!"', 0,
+    "Yes. Real ladybirds can't talk, so this is from a story.",
+    "Non-fiction only tells true things. Real ladybirds don't talk.", 'U3R3 Talking ladybird');
+
+  /* ============ Features ============ */
+  var feat=document.getElementById('featAsk');
+  var LADYBIRD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="14" r="7"/><path d="M12 7v14M9 7.6a3 3 0 0 1 6 0"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="9" cy="17" r="1" fill="currentColor"/><circle cx="15" cy="17" r="1" fill="currentColor"/></svg>';
+  var BARS='<span class="bar" style="width:92%"></span><span class="bar" style="width:80%"></span>';
+  Station.label(feat,{
+    prompt:'Label the information page. Drag each label onto the part it names, or tap a label and then the part.',
+    keepOrder:true,
+    targets:[
+      {label:'big words at the very top', aria:'The big words at the very top of the page', accept:'title', max:1,
+       html:'<span class="bar" style="height:1rem;width:70%;background:var(--bark)"></span>'},
+      {label:'first few lines', aria:'The first few lines under the top', accept:'introduction', max:1, html:BARS},
+      {label:'bold words above a part', aria:'Bold words above one part of the page', accept:'heading', max:1,
+       html:'<span class="bar" style="height:.75rem;width:45%;background:var(--slate)"></span>'},
+      {label:'drawing', aria:'The drawing of a ladybird', accept:'picture', max:1, html:LADYBIRD},
+      {label:'small words under the drawing', aria:'Small words under the drawing', accept:'caption', max:1,
+       html:'<span class="bar" style="height:.4rem;width:55%;margin:auto"></span>'}
+    ],
+    items:[
+      {text:'title', value:'title'}, {text:'introduction', value:'introduction'}, {text:'heading', value:'heading'},
+      {text:'picture', value:'picture'}, {text:'caption', value:'caption'}
+    ],
+    nudge:'Think about what each part of a non-fiction page is for.',
+    hint:'The name of the whole text is biggest and at the top. Bold words over one part name just that part. Small words next to a drawing explain it. The opening lines say what the text is about.',
+    praise:'Yes, that label fits.', done:'Every part of the page is labelled.',
+    task:'U3R3 Label the page'
+  });
+  Station.choose(feat,{
+    prompt:'Non-fiction uses technical words. Which one is a technical word about insects?',
+    options:[
+      {text:'antennae', why:"Yes. antennae is the science word for an insect's feelers."},
+      {text:'lovely',   why:'lovely is an everyday describing word.'},
+      {text:'very',     why:'very is an everyday word you can use about anything.'}
+    ],
+    answer:0, task:'U3R3 Technical word'
+  });
+  Station.choose(feat,{
+    prompt:'Non-fiction about animals is usually in the present tense. Which sentence is in the present tense?',
+    options:[
+      {text:'Ants lived in nests.',     why:'lived is the past tense. It already happened.'},
+      {text:'Ants live in nests.',      why:'Yes. live is happening now, and it is always true.'},
+      {text:'Ants will live in nests.', why:'will live is the future tense.'}
+    ],
+    answer:1, task:'U3R3 Present tense'
+  });
+
+  /* ============ Fact or opinion ============ */
+  var fo=document.getElementById('factAsk'), FO=['Fact','Opinion'];
+  Station.sortInto(fo,{
+    prompt:'Fact or opinion? Drag each sentence into a basket, or tap a sentence and then a basket.',
+    targets:[{label:'Fact', accept:'fact'},{label:'Opinion', accept:'opinion'}],
+    items:[
+      {text:'Bees make honey.', value:'fact'},
+      {text:'Spiders have eight legs.', value:'fact'},
+      {text:'Snails carry their shells.', value:'fact'},
+      {text:'A ladybird has six legs.', value:'fact'},
+      {text:'Bees are the best insects.', value:'opinion'},
+      {text:'Moths are boring.', value:'opinion'},
+      {text:'I think butterflies are prettier than moths.', value:'opinion'},
+      {text:'Worms are the most horrible animals.', value:'opinion'}
+    ],
+    nudge:'Ask yourself: could I check this in a book?',
+    hint:'If you could look it up and everyone would agree, it goes with the things you can check. If it says what someone thinks or feels, like best, boring or I think, it goes in the other basket.',
+    praise:'Yes.', done:'All sorted. Facts can be checked; opinions are what someone thinks.',
+    task:'U3R3 Fact or opinion sort'
+  });
+  Station.choose(fo,{
+    prompt:'Which words often show that a sentence is an opinion?',
+    options:[
+      {text:'Ants have',  why:'Ants have is how a lot of facts start: ants have six legs.'},
+      {text:'There are',  why:'There are is used in facts too: there are lots of ants in a nest.'},
+      {text:'I think',    why:'Yes. I think, I like and the best are clues that someone is giving an opinion.'}
+    ],
+    answer:2, task:'U3R3 Opinion clue words'
+  });
+
+  /* ============ True or false (own text, not the SB Germs text) ============ */
+  var tf=document.getElementById('tfAsk'), TF=['True','False'];
+  pair(tf, TF, 'You can see germs with just your eyes.', 1,
+    'Yes, it is false. The text says you need a microscope.',
+    'Look at the first part again. What do you need to see germs?', 'U3R3 TF see germs');
+  pair(tf, TF, 'Some germs are helpful.', 0,
+    'Yes. The text says some germs are helpful.',
+    'Find the sentence that starts with Some germs and read it again.', 'U3R3 TF helpful germs');
+  pair(tf, TF, 'You should scrub your hands for about twenty seconds.', 0,
+    'Yes. That is in the part about soap and warm water.',
+    'Read the part about soap and warm water again.', 'U3R3 TF twenty seconds');
+  pair(tf, TF, 'When you sneeze, the best thing to use is your hand.', 1,
+    'Yes, it is false. The text says to use a tissue or your elbow.',
+    'Read the last part again. What does it say you should use?', 'U3R3 TF sneeze');
+  pair(tf, TF, 'Germs only live on toys.', 1,
+    'Yes, it is false. The text names more than one place.',
+    'Read the second part again. How many places does it name?', 'U3R3 TF only toys');
+  Station.ask(tf,{
+    prompt:'How many seconds should you scrub your hands for? Write the number.',
+    answers:['twenty','20','twenty seconds','20 seconds','about twenty seconds','about 20 seconds'],
+    nudge:'Find the part about soap and warm water.',
+    hint:'Look for the number just after the words "for about".',
+    praise:'Yes. You found it in the text.',
+    task:'U3R3 Scrub time'
+  });
+
+  /* ============ Room card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'How can you tell a text is non-fiction?',
+    options:[
+      {text:'It starts with Once upon a time', why:"Stories start like that. Non-fiction doesn't."},
+      {text:'It has talking animals', why:'Talking animals belong in stories.'},
+      {text:'It has headings and true facts', why:'Yes. Headings and true facts are clues that it is non-fiction.'}
+    ],
+    answer:2, task:'U3R3 Card non-fiction'
+  });
+  pair(badgeHost, FO, 'Washing your hands is the most boring job ever.', 1,
+    'Yes. boring is how someone feels. Not everyone agrees.',
+    "You can't check boring in a book. It's a feeling.", 'U3R3 Card opinion');
+  Station.choose(badgeHost,{
+    prompt:'Which part tells you what a picture shows?',
+    options:[
+      {text:'A heading', why:'A heading tells you what one part of the text is about.'},
+      {text:'A caption', why:'Yes. A caption sits next to the picture.'},
+      {text:'The title', why:'The title names the whole text.'}
+    ],
+    answer:1, task:'U3R3 Card caption'
+  });
+
+})();
+</script>
+</body>
+</html>

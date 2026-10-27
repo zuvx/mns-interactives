@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bug Hotel · Room 1: The Bamboo Canes</title>
+<link rel="stylesheet" href="bughotel.css">
+</head>
+<body data-lesson="u3r1">
+<div class="wrap">
+  <header>
+    <div class="roof"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-bee"></use></svg>
+      <div><h1>The Bamboo Canes</h1><p class="sub">Room 1 · Rhymes, sounds and exclamation marks</p></div>
+      <div class="pill">Unit 3 · Stage 3 · 3Rw.01 · 3Rg.01 · 3Rg.02</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="rhyme"><div class="ktext"><b>rhyme</b><span>Two words rhyme when they end with the same sound: <i>bug, rug</i>.</span></div></div>
+      <div class="kcard" data-word="sound"><div class="ktext"><b>sound</b><span>What you hear when you say a word out loud.</span></div></div>
+      <div class="kcard" data-word="spelling"><div class="ktext"><b>spelling</b><span>The letters we write to show a word.</span></div></div>
+      <div class="kcard" data-word="exclamation mark"><div class="ktext"><b>exclamation mark !</b><span>Goes at the end of a sentence said with strong feeling.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-hotel"></use></svg> Room 1</span>
+    <h2>Welcome to the Bug Hotel</h2>
+    <p class="lead" data-voice="daniel" data-read="Our class is building a bug hotel, one room at a time. Room one is full of hollow bamboo canes. Bees love to sleep inside them. Fill the room by finding rhymes, sounds and exclamation marks.">
+      Our class is building a <b>bug hotel</b>, one room at a time. Room 1 is full of hollow
+      bamboo canes, and bees love to sleep inside them. Fill the room with <b>rhymes</b>,
+      <b>sounds</b> and <b>exclamation marks</b>.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg>
+      <div><b>Say it out loud.</b> bug, rug, hug. They all end with the same sound, so they rhyme.
+      Poems often use rhymes. You'll find some in the poem <i>Bugs!</i> in your Student's Book.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Find the rhymes</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Rhymes</span>
+    <h2>Which words rhyme?</h2>
+    <p class="lead" data-read="Say both words out loud. Listen to the end of each word. If the ends sound the same, they rhyme.">
+      Say both words out loud. Listen to the <b>end</b> of each word. If the ends sound the
+      same, they rhyme.</p>
+    <div id="rhymeAsk"></div>
+    <div id="finishAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(2)">Next: one sound, two spellings</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-puzzle"></use></svg> Sounds</span>
+    <h2>Same sound, different spelling</h2>
+    <p class="lead" data-read="Some words sound the same at the end, but they are spelled in different ways. Look at the letters that make the sound.">
+      Some words sound the same, but the sound is <b>spelled</b> in different ways.</p>
+    <div class="example">
+      <div><span class="big">hair · wear · where</span><br>One <b>air</b> sound, three spellings: air, ear, ere.</div>
+      <div><span class="big">should · could · wood</span><br>One short <b>oo</b> sound, two spellings: ould, oo.</div>
+    </div>
+    <div id="soundAsk"></div>
+    <div class="quest"><div class="q">In your English book</div>
+      Workbook page 12. Find the rhyming words, then write two more words with the air sound.</div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(3)">Next: exclamation marks</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bee"></use></svg> Strong feelings</span>
+    <h2>Exclamation marks</h2>
+    <p class="lead" data-read="An exclamation mark goes at the end of a sentence that is said with strong feeling: surprise, a shout or a warning.">
+      An <b>exclamation mark !</b> goes at the end of a sentence said with strong feeling:
+      surprise, a shout or a warning.</p>
+    <div class="example">
+      <div><span class="big">Ouch! A bee stung me!</span></div>
+      <div><span class="big">Look out, a wasp!</span></div>
+    </div>
+    <div id="bangAsk"></div>
+    <div class="btnrow"><button class="btn ghost" type="button" onclick="go(4)">Next: room card</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Room card</span>
+    <h2>Open Room 1 and earn the Rhyme Bee badge</h2>
+    <p class="lead" data-read="Answer these on screen. The last task goes in your English book.">
+      Answer these on screen. The last task goes in your <b>English book</b>.</p>
+
+    <div id="badgeAsk"></div>
+
+    <div class="quest"><div class="q">In your English book</div>
+      Write two sentences about bugs that end with an exclamation mark. Then write a pair of
+      words that rhyme with <i>bee</i>.</div>
+
+    <div class="mywork" id="mywork"></div>
+
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-bee"></use></svg> Room 1 · Rhyme Bee</h3>
+      <div style="font-weight:700">Stamp this when you can find rhymes, spot one sound with two spellings, and use an exclamation mark.</div>
+      <div><span class="stamp" id="stamp">ROOM OPEN</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn sun" type="button" id="stampBtn">Open my room</button></div>
+    </div>
+    <p class="note">All five rooms open? Look at the whole hotel in <b>charter.html</b>. Teacher: check the
+      book work and the Session summary before you give the badge.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bug Hotel · Stage 3 · Unit 3 Bugs! · Room 1 (3Rw.01, 3Rg.01, 3Rg.02). Works offline. No timers, no leaderboard.</p>
+</div>
+
+<script src="bughotel.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  Station.init([
+    {icon:'hotel',  label:'Welcome'},
+    {icon:'search', label:'Rhymes'},
+    {icon:'puzzle', label:'Sounds'},
+    {icon:'bee',    label:'Feelings !'},
+    {icon:'medal',  label:'Room card'}
+  ], {onEnter:function(n){ if(n===4) Station.renderMyWork(); }});
+
+  /* ============ Rhymes (WB p12): memory, our own pairs ============ */
+  var rhymeHost=document.getElementById('rhymeAsk');
+  Station.memory(rhymeHost,{
+    prompt:'Rhyme memory. Flip two cards. If the words rhyme, they stay up.',
+    kind:'rhyme', back:'bee',
+    pairs:[['hair','wear'],['see','me'],['should','good'],['bug','rug'],['sting','wing'],['hive','five']],
+    nudge:'Those two do not rhyme. Remember where they are and try again.',
+    hint:'Say both words out loud and listen to the very end. A rhyme sounds the same at the end, even if the spelling is different.',
+    praise:'They rhyme!', done:'All six rhyming pairs found.',
+    task:'U3R1 Rhyme memory'
+  });
+
+  var finishHost=document.getElementById('finishAsk');
+  [
+    {prompt:'Finish the rhyme: "A beetle sat down on a log. It saw a green and jumpy ___."',
+     rhyme:'log', answers:['frog'],
+     nudge:'It is an animal that lives near a pond.',
+     hint:'Keep the og ending of log. Try different sounds in front of it until you find a green animal that jumps.',
+     task:'U3R1 Finish the log rhyme'},
+    {prompt:'Finish the rhyme: "Busy bees fly past the gate. Hurry home, bees, or you\'ll be ___!"',
+     rhyme:'gate', answers:['late'],
+     nudge:'What do we say when someone gets home after the right time?',
+     hint:'Say gate slowly: g-ate. Keep the ate and change the first sound until it means "not on time".',
+     task:'U3R1 Finish the gate rhyme'},
+    {prompt:'Finish the rhyme: "A spider made a web so fine, from the window to the washing ___."',
+     rhyme:'fine', answers:['line'],
+     nudge:'Where do wet clothes hang up to dry outside?',
+     hint:'Say fine slowly: f-ine. Keep the ine and try other first sounds. Which one holds wet clothes?',
+     task:'U3R1 Finish the fine rhyme'}
+  ].forEach(function(q){
+    q.praise='Yes. That rhymes and it makes sense.';
+    Station.ask(finishHost,q);
+  });
+
+  /* ============ One sound, two spellings ============ */
+  var soundHost=document.getElementById('soundAsk');
+  Station.sortInto(soundHost,{
+    prompt:'Every word has the air sound. Drag each word into the basket that shows how the sound is spelled, or tap a word and then a basket.',
+    targets:[
+      {label:'air', accept:'air'}, {label:'are', accept:'are'},
+      {label:'ear', accept:'ear'}, {label:'ere', accept:'ere'}
+    ],
+    items:[
+      {text:'hair', value:'air'}, {text:'chair', value:'air'}, {text:'pair', value:'air'},
+      {text:'care', value:'are'}, {text:'share', value:'are'}, {text:'square', value:'are'},
+      {text:'bear', value:'ear'}, {text:'pear', value:'ear'}, {text:'wear', value:'ear'},
+      {text:'where', value:'ere'}, {text:'there', value:'ere'}
+    ],
+    nudge:'Look at the end of the word. Which letters are making the air sound?',
+    hint:'Cover the first letter or two with your finger. Read the letters left at the end and find the basket with the same letters.',
+    praise:'Yes, that spelling matches.', done:'Four spellings, one sound.',
+    task:'U3R1 Air sort'
+  });
+  Station.choose(soundHost,{
+    prompt:'Which spelling is right? "I ______ see a bee on the flower."',
+    options:[
+      {text:'cood',  why:'cood is how it sounds, but this word uses the same letters as should.'},
+      {text:'could', why:'Yes. could, should and would all share the spelling ould.'},
+      {text:'culd',  why:'culd is missing letters. Think of how should is spelled.'}
+    ],
+    answer:1, task:'U3R1 Spelling could'
+  });
+  Station.ask(soundHost,{
+    prompt:'Write a word that rhymes with hair and is also spelled with air.',
+    rhyme:'hair',
+    answers:['chair','fair','pair','stair','air','lair','flair','repair','armchair','highchair','wheelchair','despair','affair'],
+    nudge:'Keep the letters a, i, r at the end, and change the first sound.',
+    hint:'Think of something you sit on, or two socks that go together. Spell the end a, i, r.',
+    praise:'Yes. Same sound and the same air spelling.',
+    task:'U3R1 Write an air word'
+  });
+  Station.ask(soundHost,{
+    prompt:'Write the word that sounds like wood and fits here: "I ______ like to build a bug hotel."',
+    answers:['would'],
+    nudge:'wood comes from trees. This word sounds the same but means "want to".',
+    hint:'It uses the same ending as should and could. Change the first letter to w.',
+    praise:'Yes. would, should and could: same ending, same sound.',
+    task:'U3R1 Write would'
+  });
+
+  /* ============ Exclamation marks ============ */
+  var bangHost=document.getElementById('bangAsk');
+  Station.label(bangHost,{
+    inline:true,
+    prompt:'Drag a full stop or an exclamation mark to the end of each sentence. Or tap a mark, then tap the gap.',
+    targets:[
+      {before:"Look out, there's a wasp", label:'end of: Look out', accept:'!', max:1},
+      {before:'Ants have six legs', label:'end of: Ants have six legs', accept:'.', max:1},
+      {before:'Wow, that butterfly is beautiful', label:'end of: Wow', accept:'!', max:1},
+      {before:'Snails move very slowly', label:'end of: Snails move', accept:'.', max:1}
+    ],
+    items:[{text:'.', value:'.'},{text:'.', value:'.'},{text:'!', value:'!'},{text:'!', value:'!'}],
+    nudge:'Read the sentence aloud. Is it calm, or full of strong feeling?',
+    hint:'A shout, a warning or a surprise needs the mark for strong feeling. A calm fact needs the mark that is just a dot.',
+    praise:'Yes, that mark fits.', done:'Every sentence has the right end mark.',
+    task:'U3R1 End marks'
+  });
+  Station.choose(bangHost,{
+    prompt:'Why is there an exclamation mark after the title of the poem Bugs!?',
+    options:[
+      {text:'To show it is a question', why:'A question mark shows a question. This title does not ask anything.'},
+      {text:'To show the word is said with strong feeling', why:'Yes. The ! tells the reader to say it loudly, with feeling.'},
+      {text:'To show the end of a list', why:'A list uses commas. This title is just one word.'}
+    ],
+    answer:1, task:'U3R1 Why the title has !'
+  });
+
+  /* ============ Room card ============ */
+  var badgeHost=document.getElementById('badgeAsk');
+  Station.choose(badgeHost,{
+    prompt:'Which pair of words rhymes?',
+    options:[
+      {text:'bee, bed',  why:'They start the same, but the ends are different.'},
+      {text:'bee, bat',  why:'Only the first sound matches. A rhyme matches at the end.'},
+      {text:'bee, tree', why:'Yes. bee and tree both end with the ee sound.'}
+    ],
+    answer:2, task:'U3R1 Card rhyming pair'
+  });
+  Station.ask(badgeHost,{
+    prompt:'Write the word that rhymes with should and starts with g.',
+    rhyme:'should', answers:['good'],
+    nudge:'Say should and could. Now start the same sound with g.',
+    hint:'It means the opposite of bad. The oo sound in it is spelled like the one in wood.',
+    praise:'Yes. Same short oo sound, a different spelling.',
+    task:'U3R1 Card rhyme with should'
+  });
+  Station.choose(badgeHost,{
+    prompt:'Which sentence needs an exclamation mark?',
+    options:[
+      {text:'The bucket is in the garden', why:'This tells you something calmly. It ends with a full stop.'},
+      {text:'Ouch, a nettle stung my leg', why:'Yes. Ouch shows sudden pain, so it ends with an exclamation mark.'},
+      {text:'Is the bucket full', why:'This one asks something. It ends with a question mark.'}
+    ],
+    answer:1, task:'U3R1 Card exclamation'
+  });
+
+})();
+</script>
+</body>
+</html>
