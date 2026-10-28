@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Toy Box Workshop · Lesson 4: The Delivery Room</title>
+<link rel="stylesheet" href="workshop.css">
+<style>
+  .thing{font:700 1.375rem var(--display);color:var(--coral-deep);background:var(--paper);border:3px solid var(--sand-2);
+    border-radius:14px;padding:.5rem 1rem}
+</style>
+</head>
+<body data-lesson="u21-l4">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg>
+      <div><h1>The Delivery Room</h1><p class="sub">Lesson 4 · 3D shapes in real life</p></div>
+      <div class="pill">Unit 21 · Stage 3 · 3Gg.05, 3Gg.08</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="face"><div class="ktext"><b>face</b><span>A flat or curved surface of a 3D shape.</span></div></div>
+      <div class="kcard" data-word="curved"><div class="ktext"><b>curved</b><span>Bending, not flat or straight.</span></div></div>
+      <div class="kcard" data-word="prism"><div class="ktext"><b>prism</b><span>Two end faces that are the same polygon. All the other faces are rectangles.</span></div></div>
+      <div class="kcard" data-word="pyramid"><div class="ktext"><b>pyramid</b><span>A polygon base. All the other faces are triangles that meet at the apex.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-door"></use></svg> The workshop</span>
+    <h2>The delivery room</h2>
+    <p class="lead" data-voice="daniel" data-read="Things arrive at the workshop every day, and every one of them has a 3D shape. Omar sorts the deliveries. Mariam says: think about the shape of each face before you choose.">
+      Things arrive at the workshop every day, and every one of them has a 3D shape. Omar sorts the deliveries.
+      Mariam says: think about the shape of each face before you choose.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Picture the real thing in your head. Does it roll? Has it got corners? Are its ends the same?</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the door</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> What shape?</span>
+    <h2>What shape is it?</h2>
+    <div id="what"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg> Pack</span>
+    <h2>Pack the boxes</h2>
+    <p class="lead" data-read="Put each delivery in the box for its shape.">Put each delivery in the box for its shape.</p>
+    <div id="pack"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Odd one out</span>
+    <h2>Which one does not belong?</h2>
+    <div id="odd"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-cube"></use></svg> Open it up</span>
+    <h2>Open up a box</h2>
+    <p class="lead" data-voice="daniel" data-read="Mariam cuts open an empty box so it lies flat. Every face of the box is still there, just unfolded.">
+      Mariam cuts open an empty box so it lies flat. Every face of the box is still there, just unfolded.</p>
+    <div id="open"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Workshop badge</span>
+    <h2>Earn your Workshop rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Find three things in the classroom. Write what each one is and the name of its 3D shape.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Workshop Rank 4: Shape Spotter</h3>
+      <div style="font-weight:700">Stamp this when you can name the 3D shape of real things.</div>
+      <div><span class="stamp" id="stamp">SHAPE SPOTTER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Toy Box Workshop · Stage 3 · Unit 21 Lesson 4 (3Gg.05, 3Gg.08). SB p89, WB pp172-173. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. None of the Progress Check's own objects: check-workshop.js holds
+     that list and fails a page that names one. -->
+<script type="application/json" id="data">
+{
+  "what": [["a can of drink", "cylinder"], ["a sugar cube", "cube"], ["a beach ball", "sphere"],
+           ["a shoe box", "cuboid"], ["a wedge of cheese", "triangular prism"], ["a pyramid in Egypt", "square-based pyramid"]],
+  "shapes": ["cube", "cuboid", "sphere", "cylinder", "triangular prism", "square-based pyramid"],
+  "pack": [["a candle", "cylinder"], ["a toilet roll tube", "cylinder"], ["a tennis ball", "sphere"], ["a marble", "sphere"],
+           ["a cereal box", "cuboid"], ["a book", "cuboid"]],
+  "odd": {"items": ["a tin of beans", "a candle", "an orange", "a toilet roll tube"], "answer": 2},
+  "open": [["How many squares do you need to open up a cube?", 6], ["How many faces does a cuboid have when it is opened up flat?", 6]],
+  "rank": [["a tube of sweets", "cylinder"], ["a tent", "triangular prism"]]
+}
+</script>
+<script src="solids.js"></script>
+<script src="workshop.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var W = Workshop;
+
+  W.init([
+    {icon:'door',   label:'Welcome'},
+    {icon:'search', label:'What shape'},
+    {icon:'box',    label:'Pack'},
+    {icon:'talk',   label:'Odd one out'},
+    {icon:'cube',   label:'Open it up'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) W.renderMyWork(); }});
+
+  /* Four names to choose from: the right one and three others, the same mix each time. */
+  function four(right){
+    var others = D.shapes.filter(function(s){ return s !== right; });
+    var k = D.shapes.indexOf(right);
+    var pick = [others[k % 5], others[(k + 2) % 5], others[(k + 4) % 5]];
+    pick.splice(k % 4, 0, right);
+    return pick;
+  }
+  function what(host, r, task){
+    var o = four(r[1]);
+    W.choose(host, {prompt:'What shape is '+r[0]+'?', show:'<span class="thing">'+r[0]+'</span>',
+      options:o, answer:o.indexOf(r[1]), task:task,
+      nudge:'Picture it in your hand. Look at each face.',
+      hint:'Does it roll? Has it got corners? If it has flat faces, what shape are they, and are its two ends the same?'});
+  }
+  D.what.forEach(function(r){ what(document.getElementById('what'), r, 'L4 What shape is '+r[0]); });
+
+  W.place(document.getElementById('pack'), {prompt:'Pack each delivery.', baskets:true, task:'L4 Pack the boxes',
+    places:[{label:'Cylinder box', accept:'cylinder'}, {label:'Sphere box', accept:'sphere'}, {label:'Cuboid box', accept:'cuboid'}],
+    cards:D.pack.map(function(r){ return {html:r[0], value:r[1]}; }),
+    nudge:'Not that box. Picture the real thing.',
+    hint:'Does it roll all ways, roll one way only, or not roll at all? That tells you the box.'});
+
+  var O = D.odd;
+  W.choose(document.getElementById('odd'), {prompt:'Which one is the odd one out?', options:O.items, answer:O.answer, task:'L4 Odd one out',
+    nudge:'Name the 3D shape of each one first.',
+    hint:'Name each shape. Three of them have the same shape. Which one does not have flat ends?'});
+
+  O = D.open;
+  O.forEach(function(r, i){
+    W.ask(document.getElementById('open'), {prompt:r[0], show:i === 0 ? W.solid('cube', {label:'a cube'}) : W.solid('cuboid', {label:'a cuboid'}),
+      answer:r[1], task:'L4 Open it up '+(i+1),
+      nudge:'Count the faces of the shape before it was opened.', hint:'Opening it up does not add or lose a face. Count front, back, top, bottom and the two sides.'});
+  });
+  W.readAloud();
+
+  var host = document.getElementById('rankAsk');
+  D.rank.forEach(function(r){ what(host, r, 'L4 Rank '+r[0]); });
+})();
+</script>
+</body>
+</html>

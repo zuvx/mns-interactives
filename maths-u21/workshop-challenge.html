@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Toy Box Workshop · The Workshop Challenge</title>
+<link rel="stylesheet" href="workshop.css">
+<style>
+  .thing{font:700 1.375rem var(--display);color:var(--coral-deep);background:var(--paper);border:3px solid var(--sand-2);
+    border-radius:14px;padding:.5rem 1rem}
+</style>
+</head>
+<body data-lesson="u21-challenge">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
+      <div><h1>The Workshop Challenge</h1><p class="sub">Unit 21 review · 3D shapes</p></div>
+      <div class="pill">Unit 21 · Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <nav class="rail" id="rail" aria-label="Challenge steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-door"></use></svg> The challenge</span>
+    <h2>One of everything</h2>
+    <p class="lead" data-voice="daniel" data-read="Mariam has one last job for you: one question of every kind you met this week. Your first try is the one that counts for the score, so take your time. Hints are still there if you need them.">
+      Mariam has one last job for you: one question of every kind you met this week. Your <b>first try</b>
+      counts for the score, so take your time. Hints are still there if you need them.</p>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the challenge</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-box"></use></svg> Shapes</span>
+    <h2>Name and count</h2>
+    <div id="shapes"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(2)">Next: prisms and pyramids</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pyramid"></use></svg> Prisms and pyramids</span>
+    <h2>Spot them, say what they are</h2>
+    <div id="pp"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(3)">Next: real things</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Real things</span>
+    <h2>What shape is it?</h2>
+    <div id="real"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">See my score</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Score</span>
+    <h2>Your Workshop score</h2>
+    <p class="lead">Right on the first try:</p>
+    <div class="score" id="score">0</div>
+    <p id="scoreNote"></p>
+    <div class="mywork" id="mywork"></div>
+    <p class="note">Teacher: the Session summary shows each Progress Check question type, first try and after a hint.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Toy Box Workshop · Stage 3 · Unit 21 review (3Gg.05, 3Gg.08). Works offline. No timers.</p>
+</div>
+
+<!-- Every Progress Check question type once, tagged "PC Qn" for the summary, with
+     other shapes and other objects throughout. check-workshop.js re-derives every
+     answer and holds the Progress Check's own items. -->
+<script type="application/json" id="data">
+{
+  "q1": ["hemisphere", "triprism", "hexprism", "pentpyramid", "octprism", "hexpyramid"],
+  "q2": {"shape": "triprism", "faceShapes": ["2 triangles and 3 rectangles", "5 triangles", "3 triangles and 2 rectangles", "5 rectangles"], "faceAnswer": 0,
+         "curved": "hemisphere"},
+  "q35": ["hemisphere", "pentpyramid", "triprism", "flatcuboid", "hexprism_lying", "cylinder_lying", "hexpyramid", "triprism_up"],
+  "q4": {"gaps": ["polygon", "rectangles"], "spare": ["triangles", "circles"]},
+  "q6": {"gaps": ["polygon", "triangles", "apex"], "spare": ["rectangles", "edge"]},
+  "q7": [["a tent", "triangular prism"], ["an ice cube", "cube"], ["a football", "sphere"], ["a brick", "cuboid"], ["a tube of sweets", "cylinder"]],
+  "q7shapes": ["cube", "cuboid", "sphere", "cylinder", "triangular prism", "square-based pyramid"]
+}
+</script>
+<script src="solids.js"></script>
+<script src="workshop.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var W = Workshop, S = window.Solids;
+  var total = 0, first = 0;
+  function count(){ total++; return function(v, tries){ if (tries === 1) first++; paint(); }; }
+  function paint(){
+    document.getElementById('score').textContent = first + ' / ' + total;
+    document.getElementById('scoreNote').textContent = first === total ? 'Every one on the first try. Workshop champion!'
+      : 'Look at the Session summary with your teacher to see which kind of question to practise.';
+  }
+
+  W.init([
+    {icon:'door',    label:'Start'},
+    {icon:'box',     label:'Shapes'},
+    {icon:'pyramid', label:'Prisms and pyramids'},
+    {icon:'search',  label:'Real things'},
+    {icon:'medal',   label:'Score'}
+  ], {onEnter:function(n){ if(n===4){ paint(); W.renderMyWork(); } }});
+
+  var host = document.getElementById('shapes');
+  W.place(host, {prompt:'Put each name on its shape.', task:'PC Q1 Name the shapes', onSolved:count(),
+    places:D.q1.map(function(n, i){ return {before:W.solid(n, {label:'shape '+(i+1)}), accept:S.names[n], aria:'Shape '+(i+1)}; }),
+    cards:D.q1.map(function(n){ return {html:S.names[n], value:S.names[n]}; }),
+    nudge:'Not that one. Look at the faces again.',
+    hint:'Prisms are named by their end faces, pyramids by their base. Count the sides of that face.'});
+
+  var Q = D.q2, c = S.counts(Q.shape);
+  W.turn(host, Q.shape, {label:'a triangular prism'});
+  [['faces', 0], ['edges', 1], ['vertices', 2]].forEach(function(w){
+    W.ask(host, {prompt:'A triangular prism: how many '+w[0]+'?', answer:c[w[1]], task:'PC Q2 Triangular prism '+w[0], onSolved:count(),
+      nudge:'Count again. Turn it to see the back.',
+      hint: w[0] === 'faces' ? 'Count the two ends, then the faces round the side.'
+          : w[0] === 'edges' ? 'Count the edges of each end, then the edges joining the ends.'
+          : 'Count the corners of one end, then the other end.'});
+  });
+  W.choose(host, {prompt:'What shapes are the faces of a triangular prism?', options:Q.faceShapes, answer:Q.faceAnswer,
+    task:'PC Q2 Shapes of the faces', onSolved:count(),
+    nudge:'Look at the ends, then the faces round the side.', hint:'A prism has two end faces the same, and rectangles round the side. What are the ends here?'});
+  c = S.counts(Q.curved);
+  W.ask(host, {prompt:'A hemisphere: how many faces? Count the flat one and the curved one.', show:W.solid(Q.curved, {label:'a hemisphere'}),
+    answer:c[0], task:'PC Q2 Hemisphere faces', onSolved:count(),
+    nudge:'A curved face counts as a face.', hint:'Count the flat circle on top, then the curved face underneath.'});
+
+  host = document.getElementById('pp');
+  function idx(fam){ return D.q35.map(function(n, i){ return S.family(n) === fam ? i : -1; }).filter(function(i){ return i >= 0; }); }
+  var items = function(){ return D.q35.map(function(n, i){ return W.solid(n, {label:'shape '+(i+1)}); }); };
+  W.picks(host, {prompt:'Tap every prism.', items:items(), correct:idx('prism'), task:'PC Q3 Circle the prisms', onSolved:count(),
+    hint:'A prism has two end faces the same polygon, with rectangles between them. Cuboids count.'});
+  function sentence(G, before, task){
+    W.place(host, {prompt:'Finish the sentences.', task:task, onSolved:count(), layout:'sentence',
+      places:before.map(function(b, i){ return {before:b, accept:G.gaps[i], aria:'Gap '+(i+1)}; }),
+      cards:G.gaps.concat(G.spare).map(function(w){ return {html:w, value:w}; }),
+      nudge:'Not that gap. Read the whole sentence with that word in it.',
+      hint:'Picture one example of the shape and say the sentence about it. Then pick the word that works for every one.'});
+  }
+  sentence(D.q4, ['A prism has two end faces that are the same', 'All the other faces are'], 'PC Q4 What is a prism');
+  W.picks(host, {prompt:'Tap every pyramid.', items:items(), correct:idx('pyramid'), task:'PC Q5 Circle the pyramids', onSolved:count(),
+    hint:'A pyramid has one base, and triangle faces that meet at a point.'});
+  sentence(D.q6, ['A pyramid has a base that is a', 'All the other faces are', 'They meet at a point called the'], 'PC Q6 What is a pyramid');
+
+  host = document.getElementById('real');
+  var SH = D.q7shapes;
+  D.q7.forEach(function(r){
+    var o = SH.slice();
+    W.choose(host, {prompt:'What shape is '+r[0]+'?', show:'<span class="thing">'+r[0]+'</span>', options:o, answer:o.indexOf(r[1]),
+      task:'PC Q7 '+r[0], onSolved:count(),
+      nudge:'Picture it in your hand. Look at each face.',
+      hint:'Does it roll? Has it got corners? If it has flat faces, what shape are they, and are its two ends the same?'});
+  });
+  W.readAloud();
+})();
+</script>
+</body>
+</html>
