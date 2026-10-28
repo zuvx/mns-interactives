@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tile Courtyard · The Courtyard Challenge</title>
+<link rel="stylesheet" href="courtyard.css">
+</head>
+<body data-lesson="u20-challenge">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
+      <div><h1>The Courtyard Challenge</h1><p class="sub">Unit 20 review · shapes, symmetry and angles</p></div>
+      <div class="pill">Unit 20 · Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <nav class="rail" id="rail" aria-label="Challenge steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-gate"></use></svg> The challenge</span>
+    <h2>One of everything</h2>
+    <p class="lead" data-voice="daniel" data-read="Layla has one last job for you: one question of every kind you met this week. Your first try is the one that counts for the score, so take your time. Hints are still there if you need them.">
+      Layla has one last job for you: one question of every kind you met this week. Your <b>first try</b>
+      counts for the score, so take your time. Hints are still there if you need them.</p>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the challenge</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tile"></use></svg> Shapes</span>
+    <h2>Name, sort, choose</h2>
+    <div id="shapes"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(2)">Next: symmetry and angles</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mirror"></use></svg> Symmetry and angles</span>
+    <h2>Fold, finish, compare</h2>
+    <div id="more"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(3)">See my score</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Score</span>
+    <h2>Your Courtyard score</h2>
+    <p class="lead">Right on the first try:</p>
+    <div class="score" id="score">0</div>
+    <p id="scoreNote"></p>
+    <div class="mywork" id="mywork"></div>
+    <p class="note">Teacher: the Session summary shows each Progress Check question type, first try and after a hint.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Tile Courtyard · Stage 3 · Unit 20 review (3Gg.01, 3Gg.09, 3Gg.10). Works offline. No timers.</p>
+</div>
+
+<!-- Every Progress Check question type once, tagged "PC Qn" for the summary,
+     with other shapes, other rules, another pattern and other angles throughout.
+     check-courtyard.js re-derives every answer and holds the Progress Check list. -->
+<script type="application/json" id="data">
+{
+  "q1": ["reg7", "heptagon", ["hexagon", "heptagon", "octagon", "nonagon"]],
+  "q2": {"fewer": ["kite", "scalene", "irr5"], "more": ["reg7", "reg10@18", "tshape"]},
+  "q3": [["reg9", true], ["irr8", false], ["reg10@18", true], ["parallelogram", false], ["reg7@15", true], ["house", false]],
+  "q4": [["lshape", true], ["reg6", false], ["irr7", false], ["irr5", false]],
+  "q6": ["plus", "HV"],
+  "q7": {"cols": 6, "rows": 4, "axis": "V", "cells": [[0, 0], [2, 0], [1, 1], [0, 2], [2, 3]]},
+  "q8": [[30, 10], [120, 200], [90, 300], [75, 130], [150, 20], [50, 240]],
+  "q9": 2
+}
+</script>
+<script src="courtyard.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var C = Courtyard;
+  var total = 0, first = 0;
+  function count(){ total++; return function(v, tries){ if (tries === 1) first++; paint(); }; }
+  function paint(){
+    document.getElementById('score').textContent = first + ' / ' + total;
+    document.getElementById('scoreNote').textContent = first === total ? 'Every one on the first try. Courtyard champion!'
+      : 'Look at the Session summary with your teacher to see which kind of question to practise.';
+  }
+
+  C.init([
+    {icon:'gate',   label:'Start'},
+    {icon:'tile',   label:'Shapes'},
+    {icon:'mirror', label:'Symmetry and angles'},
+    {icon:'medal',  label:'Score'}
+  ], {onEnter:function(n){ if(n===3){ paint(); C.renderMyWork(); } }});
+
+  var host = document.getElementById('shapes');
+  C.choose(host, {prompt:'What is this shape called?', show:C.tile(D.q1[0], {tone:1, label:'a shape to name'}),
+    options:D.q1[2], answer:D.q1[2].indexOf(D.q1[1]), task:'PC Q1 Name the shape', onSolved:count(),
+    nudge:'Count the sides. Touch each one as you count.',
+    hint:'Count the sides, then use the start of the name: tri, quad, penta, hexa, hepta, octa, nona and deca go up one side at a time, starting from three.'});
+
+  var k = 0;
+  C.place(host, {prompt:'Sort the shapes by the number of sides.', baskets:true, task:'PC Q2 Sort by sides', onSolved:count(),
+    places:[{label:'5 or fewer sides', accept:'fewer'}, {label:'More than 5 sides', accept:'more'}],
+    cards:['fewer', 'more'].reduce(function(out, key){
+      return out.concat(D.q2[key].map(function(s){ return {html:C.tile(s, {tone:(k++) % 5, label:'a shape'}), value:key, aria:'Shape '+k}; })); }, []),
+    nudge:'Not that group. Count the sides again.', hint:'Count every straight side once, then read both headings.'});
+
+  C.picks(host, {prompt:'Tap every regular shape.', task:'PC Q3 Regular shapes', onSolved:count(),
+    items:D.q3.map(function(r, i){ return C.tile(r[0], {tone:i % 5, label:'shape '+(i+1)}); }),
+    correct:D.q3.map(function(r, i){ return r[1] ? i : -1; }).filter(function(i){ return i >= 0; }),
+    hint:'Regular needs both: every side the same length and every corner the same size.'});
+
+  C.choose(host, {prompt:'Which one is an irregular hexagon?', cards:true, task:'PC Q4 Irregular shape', onSolved:count(),
+    options:D.q4.map(function(r, i){ return C.tile(r[0], {tone:i % 5, label:'shape '+(i+1)}); }),
+    labels:D.q4.map(function(r, i){ return 'Shape '+(i+1); }),
+    answer:D.q4.map(function(r){ return r[1]; }).indexOf(true),
+    nudge:'A hexagon has six sides. Count the sides of each shape.',
+    hint:'Find the shapes with six sides first. Then choose the one whose sides are not all the same length.'});
+
+  host = document.getElementById('more');
+  C.choose(host, {prompt:'Which lines of symmetry does this shape have?', show:C.tile(D.q6[0], {tone:2, label:'a shape'}),
+    options:['Only a vertical line', 'Only a horizontal line', 'Both', 'Neither'], answer:2, task:'PC Q6 Lines of symmetry', onSolved:count(),
+    nudge:'Test each line on its own: fold up and down, then side to side.',
+    hint:'Picture folding along a line straight down the middle, then along a line straight across. Do the halves match each time?'});
+
+  C.mirror(host, {prompt:'Make the pattern symmetrical about the red line.', cols:D.q7.cols, rows:D.q7.rows, axis:D.q7.axis,
+    cells:D.q7.cells, task:'PC Q7 Finish the pattern', onSolved:count()});
+
+  C.picks(host, {prompt:'Tap every angle that is smaller than a right angle.', task:'PC Q8 Smaller angles', onSolved:count(),
+    items:D.q8.map(function(a, i){ return C.angle(a[0], a[1], 'angle '+(i+1)); }),
+    correct:D.q8.map(function(a, i){ return a[0] < 90 ? i : -1; }).filter(function(i){ return i >= 0; }),
+    hint:'Hold a folded paper corner on each angle. Smaller angles fit inside the corner.'});
+
+  C.ask(host, {prompt:'A half turn is the same as how many right angles?', answer:D.q9, task:'PC Q9 Half turn', onSolved:count(),
+    nudge:'A quarter turn is one right angle. How many quarter turns make a half turn?',
+    hint:'Stand up and make quarter turns until you face the opposite way. Count them.'});
+  C.readAloud();
+})();
+</script>
+</body>
+</html>

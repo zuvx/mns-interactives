@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tile Courtyard · Lesson 4: The Corner Hunt</title>
+<link rel="stylesheet" href="courtyard.css">
+</head>
+<body data-lesson="u20-l4">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-angle"></use></svg>
+      <div><h1>The Corner Hunt</h1><p class="sub">Lesson 4 · Right angles, turns and straight lines</p></div>
+      <div class="pill">Unit 20 · Stage 3 · 3Gg.10</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="right angle"><div class="ktext"><b>right angle</b><span>A square corner. A quarter turn.</span></div></div>
+      <div class="kcard" data-word="quarter turn"><div class="ktext"><b>quarter turn</b><span>One right angle of turn.</span></div></div>
+      <div class="kcard" data-word="half turn"><div class="ktext"><b>half turn</b><span>Two right angles. You end up facing the other way.</span></div></div>
+      <div class="kcard" data-word="straight line"><div class="ktext"><b>straight line</b><span>Two right angles side by side.</span></div></div>
+      <div class="kcard" data-word="clockwise"><div class="ktext"><b>clockwise</b><span>The way the hands of a clock turn.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-gate"></use></svg> The courtyard</span>
+    <h2>Square corners only</h2>
+    <p class="lead" data-voice="daniel" data-read="My square tiles only fit together if every corner is a right angle. A right angle is a square corner, like the corner of a book. Help me check the corners before the tiles go down.">
+      My square tiles only fit together if every corner is a <b>right angle</b>: a square corner, like the
+      corner of a book. Help me check the corners before the tiles go down.</p>
+    <div class="ask-pic" id="intro"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Fold a piece of paper in half and in half again. The folded corner is a right angle. Use it on the screen.</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the hunt</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-angle"></use></svg> Corners</span>
+    <h2>Find the right angles</h2>
+    <p class="lead" data-read="Right angles can face any way. Tap every right angle, then press Check.">Right angles can face any way. Tap every right angle.</p>
+    <div id="rights"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Compare</span>
+    <h2>Smaller, the same or greater?</h2>
+    <p class="lead" data-read="Hold your folded corner against each angle. Is the angle smaller than a right angle, a right angle, or greater than a right angle?">
+      Hold your folded corner against each angle. Is it smaller, a right angle, or greater?</p>
+    <div id="compare"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-swap"></use></svg> Turns</span>
+    <h2>Quarter turns and half turns</h2>
+    <p class="lead" data-read="A quarter turn is one right angle. Two right angles make a half turn, and a straight line.">
+      A quarter turn is one right angle. Two right angles make a <b>half turn</b>, and a <b>straight line</b>.</p>
+    <div id="turns"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard badge</span>
+    <h2>Earn your Courtyard rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a shape with exactly two right angles. Mark each right angle with a small square, and
+      ring one angle that is greater than a right angle.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard Rank 4: Corner Finder</h3>
+      <div style="font-weight:700">Stamp this when you can compare angles with a right angle.</div>
+      <div><span class="stamp" id="stamp">CORNER FINDER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Tile Courtyard · Stage 3 · Unit 20 Lesson 4 (3Gg.10). SB p85, WB pp164-165. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data: [degrees, direction of the first arm]. check-courtyard.js re-derives
+     every answer from the degrees. Quarter and half turns only (3Gg.10). The
+     Progress Check's 3 o'clock is kept out: the clocks here show 6 and 9. -->
+<script type="application/json" id="data">
+{
+  "intro": [[90, 0], [90, 135], [90, 250]],
+  "rights": [[90, 0], [60, 20], [90, 135], [120, 200], [90, 250], [45, 300], [115, 60], [90, 30]],
+  "compare": [[70, 15], [140, 210], [90, 200], [25, 100], [160, 0], [75, 300]],
+  "turns": {
+    "from12": [["quarter", "clockwise", "3"], ["half", "clockwise", "6"], ["quarter", "anticlockwise", "9"]],
+    "halfRights": 2,
+    "sixClock": 6
+  },
+  "rank": {"clocks": [9, 6, 1], "squareRights": 4}
+}
+</script>
+<script src="courtyard.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var C = Courtyard;
+  var CMP = ['Smaller than a right angle', 'A right angle', 'Greater than a right angle'];
+  function cmp(deg){ return deg < 90 ? 0 : deg === 90 ? 1 : 2; }
+  var CORNER = 'Put the corner of your folded paper on the point where the arms meet, with one edge along one arm. Where does the other arm go?';
+
+  document.getElementById('intro').innerHTML = D.intro.map(function(a){ return C.angle(a[0], a[1], 'a right angle'); }).join('');
+
+  C.init([
+    {icon:'gate',  label:'Welcome'},
+    {icon:'angle', label:'Corners'},
+    {icon:'search',label:'Compare'},
+    {icon:'swap',  label:'Turns'},
+    {icon:'medal', label:'Rank'}
+  ], {onEnter:function(n){ if(n===4) C.renderMyWork(); }});
+
+  C.picks(document.getElementById('rights'), {prompt:'Tap every right angle.',
+    items:D.rights.map(function(a, i){ return C.angle(a[0], a[1], 'angle '+(i+1)); }),
+    correct:D.rights.map(function(a, i){ return a[0] === 90 ? i : -1; }).filter(function(i){ return i >= 0; }),
+    task:'L4 Right angles', hint:CORNER});
+
+  var host = document.getElementById('compare');
+  D.compare.forEach(function(a, i){
+    C.choose(host, {prompt:'How big is this angle?', show:C.angle(a[0], a[1], 'an angle'),
+      options:CMP, answer:cmp(a[0]), task:'L4 Compare '+(i+1),
+      nudge:'Check it against your folded corner. Does the other arm go inside the corner, along its edge, or outside it?',
+      hint:CORNER});
+  });
+
+  host = document.getElementById('turns');
+  var T = D.turns;
+  T.from12.forEach(function(t){
+    C.choose(host, {prompt:'The minute hand points to 12. It makes a '+t[0]+' turn '+t[1]+'. Where does it point now?',
+      show:C.clock(12), cards:true, options:['3', '6', '9'], labels:['3', '6', '9'],
+      answer:['3', '6', '9'].indexOf(t[2]), task:'L4 Turn '+t[0]+' '+t[1],
+      nudge: t[1] === 'clockwise' ? 'Clockwise is the way the hands of a clock go round.' : 'Anticlockwise is the opposite way to the hands of a clock.',
+      hint:'A quarter turn moves the hand a quarter of the way round the clock. A half turn moves it halfway, to point the opposite way.'});
+  });
+  C.ask(host, {prompt:'How many right angles make a half turn?', answer:T.halfRights, task:'L4 Half turn',
+    nudge:'A quarter turn is one right angle. How many quarter turns make a half turn?',
+    hint:'Turn your body a quarter of the way round, then again. Which way are you facing now?'});
+  C.choose(host, {prompt:'Two right angles side by side make...', options:['a straight line', 'a square', 'one right angle'], answer:0,
+    task:'L4 Straight line', show:C.angle(90, 0, 'a right angle') + C.angle(90, 90, 'another right angle'),
+    nudge:'Put two folded corners next to each other along a ruler.',
+    hint:'Lay two paper corners edge to edge. Look at the bottom edges together.'});
+  C.choose(host, {prompt:'At '+T.sixClock+' o’clock, what do the hands of the clock make?', show:C.clock(T.sixClock),
+    options:['A straight line, two right angles', 'A right angle', 'Smaller than a right angle'], answer:0, task:'L4 Six o’clock',
+    nudge:'Look where each hand points. Are they pointing opposite ways?',
+    hint:'Check the angle between the hands with your folded corner, then with two corners side by side.'});
+  C.readAloud();
+
+  host = document.getElementById('rankAsk');
+  var R = D.rank;
+  C.choose(host, {prompt:'Which clock shows a right angle between the hands?', cards:true,
+    options:R.clocks.map(function(h){ return C.clock(h); }), labels:R.clocks.map(function(h){ return h+' o’clock'; }),
+    answer:0, task:'L4 Rank clock', nudge:'Check the angle between the hands on each clock with your folded corner.',
+    hint:'A right angle is a quarter of the way round the clock.'});
+  C.ask(host, {prompt:'How many right angles does a square have?', answer:R.squareRights, task:'L4 Rank square',
+    nudge:'Count the corners of a square. Is each one a right angle?', hint:'Every corner of a square is a square corner.'});
+})();
+</script>
+</body>
+</html>

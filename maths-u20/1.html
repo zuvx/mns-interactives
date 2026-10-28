@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tile Courtyard · Lesson 1: The Tile Shelf</title>
+<link rel="stylesheet" href="courtyard.css">
+</head>
+<body data-lesson="u20-l1">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-tile"></use></svg>
+      <div><h1>The Tile Shelf</h1><p class="sub">Lesson 1 · Naming and describing 2D shapes</p></div>
+      <div class="pill">Unit 20 · Stage 3 · 3Gg.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="polygon"><div class="ktext"><b>polygon</b><span>A flat shape with three or more straight sides.</span></div></div>
+      <div class="kcard" data-word="side"><div class="ktext"><b>side</b><span>One of the lines that make the edge of a shape.</span></div></div>
+      <div class="kcard" data-word="vertex"><div class="ktext"><b>vertex, vertices</b><span>A corner, where two sides meet.</span></div></div>
+      <div class="kcard" data-word="regular"><div class="ktext"><b>regular</b><span>Every side is the same length and every angle is the same size.</span></div></div>
+      <div class="kcard" data-word="irregular"><div class="ktext"><b>irregular</b><span>The sides or the angles are not all the same.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-gate"></use></svg> The courtyard</span>
+    <h2>Welcome to the Tile Courtyard</h2>
+    <p class="lead" data-voice="daniel" data-read="Hello, I am Layla, the tile maker. My new tiles are on the shelf, but the labels have fallen off. Count the sides of each tile and help me name it.">
+      Hello, I am Layla, the tile maker. My new tiles are on the shelf, but the labels have fallen off.
+      Count the sides of each tile and help me <b>name</b> it.</p>
+    <div class="ask-pic" id="shelf"></div>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>The start of a shape's name tells you how many sides it has. Penta means five. What does hexa mean?</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Open the shelf</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tile"></use></svg> Labels</span>
+    <h2>Name each tile</h2>
+    <p class="lead" data-read="Count the sides. Then tap the name that fits.">Count the sides. Then tap the name that fits.</p>
+    <div id="names"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Count</span>
+    <h2>Sides and vertices</h2>
+    <p class="lead" data-read="A vertex is a corner, where two sides meet. Count carefully: touch each one as you go round.">
+      A <b>vertex</b> is a corner, where two sides meet. Touch each one as you go round.</p>
+    <div id="counts"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg> Regular?</span>
+    <h2>Find the regular tiles</h2>
+    <p class="lead" data-read="A regular tile has every side the same length and every corner the same size. Tap every regular tile, then press Check.">
+      A <b>regular</b> tile has every side the same length <b>and</b> every corner the same size. Tap every regular tile.</p>
+    <div id="regular"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> True or false?</span>
+    <h2>What Sami and Layla say</h2>
+    <div id="talk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard badge</span>
+    <h2>Earn your Courtyard rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw an irregular heptagon and a regular shape of your choice. Label each one with its name,
+      how many sides and how many vertices.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard Rank 1: Tile Namer</h3>
+      <div style="font-weight:700">Stamp this when you can name a shape by counting its sides.</div>
+      <div><span class="stamp" id="stamp">TILE NAMER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Tile Courtyard · Stage 3 · Unit 20 Lesson 1 (3Gg.01). SB p82, WB pp158-159. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-courtyard.js reads this block and re-derives every answer.
+     Shapes in other orientations (Collins: "show shapes in different orientations"),
+     heptagon to decagon, regular means equal sides AND equal angles. The Progress
+     Check's own shapes are kept out: check-courtyard.js holds that list. -->
+<script type="application/json" id="data">
+{
+  "shelf": ["reg5", "reg7", "lshape", "reg10@18"],
+  "names": [
+    ["reg7", "heptagon", ["hexagon", "heptagon", "octagon", "pentagon"]],
+    ["house", "pentagon", ["quadrilateral", "pentagon", "hexagon", "triangle"]],
+    ["lshape", "hexagon", ["octagon", "pentagon", "hexagon", "quadrilateral"]],
+    ["reg9", "nonagon", ["octagon", "decagon", "heptagon", "nonagon"]],
+    ["kite", "quadrilateral", ["quadrilateral", "triangle", "pentagon", "hexagon"]],
+    ["reg10@18", "decagon", ["nonagon", "decagon", "octagon", "heptagon"]]
+  ],
+  "counts": [["irr7", "sides", 7], ["tshape", "vertices", 8], ["reg9@20", "sides", 9], ["circle", "vertices", 0]],
+  "regular": [["reg6", true], ["rectangle", false], ["reg5@36", true], ["rhombus", false],
+              ["reg8@22.5", true], ["irr7", false], ["reg3@180", true], ["trapezium", false]],
+  "talk": [
+    ["Sami", "reg4@20", "This tile is turned on its corner, so it is not a square any more.", false],
+    ["Layla", "lshape", "This tile has six straight sides, so it is a hexagon, even though its sides are different lengths.", true],
+    ["Sami", "circle", "A circle is a polygon because it is a closed shape.", false]
+  ],
+  "rank": {"irregular": [["reg8@22.5", false], ["irr8", true], ["irr7", false], ["star", false]],
+           "vertices": ["nonagon", 9]}
+}
+</script>
+<script src="courtyard.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var C = Courtyard;
+  var tones = [0, 1, 2, 3, 4];
+
+  document.getElementById('shelf').innerHTML = D.shelf.map(function(s, i){ return C.tile(s, {tone: tones[i % 5], label: 'a tile'}); }).join('');
+
+  C.init([
+    {icon:'gate',   label:'Welcome'},
+    {icon:'tile',   label:'Labels'},
+    {icon:'search', label:'Count'},
+    {icon:'four',   label:'Regular?'},
+    {icon:'talk',   label:'True or false?'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) C.renderMyWork(); }});
+
+  var COUNT_HINT = 'Start at one corner and go round. Tri means three, quad four, penta five, hexa six, hepta seven, octa eight, nona nine, deca ten.';
+
+  /* ---- Name each tile ---- */
+  var host = document.getElementById('names');
+  D.names.forEach(function(n, i){
+    C.choose(host, {prompt:'What is this tile called?', show:C.tile(n[0], {tone:i % 5, label:'a tile to name'}),
+      options:n[2], answer:n[2].indexOf(n[1]), task:'L1 Name '+n[1],
+      nudge:'Count the sides again. Touch each side as you count.', hint:COUNT_HINT});
+  });
+
+  /* ---- Count sides and vertices ---- */
+  host = document.getElementById('counts');
+  D.counts.forEach(function(c, i){
+    C.ask(host, {prompt:'How many '+c[1]+' does this tile have?', show:C.tile(c[0], {tone:(i+2) % 5, label:'a tile'}),
+      answer:c[2], task:'L1 Count '+c[1],
+      nudge: c[1] === 'vertices' ? 'A vertex is a corner where two straight sides meet. Count the corners.' : 'Count the straight sides.',
+      hint:'Put your finger on one corner and go all the way round. Count each '+(c[1] === 'vertices' ? 'corner' : 'side')+' once.'});
+  });
+
+  /* ---- Regular tiles ---- */
+  C.picks(document.getElementById('regular'), {prompt:'Tap every regular tile.',
+    items:D.regular.map(function(r, i){ return C.tile(r[0], {tone:i % 5, label:'tile '+(i+1)}); }),
+    correct:D.regular.map(function(r, i){ return r[1] ? i : -1; }).filter(function(i){ return i >= 0; }),
+    task:'L1 Regular tiles',
+    hint:'Check two things for every tile: are all the sides the same length, and are all the corners the same size? Both must be yes.'});
+
+  /* ---- True or false ---- */
+  host = document.getElementById('talk');
+  D.talk.forEach(function(t, i){
+    var says = document.createElement('div'); says.className = 'says';
+    says.innerHTML = '<p data-voice="daniel"><span class="who">'+t[0]+' says:</span> '+t[2]+'</p>';
+    host.appendChild(says);
+    C.choose(host, {prompt:'Is '+t[0]+' right?', show:C.tile(t[1], {tone:(i+1) % 5, label:'the tile '+t[0]+' means'}),
+      options:['True.', 'False.'], answer:t[3] ? 0 : 1, task:'L1 '+t[0]+' '+(i+1),
+      nudge:'Think about what makes a shape that shape: the sides, the corners, or the way it is turned?',
+      hint:'Turning a shape does not change its sides or corners. A polygon needs straight sides.'});
+  });
+  C.readAloud();
+
+  /* ---- Rank ---- */
+  host = document.getElementById('rankAsk');
+  var R = D.rank;
+  C.choose(host, {prompt:'Which tile is an irregular octagon?', cards:true,
+    options:R.irregular.map(function(r, i){ return C.tile(r[0], {tone:i % 5, label:'tile '+(i+1)}); }),
+    labels:R.irregular.map(function(r, i){ return 'Tile '+(i+1); }),
+    answer:R.irregular.map(function(r){ return r[1]; }).indexOf(true), task:'L1 Rank octagon',
+    nudge:'An octagon has eight sides. Count the sides of each tile.',
+    hint:'Find the tiles with eight sides first. Then pick the one whose sides are not all the same length.'});
+  C.ask(host, {prompt:'How many vertices does a '+R.vertices[0]+' have?', answer:R.vertices[1], task:'L1 Rank vertices',
+    nudge:'The start of the name tells you how many sides. A polygon has as many vertices as sides.',
+    hint:'Use the start of the name to find how many sides. Every side ends at a corner, so there are as many corners as sides.'});
+})();
+</script>
+</body>
+</html>

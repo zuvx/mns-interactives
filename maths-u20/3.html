@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tile Courtyard · Lesson 3: The Mirror Pool</title>
+<link rel="stylesheet" href="courtyard.css">
+</head>
+<body data-lesson="u20-l3">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-mirror"></use></svg>
+      <div><h1>The Mirror Pool</h1><p class="sub">Lesson 3 · Horizontal and vertical lines of symmetry</p></div>
+      <div class="pill">Unit 20 · Stage 3 · 3Gg.09</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="symmetrical"><div class="ktext"><b>symmetrical</b><span>Both halves match exactly, like a reflection.</span></div></div>
+      <div class="kcard" data-word="line of symmetry"><div class="ktext"><b>line of symmetry</b><span>The fold line that splits a shape into two matching halves.</span></div></div>
+      <div class="kcard" data-word="vertical"><div class="ktext"><b>vertical</b><span>Straight up and down.</span></div></div>
+      <div class="kcard" data-word="horizontal"><div class="ktext"><b>horizontal</b><span>Straight across, from side to side.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-gate"></use></svg> The courtyard</span>
+    <h2>The pool in the middle</h2>
+    <p class="lead" data-voice="daniel" data-read="In the middle of the courtyard there is a still pool. Look into it and you see the tiles again, the other way round. A line of symmetry works like the edge of the pool. Fold a tile along it and the two halves match exactly.">
+      In the middle of the courtyard there is a still pool. Look into it and you see the tiles again,
+      the other way round. A <b>line of symmetry</b> is like the edge of the pool: fold along it and the two halves match exactly.</p>
+    <div class="ask-pic" id="intro"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Look into the pool</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mirror"></use></svg> Fold test</span>
+    <h2>Is the dashed line a line of symmetry?</h2>
+    <p class="lead" data-read="Imagine folding the tile along the red dashed line. Do the two halves match exactly?">Imagine folding along the red dashed line. Do the halves match exactly?</p>
+    <div id="fold"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Which lines?</span>
+    <h2>Vertical, horizontal, both or neither?</h2>
+    <p class="lead" data-read="Look for a vertical line of symmetry, then a horizontal one.">Look for a <b>vertical</b> line first, then a <b>horizontal</b> one.</p>
+    <div id="which"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tile"></use></svg> Mirror tiles</span>
+    <h2>Finish the pattern</h2>
+    <p class="lead" data-read="Tap squares on the other side of the red line to colour them. Make the pattern symmetrical, then press Check.">
+      Tap squares on the other side of the red line to colour them. Make the pattern symmetrical.</p>
+    <div id="pools"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> True or false?</span>
+    <h2>What Sami and Layla say</h2>
+    <div id="talk"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard badge</span>
+    <h2>Earn your Courtyard rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      On squared paper, draw a line down the middle. Make a pattern of six squares on one side,
+      then swap with a partner and finish each other's pattern.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard Rank 3: Mirror Maker</h3>
+      <div style="font-weight:700">Stamp this when you can find lines of symmetry and finish a symmetrical pattern.</div>
+      <div><span class="stamp" id="stamp">MIRROR MAKER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Tile Courtyard · Stage 3 · Unit 20 Lesson 3 (3Gg.09). SB p84, WB pp162-163. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-courtyard.js re-derives every answer from its own table of
+     each shape's lines. Horizontal and vertical lines only (3Gg.09); the Progress
+     Check's diamond, double arrow, decagon and rectangle are kept out. -->
+<script type="application/json" id="data">
+{
+  "intro": [["reg6", "HV"], ["uparrow", "V"], ["homeplate", "H"]],
+  "fold": [["uparrow", "V", true], ["homeplate", "V", false], ["reg5", "V", true], ["parallelogram", "H", false],
+           ["tshape", "V", true], ["lshape", "H", false]],
+  "which": [["semileft", "H"], ["kite", "V"], ["plus", "HV"], ["scalene", ""], ["reg6", "HV"], ["trapezium", "V"]],
+  "pools": [
+    {"cols": 8, "rows": 6, "axis": "V", "cells": [[0, 0], [1, 1], [2, 1], [3, 3], [1, 4], [0, 5], [2, 5]]},
+    {"cols": 8, "rows": 6, "axis": "V", "cells": [[3, 0], [2, 1], [3, 2], [0, 2], [1, 3], [3, 4], [2, 5]]},
+    {"cols": 6, "rows": 8, "axis": "H", "cells": [[0, 0], [2, 1], [5, 1], [3, 2], [1, 3], [4, 3]]}
+  ],
+  "talk": [
+    ["Sami", "reg8@22.5", "This tile has no line of symmetry, because it has too many sides.", false],
+    ["Layla", "reg5", "Every regular shape has at least one line of symmetry.", true],
+    ["Sami", "scalene", "This tile has a line of symmetry, because all its sides are straight.", false]
+  ],
+  "rank": {"pool": {"cols": 6, "rows": 4, "axis": "V", "cells": [[0, 0], [2, 1], [1, 2], [2, 3]]},
+           "which": ["reg8@22.5", "HV"]}
+}
+</script>
+<script src="courtyard.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var C = Courtyard;
+  var WHICH = ['Only a vertical line', 'Only a horizontal line', 'Both', 'Neither'];
+  function pick(lines){ return lines === 'V' ? 0 : lines === 'H' ? 1 : lines === 'HV' ? 2 : 3; }
+  var FOLD_HINT = 'Picture the half on one side of the line flipping over onto the other half. Does every corner land on a corner?';
+
+  document.getElementById('intro').innerHTML = D.intro.map(function(t, i){
+    return C.tile(t[0], {tone:i, lines:t[1], label:'a tile with its lines of symmetry'}); }).join('');
+
+  C.init([
+    {icon:'gate',   label:'Welcome'},
+    {icon:'mirror', label:'Fold test'},
+    {icon:'search', label:'Which lines?'},
+    {icon:'tile',   label:'Mirror tiles'},
+    {icon:'talk',   label:'True or false?'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) C.renderMyWork(); }});
+
+  var host = document.getElementById('fold');
+  D.fold.forEach(function(f, i){
+    C.choose(host, {prompt:'Is the dashed line a line of symmetry?', show:C.tile(f[0], {tone:i % 5, lines:f[1], label:'a tile with a dashed line'}),
+      options:['Yes, the halves match.', 'No, the halves do not match.'], answer:f[2] ? 0 : 1, task:'L3 Fold '+(i+1),
+      nudge:'Look at the two halves again. Are they the same shape, the other way round?', hint:FOLD_HINT});
+  });
+
+  host = document.getElementById('which');
+  D.which.forEach(function(w, i){
+    C.choose(host, {prompt:'Which lines of symmetry does this tile have?', show:C.tile(w[0], {tone:(i+2) % 5, label:'a tile'}),
+      options:WHICH, answer:pick(w[1]), task:'L3 Which lines '+(i+1),
+      nudge:'Test each line on its own. First fold top to bottom, then side to side.',
+      hint:'A vertical line goes straight up and down the middle. A horizontal line goes straight across the middle. Check each one with the fold test.'});
+  });
+
+  host = document.getElementById('pools');
+  D.pools.forEach(function(p, i){
+    C.mirror(host, {prompt:'Make the pattern symmetrical about the red line.', cols:p.cols, rows:p.rows, axis:p.axis, cells:p.cells,
+      task:'L3 Mirror pool '+(i+1)});
+  });
+
+  host = document.getElementById('talk');
+  D.talk.forEach(function(t, i){
+    var says = document.createElement('div'); says.className = 'says';
+    says.innerHTML = '<p data-voice="daniel"><span class="who">'+t[0]+' says:</span> '+t[2]+'</p>';
+    host.appendChild(says);
+    C.choose(host, {prompt:'Is '+t[0]+' right?', show:C.tile(t[1], {tone:(i+1) % 5, label:'the tile '+t[0]+' means'}),
+      options:['True.', 'False.'], answer:t[3] ? 0 : 1, task:'L3 '+t[0]+' '+(i+1),
+      nudge:'Do the fold test on the tile before you decide.', hint:FOLD_HINT});
+  });
+  C.readAloud();
+
+  host = document.getElementById('rankAsk');
+  var R = D.rank;
+  C.mirror(host, {prompt:'Make the pattern symmetrical about the red line.', cols:R.pool.cols, rows:R.pool.rows, axis:R.pool.axis,
+    cells:R.pool.cells, task:'L3 Rank pool'});
+  C.choose(host, {prompt:'Which lines of symmetry does this tile have?', show:C.tile(R.which[0], {tone:3, label:'a tile'}),
+    options:WHICH, answer:pick(R.which[1]), task:'L3 Rank lines',
+    nudge:'Test each line on its own: up and down, then across.', hint:FOLD_HINT});
+})();
+</script>
+</body>
+</html>

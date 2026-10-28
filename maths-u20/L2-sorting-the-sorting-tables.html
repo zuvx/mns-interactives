@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tile Courtyard · Lesson 2: The Sorting Tables</title>
+<link rel="stylesheet" href="courtyard.css">
+<style>
+  .groups{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;width:100%}
+  .group{flex:1 1 14rem;border:3px solid var(--sand-2);border-radius:14px;padding:.5rem;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+  .group b{flex:1 1 100%;text-align:center;color:var(--sea)}
+  .group .tile{width:4.5rem}
+</style>
+</head>
+<body data-lesson="u20-l2">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg>
+      <div><h1>The Sorting Tables</h1><p class="sub">Lesson 2 · Sorting 2D shapes</p></div>
+      <div class="pill">Unit 20 · Stage 3 · 3Gg.01</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="polygon"><div class="ktext"><b>polygon</b><span>A flat shape with three or more straight sides.</span></div></div>
+      <div class="kcard" data-word="non-polygon"><div class="ktext"><b>non-polygon</b><span>A flat shape with at least one curved side.</span></div></div>
+      <div class="kcard" data-word="regular"><div class="ktext"><b>regular</b><span>Every side the same length, every angle the same size.</span></div></div>
+      <div class="kcard" data-word="vertices"><div class="ktext"><b>vertices</b><span>Corners. One corner is a vertex.</span></div></div>
+      <div class="kcard" data-word="sort"><div class="ktext"><b>sort</b><span>Put things into groups by a rule.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-gate"></use></svg> The courtyard</span>
+    <h2>The tiles are muddled up</h2>
+    <p class="lead" data-voice="daniel" data-read="A delivery of tiles came this morning and they are all muddled up. Each sorting table has a rule. Drag each tile to the right table, or tap a tile and then tap the table.">
+      A delivery of tiles came this morning and they are all muddled up. Each table has a <b>rule</b>.
+      Drag each tile to the right table, or tap a tile and then the table.</p>
+    <div class="think"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>
+      <div>Before you sort, read the rule on each table. What do you need to count or check?</div></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start sorting</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-four"></use></svg> Table 1</span>
+    <h2>Polygon or not?</h2>
+    <p class="lead" data-read="A polygon has only straight sides. A shape with a curved side is not a polygon.">A polygon has only straight sides. A shape with a curved side is not a polygon.</p>
+    <div id="poly"></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tile"></use></svg> Table 2</span>
+    <h2>Regular or not regular?</h2>
+    <p class="lead" data-read="Regular means every side is the same length and every angle is the same size.">Regular means every side the same length <b>and</b> every angle the same size.</p>
+    <div id="reg"></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Tables 3 and 4</span>
+    <h2>Count, then sort</h2>
+    <p class="lead" data-read="Count the sides, or the vertices, of each tile before you move it.">Count the sides, or the vertices, of each tile before you move it.</p>
+    <div id="sides"></div>
+    <div id="verts"></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Whose rule?</span>
+    <h2>What was the rule?</h2>
+    <p class="lead" data-voice="daniel" data-read="Sami sorted some tiles but forgot to write the headings. Look at both groups. What rule did he use?">
+      Sami sorted some tiles but forgot to write the headings. What rule did he use?</p>
+    <div id="rule"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard badge</span>
+    <h2>Earn your Courtyard rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Draw a table with two headings of your own. Sketch three shapes in each part, and include at
+      least one irregular shape.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Courtyard Rank 2: Sorter</h3>
+      <div style="font-weight:700">Stamp this when you can sort shapes by a rule and explain it.</div>
+      <div><span class="stamp" id="stamp">SORTER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Tile Courtyard · Stage 3 · Unit 20 Lesson 2 (3Gg.01). SB p83, WB pp160-161. Works offline. No timers.</p>
+</div>
+
+<!-- Lesson data. check-courtyard.js re-derives every basket from the shape list.
+     Sorting tables with two headings, as in the SB and the Progress Check, but
+     with other rules (6 sides, exactly 4 vertices) and other shapes. -->
+<script type="application/json" id="data">
+{
+  "poly": {"polygon": ["reg5@36", "irr4", "star", "righttri"], "not": ["oval", "semicircle", "quarter"]},
+  "reg": {"regular": ["reg7", "reg4@45", "reg10@18"], "not": ["parallelogram", "house", "scalene"]},
+  "sides": {"fewer": ["kite", "irr5", "scalene"], "more": ["reg9", "tshape", "lshape"]},
+  "verts": {"four": ["rhombus", "trapezium", "reg4@30", "irr4"], "other": ["reg3", "irr5", "oval", "reg6@30"]},
+  "rule": {"a": ["reg6", "irr8", "reg9"], "b": ["irr4", "scalene", "reg5"],
+           "options": ["More than 5 sides, and 5 or fewer sides", "Regular, and not regular", "Polygons, and non-polygons", "Curved sides, and straight sides"],
+           "answer": 0},
+  "rank": {"regular": ["reg8@22.5", "reg3@60"], "not": ["rectangle", "irr7"]}
+}
+</script>
+<script src="courtyard.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var C = Courtyard;
+
+  C.init([
+    {icon:'gate',   label:'Welcome'},
+    {icon:'four',   label:'Polygons'},
+    {icon:'tile',   label:'Regular'},
+    {icon:'search', label:'Count'},
+    {icon:'talk',   label:'The rule'},
+    {icon:'medal',  label:'Rank'}
+  ], {onEnter:function(n){ if(n===5) C.renderMyWork(); }});
+
+  function cards(groups){
+    var out = [], k = 0;
+    Object.keys(groups).forEach(function(key){
+      groups[key].forEach(function(spec){ out.push({html:C.tile(spec, {tone:k % 5, label:'a tile'}), value:key, aria:'Tile '+(++k)}); });
+    });
+    return out;
+  }
+  function sort(id, groups, labels, cfg){
+    cfg.baskets = true;
+    cfg.places = Object.keys(groups).map(function(key, i){ return {label:labels[i], accept:key}; });
+    cfg.cards = cards(groups);
+    return C.place(document.getElementById(id), cfg);
+  }
+
+  sort('poly', D.poly, ['Polygon', 'Not a polygon'], {prompt:'Sort the tiles: polygon or not?', task:'L2 Polygon or not',
+    nudge:'Not that table. Run your finger round the edge: is any part curved?',
+    hint:'One curved side is enough to make it a non-polygon. Only straight sides makes a polygon.'});
+  sort('reg', D.reg, ['Regular', 'Not regular'], {prompt:'Sort the tiles: regular or not regular?', task:'L2 Regular or not',
+    nudge:'Not that table. Check the sides and the corners.',
+    hint:'All sides the same length and all corners the same size: regular. If either is not, it is not regular.'});
+  sort('sides', D.sides, ['Fewer than 6 sides', '6 or more sides'], {prompt:'Sort by the number of sides.', task:'L2 Sides',
+    nudge:'Not that table. Count the sides again.',
+    hint:'Count every straight side once. Then read the rule: fewer than six, or six and more?'});
+  sort('verts', D.verts, ['Exactly 4 vertices', 'Not 4 vertices'], {prompt:'Sort by the number of vertices.', task:'L2 Vertices',
+    nudge:'Not that table. Count the corners again.',
+    hint:'A vertex is a corner where two straight sides meet. A curved shape may have none.'});
+
+  /* ---- What was the rule ---- */
+  var R = D.rule;
+  function row(list){ return list.map(function(s, i){ return C.tile(s, {tone:i % 5, label:'a tile'}); }).join(''); }
+  C.choose(document.getElementById('rule'), {prompt:'Which headings did Sami use?',
+    show:'<div class="groups"><div class="group"><b>Group 1</b>'+row(R.a)+'</div><div class="group"><b>Group 2</b>'+row(R.b)+'</div></div>',
+    options:R.options, answer:R.answer, task:'L2 The rule',
+    nudge:'Check that rule against every tile in both groups.',
+    hint:'Count the sides of every tile in Group 1, then in Group 2. What is the same inside each group?'});
+  C.readAloud();
+
+  /* ---- Rank ---- */
+  sort('rankAsk', D.rank, ['Regular', 'Not regular'], {prompt:'Sort these tiles.', task:'L2 Rank sort',
+    nudge:'Not that table. Check the sides and the corners.',
+    hint:'Regular needs both: equal sides and equal corners.'});
+})();
+</script>
+</body>
+</html>
