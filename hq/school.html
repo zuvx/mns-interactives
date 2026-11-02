@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>House Quest: School</title>
+<link rel="stylesheet" href="quest.css">
+</head>
+<body class="game-page school-page">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 2c1 3 5 5.5 5 10.5a5 5 0 0 1-10 0c0-2 .8-3.4 2-4.5 0 2 1 3 2 3 0-3-1-5.5 1-9z"/></symbol>
+  <symbol id="i-water" viewBox="0 0 24 24"><path d="M12 2.7s-6 6.3-6 11.3a6 6 0 0 0 12 0c0-5-6-11.3-6-11.3z"/></symbol>
+  <symbol id="i-air" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></symbol>
+  <symbol id="i-earth" viewBox="0 0 24 24"><path d="m8 4 4 7 3-3 7 12H2z"/></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></symbol>
+  <symbol id="i-uparrow" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  <symbol id="i-downarrow" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 7c-1.6-1.5-4.2-1.7-6-.4C3.8 8.2 3.5 11.8 5 15c1.3 3 3.5 5.5 5.5 5.5 1 0 1.5-.5 1.5-.5s.5.5 1.5.5c2 0 4.2-2.5 5.5-5.5 1.5-3.2 1.2-6.8-1-8.4-1.8-1.3-4.4-1.1-6 .4z"/><path d="M12 7c0-2 1-3.5 3-4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+  <symbol id="i-music-off" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><path d="M2 2l20 20"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><ellipse cx="12" cy="15.5" rx="5" ry="4"/><circle cx="6.5" cy="9.5" r="2"/><circle cx="10" cy="6" r="2"/><circle cx="14" cy="6" r="2"/><circle cx="17.5" cy="9.5" r="2"/></symbol>
+</svg>
+
+<div class="wrap">
+  <p class="demo">
+    <span><strong>Demo.</strong> Nothing you do here is saved or sent.</span>
+    <span class="demo-links">
+      <a class="demo-link" href="index.html">Park mode</a>
+      <a class="demo-link" href="assembly.html">Results</a>
+    </span>
+  </p>
+
+  <main>
+    <section class="screen on" data-s="0" aria-label="House Quest school">
+      <h1 class="sr-only">House Quest</h1>
+      <header class="hud">
+        <span class="hud-crest" id="hudCrest" aria-hidden="true"></span>
+        <span class="house-badge" id="houseBadge" hidden></span>
+        <span class="pill" id="gemPill" aria-live="polite">
+          <svg class="icon" aria-hidden="true"><use href="#i-gem"/></svg>
+          <span id="gemCount">0</span><span class="pill-of">points</span>
+        </span>
+        <ol class="pips" id="pips" aria-label="Questions answered: 0 of 10"></ol>
+        <div class="head-right">
+          <button class="pill hud-btn" id="whatNowBtn" type="button" aria-label="What now?">
+            <svg class="icon" aria-hidden="true"><use href="#i-help"/></svg><span class="hud-btn-label">What now?</span>
+          </button>
+          <button class="pill hud-btn" id="handInBtn" type="button" aria-label="Hand in my points" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg><span class="hud-btn-label">Hand in</span>
+          </button>
+          <button class="pill sound-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Sound effects">
+            <svg class="icon" aria-hidden="true"><use href="#i-music-off"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="stage" id="stage">
+        <canvas id="world" role="img" aria-label="The school seen from above. Tap where you want Wafi to go, or use the arrows underneath."></canvas>
+        <canvas class="hud-map" id="hudMap" aria-hidden="true"></canvas>
+        <div class="cup-still" id="cupStill" hidden>
+          <div class="cup-still-art" id="cupStillArt" aria-hidden="true"></div>
+          <p class="cup-still-banner" id="cupStillText"></p>
+        </div>
+        <div class="toast" id="toast" role="status" hidden>
+          <div class="bubble">
+            <p id="toastText"></p>
+            <button class="say" id="toastSay" type="button" aria-label="Read this to me"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button>
+          </div>
+          <span class="toast-wafi" id="toastWafi" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="pad">
+        <div class="dpad" role="group" aria-label="Move Wafi">
+          <button class="ctl d-up" type="button" data-k="up" aria-label="Walk up"><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button>
+          <button class="ctl d-left" type="button" data-k="left" aria-label="Walk left"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+          <button class="ctl d-right" type="button" data-k="right" aria-label="Walk right"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+          <button class="ctl d-down" type="button" data-k="down" aria-label="Walk down"><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button>
+        </div>
+        <button class="ctl ctl-jump" id="jumpBtn" type="button" data-k="jump"><svg class="icon" aria-hidden="true"><use href="#i-uparrow"/></svg><span>Jump</span></button>
+      </div>
+
+      <!-- Start: the code from the pupil's card -->
+      <div class="overlay" id="startPanel">
+        <div class="card panel">
+          <div class="greet">
+            <span class="greet-wafi" id="greetWafi" aria-hidden="true"></span>
+            <div>
+              <h2 tabindex="-1">Explore the school with Wafi!</h2>
+              <p class="lead">Help me win points for your house.</p>
+            </div>
+          </div>
+          <form id="codeForm" class="code-form" autocomplete="off">
+            <label for="code" class="step-label">Type your class code</label>
+            <div class="ask-row">
+              <input id="code" class="code-in" type="text" inputmode="numeric" maxlength="4" placeholder="0000" autocorrect="off" spellcheck="false">
+              <button class="btn" type="submit">Let's go</button>
+            </div>
+            <p class="code-who" id="codeWho" aria-live="polite"></p>
+            <p class="ask-fb" id="codeMsg" role="status"></p>
+            <details class="demo-codes" id="demoCodes">
+              <summary>Demo: every class code</summary>
+              <div class="demo-code-grid" id="demoCodeGrid"></div>
+            </details>
+          </form>
+        </div>
+      </div>
+
+      <!-- A chest in a room: its question -->
+      <div class="overlay" id="pipeModal" hidden>
+        <div class="card panel pipe-room">
+          <h2 id="pipeTitle" tabindex="-1">You found a chest!</h2>
+          <div class="stage-chest" id="pipeChest"></div>
+          <div id="qHost"></div>
+          <div class="send-row pipe-actions">
+            <button class="btn ghost" id="leavePipe" type="button">Leave it for now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- A battle with a habit rival: one question, then the rival changes -->
+      <div class="overlay battle-overlay" id="battlePanel" hidden>
+        <div class="card panel battle">
+          <h2 class="battle-banner" id="battleBanner" tabindex="-1"></h2>
+          <div class="arena">
+            <div class="habit" aria-hidden="true">
+              <span class="habit-name" id="habitName"></span>
+              <span class="habit-label">Habit</span>
+              <span class="habit-track"><span class="habit-fill" id="habitFill"></span></span>
+            </div>
+            <span class="arena-rival" id="battleRival" aria-hidden="true"></span>
+            <span class="arena-wafi" id="battleWafi" aria-hidden="true"></span>
+            <span class="battle-power" id="battlePower" aria-hidden="true" hidden></span>
+            <span class="battle-burst" id="battleBurst" aria-hidden="true" hidden></span>
+            <span class="battle-pts" id="battlePts" aria-hidden="true" hidden></span>
+            <p class="battle-hit" id="battleHit" role="status" hidden></p>
+          </div>
+          <div class="rival-says">
+            <p id="battleLine"></p>
+            <button class="say" id="battleSay" type="button" aria-label="Read this to me"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button>
+          </div>
+          <p class="battle-msg" id="battleMsg" aria-live="polite"></p>
+          <div id="battleQ"></div>
+          <div class="send-row pipe-actions">
+            <button class="btn" id="battleGo" type="button" hidden>Continue<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- The notice board without the cup: hand in now, or keep going -->
+      <div class="overlay" id="handInPanel" role="dialog" aria-modal="true" aria-labelledby="handInTitle" hidden>
+        <div class="card panel">
+          <h2 id="handInTitle" tabindex="-1">Hand in your points?</h2>
+          <div class="end-say">
+            <p class="ask-fb" id="handInText"></p>
+            <button class="say" id="handInSay" type="button" aria-label="Read this to me"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button>
+          </div>
+          <div class="send-row">
+            <button class="btn send" id="handInLater" type="button">Keep exploring</button>
+            <button class="btn ghost" id="handInNow" type="button">Hand in now</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- The House Cup: what would be sent -->
+      <div class="overlay endcard-overlay" id="treasurePanel" role="dialog" aria-modal="true" aria-labelledby="tTitle" hidden>
+        <div class="card panel endcard">
+          <div class="end-hero">
+            <div class="end-wafi" id="tWafi" aria-hidden="true"></div>
+            <h2 id="tTitle" tabindex="-1">You handed in your points!</h2>
+            <p class="end-points"><span class="t-num" id="tGems">0</span> <span class="t-of" id="tOf">points for your house</span></p>
+            <div class="end-say">
+              <p id="tSay"></p>
+              <button class="say" id="tSayBtn" type="button" aria-label="Read this to me"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button>
+            </div>
+          </div>
+          <ol class="stamps" id="tList" aria-label="Your ten questions"></ol>
+          <p class="t-paws" id="tPaws" hidden></p>
+          <button class="btn ghost teacher-btn" id="teacherBtn" type="button" aria-expanded="false" aria-controls="teacherPart">For teachers</button>
+          <div class="teacher-part" id="teacherPart" hidden>
+            <canvas class="t-map" id="tMap" aria-label="Map of the school with the rooms you won in your house colour"></canvas>
+            <dl class="breakdown">
+              <dt>Questions answered</dt><dd id="bOpened">0</dd>
+              <dt>Question points</dt><dd id="bQ">+0</dd>
+              <dt>Fruit and veg bonus</dt><dd id="bBonus">+0</dd>
+              <dt>Bumps</dt><dd id="bBumps">0</dd>
+            </dl>
+            <p class="ask-fb" id="sendMsg" role="status"></p>
+            <div class="send-row">
+              <button class="btn send" id="sendBtn" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>Send my points to my house
+              </button>
+              <button class="btn ghost" id="keepGoing" type="button">Keep exploring</button>
+            </div>
+            <div class="receipt" id="receipt" hidden>
+              <p class="r-title">In the real version, this is all that leaves the iPad:</p>
+              <dl>
+                <dt>House</dt><dd id="rHouse"></dd>
+                <dt>Year</dt><dd id="rYear"></dd>
+                <dt>Week</dt><dd id="rWeek"></dd>
+                <dt>Points</dt><dd id="rGems"></dd>
+                <dt>Points per question</dt><dd id="rPerQ"></dd>
+              </dl>
+              <p class="r-note">The code is shared by the whole year group in that house, so nothing about any pupil is sent. This demo hasn't sent anything.</p>
+            </div>
+            <p class="r-note">Voices made with ElevenLabs (elevenlabs.io).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Arrival: Wafi walks up the MNS steps and the doors open -->
+  <div class="intro" id="intro" hidden role="img" aria-label="Wafi arrives at school. Tap to skip.">
+    <div class="intro-scene" id="introScene">
+      <div class="intro-facade" id="introFacade"></div>
+      <span class="intro-door left"></span><span class="intro-door right"></span>
+      <span class="intro-wafi" id="introWafi"></span>
+    </div>
+    <p class="intro-skip">Tap to skip</p>
+  </div>
+
+  <p id="live" class="sr-only" aria-live="polite"></p>
+</div>
+<script src="mns-art.js"></script>
+<script src="bank-y2.js"></script>
+<script src="bank-y3.js"></script>
+<script src="bank-y4.js"></script>
+<script src="bank-y5.js"></script>
+<script src="bank-y6.js"></script>
+<script src="quest.js"></script>
+<script src="audio/index.js"></script>
+<script src="school-map.js"></script>
+<script src="school-lines.js"></script>
+<script src="school-ui.js"></script>
+<script src="school.js"></script>
+</body>
+</html>
