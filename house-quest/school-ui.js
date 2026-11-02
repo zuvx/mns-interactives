@@ -142,30 +142,28 @@
     sfx('point');
   }
 
-  /* ---------- Sign in: the class code says the house and the year ---------- */
+  /* ---------- Sign in: the house QR code (points.js), or a teacher types the code ---------- */
   var onSignedIn = null;
-  /* Under the box, whose code it is, so a pupil holding the wrong card sees it. */
-  function paintCodeWho() {
-    var o = Q.codeOwner($('#code').value), who = $('#codeWho');
-    who.dataset.house = o ? o.house : '';
-    who.innerHTML = o ? Q.icon(Q.HOUSES[o.house].icon) + '<span>' + Q.HOUSES[o.house].name + ', Year ' + o.year + '</span>' : '';
-  }
-  function signIn() {
-    var o = Q.codeOwner($('#code').value);
-    if (!o) {
-      $('#codeMsg').textContent = 'That code isn\'t right. Check the card in your classroom.';
-      $('#code').select();
-      return;
-    }
-    $('#codeMsg').textContent = '';
+  /* entry: { house, year, code } from the QR address or the teacher's code. */
+  function enter(entry) {
     showPanel(null);
-    signInAs(o.house, o.year);
+    signInAs(entry.house, entry.year, entry.code);
     if (onSignedIn) onSignedIn({ house: state.house, year: state.year });
   }
+  function typedCode() {
+    var code = $('#code').value.replace(/\D/g, '');
+    $('#codeMsg').textContent = '';
+    window.HQPoints.lookup(window.HQ_POINTS_URL, code).then(function (o) {
+      if (o) { enter({ house: o.house, year: o.year, code: code }); return; }
+      $('#codeMsg').textContent = window.SchoolLines.SEND.code;
+      $('#code').select();
+    });
+  }
   /* Also used by the #test-HOUSE-YEAR start in school.js. */
-  function signInAs(house, year) {
+  function signInAs(house, year, code) {
     state.house = house;
     state.year = year;
+    state.code = code || '';
     game.q.forEach(function (s) { s.box.remove(); });
     game = { used: new Set(), q: [] };
     state.level = { level: 1, streak: 0 };
@@ -176,21 +174,16 @@
     paintHud();
   }
   function buildStart() {
-    $('#code').addEventListener('input', function () { $('#codeMsg').textContent = ''; paintCodeWho(); });
-    $('#codeForm').addEventListener('submit', function (e) { e.preventDefault(); signIn(); });
-    /* Demo only: the real cards are in the classrooms, so SLT need the codes here. */
-    Q.YEAR_LIST.forEach(function (y) {
-      ORDER.forEach(function (h) {
-        var b = Q.el('button', 'demo-code');
-        b.type = 'button';
-        b.dataset.code = Q.CODES[h][y];
-        b.dataset.house = h;
-        b.setAttribute('aria-label', Q.HOUSES[h].name + ', Year ' + y + ', code ' + Q.CODES[h][y]);
-        b.innerHTML = '<span>' + Q.HOUSES[h].name + ' ' + y + '</span><strong>' + Q.CODES[h][y] + '</strong>';
-        b.addEventListener('click', function () { $('#code').value = b.dataset.code; paintCodeWho(); signIn(); });
-        $('#demoCodeGrid').appendChild(b);
-      });
+    $('#scanMsg').textContent = window.SchoolLines.scanQr;
+    $('#scanSay').addEventListener('click', function () { Q.speak($('#scanMsg').textContent); });
+    $('#typeCodeBtn').addEventListener('click', function () {
+      var open = $('#codeForm').hidden;
+      $('#codeForm').hidden = !open;
+      $('#typeCodeBtn').setAttribute('aria-expanded', String(open));
+      if (open) $('#code').focus();
     });
+    $('#code').addEventListener('input', function () { $('#codeMsg').textContent = ''; });
+    $('#codeForm').addEventListener('submit', function (e) { e.preventDefault(); typedCode(); });
   }
 
   /* ---------- Inside a chest ----------
@@ -456,10 +449,9 @@
     $('#teacherBtn').setAttribute('aria-expanded', 'false');
     if (drawMiniMap) drawMiniMap($('#tMap'));
     $('#receipt').hidden = true;
-    var left = PIPES - doneCount();
-    $('#sendMsg').textContent = left
-      ? 'There ' + (left === 1 ? 'is still 1 question' : 'are still ' + left + ' questions') + ' to find. You can keep exploring or send your points now.'
-      : '';
+    $('#sendMsg').textContent = '';
+    $('#sendSayRow').hidden = true;
+    $('#retryRow').hidden = true;
     showPanel('#treasurePanel');
   }
   function perQText() {
@@ -467,14 +459,28 @@
     for (var i = 0; i < PIPES; i++) out.push(state.perQ[i] === undefined ? '–' : String(state.perQ[i]));
     return out.join(' · ');
   }
+  /* The receipt, then the one record goes to the points script. A retry
+     sends the same gameId, so the script never counts a game twice. */
+  var gameId = '';
   function send() {
-    $('#rHouse').textContent = Q.HOUSES[state.house].name;
+    var H = Q.HOUSES[state.house], SEND = window.SchoolLines.SEND;
+    $('#rHouse').textContent = H.name;
     $('#rYear').textContent = 'Year ' + state.year;
-    $('#rWeek').textContent = '—';                      // the week comes from the points script (Task 10)
+    $('#rWeek').textContent = '—';
     $('#rGems').textContent = String(state.gems);
     $('#rPerQ').textContent = perQText();
     $('#receipt').hidden = false;
-    $('#sendMsg').textContent = state.gems + (state.gems === 1 ? ' point' : ' points') + ' for ' + Q.HOUSES[state.house].name + ' house.' + (state.gems ? ' Well done!' : '');
+    $('#retryRow').hidden = true;
+    if (!gameId) gameId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    var body = window.HQPoints.payload({ house: state.house, year: state.year, code: state.code }, Math.max(0, Math.min(28, state.gems)), gameId);   // the script takes 0-28
+    window.HQPoints.send(window.HQ_POINTS_URL, body).then(function (r) {
+      r = r || {};
+      var why = r.ok || r.reason === 'duplicate' ? 'sent' : r.reason === 'week' ? 'hours' : SEND[r.reason] ? r.reason : 'code';
+      $('#sendMsg').textContent = SEND[why];
+      $('#retryRow').hidden = why !== 'offline';
+      if (r.week) $('#rWeek').textContent = String(r.week);
+      $('#sendSayRow').hidden = false;
+    });
   }
 
   /* ---------- The notice board ----------
@@ -498,7 +504,6 @@
     finish(drawMiniMap);
     send();
     $('#treasurePanel h2').textContent = 'You handed in your points!';
-    $('#treasurePanel .send-row').hidden = true;
   }
 
   /* ---------- What a bump on the map means ---------- */
@@ -530,6 +535,7 @@
       $('#teacherBtn').setAttribute('aria-expanded', String(open));
     });
     $('#tSayBtn').addEventListener('click', function () { Q.speak($('#tSay').textContent); });
+    $('#sendSay').addEventListener('click', function () { Q.speak($('#sendMsg').textContent); });
     $('#handInSay').addEventListener('click', function () { Q.speak($('#handInText').textContent); });
     buildPips();
     $('#whatNowBtn').addEventListener('click', function () {
@@ -541,7 +547,6 @@
     $('#handInLater').addEventListener('click', function () { answerHandIn(false); });
     $('#battleGo').addEventListener('click', closeBattle);
     $('#battleSay').addEventListener('click', function () { Q.speak($('#battleLine').textContent); });
-    $('#keepGoing').addEventListener('click', function () { showPanel(null); window.School.freeze(false); });
     window.School.onBump = function (kind, info) { onBump(kind, info); if (SchoolUI.onBump) SchoolUI.onBump(kind, info); };
     buildStart();
     $('#pipeChest').innerHTML = Q.chestSvg();
@@ -549,7 +554,7 @@
   }
 
   var SchoolUI = {
-    state: state, init: init, signInAs: signInAs, showPanel: showPanel,
+    state: state, init: init, enter: enter, signInAs: signInAs, showPanel: showPanel,
     openQuestion: openQuestion, openBattle: openBattle, isDone: isDone, doneCount: doneCount,
     toast: toast, teacherSay: teacherSay, wafiWithCup: wafiWithCup, hasSfx: function (n) { return !!SFX[n]; }, askHandIn: askHandIn, handIn: handIn, sfx: sfx, paintHud: paintHud, paintGems: paintGems, finish: finish,
     onBump: null,

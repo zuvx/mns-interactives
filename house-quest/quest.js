@@ -37,27 +37,7 @@
     perPoint: 2          // fruit and veg collected for each bonus house point
   };
 
-  /* One 4-digit code per year group per house: 20 in all, shared by every
-     pupil in that year and house, so nothing identifies a child. The first
-     digit is the year, which helps staff hand out the right card. The real
-     version checks these on the school's side and caps games per code. */
-  var CODES = {
-    FIRE:  { 2: '2741', 3: '3158', 4: '4926', 5: '5317', 6: '6480' },
-    WATER: { 2: '2063', 3: '3794', 4: '4205', 5: '5831', 6: '6172' },
-    AIR:   { 2: '2519', 3: '3346', 4: '4687', 5: '5092', 6: '6753' },
-    EARTH: { 2: '2908', 3: '3621', 4: '4374', 5: '5465', 6: '6039' }
-  };
   var YEAR_LIST = [2, 3, 4, 5, 6];
-  function checkCode(house, year, code) {
-    return !!(CODES[house] && CODES[house][year] === String(code || '').replace(/\D/g, ''));
-  }
-  /* The house and year a code belongs to, or null: every code is different,
-     so the code alone is enough to sign in. */
-  function codeOwner(code) {
-    var c = String(code || '').replace(/\D/g, '');
-    for (var h in CODES) for (var y in CODES[h]) if (CODES[h][y] === c) return { house: h, year: Number(y) };
-    return null;
-  }
 
   /* Question builders. typed(): the pupil types the answer; pick(): taps one. */
   function typed(subject, type, prompt, answer, accept, nudge, hint) {
@@ -642,9 +622,9 @@
   }
 
   var Quest = {
-    ask: ask, chestPoints: chestPoints, draw: draw, nextLevel: nextLevel, checkCode: checkCode, codeOwner: codeOwner, speak: speak, icon: icon, el: el, plural: plural,
+    ask: ask, chestPoints: chestPoints, draw: draw, nextLevel: nextLevel, speak: speak, icon: icon, el: el, plural: plural,
     chestSvg: chestSvg, sayButton: sayButton,
-    YEARS: YEARS, YEAR_LIST: YEAR_LIST, CODES: CODES, HOUSES: HOUSES, THEME: THEME
+    YEARS: YEARS, YEAR_LIST: YEAR_LIST, HOUSES: HOUSES, THEME: THEME
   };
   if (typeof module !== 'undefined' && module.exports) { module.exports = Quest; return; }
   window.Quest = Quest;

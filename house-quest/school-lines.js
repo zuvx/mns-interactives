@@ -33,6 +33,16 @@
     handInNoCup: 'You haven\'t got the House Cup yet. Hand in your points now?',
     handInCarrying: 'You have the House Cup! Hand in your points now?',
 
+    /* Signing in from the house QR code, and sending the points (points.js) */
+    scanQr: 'Scan your house QR code to start.',
+    SEND: {
+      sent: 'Your points are on their way to your house!',
+      offline: 'Points not sent yet. Check the Wi-Fi and tap Try again.',
+      hours: 'House points only count in school time. See you in class!',
+      cap: 'Your house has played all its games this week. Well done, team!',
+      code: 'That code didn\'t work. Ask your teacher.'
+    },
+
     /* The habit rivals (voice: Daniel): their name, what they say before the
        question, and what they say once their habit has changed. */
     RIVALS: {

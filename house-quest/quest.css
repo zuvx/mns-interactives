@@ -276,17 +276,7 @@ section.screen.on{display:block;animation:rise .35s cubic-bezier(.22,1,.36,1)}
 .demo-hint{margin:10px 0 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 8px 8px 14px;
   border-radius:14px;background:#FFF4CC;border:2px dashed var(--gold-deep);font-weight:700}
 .btn.small{min-height:48px;padding:0 16px;font-size:1rem}
-.code-who{display:flex;align-items:center;gap:8px;min-height:1.6em;margin:10px 0 0;font-weight:700;font-size:1.15rem}
-.code-who[data-house="FIRE"]{color:var(--fire)} .code-who[data-house="WATER"]{color:var(--water)}
-.code-who[data-house="AIR"]{color:var(--air-deep)} .code-who[data-house="EARTH"]{color:var(--earth)}
-.demo-codes{margin:12px 0 0;padding:0 14px;border-radius:14px;background:#FFF4CC;border:2px dashed var(--gold-deep);font-weight:700}
-.demo-codes summary{padding:11px 0;cursor:pointer}
-.demo-code-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
-.demo-code{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;padding:4px;
-  border-radius:12px;border:2px solid var(--line);font:700 .85rem var(--school);color:#fff;cursor:pointer}
-.demo-code strong{font-size:1.05rem;letter-spacing:.06em}
-.demo-code[data-house="FIRE"]{background:var(--fire)} .demo-code[data-house="WATER"]{background:var(--water)}
-.demo-code[data-house="AIR"]{background:var(--air);color:#2B1F00} .demo-code[data-house="EARTH"]{background:var(--earth)}
+#codeForm{margin-top:14px}
 
 /* ---------- Staff view ---------- */
 .staff-grid{display:grid;gap:18px}

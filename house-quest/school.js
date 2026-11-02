@@ -2401,7 +2401,7 @@
     };
   }
 
-  /* Sign-in, then the arrival, then play (or straight in with #test-HOUSE-YEAR). */
+  /* Sign-in (the QR address, or the teacher's code), then the arrival, then play (or straight in with #test-HOUSE-YEAR). */
   var UI = window.SchoolUI;
   UI.onBump = worldBump;
   var begin = function (s) {
@@ -2413,12 +2413,13 @@
   };
   UI.init(begin);
   var m = /^#test-([A-Z]+)-(\d)(-intro)?/.exec(location.hash);
+  var qr = window.HQPoints.entryFromUrl(location.search);   // the house QR: ?h=WATER&y=3&c=NNNN
   if (m) {
     UI.showPanel(null);
-    UI.signInAs(m[1], Number(m[2]));
+    UI.signInAs(m[1], Number(m[2]), qr && qr.code);
     if (m[3]) begin({ house: m[1], year: Number(m[2]) });
     else School.start({ house: m[1], year: Number(m[2]) });
-  }
+  } else if (qr) UI.enter(qr);
 
   setFloor('ground');
   window.requestAnimationFrame(frame);

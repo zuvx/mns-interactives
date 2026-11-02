@@ -31,13 +31,6 @@
 </svg>
 
 <div class="wrap">
-  <p class="demo">
-    <span><strong>Demo.</strong> Nothing you do here is saved or sent.</span>
-    <span class="demo-links">
-      <a class="demo-link" href="index.html">Park mode</a>
-      <a class="demo-link" href="assembly.html">Results</a>
-    </span>
-  </p>
 
   <main>
     <section class="screen on" data-s="0" aria-label="House Quest school">
@@ -89,7 +82,7 @@
         <button class="ctl ctl-jump" id="jumpBtn" type="button" data-k="jump"><svg class="icon" aria-hidden="true"><use href="#i-uparrow"/></svg><span>Jump</span></button>
       </div>
 
-      <!-- Start: the code from the pupil's card -->
+      <!-- Start: the house QR code signs in; without it, a teacher can type the code -->
       <div class="overlay" id="startPanel">
         <div class="card panel">
           <div class="greet">
@@ -99,18 +92,18 @@
               <p class="lead">Help me win points for your house.</p>
             </div>
           </div>
-          <form id="codeForm" class="code-form" autocomplete="off">
-            <label for="code" class="step-label">Type your class code</label>
+          <div class="end-say">
+            <p class="ask-fb" id="scanMsg"></p>
+            <button class="say" id="scanSay" type="button" aria-label="Read this to me"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button>
+          </div>
+          <button class="btn ghost small" id="typeCodeBtn" type="button" aria-expanded="false" aria-controls="codeForm">Teacher: type the code</button>
+          <form id="codeForm" class="code-form" autocomplete="off" hidden>
+            <label for="code" class="step-label">Type the class code</label>
             <div class="ask-row">
               <input id="code" class="code-in" type="text" inputmode="numeric" maxlength="4" placeholder="0000" autocorrect="off" spellcheck="false">
               <button class="btn" type="submit">Let's go</button>
             </div>
-            <p class="code-who" id="codeWho" aria-live="polite"></p>
             <p class="ask-fb" id="codeMsg" role="status"></p>
-            <details class="demo-codes" id="demoCodes">
-              <summary>Demo: every class code</summary>
-              <div class="demo-code-grid" id="demoCodeGrid"></div>
-            </details>
           </form>
         </div>
       </div>
@@ -185,6 +178,15 @@
           </div>
           <ol class="stamps" id="tList" aria-label="Your ten questions"></ol>
           <p class="t-paws" id="tPaws" hidden></p>
+          <div class="end-say" id="sendSayRow" hidden>
+            <p id="sendMsg" role="status"></p>
+            <button class="say" id="sendSay" type="button" aria-label="Read this to me"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button>
+          </div>
+          <div class="send-row" id="retryRow" hidden>
+            <button class="btn send" id="sendBtn" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>Try again
+            </button>
+          </div>
           <button class="btn ghost teacher-btn" id="teacherBtn" type="button" aria-expanded="false" aria-controls="teacherPart">For teachers</button>
           <div class="teacher-part" id="teacherPart" hidden>
             <canvas class="t-map" id="tMap" aria-label="Map of the school with the rooms you won in your house colour"></canvas>
@@ -194,15 +196,8 @@
               <dt>Fruit and veg bonus</dt><dd id="bBonus">+0</dd>
               <dt>Bumps</dt><dd id="bBumps">0</dd>
             </dl>
-            <p class="ask-fb" id="sendMsg" role="status"></p>
-            <div class="send-row">
-              <button class="btn send" id="sendBtn" type="button">
-                <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>Send my points to my house
-              </button>
-              <button class="btn ghost" id="keepGoing" type="button">Keep exploring</button>
-            </div>
             <div class="receipt" id="receipt" hidden>
-              <p class="r-title">In the real version, this is all that leaves the iPad:</p>
+              <p class="r-title">This is all that leaves the iPad:</p>
               <dl>
                 <dt>House</dt><dd id="rHouse"></dd>
                 <dt>Year</dt><dd id="rYear"></dd>
@@ -210,7 +205,7 @@
                 <dt>Points</dt><dd id="rGems"></dd>
                 <dt>Points per question</dt><dd id="rPerQ"></dd>
               </dl>
-              <p class="r-note">The code is shared by the whole year group in that house, so nothing about any pupil is sent. This demo hasn't sent anything.</p>
+              <p class="r-note">The code is shared by the whole year group in that house, so nothing about any pupil is sent.</p>
             </div>
             <p class="r-note">Voices made with ElevenLabs (elevenlabs.io).</p>
           </div>
@@ -241,6 +236,8 @@
 <script src="audio/index.js"></script>
 <script src="school-map.js"></script>
 <script src="school-lines.js"></script>
+<script src="points-config.js"></script>
+<script src="points.js"></script>
 <script src="school-ui.js"></script>
 <script src="school.js"></script>
 </body>
