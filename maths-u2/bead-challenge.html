@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bead Market · The Bead Market Challenge</title>
+<link rel="stylesheet" href="market.css">
+</head>
+<body data-lesson="u2-challenge">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg>
+      <div><h1>The Bead Market Challenge</h1><p class="sub">Unit 2 review · Counting and sequences</p></div>
+      <div class="pill">Unit 2 · Stage 3</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <nav class="rail" id="rail" aria-label="Challenge steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-door"></use></svg> The challenge</span>
+    <h2>One of everything</h2>
+    <p class="lead" data-voice="daniel" data-read="Mrs Noor has one last job for you: one question of every kind you met this week. Your first try is the one that counts for the score, so take your time. Hints are still there if you need them.">
+      Mrs Noor has one last job for you: one question of every kind you met this week. Your <b>first try</b>
+      counts for the score, so take your time. Hints are still there if you need them.</p>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start the challenge</button></div>
+  </div></section>
+
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-jar"></use></svg> Estimating</span>
+    <h2>Estimate, then count</h2>
+    <div id="est"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(2)">Next: sequences</button></div>
+  </div></section>
+
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tag"></use></svg> Sequences</span>
+    <h2>Lost numbers and rules</h2>
+    <div id="seq"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(3)">Next: a pattern</button></div>
+  </div></section>
+
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bead"></use></svg> Pattern</span>
+    <h2>Keep the pattern going</h2>
+    <div id="pat"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">See my score</button></div>
+  </div></section>
+
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Score</span>
+    <h2>Your Market score</h2>
+    <p class="lead">Right on the first try:</p>
+    <div class="score" id="score">0</div>
+    <p id="scoreNote"></p>
+    <div class="mywork" id="mywork"></div>
+    <p class="note">Teacher: the Session summary shows each Progress Check question type, first try and after a hint.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bead Market · Stage 3 · Unit 2 review (3Nc.01, 3Nc.05, 3Nc.06). Works offline. No timers.</p>
+</div>
+
+<!-- Every Progress Check question type once, tagged "PC Qn" for the summary, with other
+     numbers and another shape. check-market.js re-derives the answers and holds the
+     Progress Check's own numbers out. -->
+<script type="application/json" id="data">
+{
+ "q1": {
+  "n": 160,
+  "options": [
+   "100–120",
+   "140–180",
+   "220–260"
+  ]
+ },
+ "q2": {
+  "n": 260,
+  "options": [
+   "150–190",
+   "240–280",
+   "320–360"
+  ]
+ },
+ "q3": {
+  "list": [
+   417,
+   420,
+   423,
+   426,
+   null,
+   432
+  ],
+  "answer": 429,
+  "rule": "Add 3",
+  "options": [
+   "Add 3",
+   "Add 4",
+   "Subtract 3"
+  ]
+ },
+ "q4": {
+  "list": [
+   268,
+   264,
+   260,
+   null,
+   252,
+   248
+  ],
+  "answer": 256,
+  "rule": "Subtract 4",
+  "options": [
+   "Add 4",
+   "Subtract 4",
+   "Subtract 2"
+  ]
+ },
+ "q5": {
+  "list": [
+   586,
+   592,
+   598,
+   null,
+   610,
+   616
+  ],
+  "answer": 604,
+  "rule": "Add 6",
+  "options": [
+   "Add 6",
+   "Add 8",
+   "Subtract 6"
+  ]
+ },
+ "q6": {
+  "kind": "hexagon",
+  "sides": 6,
+  "parts": [
+   1,
+   2,
+   3
+  ],
+  "next": [
+   4,
+   5,
+   6
+  ]
+ }
+}
+</script>
+<script src="market.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var W = Market, host;
+  var total = 0, first = 0;
+  function count(){ total++; return function(v, tries){ if (tries === 1) first++; paint(); }; }
+  function paint(){
+    document.getElementById('score').textContent = first + ' / ' + total;
+    document.getElementById('scoreNote').textContent = first === total ? 'Every one on the first try. Market champion!'
+      : 'Look at the Session summary with your teacher to see which kind of question to practise.';
+  }
+  W.init([{icon:'door',label:'Start'},{icon:'jar',label:'Estimating'},{icon:'tag',label:'Sequences'},{icon:'bead',label:'Pattern'},{icon:'medal',label:'Score'}],
+    {onEnter:function(n){ if(n===4){ paint(); W.renderMyWork(); } }});
+
+  host = document.getElementById('est');
+  [['q1', 'PC Q1'], ['q2', 'PC Q2']].forEach(function(p){
+    var r = D[p[0]], best = r.options.map(function(o){ return o.split('–').map(Number); }).findIndex(function(a){ return r.n >= a[0] && r.n <= a[1]; });
+    W.choose(host, {prompt:'Estimate how many beads as a range.', show:W.tens(r.n), options:r.options, answer:best, task:p[1]+' Range', onSolved:count(),
+      nudge:'Look at how many rows there are.', hint:'Each row is ten. Roughly how many rows are there?'});
+    W.ask(host, {prompt:'Ring the tens in your head. How many full tens?', answer:r.n / 10, task:p[1]+' Tens', onSolved:count(),
+      nudge:'Count the full rows of ten.', hint:'Touch each row as you count it.'});
+    W.ask(host, {prompt:'How many beads altogether?', answer:r.n, task:p[1]+' Count', onSolved:count(),
+      nudge:'Count in tens: 10, 20, 30 ...', hint:'Say the tens, one for each row, until you reach the last row.'});
+  });
+
+  host = document.getElementById('seq');
+  [['q3', 'PC Q3'], ['q4', 'PC Q4'], ['q5', 'PC Q5']].forEach(function(p){
+    var r = D[p[0]];
+    W.ask(host, {prompt:'Find the lost number.', show:W.string(r.list), answer:r.answer, task:p[1]+' Lost number', onSolved:count(),
+      nudge:'How far is it from one bead to the next?', hint:'Work out the hop from two beads next to each other, then make the same hop to the empty bead.'});
+    W.choose(host, {prompt:'What is the rule?', options:r.options, answer:r.options.indexOf(r.rule), task:p[1]+' Rule', onSolved:count(),
+      nudge:'Is it going up or going down?', hint:'Take one number from the next one. Going up means add, going down means subtract.'});
+  });
+
+  host = document.getElementById('pat');
+  var Q = D.q6;
+  Q.next.forEach(function(n, i){
+    W.ask(host, {prompt:'How many sides altogether on '+n+' '+Q.kind+'s?', show:i === 0 ? W.parts(Q.parts, Q.kind) : undefined, answer:n * Q.sides, task:'PC Q6 '+n+' '+Q.kind+'s', onSolved:count(),
+      nudge:'Count the sides on one shape, then add that number again for each shape.', hint:'How many sides has one? Add that number once for every shape.'});
+  });
+  W.readAloud();
+})();
+</script>
+</body>
+</html>

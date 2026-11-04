@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bead Market · Lesson 3: The Price Tags</title>
+<link rel="stylesheet" href="market.css">
+</head>
+<body data-lesson="u2-l3">
+<div class="wrap">
+  <header>
+    <div class="waves"></div>
+    <div class="head-body">
+      <svg class="icon icon-lg head-mark" aria-hidden="true" focusable="false"><use href="#i-tag"></use></svg>
+      <div><h1>The Price Tags</h1><p class="sub">Lesson 3 · Making sequences with numbers</p></div>
+      <div class="pill">Unit 2 · Stage 3 · 3Nc.05</div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <details class="keys">
+    <summary><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-scroll"></use></svg> Key words: tap to open</summary>
+    <div class="krow">
+      <div class="kcard" data-word="sequence"><div class="ktext"><b>sequence</b><span>Numbers in order that follow a rule.</span></div></div>
+      <div class="kcard" data-word="rule"><div class="ktext"><b>rule</b><span>What you do to get from one number to the next, like add 5.</span></div></div>
+      <div class="kcard" data-word="extend"><div class="ktext"><b>extend</b><span>To carry a sequence on.</span></div></div>
+      <div class="kcard" data-word="step"><div class="ktext"><b>step</b><span>One hop from a number to the next.</span></div></div>
+    </div>
+  </details>
+
+  <nav class="rail" id="rail" aria-label="Lesson steps"></nav>
+
+  <section class="screen on" data-s="0"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-door"></use></svg> The tags</span>
+    <h2>The price tags</h2>
+    <p class="lead" data-read="Mrs Noor prices her bracelets in fils. Each price tag follows a rule, and some have fallen off. Can you put them back?">Mrs Noor prices her bracelets in fils. Each price tag follows a rule, and some have fallen off. Can you put them back?</p>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(1)">Start pricing</button></div>
+  </div></section>
+  <section class="screen" data-s="1"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-tag"></use></svg> Sequences</span>
+    <h2>What's the lost tag?</h2>
+    <p class="lead" data-read="Careful when the numbers go past a hundred!">Careful when the numbers go past a hundred!</p>
+    <div id="tags"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(2)">Next: the rule</button></div>
+  </div></section>
+  <section class="screen" data-s="2"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg> Rules</span>
+    <h2>Say the rule</h2>
+    <p class="lead" data-read="Going up means add, going down means subtract.">Going up means add, going down means subtract.</p>
+    <div id="rules"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(3)">Next: further along</button></div>
+  </div></section>
+  <section class="screen" data-s="3"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-bead"></use></svg> Further along</span>
+    <h2>Which number is 10th?</h2>
+    <p class="lead" data-read="The 1st number is where you start, so the 10th is 9 hops on.">The 1st number is where you start, so the 10th is 9 hops on.</p>
+    <div id="tenth"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(4)">Next: find the mistake</button></div>
+  </div></section>
+  <section class="screen" data-s="4"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-talk"></use></svg> Mistakes</span>
+    <h2>Who is right?</h2>
+    <p class="lead" data-read="Read what they said, then try it yourself.">Read what they said, then try it yourself.</p>
+    <div id="errors"></div>
+    <div class="btnrow"><button class="btn" type="button" onclick="go(5)">Earn your rank</button></div>
+  </div></section>
+
+  <section class="screen" data-s="5"><div class="card">
+    <span class="tag"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Market badge</span>
+    <h2>Earn your Market rank</h2>
+    <p class="lead" data-read="Answer these on screen. Then do the task in your maths book.">Answer these on screen. Then do the book task.</p>
+    <div id="rankAsk"></div>
+    <div class="quest"><div class="q">In your maths book</div>
+      Start your own sequence from any number between 100 and 900. Write eight numbers, then write the rule. Ask a friend to check it.</div>
+    <div class="mywork" id="mywork"></div>
+    <div class="licence"><h3><svg class="icon icon-lg" aria-hidden="true" focusable="false"><use href="#i-medal"></use></svg> Market Rank 3: Sequence Maker</h3>
+      <div style="font-weight:700">Stamp this when you can extend a sequence and say its rule.</div>
+      <div><span class="stamp" id="stamp">SEQUENCE MAKER</span></div>
+      <div class="btnrow" style="justify-content:center"><button class="btn gold" type="button" id="stampBtn">Stamp my rank</button></div>
+    </div>
+    <p class="note">Teacher: check the book work and the Session summary before recording the rank.</p>
+  </div></section>
+
+  <div class="summary" id="summary" role="region" aria-label="Session summary">
+    <h3>Session summary</h3>
+    <div data-summary-body></div>
+    <p class="privacy">Held in memory only. Nothing is saved and nothing leaves this device. It disappears when the page reloads.</p>
+  </div>
+
+  <p class="note">The Bead Market · Stage 3 · Unit 2, Lesson 3 (3Nc.05). Works offline. No timers.</p>
+</div>
+
+<!-- check-market.js re-derives every answer from this block. -->
+<script type="application/json" id="data">
+{
+ "seqs": [
+  {
+   "list": [
+    682,
+    688,
+    694,
+    null,
+    706
+   ],
+   "answer": 700,
+   "step": 6,
+   "prompt": "Find the lost price."
+  },
+  {
+   "list": [
+    412,
+    408,
+    404,
+    null,
+    396
+   ],
+   "answer": 400,
+   "step": -4,
+   "prompt": "Find the lost price."
+  },
+  {
+   "list": [
+    785,
+    790,
+    795,
+    null,
+    805
+   ],
+   "answer": 800,
+   "step": 5,
+   "prompt": "Find the lost price."
+  },
+  {
+   "list": [
+    246,
+    256,
+    null,
+    276,
+    286
+   ],
+   "answer": 266,
+   "step": 10,
+   "prompt": "Find the lost price."
+  }
+ ],
+ "rules": [
+  {
+   "list": [
+    315,
+    320,
+    325,
+    330
+   ],
+   "rule": "Add 5",
+   "options": [
+    "Add 5",
+    "Subtract 5",
+    "Add 10"
+   ]
+  },
+  {
+   "list": [
+    764,
+    760,
+    756,
+    752
+   ],
+   "rule": "Subtract 4",
+   "options": [
+    "Add 4",
+    "Subtract 4",
+    "Subtract 2"
+   ]
+  },
+  {
+   "list": [
+    596,
+    602,
+    608,
+    614
+   ],
+   "rule": "Add 6",
+   "options": [
+    "Add 3",
+    "Add 6",
+    "Subtract 6"
+   ]
+  }
+ ],
+ "made": {
+  "start": 26,
+  "step": 10,
+  "list": [
+   26,
+   36,
+   46,
+   56
+  ]
+ },
+ "tenth": [
+  {
+   "start": 135,
+   "step": 10,
+   "nth": 10
+  },
+  {
+   "start": 240,
+   "step": 5,
+   "nth": 5
+  },
+  {
+   "start": 900,
+   "step": -10,
+   "nth": 10
+  }
+ ],
+ "errors": [
+  {
+   "who": "Salma",
+   "text": "counts in 2s from 360 and says the 5th step is 370.",
+   "start": 360,
+   "step": 2,
+   "steps": 5,
+   "said": 370,
+   "options": [
+    "Correct",
+    "Wrong: it is 368",
+    "Wrong: it is 350"
+   ],
+   "answer": 0
+  },
+  {
+   "who": "Yusuf",
+   "text": "counts back in 10s from 480 and says the 10th step is 580.",
+   "start": 480,
+   "step": -10,
+   "steps": 10,
+   "said": 580,
+   "options": [
+    "Correct",
+    "Wrong: he should have subtracted",
+    "Wrong: he should have counted in 2s"
+   ],
+   "answer": 1
+  }
+ ],
+ "rank": {
+  "list": [
+   388,
+   394,
+   400,
+   null,
+   412
+  ],
+  "answer": 406,
+  "step": 6
+ }
+}
+</script>
+<script src="market.js"></script>
+<script>
+(function(){
+  'use strict';
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var W = Market, host;
+  W.init([{"icon": "door", "label": "Start"}, {"icon": "tag", "label": "Sequences"}, {"icon": "search", "label": "Rules"}, {"icon": "bead", "label": "Further along"}, {"icon": "talk", "label": "Mistakes"}, {"icon": "medal", "label": "Rank"}], {onEnter:function(n){ if(n===5) W.renderMyWork(); }});
+  function seqAsk(host, r, task){
+    var list = r.list, gap = list.indexOf(null);
+    W.ask(host, {prompt:r.prompt, show:W.string(list), answer:r.answer, task:task,
+      nudge:'Look at two beads side by side. How far is the hop?',
+      hint:'Work out the size of the hop from two beads next to each other, then make the same hop to the empty bead.'});
+  }
+  function ruleChoose(host, r, task){
+    W.choose(host, {prompt:'What is the rule?', show:W.string(r.list), options:r.options, answer:r.options.indexOf(r.rule), task:task,
+      nudge:'Is it going up or going down? Check the rule on every hop.', hint:'Take one number from the next one to see the hop. Going up means add, going down means subtract.'});
+  }
+  host = document.getElementById('tags');
+  D.seqs.forEach(function(r, i){ seqAsk(host, r, 'L3 Tag '+(i+1)); });
+  W.ask(host, {prompt:D.made.start+' + ? = '+D.made.list[1]+'. How is this sequence made?', show:W.string(D.made.list), answer:D.made.step, task:'L3 How it is made',
+    nudge:'How far is it from one number to the next?', hint:'Look at the tens digit, then the ones digit, as you go along the string.'});
+  host = document.getElementById('rules');
+  D.rules.forEach(function(r, i){ ruleChoose(host, r, 'L3 Rule '+(i+1)); });
+  host = document.getElementById('tenth');
+  D.tenth.forEach(function(r){
+    var dir = r.step > 0 ? 'add '+r.step : 'subtract '+(-r.step);
+    W.ask(host, {prompt:'Start at '+r.start+' and '+dir+' each time. Which number comes '+r.nth+'th?', answer:r.start + r.step * (r.nth - 1), task:'L3 '+r.nth+'th from '+r.start,
+      nudge:'The first number is the start, so count one hop fewer than the place you want.', hint:'How many hops from the 1st place to that place? Multiply that by the hop, then add it on or take it away.'});
+  });
+  host = document.getElementById('errors');
+  D.errors.forEach(function(r){
+    W.choose(host, {prompt:r.who+' '+r.text+' Is that right?', options:r.options, answer:r.answer, task:'L3 '+r.who,
+      nudge:'Try the count yourself, one hop at a time.', hint:'Is the count going up or going down? Make the hops and see where you land.'});
+  });
+  host = document.getElementById('rankAsk');
+  seqAsk(host, Object.assign({prompt:'Find the lost price.'}, D.rank), 'L3 Rank');
+
+  W.readAloud();
+})();
+</script>
+</body>
+</html>
