@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Healthy Habits Quest</title>
+<meta name="description" content="Year 3 Citizenship, healthy month: four missions on food and water, moving, sleep and screens, and keeping clean, then choose a habit for the week. Built for iPads. No network, no data collected.">
+<style>
+/* ============================================================
+   Healthy Habits Quest: Citizenship, Year 3 (healthy month)
+   Same shell as Feelings Detectives and The Shake Station
+   (design-system/mns-classroom/pages/healthy-habits-quest.md).
+   One colour per mission, leaf green for the frame.
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+:root{
+  --bg:#ECFDF5; --bg-2:#D1F0E2; --paper:#FFFFFF;
+  /* Everything that sits behind white text is 5.3:1 or better (measured). */
+  --leaf:#0F6B4C; --leaf-deep:#0A4A34;
+  --cta:#C2410C; --cta-deep:#8A2E08;
+  --sun:#FFC145;
+  --ink:#0F2A22; --muted:#475569;
+  --ok:#257048; --warn:#B3261E;
+  --mc:var(--leaf);                 /* current mission colour, set per screen */
+  --shadow:0 8px 0 rgba(10,74,52,.13);
+  --tap:56px; --tap-min:48px;
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{margin:0;font-family:var(--school);font-size:1rem;line-height:1.5;color:var(--ink);
+  background:var(--bg);min-height:100vh;
+  background-image:
+    radial-gradient(circle at 8% 10%, rgba(255,193,69,.22), transparent 28%),
+    radial-gradient(circle at 94% 6%, rgba(234,88,12,.12), transparent 26%),
+    radial-gradient(circle at 50% 100%, rgba(16,185,129,.14), transparent 36%)}
+h1,h2,h3{font-weight:700;margin-top:0}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 3.75rem}
+:focus-visible{outline:4px solid var(--leaf);outline-offset:3px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- Header ---- */
+header{margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.stripes{height:1.25rem;display:flex}
+.stripes span{flex:1}
+.head-body{background:var(--leaf);color:#fff;padding:1rem 1.375rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-body .icon{width:3rem;height:3rem;color:var(--sun)}
+.head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.25rem)}
+.head-body .sub{margin:.125rem 0 0;font-weight:700;font-size:.9375rem;opacity:.94}
+.pill{margin-left:auto;background:var(--sun);color:var(--ink);font-weight:700;padding:.5rem .875rem;
+  border-radius:999px;font-size:.875rem;box-shadow:0 3px 0 #C99212}
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem;justify-content:flex-end}
+.tool{border:3px solid var(--leaf);background:var(--paper);color:var(--leaf);font-family:inherit;font-weight:700;
+  font-size:.9375rem;cursor:pointer;min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;
+  display:inline-flex;align-items:center;gap:.5rem}
+.tool[aria-pressed="true"]{background:var(--leaf);color:#fff}
+
+/* ---- Rail ---- */
+.rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
+.rail button{flex:1 1 0;min-width:128px;min-height:var(--tap-min);border:3px solid transparent;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:.875rem;padding:.5rem;border-radius:12px;background:var(--bg-2);
+  color:var(--leaf-deep);box-shadow:0 3px 0 rgba(10,74,52,.14);display:flex;align-items:center;justify-content:center;gap:.375rem}
+.rail button[aria-current="step"]{background:var(--leaf);color:#fff;box-shadow:0 3px 0 var(--leaf-deep)}
+.rail button .icon{width:1.4em;height:1.4em}
+.rail button.done::after{content:"\2713";font-size:1.1em}
+.rail button:active{transform:translateY(2px)}
+
+/* ---- Meter ---- */
+.meter{display:flex;align-items:center;gap:.75rem;background:var(--paper);border:3px solid var(--bg-2);
+  border-radius:16px;padding:.625rem .875rem;margin-top:.75rem}
+.meter .icon{width:1.6em;height:1.6em;color:var(--cta)}
+.meter .bar{flex:1;height:1rem;background:var(--bg-2);border-radius:999px;overflow:hidden}
+.meter .fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#EA580C,#2563EB,#7C3AED,#0891B2);transition:width .35s ease}
+.meter .pts{font-weight:700;font-size:1.125rem;min-width:5.5rem;text-align:right;color:var(--leaf-deep)}
+.meter.pop{animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+/* ---- Screens ---- */
+.screen{display:none;animation:rise .25s ease}
+.screen.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:20px;padding:1.375rem;box-shadow:var(--shadow);margin-top:.75rem;border-top:0}
+.card h2{margin:0 0 .25rem;font-size:clamp(1.3rem,3.4vw,1.75rem);color:var(--mc);display:flex;align-items:center;gap:.5rem}
+.card h2 .icon{width:1.4em;height:1.4em}
+.card h2:focus{outline:none}
+.lead{font-size:1.0625rem;margin:.2em 0 1em}
+.tag{display:inline-flex;align-items:center;gap:.375rem;background:var(--sun);color:var(--ink);font-weight:700;
+  font-size:.8125rem;padding:.25rem .75rem;border-radius:999px;margin-bottom:.5rem}
+
+/* ---- Question box ---- */
+.ask{border:3px solid var(--bg-2);border-radius:18px;padding:1rem 1.125rem;background:var(--paper)}
+.ask.solved{border-color:var(--ok)}
+.qnum{font-weight:700;color:var(--muted);font-size:.9375rem;margin:0}
+.ask-q{font-size:1.375rem;font-weight:700;margin:.375rem 0 1rem;line-height:1.4}
+.ask-q .thing{display:block;font-size:1.75rem;color:var(--mc);margin-top:.25rem}
+.choices{display:flex;flex-direction:column;gap:.75rem}
+.choices.pair{flex-direction:row}
+.choices.pair .choice{flex:1;justify-content:center;font-size:1.25rem;min-height:72px}
+.choice{text-align:left;border:3px solid var(--bg-2);background:var(--paper);color:var(--ink);font-family:inherit;
+  font-size:1.125rem;font-weight:700;cursor:pointer;min-height:var(--tap);padding:.75rem 1rem;border-radius:14px;
+  box-shadow:0 3px 0 rgba(10,74,52,.12);display:flex;align-items:center;gap:.75rem;transition:background .2s ease,border-color .2s ease}
+.choice .mark{flex:0 0 auto;width:2rem;height:2rem;border-radius:8px;background:var(--bg-2);color:var(--leaf-deep);
+  display:inline-flex;align-items:center;justify-content:center}
+.choice:active{transform:translateY(2px)}
+.choice[data-state="right"]{border-color:var(--ok);background:var(--ok);color:#fff}
+.choice[data-state="right"] .mark{background:#fff;color:var(--ok)}
+.choice[data-state="wrong"]{border-color:var(--warn);background:#FBEAE8}
+.choice[data-state="wrong"] .mark{background:var(--warn);color:#fff}
+.choice.bad{animation:wobble .4s ease}
+.choice:disabled{cursor:default}
+@keyframes wobble{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.done-steps{margin:0 0 1rem;padding:0;list-style:none;display:flex;flex-direction:column;gap:.375rem}
+.done-steps li{background:#EDF8F1;border:2px solid var(--ok);border-radius:12px;padding:.5rem .75rem;font-weight:700}
+.done-steps li b{color:var(--ok);margin-right:.5rem}
+.ask-fb{margin-top:.875rem;border-radius:14px;padding:.875rem 1rem;font-weight:700;display:none}
+.ask-fb.show{display:block;animation:rise .25s ease}
+.ask-fb.good{background:#EDF8F1;border:3px solid var(--ok);color:var(--ok)}
+.ask-fb.bad{background:#FBEAE8;border:3px solid var(--warn);color:var(--warn)}
+
+/* ---- Buttons ---- */
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:1.125rem;color:#fff;background:var(--cta);
+  padding:.8125rem 1.625rem;border-radius:14px;min-height:var(--tap);box-shadow:0 4px 0 var(--cta-deep);
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn:active{transform:translateY(3px)}
+.btn.ghost{background:transparent;color:var(--leaf);box-shadow:none;border:3px solid var(--leaf)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
+.mdone{margin-top:1rem;border:3px dashed var(--mc);border-radius:18px;padding:1rem 1.125rem;text-align:center}
+.mdone p{margin:0 0 .5rem;font-size:1.25rem;font-weight:700;color:var(--mc)}
+
+/* ---- Badge and pledge ---- */
+.badge{margin-top:1rem;background:var(--leaf);color:#fff;border-radius:20px;padding:1.25rem;text-align:center}
+.badge h3{margin:0 0 .25rem;font-size:1.5rem;color:#fff}
+.badge .big{font-size:3rem;line-height:1.1;font-weight:700;color:var(--sun);margin:0}
+.badge .rank{display:inline-block;margin-top:.5rem;border:5px double #fff;border-radius:12px;padding:.5rem 1.125rem;font-size:1.1875rem;transform:rotate(-5deg)}
+.badge .mlist{margin:.875rem 0 0;font-size:.9375rem;font-weight:700;color:#fff}
+.pledges{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.75rem;margin-top:.75rem}
+.pledge{border:3px solid var(--pc);background:var(--paper);color:var(--ink);font-family:inherit;font-weight:700;font-size:1.0625rem;
+  cursor:pointer;min-height:var(--tap);padding:.75rem 1rem;border-radius:14px;text-align:left;display:flex;align-items:center;gap:.75rem;
+  box-shadow:0 3px 0 rgba(10,74,52,.12)}
+.pledge .icon{width:1.75rem;height:1.75rem;flex:0 0 auto;color:var(--pc)}
+.pledge[aria-pressed="true"]{background:#FFF6DD;border-width:5px}
+.promise{margin-top:1rem;border:4px dashed var(--leaf);border-radius:20px;padding:1.25rem;text-align:center}
+.promise p{margin:0}
+.promise .small{font-weight:700;color:var(--muted)}
+.promise .habit{font-size:1.75rem;font-weight:700;color:var(--leaf-deep);line-height:1.25;margin:.25rem 0 .5rem}
+.privacy{font-size:.8125rem;color:var(--muted);margin-top:.75rem;font-weight:700}
+.note{font-size:.8125rem;font-weight:700;color:var(--muted);margin-top:1.125rem}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}.choices.pair{flex-direction:column}}
+</style>
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-apple"><path d="M12 7c-1.5-1-5-1.5-6.5 1.5S5 16 7 19s3.5 2.5 5 1.5c1.5 1 3 1.5 5-1.5s3-8 1.5-10.5S13.5 6 12 7z"/><path d="M12 7c0-2 1-3.5 3-4"/></g>
+  <g id="i-run"><circle cx="14" cy="4" r="2"/><path d="m6 21 3.5-5.5L13 17v4"/><path d="m9.5 15.5 1.5-6.5 4 3 3-1"/><path d="M11 9 7 10l-2 3"/></g>
+  <g id="i-moon"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></g>
+  <g id="i-drop"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></g>
+  <g id="i-heart"><path d="M12 20s-7.5-4.6-9-9.5C2 6.7 5.5 4 8.5 5.2 10 5.8 11 7 12 8.2c1-1.2 2-2.4 3.5-3C18.5 4 22 6.7 21 10.5 19.5 15.4 12 20 12 20z"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="stripes" id="stripes" aria-hidden="true"></div>
+    <div class="head-body">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg>
+      <div>
+        <h1>Healthy Habits Quest</h1>
+        <p class="sub">Citizenship · Year 3 · Healthy month</p>
+      </div>
+      <span class="pill">4 missions, 1 habit</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <nav class="rail" id="rail" aria-label="Missions"></nav>
+
+  <div class="meter" id="meter">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <span class="pts"><span id="habitCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <div id="screens"></div>
+
+  <!-- Last screen: badge and pledge -->
+  <section class="screen" id="sEnd" data-s="4" aria-label="My healthy habit">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg> Last step</span>
+      <h2 tabindex="-1" id="hEnd">My healthy habit</h2>
+      <div class="badge">
+        <h3>Healthy Habits Quest</h3>
+        <p class="big"><span id="finalPts">0</span> / <span id="totalPts">0</span></p>
+        <span class="rank" id="rank">Habit starter</span>
+        <p class="mlist" id="mlist"></p>
+      </div>
+      <p class="lead" style="margin-top:1.25rem"><b>Choose one habit to try this week.</b> Tap it, then show your teacher.</p>
+      <div class="pledges" id="pledges"></div>
+      <div class="promise" id="promise" hidden>
+        <p class="small">This week I will...</p>
+        <p class="habit" id="promiseText"></p>
+        <p class="small">Show this to your teacher. Tell your family at home!</p>
+      </div>
+      <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="note">Citizenship · Year 3 · Healthy Habits Quest</p>
+    </div>
+  </section>
+</div>
+
+<script>
+'use strict';
+(function () {
+  /* ---------- content ----------
+     MISSIONS and PLEDGES are also read by tools/unit-pipeline/build_healthy_habits_ppt.js
+     and checked by check-healthy-habits-quest.js, so slides, page and key cannot drift.
+     Item kinds:
+       sort  { t, ans }          two fixed buttons from the mission's pair
+       pick  { q, a, why, hint } a[0] is right; the page shuffles
+       order { q, steps, why, hint } tap the steps in order
+     Hints teach how to think. They never name the answer. */
+  var MISSIONS = [
+    { k: 'food', name: 'Food and water', short: 'Food', col: '#B8450F', icon: 'i-apple',
+      intro: 'Some foods help your body every day. Some are treats for sometimes.',
+      ask: 'Every day, or just sometimes?',
+      pair: ['Every day', 'Sometimes'],
+      hint: 'Ask yourself: does it help my body grow strong? Or does it have lots of sugar, salt or fat?',
+      items: [
+        { kind: 'sort', t: 'An apple', ans: 'Every day', why: 'Fruit is full of vitamins. It’s great every day.' },
+        { kind: 'sort', t: 'A glass of water', ans: 'Every day', why: 'Water is the best drink. Your body needs it all day long.' },
+        { kind: 'sort', t: 'A bag of crisps', ans: 'Sometimes', why: 'Crisps have lots of salt and fat. They’re a treat for sometimes.' },
+        { kind: 'sort', t: 'Carrot sticks', ans: 'Every day', why: 'Vegetables help your body grow and stay well.' },
+        { kind: 'sort', t: 'A fizzy drink', ans: 'Sometimes', why: 'Fizzy drinks have lots of sugar, and sugar is bad for your teeth.' },
+        { kind: 'sort', t: 'Chocolate cake', ans: 'Sometimes', why: 'Cake is lovely at a party, but it has lots of sugar and fat.' },
+        { kind: 'pick', q: 'How many portions of fruit and vegetables should we try to eat every day?',
+          a: ['At least 5', 'Just 1', 'None at all'],
+          why: 'Try for 5 a day! A banana at breakfast, an apple at break, and vegetables at lunch and dinner.',
+          hint: 'Remember the “... a day” rule from the slides. Count the fruit and vegetables you could have at each meal.' }
+      ] },
+    { k: 'move', name: 'Moving', short: 'Move', col: '#1D4ED8', icon: 'i-run',
+      intro: 'Your body needs to move every day. What gets it moving?',
+      ask: 'Is your body moving, or sitting still?',
+      pair: ['Moving', 'Sitting still'],
+      hint: 'Picture yourself doing it. Is your body working and your heart beating faster? Or are you sitting down?',
+      items: [
+        { kind: 'sort', t: 'Riding a bike', ans: 'Moving', why: 'Riding a bike makes your legs and your heart strong.' },
+        { kind: 'sort', t: 'Watching TV on the sofa', ans: 'Sitting still', why: 'Sitting is fine for a little while. Then get up and move!' },
+        { kind: 'sort', t: 'Playing tag at break time', ans: 'Moving', why: 'Running and dodging is great exercise, and it’s fun with friends.' },
+        { kind: 'sort', t: 'Playing a game on a tablet', ans: 'Sitting still', why: 'Your fingers move, but the rest of your body sits still.' },
+        { kind: 'sort', t: 'Dancing to music', ans: 'Moving', why: 'Dancing moves your whole body.' },
+        { kind: 'pick', q: 'How long should children be active every day?',
+          a: ['About 1 hour (60 minutes)', 'About 5 minutes', 'No time at all'],
+          why: 'Children need about an hour of moving every day. Break time, PE and playing outside all count!',
+          hint: 'Add up all the moving in a busy day: break time, PE, walking and playing. Is it a long time or a short time?' },
+        { kind: 'pick', q: 'What happens to your heart when you run?',
+          a: ['It beats faster', 'It stops', 'It goes to sleep'],
+          why: 'Your heart beats faster to send more blood to your muscles.',
+          hint: 'Put your hand on your chest after the move break. What can you feel?' },
+        { kind: 'pick', q: 'Why is moving good for you?',
+          a: ['It makes your heart and muscles strong', 'It makes your teeth clean', 'It makes your hair grow'],
+          why: 'Exercise makes your heart, lungs and muscles stronger. It helps you feel happy too.',
+          hint: 'Think about which parts of your body are working hard when you run and jump.' }
+      ] },
+    { k: 'sleep', name: 'Sleep and screens', short: 'Sleep', col: '#5B21B6', icon: 'i-moon',
+      intro: 'Good sleep starts before you get into bed.',
+      ask: 'Does it help you get ready for sleep?',
+      pair: ['Good before bed', 'Not good before bed'],
+      hint: 'Does it make your body calm and sleepy? Or does it wake your brain up?',
+      items: [
+        { kind: 'sort', t: 'Reading a book', ans: 'Good before bed', why: 'A story helps your brain slow down and get sleepy.' },
+        { kind: 'sort', t: 'Playing on a tablet in bed', ans: 'Not good before bed', why: 'The light from screens tells your brain it’s still daytime.' },
+        { kind: 'sort', t: 'A warm bath', ans: 'Good before bed', why: 'A warm bath helps your body relax.' },
+        { kind: 'sort', t: 'Watching a scary video', ans: 'Not good before bed', why: 'Scary videos can make it hard to fall asleep.' },
+        { kind: 'sort', t: 'Brushing your teeth', ans: 'Good before bed', why: 'Clean teeth all night long. Brush every night before bed.' },
+        { kind: 'sort', t: 'A big fizzy drink', ans: 'Not good before bed', why: 'Sugar gives your body energy just when it needs to rest.' },
+        { kind: 'pick', q: 'How much sleep do children your age need every night?',
+          a: ['About 10 hours', 'About 3 hours', 'About 20 hours'],
+          why: 'Children aged 7 to 9 need about 9 to 12 hours of sleep. Sleep helps you grow, learn and remember.',
+          hint: 'If you go to bed at 8 o’clock at night and wake up at 6 in the morning, how many hours is that?' },
+        { kind: 'pick', q: 'When should screens go off?',
+          a: ['About an hour before bed', 'When your eyes close', 'Never'],
+          why: 'Screens off an hour before bed gives your brain quiet time to get ready for sleep.',
+          hint: 'Your brain needs some quiet time before sleep. Does it need a long time or no time at all?' }
+      ] },
+    { k: 'clean', name: 'Keeping clean', short: 'Clean', col: '#0E7490', icon: 'i-drop',
+      intro: 'Germs are too small to see. Clean habits stop them spreading.',
+      pair: [],
+      hint: '',
+      items: [
+        { kind: 'order', q: 'Tap the steps for washing your hands, in the right order.',
+          steps: ['Wet your hands', 'Add soap', 'Rub for 20 seconds', 'Rinse off the soap', 'Dry your hands'],
+          why: 'Rub for 20 seconds. That’s as long as singing “Happy Birthday” twice!',
+          hint: 'Picture yourself at the sink. What do you really do first, and what comes after it?' },
+        { kind: 'pick', q: 'When should you wash your hands?',
+          a: ['Before you eat and after the toilet', 'Only once a week', 'Only when they look dirty'],
+          why: 'Wash before you eat and after the toilet, so germs don’t get into your mouth.',
+          hint: 'Germs are too small to see. When could germs get onto your hands, or from your hands into your mouth?' },
+        { kind: 'pick', q: 'How should you brush your teeth?',
+          a: ['For 2 minutes, morning and night', 'For 10 seconds, once a week', 'Only on your birthday'],
+          why: 'Brush for 2 minutes, twice a day: in the morning and before bed.',
+          hint: 'Think about when you get up and when you go to bed. How long does a good brush take?' },
+        { kind: 'pick', q: 'You need to sneeze. What should you do?',
+          a: ['Catch it in a tissue, put it in the bin, wash your hands', 'Sneeze on your friend', 'Sneeze into your hand and carry on'],
+          why: 'Catch it, bin it, wash your hands. That stops your germs reaching other people.',
+          hint: 'Where do the germs go when you sneeze? How can you stop them reaching other people?' },
+        { kind: 'pick', q: 'Why do we have a bath or a shower?',
+          a: ['To wash away dirt, sweat and germs', 'To make our hair grow', 'To make us taller'],
+          why: 'Washing keeps your skin clean and healthy after a busy day.',
+          hint: 'What is on your skin after a busy day of running and playing?' },
+        { kind: 'pick', q: 'Your friend wants to use your toothbrush. What do you say?',
+          a: ['No thanks, we each use our own', 'Yes, sharing is kind', 'Yes, but only on Mondays'],
+          why: 'Toothbrushes carry germs, so everyone has their own. You can share toys instead!',
+          hint: 'Think about what is on a toothbrush after you use it. Is it the same as sharing a toy?' }
+      ] }
+  ];
+
+  /* Two habits per mission. The child picks one on the last screen. */
+  var PLEDGES = [
+    ['food', 'Drink water instead of fizzy drinks'],
+    ['food', 'Eat a fruit or vegetable at every meal'],
+    ['move', 'Move for 1 hour every day'],
+    ['move', 'Do a move break at home with my family'],
+    ['sleep', 'Turn screens off an hour before bed'],
+    ['sleep', 'Go to bed at the same time every night'],
+    ['clean', 'Wash my hands before every meal'],
+    ['clean', 'Brush my teeth for 2 minutes, morning and night']
+  ];
+
+  var PER = 10, AFTER_MISS = 5;
+  var TOTAL = MISSIONS.reduce(function (n, m) { return n + m.items.length * PER; }, 0);
+
+  var $ = function (id) { return document.getElementById(id); };
+  var BY = {};
+  MISSIONS.forEach(function (m) { BY[m.k] = m; });
+  function say(msg) { $('live').textContent = msg; }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function svg(id) { return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
+
+  /* ---------- state: memory only, never stored ---------- */
+  var pts, st;   /* st[k] = { i: item index, miss: bool, pts, done } */
+  function reset() {
+    pts = 0; st = {};
+    MISSIONS.forEach(function (m) { st[m.k] = { i: 0, miss: false, pts: 0, done: false, solved: false, next: 0 }; });
+    $('habitCount').textContent = '0'; $('fill').style.width = '0';
+  }
+
+  function addPts(m, n) {
+    pts += n; st[m.k].pts += n;
+    $('habitCount').textContent = pts;
+    $('fill').style.width = Math.round(pts / TOTAL * 100) + '%';
+    var el = $('meter'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  }
+
+  /* ---------- chrome ---------- */
+  MISSIONS.forEach(function (m) { var s = document.createElement('span'); s.style.background = m.col; $('stripes').appendChild(s); });
+
+  var SCREENS = MISSIONS.map(function (m) { return 's-' + m.k; }).concat(['sEnd']);
+  MISSIONS.concat([{ k: 'end', short: 'My habit', icon: 'i-star' }]).forEach(function (m, n) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.dataset.go = n; b.id = 'rail-' + m.k;
+    b.innerHTML = svg(m.icon) + ' ' + (n + 1) + '. ' + m.short;
+    b.addEventListener('click', function () { show(n); });
+    $('rail').appendChild(b);
+  });
+
+  MISSIONS.forEach(function (m, n) {
+    var sec = document.createElement('section');
+    sec.className = 'screen'; sec.id = 's-' + m.k; sec.dataset.s = n;
+    sec.setAttribute('aria-label', m.name);
+    sec.style.setProperty('--mc', m.col);
+    sec.innerHTML =
+      '<div class="card">' +
+        '<span class="tag">' + svg(m.icon) + ' Mission ' + (n + 1) + ' of ' + MISSIONS.length + '</span>' +
+        '<h2 tabindex="-1" id="h-' + m.k + '">' + svg(m.icon) + ' ' + m.name + '</h2>' +
+        '<p class="lead">' + m.intro + '</p>' +
+        '<div class="ask" id="ask-' + m.k + '">' +
+          '<p class="qnum" id="qn-' + m.k + '"></p>' +
+          '<p class="ask-q" id="q-' + m.k + '"></p>' +
+          '<ol class="done-steps" id="ds-' + m.k + '" hidden></ol>' +
+          '<div class="choices" id="c-' + m.k + '"></div>' +
+          '<div class="ask-fb" id="fb-' + m.k + '"></div>' +
+        '</div>' +
+        '<div class="btnrow"><button class="btn" id="next-' + m.k + '" type="button" disabled>Next question</button></div>' +
+        '<div class="mdone" id="md-' + m.k + '" hidden><p>Mission complete!</p>' +
+          '<button class="btn" id="go-' + m.k + '" type="button">' +
+          (n < MISSIONS.length - 1 ? 'Next mission: ' + MISSIONS[n + 1].name : 'Choose my healthy habit') + '</button></div>' +
+      '</div>';
+    $('screens').appendChild(sec);
+    $('next-' + m.k).addEventListener('click', function () { nextItem(m); });
+    $('go-' + m.k).addEventListener('click', function () { show(n + 1); });
+  });
+
+  function show(n) {
+    SCREENS.forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    $('rail').querySelectorAll('button').forEach(function (b, i) {
+      if (i === n) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+    if (n === MISSIONS.length) fillBadge();
+    var h = n < MISSIONS.length ? $('h-' + MISSIONS[n].k) : $('hEnd');
+    if (h) h.focus();
+  }
+
+  $('boardBtn').addEventListener('click', function () {
+    var on = document.documentElement.hasAttribute('data-board');
+    if (on) document.documentElement.removeAttribute('data-board'); else document.documentElement.setAttribute('data-board', '');
+    this.setAttribute('aria-pressed', String(!on));
+  });
+
+  /* ---------- one question at a time ---------- */
+  function feedback(m, good, text) {
+    var fb = $('fb-' + m.k);
+    fb.className = 'ask-fb show ' + (good ? 'good' : 'bad');
+    fb.textContent = text; say(text);
+  }
+
+  function choiceBtn(label, mark, onTap) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'choice';
+    if (mark) b.innerHTML = '<span class="mark">' + mark + '</span>';
+    var sp = document.createElement('span'); sp.textContent = label; b.appendChild(sp);
+    b.addEventListener('click', function () { onTap(b); });
+    return b;
+  }
+
+  function wrong(m, b, text) {
+    st[m.k].miss = true;
+    b.setAttribute('data-state', 'wrong');
+    b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad');
+    feedback(m, false, text);
+  }
+
+  function right(m, b, text) {
+    var s = st[m.k];
+    s.solved = true;
+    b.setAttribute('data-state', 'right');
+    $('c-' + m.k).querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+    $('ask-' + m.k).classList.add('solved');
+    addPts(m, s.miss ? AFTER_MISS : PER);
+    feedback(m, true, text);
+    if (s.i === m.items.length - 1) { s.done = true; $('md-' + m.k).hidden = false; $('next-' + m.k).hidden = true; $('rail-' + m.k).classList.add('done'); }
+    else $('next-' + m.k).disabled = false;
+  }
+
+  function drawItem(m) {
+    var s = st[m.k], it = m.items[s.i];
+    s.miss = false; s.solved = false; s.next = 0;
+    $('ask-' + m.k).classList.remove('solved');
+    $('qn-' + m.k).textContent = 'Question ' + (s.i + 1) + ' of ' + m.items.length;
+    var fb = $('fb-' + m.k); fb.className = 'ask-fb'; fb.textContent = '';
+    $('next-' + m.k).disabled = true;
+    $('next-' + m.k).hidden = s.done;
+    $('md-' + m.k).hidden = !s.done;
+    var box = $('c-' + m.k); box.textContent = ''; box.className = 'choices';
+    var ds = $('ds-' + m.k); ds.textContent = ''; ds.hidden = true;
+    var q = $('q-' + m.k); q.textContent = '';
+
+    if (it.kind === 'sort') {
+      q.appendChild(document.createTextNode(m.ask));
+      var th = document.createElement('span'); th.className = 'thing'; th.textContent = it.t; q.appendChild(th);
+      box.className = 'choices pair';
+      m.pair.forEach(function (label) {         /* fixed order: the left button never moves */
+        box.appendChild(choiceBtn(label, '', function (b) {
+          if (st[m.k].solved) return;
+          if (label === it.ans) right(m, b, it.t + ': ' + label.toLowerCase() + '. ' + it.why);
+          else wrong(m, b, 'Not quite. ' + m.hint);
+        }));
+      });
+    } else if (it.kind === 'pick') {
+      q.textContent = it.q;
+      shuffle(it.a.map(function (_, i) { return i; })).forEach(function (src, i) {
+        box.appendChild(choiceBtn(it.a[src], 'ABC'.charAt(i), function (b) {
+          if (st[m.k].solved || b.getAttribute('data-state') === 'wrong') return;
+          if (src === 0) right(m, b, 'Yes! ' + it.why);
+          else wrong(m, b, 'Not that one. ' + it.hint);
+        }));
+      });
+    } else {                                     /* order */
+      q.textContent = it.q;
+      ds.hidden = false;
+      s.tries = 0;
+      /* For scan_interactives.js: solve and fail this with the page's own buttons. */
+      var askEl = $('ask-' + m.k);
+      window.__widgets = (window.__widgets || []).filter(function (w) { return w.el !== askEl; });
+      window.__widgets.push({
+        el: askEl,
+        wrong: function () {
+          var out = [], btns = box.querySelectorAll('button');
+          for (var j = 0; j < 2; j++) {
+            var later = [].filter.call(btns, function (x) { return !x.hidden && x.dataset.src !== String(st[m.k].next); })[0];
+            if (later) { later.click(); out.push($('fb-' + m.k).textContent); }
+          }
+          return out;
+        },
+        solve: function () {
+          for (var j = st[m.k].next; j < it.steps.length; j++) box.querySelector('button[data-src="' + j + '"]').click();
+        }
+      });
+      shuffle(it.steps.map(function (_, i) { return i; })).forEach(function (src) {
+        box.appendChild(choiceBtn(it.steps[src], '', function (b) {
+          var s2 = st[m.k];
+          if (s2.solved || b.getAttribute('data-state') === 'right') return;
+          if (src !== s2.next) {
+            s2.tries = (s2.tries || 0) + 1;    /* first a nudge, then the method hint */
+            wrong(m, b, s2.tries === 1 ? 'Not yet. That step comes later.' : 'Not yet. ' + it.hint);
+            setTimeout(function () { if (b.getAttribute('data-state') === 'wrong') b.removeAttribute('data-state'); }, 700);
+            return;
+          }
+          s2.next++;
+          var li = document.createElement('li');
+          li.innerHTML = '<b>' + s2.next + '</b>'; li.appendChild(document.createTextNode(it.steps[src]));
+          ds.appendChild(li);
+          b.hidden = true;
+          if (s2.next === it.steps.length) right(m, b, 'Clean hands! ' + it.why);
+          else { var f = $('fb-' + m.k); f.className = 'ask-fb'; f.textContent = ''; }
+        }));
+        box.lastChild.dataset.src = src;
+      });
+    }
+  }
+
+  function nextItem(m) {
+    var s = st[m.k];
+    if (s.i < m.items.length - 1) { s.i++; drawItem(m); $('h-' + m.k).focus(); }
+  }
+
+  /* ---------- badge and pledge ---------- */
+  PLEDGES.forEach(function (p) {
+    var m = BY[p[0]];
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'pledge'; b.setAttribute('aria-pressed', 'false');
+    b.style.setProperty('--pc', m.col);
+    b.innerHTML = svg(m.icon);
+    b.appendChild(document.createTextNode(p[1]));
+    b.addEventListener('click', function () {
+      $('pledges').querySelectorAll('.pledge').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      $('promiseText').textContent = p[1].charAt(0).toLowerCase() + p[1].slice(1) + '.';
+      $('promise').hidden = false;
+      say('This week I will ' + $('promiseText').textContent);
+    });
+    $('pledges').appendChild(b);
+  });
+
+  function fillBadge() {
+    $('finalPts').textContent = pts;
+    $('totalPts').textContent = TOTAL;
+    var share = pts / TOTAL;
+    $('rank').textContent = share >= 0.9 ? 'Healthy hero' : share >= 0.6 ? 'Habit champion' : share >= 0.3 ? 'Habit builder' : 'Habit starter';
+    var done = MISSIONS.filter(function (m) { return st[m.k].done; }).length;
+    $('mlist').textContent = 'Missions complete: ' + done + ' of ' + MISSIONS.length;
+  }
+
+  $('again').addEventListener('click', function () {
+    reset();
+    MISSIONS.forEach(function (m) { $('rail-' + m.k).classList.remove('done'); drawItem(m); });
+    $('pledges').querySelectorAll('.pledge').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    $('promise').hidden = true;
+    show(0);
+  });
+
+  /* ---------- start ---------- */
+  reset();
+  MISSIONS.forEach(drawItem);
+  show(0);
+})();
+</script>
+</body>
+</html>
