@@ -202,6 +202,9 @@ header p{margin:0 0 .6rem;opacity:.9;font-size:.9rem}
   font-weight:700;font-size:.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem}
 .shelf button:active{transform:translateY(3px)}
 .shelf button[disabled]{opacity:.4;cursor:not-allowed}
+/* Un .btn dentro de .shelf: la regla de arriba le pisaba el color y el borde
+   por especificidad y dejaba texto azul marino sobre naranja (2,2:1). */
+.shelf button.btn{color:#fff;border:0}
 .chip{width:1.1rem;height:1.1rem;border-radius:3px;border:1px solid rgba(0,0,0,.3);display:inline-block}
 .chip.one{background:var(--ones)}
 .chip.ten{background:var(--tens);height:1.6rem;width:.55rem}
