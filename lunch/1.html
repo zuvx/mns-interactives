@@ -54,7 +54,7 @@ header{margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shad
 .head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.25rem)}
 .head-body .sub{margin:.125rem 0 0;font-weight:700;font-size:.9375rem;opacity:.94}
 .pill{margin-left:auto;background:var(--sun);color:var(--ink);font-weight:700;padding:.5rem .875rem;
-  border-radius:999px;font-size:.875rem;box-shadow:0 3px 0 #C99212}
+  border-radius:999px;font-size:.875rem}
 .story{margin:.875rem 0 0;background:var(--paper);border:3px dashed var(--cta);border-radius:16px;padding:.75rem 1rem;font-weight:700;font-size:1.0625rem}
 .toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem;justify-content:flex-end}
 .tool{border:3px solid var(--leaf);background:var(--paper);color:var(--leaf);font-family:inherit;font-weight:700;
@@ -66,10 +66,11 @@ header{margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shad
 .rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
 .rail button{flex:1 1 0;min-width:128px;min-height:var(--tap-min);border:3px solid transparent;cursor:pointer;
   font-family:inherit;font-weight:700;font-size:.875rem;padding:.5rem;border-radius:12px;background:var(--bg-2);
-  color:var(--leaf-deep);box-shadow:0 3px 0 rgba(10,74,52,.14);display:flex;align-items:center;justify-content:center;gap:.375rem}
+  color:var(--leaf-deep);box-shadow:0 3px 0 rgba(10,74,52,.14);display:flex;align-items:center;justify-content:center;gap:.375rem;
+  white-space:nowrap;position:relative}
 .rail button[aria-current="step"]{background:var(--leaf);color:#fff;box-shadow:0 3px 0 var(--leaf-deep)}
 .rail button .icon{width:1.4em;height:1.4em}
-.rail button.done::after{content:"\2713";font-size:1.1em}
+.rail button.done::after{content:"\2713";position:absolute;top:1px;right:6px;font-size:.875rem}
 .rail button:active{transform:translateY(2px)}
 
 /* ---- Code strip and meter ---- */
@@ -164,7 +165,7 @@ header{margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shad
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
 .btn:active{transform:translateY(3px)}
 .btn.ghost{background:transparent;color:var(--leaf);box-shadow:none;border:3px solid var(--leaf)}
-.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn:disabled{background:#E6ECE9;color:#5B6B66;box-shadow:none;cursor:not-allowed;transform:none}
 .btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
 .mdone{margin-top:1rem;border:3px dashed var(--mc);border-radius:18px;padding:1rem 1.125rem;text-align:center}
 .mdone p{margin:0 0 .5rem;font-size:1.25rem;font-weight:700;color:var(--mc)}
@@ -528,6 +529,7 @@ header{margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shad
     ask.classList.remove('solved');
     ask.classList.toggle('lock', !!it.lock);
     $('qn-' + m.k).textContent = it.lock ? 'Lock question: the answer is a number for the door' :
+      it.kind === 'box' ? 'Customer ' + (s.i + 1) + ' of ' + m.items.filter(function (x) { return x.kind === 'box'; }).length :
       'Question ' + (s.i + 1) + ' of ' + m.items.length;
     var fb = $('fb-' + m.k); fb.className = 'ask-fb'; fb.textContent = '';
     $('next-' + m.k).disabled = true;
