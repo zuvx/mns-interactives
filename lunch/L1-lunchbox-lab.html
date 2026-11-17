@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lunchbox Lab</title>
+<meta name="description" content="Year 3 Citizenship, healthy month: an escape room for pairs. Sort the fridge, the water bar, build balanced lunchboxes, be a food detective, then crack the door code. Built for iPads. No network, no data collected.">
+<style>
+/* ============================================================
+   Lunchbox Lab: Citizenship, Year 3 (healthy month), escape room
+   Same shell and palette as Healthy Habits Quest
+   (design-system/mns-classroom/pages/lunchbox-lab.md).
+   NO external requests. No @font-face, no CDN, nothing off-device.
+   ============================================================ */
+:root{
+  --bg:#ECFDF5; --bg-2:#D1F0E2; --paper:#FFFFFF;
+  --leaf:#0F6B4C; --leaf-deep:#0A4A34;
+  --cta:#C2410C; --cta-deep:#8A2E08;
+  --sun:#FFC145;
+  --ink:#0F2A22; --muted:#475569;
+  --ok:#257048; --warn:#B3261E;
+  --mc:var(--leaf);
+  --shadow:0 8px 0 rgba(10,74,52,.13);
+  --tap:56px; --tap-min:48px;
+  --school:'Century Gothic','CenturyGothic','Futura','Avenir Next','URW Gothic',
+           'Questrial','Didact Gothic','Trebuchet MS',system-ui,sans-serif;
+  --emoji:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
+  --scale:1;
+}
+:root[data-board]{--scale:1.45}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;font-size:calc(16px * var(--scale))}
+body{margin:0;font-family:var(--school);font-size:1rem;line-height:1.5;color:var(--ink);
+  background:var(--bg);min-height:100vh;
+  background-image:
+    radial-gradient(circle at 8% 10%, rgba(255,193,69,.22), transparent 28%),
+    radial-gradient(circle at 94% 6%, rgba(234,88,12,.12), transparent 26%),
+    radial-gradient(circle at 50% 100%, rgba(16,185,129,.14), transparent 36%)}
+h1,h2,h3{font-weight:700;margin-top:0}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem 1.125rem 3.75rem}
+:focus-visible{outline:4px solid var(--leaf);outline-offset:3px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-.125em;fill:none;stroke:currentColor;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.emo{font-family:var(--emoji);font-style:normal}
+
+/* ---- Header ---- */
+header{margin-top:.5rem;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.stripes{height:1.25rem;display:flex}
+.stripes span{flex:1}
+.head-body{background:var(--leaf);color:#fff;padding:1rem 1.375rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.head-body .icon{width:3rem;height:3rem;color:var(--sun)}
+.head-body h1{margin:0;font-size:clamp(1.5rem,4.5vw,2.25rem)}
+.head-body .sub{margin:.125rem 0 0;font-weight:700;font-size:.9375rem;opacity:.94}
+.pill{margin-left:auto;background:var(--sun);color:var(--ink);font-weight:700;padding:.5rem .875rem;
+  border-radius:999px;font-size:.875rem;box-shadow:0 3px 0 #C99212}
+.story{margin:.875rem 0 0;background:var(--paper);border:3px dashed var(--cta);border-radius:16px;padding:.75rem 1rem;font-weight:700;font-size:1.0625rem}
+.toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem;justify-content:flex-end}
+.tool{border:3px solid var(--leaf);background:var(--paper);color:var(--leaf);font-family:inherit;font-weight:700;
+  font-size:.9375rem;cursor:pointer;min-height:var(--tap-min);padding:.5rem 1rem;border-radius:12px;
+  display:inline-flex;align-items:center;gap:.5rem}
+.tool[aria-pressed="true"]{background:var(--leaf);color:#fff}
+
+/* ---- Rail ---- */
+.rail{display:flex;gap:.5rem;margin:1rem 0 .25rem;flex-wrap:wrap}
+.rail button{flex:1 1 0;min-width:128px;min-height:var(--tap-min);border:3px solid transparent;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:.875rem;padding:.5rem;border-radius:12px;background:var(--bg-2);
+  color:var(--leaf-deep);box-shadow:0 3px 0 rgba(10,74,52,.14);display:flex;align-items:center;justify-content:center;gap:.375rem}
+.rail button[aria-current="step"]{background:var(--leaf);color:#fff;box-shadow:0 3px 0 var(--leaf-deep)}
+.rail button .icon{width:1.4em;height:1.4em}
+.rail button.done::after{content:"\2713";font-size:1.1em}
+.rail button:active{transform:translateY(2px)}
+
+/* ---- Code strip and meter ---- */
+.meter{display:flex;align-items:center;gap:.75rem;background:var(--paper);border:3px solid var(--bg-2);
+  border-radius:16px;padding:.625rem .875rem;margin-top:.75rem;flex-wrap:wrap}
+.meter .lbl{font-weight:700;color:var(--leaf-deep);display:flex;align-items:center;gap:.375rem}
+.meter .icon{width:1.4em;height:1.4em;color:var(--cta)}
+.slots{display:flex;gap:.5rem}
+.slot{width:2.75rem;height:3rem;border-radius:10px;border:3px dashed var(--muted);display:flex;align-items:center;
+  justify-content:center;font-size:1.5rem;font-weight:700;color:var(--muted);background:var(--paper)}
+.slot.got{border-style:solid;border-color:var(--sc);color:#fff;background:var(--sc);animation:pop .4s ease}
+.meter .pts{margin-left:auto;font-weight:700;font-size:1.125rem;color:var(--leaf-deep)}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+/* ---- Screens ---- */
+.screen{display:none;animation:rise .25s ease}
+.screen.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border-radius:20px;padding:1.375rem;box-shadow:var(--shadow);margin-top:.75rem}
+.card h2{margin:0 0 .25rem;font-size:clamp(1.3rem,3.4vw,1.75rem);color:var(--mc);display:flex;align-items:center;gap:.5rem}
+.card h2 .icon{width:1.4em;height:1.4em}
+.card h2:focus{outline:none}
+.lead{font-size:1.0625rem;margin:.2em 0 1em}
+.tag{display:inline-flex;align-items:center;gap:.375rem;background:var(--sun);color:var(--ink);font-weight:700;
+  font-size:.8125rem;padding:.25rem .75rem;border-radius:999px;margin-bottom:.5rem}
+
+/* ---- Question box ---- */
+.ask{border:3px solid var(--bg-2);border-radius:18px;padding:1rem 1.125rem;background:var(--paper)}
+.ask.solved{border-color:var(--ok)}
+.ask.lock{border-color:var(--sun);background:#FFFBEF}
+.ask.lock.solved{border-color:var(--ok)}
+.qnum{font-weight:700;color:var(--muted);font-size:.9375rem;margin:0}
+.ask.lock .qnum{color:var(--cta-deep)}
+.ask-q{font-size:1.375rem;font-weight:700;margin:.375rem 0 1rem;line-height:1.4}
+.ask-q .thing{display:block;font-size:1.75rem;color:var(--mc);margin-top:.25rem}
+.ask-q .row{display:block;font-size:2.5rem;letter-spacing:.25em;margin-top:.375rem;font-family:var(--emoji)}
+.choices{display:flex;flex-direction:column;gap:.75rem}
+.choices.pair{flex-direction:row}
+.choices.pair .choice{flex:1;justify-content:center;font-size:1.25rem;min-height:72px;text-align:center}
+.choices.four{display:grid;grid-template-columns:1fr 1fr}
+.choice{text-align:left;border:3px solid var(--bg-2);background:var(--paper);color:var(--ink);font-family:inherit;
+  font-size:1.125rem;font-weight:700;cursor:pointer;min-height:var(--tap);padding:.75rem 1rem;border-radius:14px;
+  box-shadow:0 3px 0 rgba(10,74,52,.12);display:flex;align-items:center;gap:.75rem;transition:background .2s ease,border-color .2s ease}
+.choice .mark{flex:0 0 auto;width:2rem;height:2rem;border-radius:8px;background:var(--bg-2);color:var(--leaf-deep);
+  display:inline-flex;align-items:center;justify-content:center}
+.choice:active{transform:translateY(2px)}
+.choice[data-state="right"]{border-color:var(--ok);background:var(--ok);color:#fff}
+.choice[data-state="right"] .mark{background:#fff;color:var(--ok)}
+.choice[data-state="wrong"]{border-color:var(--warn);background:#FBEAE8}
+.choice[data-state="wrong"] .mark{background:var(--warn);color:#fff}
+.bad{animation:wobble .4s ease}
+.choice:disabled{cursor:default}
+@keyframes wobble{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.ask-fb{margin-top:.875rem;border-radius:14px;padding:.875rem 1rem;font-weight:700;display:none}
+.ask-fb.show{display:block;animation:rise .25s ease}
+.ask-fb.good{background:#EDF8F1;border:3px solid var(--ok);color:var(--ok)}
+.ask-fb.bad{background:#FBEAE8;border:3px solid var(--warn);color:var(--warn);animation:rise .25s ease}
+
+/* ---- Lunchbox builder ---- */
+.lunchbox{border:4px solid var(--mc);border-radius:22px;min-height:5.5rem;padding:.75rem;display:flex;flex-wrap:wrap;
+  gap:.5rem;align-items:center;justify-content:center;background:#F6F2FC;margin-bottom:.75rem}
+.lunchbox .empty{color:var(--muted);font-weight:700}
+.lunchbox .in{font-family:var(--emoji);font-size:2.5rem;line-height:1;animation:pop .3s ease}
+.groups{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.grp{border:3px solid var(--gc);color:var(--gc);border-radius:999px;padding:.25rem .75rem;font-weight:700;font-size:.875rem;background:var(--paper)}
+.grp.full{background:var(--gc);color:#fff}
+.pantry{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:.625rem}
+.food{border:3px solid var(--bg-2);background:var(--paper);color:var(--ink);font-family:inherit;font-weight:700;font-size:1rem;
+  cursor:pointer;min-height:var(--tap);padding:.5rem .625rem;border-radius:14px;display:flex;align-items:center;gap:.5rem;
+  text-align:left;box-shadow:0 3px 0 rgba(10,74,52,.12)}
+.food .emo{font-size:1.75rem;line-height:1}
+.food[aria-pressed="true"]{border-color:var(--mc);background:#EEE7FA;border-width:4px}
+.food:disabled{cursor:default;opacity:.7}
+.food:active{transform:translateY(2px)}
+
+/* ---- Door ---- */
+.door{border:3px solid var(--bg-2);border-radius:18px;padding:1rem 1.125rem;text-align:center}
+.door.solved{border-color:var(--ok)}
+.display{display:flex;gap:.625rem;justify-content:center;margin:.5rem 0 1rem}
+.display span{width:3.5rem;height:4rem;border-radius:12px;border:3px solid var(--leaf-deep);display:flex;align-items:center;
+  justify-content:center;font-size:2rem;font-weight:700;background:#F3FAF6}
+.keypad{display:grid;grid-template-columns:repeat(3,5rem);gap:.625rem;justify-content:center}
+.key{min-height:4.25rem;border:3px solid var(--leaf);background:var(--paper);color:var(--leaf-deep);font-family:inherit;
+  font-size:1.75rem;font-weight:700;border-radius:14px;cursor:pointer;box-shadow:0 3px 0 rgba(10,74,52,.18)}
+.key.small{font-size:1rem}
+.key:active{transform:translateY(2px)}
+.key:disabled{opacity:.45;cursor:default}
+
+/* ---- Buttons ---- */
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:1.125rem;color:#fff;background:var(--cta);
+  padding:.8125rem 1.625rem;border-radius:14px;min-height:var(--tap);box-shadow:0 4px 0 var(--cta-deep);
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn:active{transform:translateY(3px)}
+.btn.ghost{background:transparent;color:var(--leaf);box-shadow:none;border:3px solid var(--leaf)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btnrow{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:.875rem}
+.mdone{margin-top:1rem;border:3px dashed var(--mc);border-radius:18px;padding:1rem 1.125rem;text-align:center}
+.mdone p{margin:0 0 .5rem;font-size:1.25rem;font-weight:700;color:var(--mc)}
+
+/* ---- Escape badge and gallery ---- */
+.badge{margin-top:1rem;background:var(--leaf);color:#fff;border-radius:20px;padding:1.25rem;text-align:center}
+.badge h3{margin:0 0 .25rem;font-size:1.75rem;color:#fff}
+.badge .big{font-size:3rem;line-height:1.1;font-weight:700;color:var(--sun);margin:0}
+.badge .rank{display:inline-block;margin-top:.5rem;border:5px double #fff;border-radius:12px;padding:.5rem 1.125rem;font-size:1.1875rem;transform:rotate(-5deg)}
+.gallery{display:flex;flex-direction:column;gap:.75rem;margin-top:.75rem}
+.gbox{border:3px solid #5B21B6;border-radius:16px;padding:.75rem 1rem;text-align:left}
+.gbox p{margin:0;font-weight:700;color:#5B21B6}
+.gbox .row{font-family:var(--emoji);font-size:2.25rem;letter-spacing:.15em}
+.walk{margin-top:1rem;border:4px dashed var(--cta);border-radius:20px;padding:1rem 1.25rem;font-weight:700;font-size:1.125rem}
+.walk p{margin:.25rem 0}
+.privacy{font-size:.8125rem;color:var(--muted);margin-top:.75rem;font-weight:700}
+.note{font-size:.8125rem;font-weight:700;color:var(--muted);margin-top:1.125rem}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:560px){.wrap{padding:.75rem .75rem 3rem}.pill{margin-left:0}.choices.pair{flex-direction:column}
+  .choices.four{grid-template-columns:1fr}.keypad{grid-template-columns:repeat(3,4.5rem)}}
+</style>
+</head>
+<body>
+<svg class="sr-only" aria-hidden="true"><defs>
+  <g id="i-fridge"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 10h12"/><path d="M9 5v2"/><path d="M9 13v3"/></g>
+  <g id="i-cup"><path d="M6 3h12l-1.6 16.4a2 2 0 0 1-2 1.6H9.6a2 2 0 0 1-2-1.6L6 3z"/><path d="M6.5 8h11"/></g>
+  <g id="i-box"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V5h6v3"/><path d="M3 13h18"/></g>
+  <g id="i-search"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></g>
+  <g id="i-door"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><circle cx="15" cy="12" r="1"/></g>
+  <g id="i-lock"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></g>
+  <g id="i-star"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></g>
+  <g id="i-board"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4"/><path d="M8 20h8"/></g>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="stripes" id="stripes" aria-hidden="true"></div>
+    <div class="head-body">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-box"/></svg>
+      <div>
+        <h1>Lunchbox Lab</h1>
+        <p class="sub">Escape room · Citizenship · Year 3 · Healthy month</p>
+      </div>
+      <span class="pill">Work with your partner</span>
+    </div>
+  </header>
+
+  <p class="story">Oh no! You’re locked in Chef Pip’s kitchen. Each room hides one number. Find all 4 numbers, then open the door. Take turns: one of you taps, the other one checks.</p>
+
+  <div class="toolbar">
+    <button class="tool" id="boardBtn" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-board"/></svg> Big screen
+    </button>
+  </div>
+
+  <nav class="rail" id="rail" aria-label="Rooms"></nav>
+
+  <div class="meter" id="meter">
+    <span class="lbl"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg> Door code</span>
+    <div class="slots" id="slots"></div>
+    <span class="pts"><span id="lunchCount">0</span> points</span>
+  </div>
+
+  <p class="sr-only" id="live" role="status" aria-live="polite"></p>
+
+  <div id="screens"></div>
+
+  <!-- Last screen: the door -->
+  <section class="screen" id="sEnd" data-s="4" aria-label="The door">
+    <div class="card">
+      <span class="tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-door"/></svg> Last room</span>
+      <h2 tabindex="-1" id="hEnd"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-door"/></svg> The kitchen door</h2>
+      <div class="door ask" id="door">
+        <p class="ask-q">Type the 4 numbers from the rooms, in order: room 1, room 2, room 3, room 4.</p>
+        <div class="display" id="display" aria-live="polite"><span></span><span></span><span></span><span></span></div>
+        <div class="keypad" id="keypad"></div>
+        <div class="ask-fb" id="fb-door"></div>
+      </div>
+      <div id="escaped" hidden>
+        <div class="badge">
+          <h3>You escaped!</h3>
+          <p class="big"><span id="finalPts">0</span> / <span id="totalPts">0</span></p>
+          <span class="rank" id="rank">Lunch helper</span>
+        </div>
+        <h3 style="margin:1.25rem 0 0">Our lunchboxes</h3>
+        <div class="gallery" id="gallery"></div>
+        <div class="walk">
+          <p>Gallery walk! Leave this iPad on your table.</p>
+          <p>Walk round and look at other lunchboxes. Find one you would love to eat. Is it balanced?</p>
+        </div>
+      </div>
+      <p class="privacy">This stays on this iPad only, and it disappears when the page closes. Nothing is saved or sent anywhere.</p>
+      <div class="btnrow">
+        <button class="btn ghost" id="again" type="button">Play again</button>
+      </div>
+      <p class="note">Citizenship · Year 3 · Lunchbox Lab</p>
+    </div>
+  </section>
+</div>
+
+<script>
+'use strict';
+(function () {
+  /* ---------- content ----------
+     ROOMS and PANTRY are read by check-lunchbox-lab.js and by
+     tools/unit-pipeline/build_lunchbox_lab_ppt.js.
+     Item kinds:
+       sort  { t, ans }                       fixed buttons from the room's pair
+       pick  { q, a, why, hint, lock? }       a[0] is right; the page shuffles
+       box   { q, title, need, maxSome, why, hint }  build a lunchbox from PANTRY
+     The last item in every room is a lock: a pick whose answer (a[0]) is one
+     digit of the door code. Hints teach how to think. They never name the answer. */
+  var ROOMS = [
+    { k: 'fridge', name: 'The Fridge', short: 'Fridge', col: '#B8450F', icon: 'i-fridge',
+      intro: 'Chef Pip’s fridge is a mess! Put each food in its food group.',
+      ask: 'Which food group is it in?',
+      pair: ['Fruit and veg', 'Starchy food', 'Protein', 'Dairy'],
+      hint: 'Ask yourself: does it grow on a plant? Does it fill you up with energy? Does it help your muscles grow? Is it made from milk?',
+      items: [
+        { kind: 'sort', t: '🍌 A banana', ans: 'Fruit and veg', why: 'Bananas are fruit. One banana is one of your 5 a day.' },
+        { kind: 'sort', t: '🧀 Cheese', ans: 'Dairy', why: 'Cheese is made from milk. It helps make strong bones and teeth.' },
+        { kind: 'sort', t: '🍞 Brown bread', ans: 'Starchy food', why: 'Bread is starchy. It gives you energy, and brown bread keeps you full for longer.' },
+        { kind: 'sort', t: '🥚 A boiled egg', ans: 'Protein', why: 'Eggs are protein. Protein helps your muscles grow.' },
+        { kind: 'sort', t: '🥒 Cucumber sticks', ans: 'Fruit and veg', why: 'Cucumber is a vegetable. It’s crunchy and full of water!' },
+        { kind: 'sort', t: '🍚 Rice', ans: 'Starchy food', why: 'Rice is starchy. It gives you energy for the afternoon.' },
+        { kind: 'sort', t: '🥛 A glass of milk', ans: 'Dairy', why: 'Milk is dairy. It helps make strong bones and teeth.' },
+        { kind: 'sort', t: '🐟 Tuna', ans: 'Protein', why: 'Tuna is a fish, and fish is protein.' },
+        { kind: 'sort', t: '🥔 A jacket potato', ans: 'Starchy food', why: 'Surprise! Potatoes are starchy food, like bread and rice. They give you energy.' },
+        { kind: 'pick', lock: true, q: 'How many portions of fruit and vegetables should we eat every day?',
+          a: ['5', '1', '10'],
+          why: 'At least 5 a day! The number for the door is 5.',
+          hint: 'Remember the “... a day” rule from last week’s lesson. Count the fruit and vegetables you could eat at each meal.' }
+      ] },
+    { k: 'drinks', name: 'The Water Bar', short: 'Water bar', col: '#1D4ED8', icon: 'i-cup',
+      intro: 'What goes in a lunchbox every day, and what is just for sometimes?',
+      ask: 'Every day, or just sometimes?',
+      pair: ['Every day', 'Sometimes'],
+      hint: 'Does it help your body grow strong? Or does it have lots of sugar, salt or fat?',
+      items: [
+        { kind: 'sort', t: '💧 A bottle of water', ans: 'Every day', why: 'Water is the best drink. Your body needs it all day long.' },
+        { kind: 'sort', t: '🥤 A can of fizzy cola', ans: 'Sometimes', why: 'Fizzy drinks have lots of sugar, and sugar hurts your teeth.' },
+        { kind: 'sort', t: '🍫 A chocolate bar', ans: 'Sometimes', why: 'Chocolate has lots of sugar and fat. It’s a treat for sometimes.' },
+        { kind: 'sort', t: '🥪 A cheese sandwich', ans: 'Every day', why: 'Bread for energy and cheese for strong bones. A great lunch!' },
+        { kind: 'sort', t: '🍬 A bag of sweets', ans: 'Sometimes', why: 'Sweets are almost all sugar. Keep them for a special day.' },
+        { kind: 'sort', t: '🍇 Grapes', ans: 'Every day', why: 'Grapes are fruit. Cut them in half for little lunchboxes.' },
+        { kind: 'sort', t: '🍩 A doughnut', ans: 'Sometimes', why: 'Doughnuts have lots of sugar and fat. They’re a treat.' },
+        { kind: 'pick', q: 'It’s a very hot day. What does your body need more of?',
+          a: ['Water', 'Sweets', 'Crisps'],
+          why: 'When it’s hot you sweat, so your body needs more water. Drink a little and often.',
+          hint: 'When you’re hot, you sweat. What do you need to put back into your body?' },
+        { kind: 'pick', q: 'Why are fizzy drinks only for sometimes?',
+          a: ['They have lots of sugar, and sugar hurts your teeth', 'They are too cold', 'They are too wet'],
+          why: 'A can of fizzy drink can have more sugar than you should have in a whole day.',
+          hint: 'Think about sweets and fizzy drinks. What do they both have lots of? What does that do to your teeth?' },
+        { kind: 'pick', lock: true, q: 'Count the “sometimes” foods.',
+          row: '🍩 🍎 🍫 🥕 🍭 🥦',
+          a: ['3', '2', '4'],
+          why: 'The doughnut, the chocolate and the lolly are sometimes foods. The number for the door is 3.',
+          hint: 'Point at each one with your partner. Does it have lots of sugar? Count only those ones.' }
+      ] },
+    { k: 'lunch', name: 'The Lunchbox Builder', short: 'Lunchbox', col: '#5B21B6', icon: 'i-box',
+      intro: 'Chef Pip needs lunchboxes for three customers. Tap a food to put it in. Tap it again to take it out.',
+      pair: [], hint: '',
+      items: [
+        { kind: 'box', title: 'A balanced lunchbox',
+          q: 'Build a balanced lunchbox: one food from every food group, and a drink of water.',
+          need: { fv: 1, st: 1, pr: 1, da: 1, wa: 1 }, maxSome: 1,
+          why: 'Balanced! Every food group is there, so your body gets what it needs.',
+          hint: 'Look at the badges under your lunchbox. Every badge needs to be filled in before you press Check.' },
+        { kind: 'box', title: 'A footballer with a big match',
+          q: 'Customer 2 is a footballer with a big match this afternoon. Make it balanced, with 2 starchy foods for extra energy.',
+          need: { fv: 1, st: 2, pr: 1, da: 1, wa: 1 }, maxSome: 0,
+          why: 'Goal! Starchy food gives the footballer energy to run for the whole match.',
+          hint: 'Read the challenge again. Look at each badge: how many foods does it ask for? Is there room for a treat?' },
+        { kind: 'box', title: 'A very hot day',
+          q: 'Customer 3 is going to the park on a very hot day. Make it balanced, with 2 fruit or vegetables (they’re full of water) and no “sometimes” foods.',
+          need: { fv: 2, st: 1, pr: 1, da: 1, wa: 1 }, maxSome: 0,
+          why: 'Cool! Fruit, vegetables and water help your body on a hot day.',
+          hint: 'Read the challenge again. Look at each badge: how many foods does it ask for? Is anything in the box a treat?' },
+        { kind: 'pick', lock: true, q: 'How many food groups did every balanced lunchbox need? Don’t count the water.',
+          a: ['4', '2', '9'],
+          why: 'Fruit and veg, starchy food, protein and dairy. Then water to drink! The number for the door is 4.',
+          hint: 'Look back at the badges under the lunchbox. Count the food groups, but not the drink.' }
+      ] },
+    { k: 'detect', name: 'The Lunch Detectives', short: 'Detectives', col: '#0E7490', icon: 'i-search',
+      intro: 'Look closely at these lunches. Be a food detective!',
+      pair: [], hint: '',
+      items: [
+        { kind: 'pick', q: 'Which lunchbox is balanced?',
+          a: ['A chicken wrap, cheese, grapes and water', 'Crisps, a chocolate bar and a fizzy drink', 'Bread, pasta, rice and water'],
+          why: 'The wrap is starchy, chicken is protein, cheese is dairy and grapes are fruit. Every group is there!',
+          hint: 'For each lunchbox, go through the four food groups one by one. Is a group missing?' },
+        { kind: 'pick', q: 'Mia’s lunchbox has pasta, an apple, a yoghurt and water. What is missing?',
+          a: ['A protein food, like an egg or tuna', 'More sweets', 'A fizzy drink'],
+          why: 'Mia has starchy food, fruit and dairy. She needs protein too.',
+          hint: 'Say the four food groups out loud. Find each one in Mia’s box. Which one can’t you find?' },
+        { kind: 'pick', q: 'Why do we need starchy food like bread, rice and pasta?',
+          a: ['It gives us energy', 'It cleans our teeth', 'It makes our hair grow'],
+          why: 'Starchy food is like fuel. It gives you energy to learn and play.',
+          hint: 'Think about the footballer’s lunchbox. Why did they need extra?' },
+        { kind: 'pick', q: 'Why do we need dairy like milk, cheese and yoghurt?',
+          a: ['It helps make strong bones and teeth', 'It makes our hair curly', 'It helps us see in the dark'],
+          why: 'Dairy has calcium, and calcium builds strong bones and teeth.',
+          hint: 'Think about the hard parts of your body. Which parts hold you up and help you chew?' },
+        { kind: 'pick', q: 'Why do we need protein like eggs, fish and beans?',
+          a: ['It helps our muscles grow and mend', 'It makes us feel cold', 'It turns our tongue blue'],
+          why: 'Protein builds and mends your muscles.',
+          hint: 'Think about what makes your body strong when you run, lift and climb.' },
+        { kind: 'pick', q: 'Sam wants to swap his chocolate bar for an every day food. What is the best swap?',
+          a: ['A banana', 'A bag of sweets', 'A doughnut'],
+          why: 'A banana is sweet too, and it counts as one of your 5 a day.',
+          hint: 'An every day food helps your body. Which one isn’t full of sugar?' },
+        { kind: 'pick', lock: true, q: 'Count the protein foods.',
+          row: '🥚 🍎 🐟 🍞',
+          a: ['2', '1', '4'],
+          why: 'The egg and the fish are protein. The number for the door is 2.',
+          hint: 'Protein helps muscles grow. Point at each food: is it from an animal, or is it a bean? Count only those.' }
+      ] }
+  ];
+
+  /* Foods for the lunchbox builder: [emoji, name, group]. Groups: fv fruit and
+     veg, st starchy, pr protein, da dairy, wa water, some sometimes foods. */
+  var PANTRY = [
+    ['🍎', 'Apple', 'fv'], ['🍌', 'Banana', 'fv'], ['🥕', 'Carrot sticks', 'fv'], ['🍇', 'Grapes', 'fv'], ['🍉', 'Watermelon', 'fv'],
+    ['🍞', 'Bread roll', 'st'], ['🍝', 'Pasta', 'st'], ['🍚', 'Rice', 'st'],
+    ['🥚', 'Egg', 'pr'], ['🍗', 'Chicken', 'pr'], ['🐟', 'Tuna', 'pr'],
+    ['🧀', 'Cheese', 'da'], ['🥛', 'Milk', 'da'],
+    ['💧', 'Water', 'wa'],
+    ['🍫', 'Chocolate', 'some'], ['🍩', 'Doughnut', 'some'], ['🥤', 'Fizzy drink', 'some']
+  ];
+  var GROUPS = [['fv', 'Fruit and veg', '#B8450F'], ['st', 'Starchy', '#8A5A00'], ['pr', 'Protein', '#1D4ED8'], ['da', 'Dairy', '#0E7490'], ['wa', 'Water', '#0F6B4C']];
+  var BOX_MAX = 6;
+
+  var PER = 10, AFTER_MISS = 5, DOOR_PTS = 10;
+  var TOTAL = ROOMS.reduce(function (n, m) { return n + m.items.length * PER; }, 0) + DOOR_PTS;
+  var CODE = ROOMS.map(function (m) { return m.items[m.items.length - 1].a[0]; }).join('');
+
+  var $ = function (id) { return document.getElementById(id); };
+  function say(msg) { $('live').textContent = msg; }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function svg(id) { return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
+
+  /* ---------- state: memory only, never stored ---------- */
+  var pts, st, typed, open, doorMiss, doorTries;
+  function reset() {
+    pts = 0; st = {}; typed = ''; open = false; doorMiss = false; doorTries = 0;
+    ROOMS.forEach(function (m) { st[m.k] = { i: 0, miss: false, done: false, solved: false, tries: 0, pick: [], boxes: [] }; });
+    $('lunchCount').textContent = '0';
+    [].forEach.call($('slots').children, function (s) { s.className = 'slot'; s.textContent = '?'; });
+  }
+  function addPts(n) {
+    pts += n; $('lunchCount').textContent = pts;
+  }
+
+  /* ---------- chrome ---------- */
+  ROOMS.forEach(function (m) {
+    var s = document.createElement('span'); s.style.background = m.col; $('stripes').appendChild(s);
+    var sl = document.createElement('span'); sl.className = 'slot'; sl.textContent = '?'; sl.style.setProperty('--sc', m.col);
+    sl.setAttribute('aria-label', m.name + ' number'); $('slots').appendChild(sl);
+  });
+
+  var SCREENS = ROOMS.map(function (m) { return 's-' + m.k; }).concat(['sEnd']);
+  ROOMS.concat([{ k: 'end', short: 'Door', icon: 'i-door' }]).forEach(function (m, n) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.id = 'rail-' + m.k;
+    b.innerHTML = svg(m.icon) + ' ' + (n + 1) + '. ' + m.short;
+    b.addEventListener('click', function () { show(n); });
+    $('rail').appendChild(b);
+  });
+
+  ROOMS.forEach(function (m, n) {
+    var sec = document.createElement('section');
+    sec.className = 'screen'; sec.id = 's-' + m.k; sec.dataset.s = n;
+    sec.setAttribute('aria-label', m.name);
+    sec.style.setProperty('--mc', m.col);
+    sec.innerHTML =
+      '<div class="card">' +
+        '<span class="tag">' + svg(m.icon) + ' Room ' + (n + 1) + ' of ' + ROOMS.length + '</span>' +
+        '<h2 tabindex="-1" id="h-' + m.k + '">' + svg(m.icon) + ' ' + m.name + '</h2>' +
+        '<p class="lead">' + m.intro + '</p>' +
+        '<div class="ask" id="ask-' + m.k + '">' +
+          '<p class="qnum" id="qn-' + m.k + '"></p>' +
+          '<p class="ask-q" id="q-' + m.k + '"></p>' +
+          '<div id="bx-' + m.k + '"></div>' +
+          '<div class="choices" id="c-' + m.k + '"></div>' +
+          '<div class="ask-fb" id="fb-' + m.k + '"></div>' +
+        '</div>' +
+        '<div class="btnrow"><button class="btn" id="next-' + m.k + '" type="button" disabled>Next</button></div>' +
+        '<div class="mdone" id="md-' + m.k + '" hidden><p>Room ' + (n + 1) + ' unlocked! Your number is in the door code.</p>' +
+          '<button class="btn" id="go-' + m.k + '" type="button">' +
+          (n < ROOMS.length - 1 ? 'Go to room ' + (n + 2) + ': ' + ROOMS[n + 1].name : 'Go to the door') + '</button></div>' +
+      '</div>';
+    $('screens').appendChild(sec);
+    $('next-' + m.k).addEventListener('click', function () { nextItem(m); });
+    $('go-' + m.k).addEventListener('click', function () { show(n + 1); });
+  });
+
+  function show(n) {
+    SCREENS.forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    $('rail').querySelectorAll('button').forEach(function (b, i) {
+      if (i === n) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+    var h = n < ROOMS.length ? $('h-' + ROOMS[n].k) : $('hEnd');
+    if (h) h.focus();
+  }
+
+  $('boardBtn').addEventListener('click', function () {
+    var on = document.documentElement.hasAttribute('data-board');
+    if (on) document.documentElement.removeAttribute('data-board'); else document.documentElement.setAttribute('data-board', '');
+    this.setAttribute('aria-pressed', String(!on));
+  });
+
+  /* ---------- one question at a time ---------- */
+  function feedback(fbId, good, text) {
+    var fb = $(fbId);
+    fb.className = 'ask-fb';
+    void fb.offsetWidth;
+    fb.className = 'ask-fb show ' + (good ? 'good' : 'bad');
+    fb.textContent = text; say(text);
+  }
+
+  function choiceBtn(label, mark, onTap) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'choice';
+    if (mark) b.innerHTML = '<span class="mark">' + mark + '</span>';
+    var sp = document.createElement('span'); sp.textContent = label; b.appendChild(sp);
+    b.addEventListener('click', function () { onTap(b); });
+    return b;
+  }
+
+  function wrong(m, b, text) {
+    st[m.k].miss = true;
+    if (b) { b.setAttribute('data-state', 'wrong'); b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); }
+    feedback('fb-' + m.k, false, text);
+  }
+
+  function right(m, b, text) {
+    var s = st[m.k], it = m.items[s.i];
+    s.solved = true;
+    if (b) b.setAttribute('data-state', 'right');
+    $('ask-' + m.k).querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+    $('ask-' + m.k).classList.add('solved');
+    addPts(s.miss ? AFTER_MISS : PER);
+    feedback('fb-' + m.k, true, text);
+    if (it.lock) {
+      var sl = $('slots').children[ROOMS.indexOf(m)];
+      sl.textContent = it.a[0]; sl.className = 'slot got';
+    }
+    if (s.i === m.items.length - 1) { s.done = true; $('md-' + m.k).hidden = false; $('next-' + m.k).hidden = true; $('rail-' + m.k).classList.add('done'); }
+    else $('next-' + m.k).disabled = false;
+  }
+
+  function drawItem(m) {
+    var s = st[m.k], it = m.items[s.i];
+    s.miss = false; s.solved = false; s.tries = 0; s.pick = [];
+    var ask = $('ask-' + m.k);
+    ask.classList.remove('solved');
+    ask.classList.toggle('lock', !!it.lock);
+    $('qn-' + m.k).textContent = it.lock ? 'Lock question: the answer is a number for the door' :
+      'Question ' + (s.i + 1) + ' of ' + m.items.length;
+    var fb = $('fb-' + m.k); fb.className = 'ask-fb'; fb.textContent = '';
+    $('next-' + m.k).disabled = true;
+    $('next-' + m.k).hidden = s.done;
+    $('md-' + m.k).hidden = !s.done;
+    var box = $('c-' + m.k); box.textContent = ''; box.className = 'choices';
+    var bx = $('bx-' + m.k); bx.textContent = '';
+    var q = $('q-' + m.k); q.textContent = '';
+
+    if (it.kind === 'sort') {
+      q.appendChild(document.createTextNode(m.ask));
+      var th = document.createElement('span'); th.className = 'thing'; th.textContent = it.t; q.appendChild(th);
+      box.className = m.pair.length > 2 ? 'choices four' : 'choices pair';
+      m.pair.forEach(function (label) {         /* fixed order: buttons never move */
+        box.appendChild(choiceBtn(label, '', function (b) {
+          if (st[m.k].solved || b.getAttribute('data-state') === 'wrong') return;
+          if (label === it.ans) right(m, b, it.why);
+          else wrong(m, b, 'Not quite. ' + m.hint);
+        }));
+      });
+    } else if (it.kind === 'pick') {
+      q.textContent = it.q;
+      if (it.row) { var r = document.createElement('span'); r.className = 'row'; r.textContent = it.row; q.appendChild(r); }
+      shuffle(it.a.map(function (_, i) { return i; })).forEach(function (src, i) {
+        box.appendChild(choiceBtn(it.a[src], 'ABC'.charAt(i), function (b) {
+          if (st[m.k].solved || b.getAttribute('data-state') === 'wrong') return;
+          if (src === 0) right(m, b, 'Yes! ' + it.why);
+          else wrong(m, b, 'Not that one. ' + it.hint);
+        }));
+      });
+    } else drawBox(m, it, q, bx, box);
+  }
+
+  /* ---------- lunchbox builder ---------- */
+  function count(pick) {
+    var c = { fv: 0, st: 0, pr: 0, da: 0, wa: 0, some: 0 };
+    pick.forEach(function (i) { c[PANTRY[i][2]]++; });
+    return c;
+  }
+
+  function drawBox(m, it, q, bx, box) {
+    var s = st[m.k];
+    q.textContent = it.q;
+    bx.innerHTML = '<div class="lunchbox" id="lb-' + m.k + '"></div><div class="groups" id="gr-' + m.k + '"></div>';
+    var pantry = document.createElement('div'); pantry.className = 'pantry';
+    PANTRY.forEach(function (f, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'food'; b.setAttribute('aria-pressed', 'false'); b.dataset.i = i;
+      b.innerHTML = '<span class="emo" aria-hidden="true">' + f[0] + '</span>';
+      b.appendChild(document.createTextNode(f[1]));
+      b.addEventListener('click', function () {
+        if (s.solved) return;
+        var at = s.pick.indexOf(i);
+        if (at !== -1) s.pick.splice(at, 1);
+        else if (s.pick.length >= BOX_MAX) { feedback('fb-' + m.k, false, 'The lunchbox is full! Take a food out first.'); return; }
+        else s.pick.push(i);
+        b.setAttribute('aria-pressed', String(at === -1));
+        paintBox(m, it);
+      });
+      pantry.appendChild(b);
+    });
+    box.appendChild(pantry);
+    var row = document.createElement('div'); row.className = 'btnrow';
+    var chk = document.createElement('button'); chk.type = 'button'; chk.className = 'btn'; chk.id = 'chk-' + m.k;
+    chk.textContent = 'Check my lunchbox';
+    chk.addEventListener('click', function () { checkBox(m, it); });
+    row.appendChild(chk); box.appendChild(row);
+    paintBox(m, it);
+
+    /* For scan_interactives.js: fail it twice, then solve it with the page's own buttons. */
+    var askEl = $('ask-' + m.k);
+    window.__widgets = (window.__widgets || []).filter(function (w) { return w.el !== askEl; });
+    window.__widgets.push({
+      el: askEl,
+      wrong: function () {
+        clearBox(m); var out = [];
+        for (var j = 0; j < 2; j++) { chk.click(); out.push($('fb-' + m.k).textContent); }
+        return out;
+      },
+      solve: function () {
+        clearBox(m);
+        GROUPS.forEach(function (g) {
+          var want = it.need[g[0]];
+          [].forEach.call(pantry.querySelectorAll('.food'), function (b) {
+            if (want > 0 && PANTRY[+b.dataset.i][2] === g[0]) { b.click(); want--; }
+          });
+        });
+        chk.click();
+      }
+    });
+  }
+
+  function clearBox(m) {
+    $('c-' + m.k).querySelectorAll('.food[aria-pressed="true"]').forEach(function (b) { b.click(); });
+  }
+
+  function paintBox(m, it) {
+    var s = st[m.k], lb = $('lb-' + m.k), gr = $('gr-' + m.k), c = count(s.pick);
+    lb.textContent = '';
+    if (!s.pick.length) lb.innerHTML = '<span class="empty">Your lunchbox is empty. Tap a food below.</span>';
+    s.pick.forEach(function (i) { var e = document.createElement('span'); e.className = 'in'; e.textContent = PANTRY[i][0]; e.title = PANTRY[i][1]; lb.appendChild(e); });
+    gr.textContent = '';
+    GROUPS.forEach(function (g) {
+      var n = it.need[g[0]], p = document.createElement('span');
+      p.className = 'grp' + (c[g[0]] >= n ? ' full' : ''); p.style.setProperty('--gc', g[2]);
+      p.textContent = g[1] + ' ' + Math.min(c[g[0]], n) + '/' + n;
+      gr.appendChild(p);
+    });
+  }
+
+  function checkBox(m, it) {
+    var s = st[m.k];
+    if (s.solved) return;
+    var c = count(s.pick);
+    var short = GROUPS.some(function (g) { return c[g[0]] < it.need[g[0]]; });
+    var treats = c.some > it.maxSome;
+    if (!short && !treats) {
+      s.boxes.push({ title: it.title, row: s.pick.map(function (i) { return PANTRY[i][0]; }).join(' ') });
+      right(m, null, it.why);
+      return;
+    }
+    s.tries++;
+    var lb = $('lb-' + m.k); lb.classList.remove('bad'); void lb.offsetWidth; lb.classList.add('bad');
+    var nudge = short ? 'Not balanced yet. One of the badges isn’t filled in.' :
+      'Too many “sometimes” foods for this customer. Take one out.';
+    wrong(m, null, s.tries === 1 ? nudge : 'Not yet. ' + it.hint);
+  }
+
+  function nextItem(m) {
+    var s = st[m.k];
+    if (s.i < m.items.length - 1) { s.i++; drawItem(m); $('h-' + m.k).focus(); }
+  }
+
+  /* ---------- the door ---------- */
+  '1 2 3 4 5 6 7 8 9 Clear 0 Open'.split(' ').forEach(function (k) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'key' + (k.length > 1 ? ' small' : ''); b.textContent = k; b.dataset.k = k;
+    b.addEventListener('click', function () { press(k); });
+    $('keypad').appendChild(b);
+  });
+  function paintDisplay() {
+    [].forEach.call($('display').children, function (s, i) { s.textContent = typed.charAt(i); });
+  }
+  function press(k) {
+    if (open) return;
+    if (k === 'Clear') typed = '';
+    else if (k === 'Open') return tryDoor();
+    else if (typed.length < 4) typed += k;
+    paintDisplay();
+  }
+  function tryDoor() {
+    if (typed === CODE) {
+      open = true;
+      addPts(doorMiss ? AFTER_MISS : DOOR_PTS);
+      $('door').classList.add('solved');
+      $('keypad').querySelectorAll('button').forEach(function (x) { x.disabled = true; });
+      feedback('fb-door', true, 'Click! The door is open. You escaped from Chef Pip’s kitchen!');
+      fillBadge();
+      $('escaped').hidden = false;
+      return;
+    }
+    doorMiss = true; doorTries++;
+    var d = $('display'); d.classList.remove('bad'); void d.offsetWidth; d.classList.add('bad');
+    var got = ROOMS.filter(function (m) { return st[m.k].done; }).length;
+    feedback('fb-door', false, doorTries === 1 ? 'The door is still locked.' + (got < ROOMS.length ? ' You have ' + got + ' of the 4 numbers so far.' : ' Check the numbers again.') :
+      'Still locked. Look at the door code boxes at the top. Type the numbers from left to right, then press Open.');
+    typed = ''; paintDisplay();
+  }
+  var doorEl = $('door');
+  window.__widgets = (window.__widgets || []).concat([{
+    el: doorEl,
+    wrong: function () {
+      var out = [];
+      for (var j = 0; j < 2; j++) { press('Clear'); '0000'.split('').forEach(press); press('Open'); out.push($('fb-door').textContent); }
+      return out;
+    },
+    solve: function () { press('Clear'); CODE.split('').forEach(function (k) { $('keypad').querySelector('[data-k="' + k + '"]').click(); }); press('Open'); }
+  }]);
+  /* the door widget's solved flag lives on #door, which the scanner reads */
+
+  function fillBadge() {
+    $('finalPts').textContent = pts;
+    $('totalPts').textContent = TOTAL;
+    var share = pts / TOTAL;
+    $('rank').textContent = share >= 0.9 ? 'Master chef' : share >= 0.6 ? 'Head chef' : share >= 0.3 ? 'Kitchen helper' : 'Lunch helper';
+    var g = $('gallery'); g.textContent = '';
+    st.lunch.boxes.forEach(function (bx) {
+      var d = document.createElement('div'); d.className = 'gbox';
+      var p = document.createElement('p'); p.textContent = bx.title; d.appendChild(p);
+      var r = document.createElement('div'); r.className = 'row'; r.textContent = bx.row; d.appendChild(r);
+      g.appendChild(d);
+    });
+    if (!st.lunch.boxes.length) g.innerHTML = '<p>No lunchboxes yet. Go back to room 3 and build one!</p>';
+  }
+
+  $('again').addEventListener('click', function () {
+    reset();
+    ROOMS.forEach(function (m) { $('rail-' + m.k).classList.remove('done'); drawItem(m); });
+    $('door').classList.remove('solved');
+    $('keypad').querySelectorAll('button').forEach(function (x) { x.disabled = false; });
+    var fb = $('fb-door'); fb.className = 'ask-fb'; fb.textContent = '';
+    $('escaped').hidden = true; paintDisplay();
+    show(0);
+  });
+
+  /* ---------- start ---------- */
+  reset();
+  ROOMS.forEach(drawItem);
+  show(0);
+})();
+</script>
+</body>
+</html>
