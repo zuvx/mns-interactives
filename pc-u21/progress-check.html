@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D shapes: Progress Check</title>
+<link rel="stylesheet" href="player.css">
+<style>
+  .solid .edge,.obj .edge{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+  .solid .hid{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:5 4;stroke-linecap:round}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="solids.js"></script>
+<script src="paper.js"></script>
+<script>
+/* Pictures: the Toy Box Workshop's solids, all one colour (a family colour would answer Q3 and Q5),
+   and Q7's five objects drawn here, our own simple drawings. */
+const S = window.Solids, PIC = {};
+S.list.forEach(n => PIC[n] = S.svg(n, { plain: true }));
+const box = b => `<svg class="obj" viewBox="-60 -60 120 120" role="img" aria-label="a picture">${b}</svg>`;
+const dot = (x, y) => `<circle cx="${x}" cy="${y}" r="4.5" fill="#1E1B33"/>`;
+PIC.glass = box(`<path d="M-30,-40 L-25,45 A25,7 0 0 0 25,45 L30,-40" fill="#dbeaf5" class="edge"/><ellipse cx="0" cy="-40" rx="30" ry="8" fill="#eef6fb" class="edge"/><path d="M-27,22 A27,7 0 0 0 27,22" fill="none" stroke="#9db8cc" stroke-width="2"/>`);
+PIC.dice = box(`<polygon points="0,-50 43,-25 0,0 -43,-25" fill="#fff" class="edge"/><polygon points="-43,-25 0,0 0,50 -43,25" fill="#eceae4" class="edge"/><polygon points="0,0 43,-25 43,25 0,50" fill="#f6f5f1" class="edge"/>`
+  + dot(0, -25) + dot(-13, 8) + dot(-30, 18) + dot(11, 6) + dot(21.5, 12.5) + dot(32, 19));
+PIC.tepee = box(`<line x1="0" y1="-45" x2="-9" y2="-58" class="edge"/><line x1="0" y1="-45" x2="9" y2="-58" class="edge"/><line x1="0" y1="-45" x2="0" y2="-59" class="edge"/>`
+  + `<polygon points="0,-45 -42,45 42,45" fill="#e9e4da" class="edge"/><polygon points="0,2 -13,45 13,45" fill="#b9b0a0" class="edge"/><line x1="0" y1="-45" x2="-20" y2="45" stroke="#c9c1b3" stroke-width="2"/><line x1="0" y1="-45" x2="22" y2="45" stroke="#c9c1b3" stroke-width="2"/>`);
+PIC.box = box(`<polygon points="-50,-5 -25,-25 50,-25 25,-5" fill="#d9b48a" class="edge"/><polygon points="-50,-5 25,-5 25,40 -50,40" fill="#c99a68" class="edge"/><polygon points="25,-5 50,-25 50,20 25,40" fill="#b5865a" class="edge"/>`
+  + `<polygon points="-17,-5 8,-25 16,-25 -9,-5" fill="#a87b52"/><polygon points="-17,-5 -9,-5 -9,12 -17,12" fill="#a87b52"/>`);
+PIC["golf ball"] = box(`<circle r="40" fill="#fbfbf9" class="edge"/>` + [[-15,-20],[0,-25],[15,-20],[-22,-5],[-7,-8],[8,-8],[23,-5],[-18,10],[-3,8],[12,8],[25,12],[-10,24],[5,24],[18,26],[-24,-18],[26,-18]]
+  .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3.2" fill="#e2e1dc"/>`).join(""));
+window.PIC = PIC;
+</script>
+<script src="player.js"></script>
+</body>
+</html>
